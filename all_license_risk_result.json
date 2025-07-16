@@ -1,0 +1,18 @@
+{
+  "1: Apache License 2.0↩": {
+    "Apache License 2.0": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    }
+  },
+  "20: GNU General Public License v2.0 only": {
+    "level": "very high - do not use -",
+    "reason": "Strong copyleft requirements enforce that derivative works must also be open-sourced under the same license."
+  },
+  "14: BSD-3-Clause": {
+    "BSD-3-Clause": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    }
+  }
+}
