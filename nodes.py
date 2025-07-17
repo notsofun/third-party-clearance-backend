@@ -2,6 +2,7 @@ from pocketflow import Node, BatchNode
 import re
 from bs4 import BeautifulSoup
 import json
+from utils.licenseReviewer import RiskReviewer
 
 class ParsingOriginalHtml(Node):
     """处理原始OSS-Readme文件，生成Json文件方便后续调用
@@ -150,9 +151,45 @@ class ParsingOriginalHtml(Node):
     
     def post(self, shared, prep_res, exec_res):
         shared["parsedHtml"] =  exec_res
-        with open("pased_original_oss.json","w",encoding="utf-8") as f:
-            json.dump(exec_res,f,ensure_ascii=False,indent=2)
+        # with open("pased_original_oss.json","w",encoding="utf-8") as f:
+        #     json.dump(exec_res,f,ensure_ascii=False,indent=2)
         return "default"
 
-# class LicenseReviewing(Node):
-    # pending
+class LicenseReviewing(BatchNode):
+    
+    """
+    对上文生成的包含原始OSS readme消息的内容做风险评估，并生成一个新的仅包含组件名、风险的json文件
+    """
+
+    def __init__(self, deployment=None):
+        super().__init__()
+        self.deployment = deployment
+
+    def prep(self, shared):
+        # super的prep的话就是そのまま把数据搞出来了
+        parsedHtml = shared["parsedHtml"]
+        licenseTexts = [(item['id'], item['title'], item['text']) 
+                        for item in parsedHtml['license_texts']]
+        return licenseTexts
+    
+    def exec(self, licenseText):
+        lId, lTitle, lText = licenseText
+        reviewer = RiskReviewer(model="api")
+        risk = reviewer.review(lTitle,lText)
+
+        return lTitle, risk
+    
+    def post(self, shared, prep_res, exec_res_list):
+
+        """
+        遍历全部license文本后合并风险评级
+        """
+        shared["riskAnalysis"] = {
+            lTitle : risk
+            for lTitle, risk in exec_res_list
+        }
+
+        with open("analysisOfRisk.json","w", encoding="utf-8" ) as f1:
+            json.dump(shared["riskAnalysis"],f1,ensure_ascii=False,indent=2)
+
+        return "default"

@@ -1,5 +1,5 @@
 from pocketflow import Flow
-from nodes import ParsingOriginalHtml
+from nodes import (ParsingOriginalHtml, LicenseReviewing)
 
 def review_oss_readme():
     """
@@ -7,6 +7,10 @@ def review_oss_readme():
     """
 
     parsingNode = ParsingOriginalHtml()
+
+    riskAnalysisNode = LicenseReviewing()
+
+    parsingNode >> riskAnalysisNode
 
     review_flow = Flow(start=parsingNode)
 
