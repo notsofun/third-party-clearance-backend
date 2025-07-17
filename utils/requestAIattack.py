@@ -1,11 +1,13 @@
 from openai import AzureOpenAI
 from azure.identity import ClientSecretCredential
+import numpy as np
 
 class AzureOpenAIChatClient:
     def __init__(
         self,
         endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com",
         deployment= None,
+        embedding_deployment = None,
         api_version="2025-01-01-preview",
         client_id=None,
         client_secret=None,
@@ -16,6 +18,7 @@ class AzureOpenAIChatClient:
         """
         self.endpoint = endpoint
         self.deployment = deployment if deployment is not None else "gpt-4o-mini-2024-07-18"
+        self.embedding_deployment = embedding_deployment
         self.api_version = api_version
 
         # 可以考虑这里要么全部传，要么通过环境变量
@@ -48,6 +51,21 @@ class AzureOpenAIChatClient:
             messages=messages
         )
         return resp
+    
+    def get_embedding(self, text):
+        """
+        获取文本的embedding向量
+        """
+        try:
+            response = self.client.embeddings.create(
+                input=text,
+                model=self.embedding_deployment  # 使用deployment名称作为model参数
+            )
+            return np.array(response.data[0].embedding, dtype=np.float32)
+        
+        except Exception as e:
+            print(f"Error getting embedding: {e}")
+            raise
 
 # --- 使用示例 ---
 

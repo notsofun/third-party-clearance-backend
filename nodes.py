@@ -193,3 +193,18 @@ class LicenseReviewing(BatchNode):
             json.dump(shared["riskAnalysis"],f1,ensure_ascii=False,indent=2)
 
         return "default"
+    
+class RiskCheckingRAG(BatchNode):
+
+    def __init__(self, deployment, max_retries=1, wait=0):
+        super().__init__(max_retries, wait)
+        self.deployment = deployment
+
+    def prep(self, shared):
+        originalRiskAnalysis = [ (k, v["level"], v["reason"]) for k,v in shared["riskAnalysis"].items()]
+        return originalRiskAnalysis
+    
+    def exec(self, item):
+        reviewedTitle, reviewedLevel, reviewedReason = item
+        
+        return 
