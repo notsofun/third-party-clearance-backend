@@ -5,23 +5,57 @@ import pickle
 import os
 
 class VectorDatabase:
-    def __init__(self,dimension=1536):
+    def __init__(self,dimension=3072):
         self.dimension = dimension
-        self.client = AzureOpenAIChatClient(embedding_deployment="text-embedding-ada-002")
+        self.client = AzureOpenAIChatClient(embedding_deployment="text-embedding-3-large")
     
-    def build_index(self,texts):
-        """构建索引咯🎵ダーリング🎵"""
-        self.texts = texts
+    def build_index(self, data_dict):
+        """最终的构建索引函数（数据平展化）"""
+        self.texts = []  # 存索引对应的数据记录
         embeddings = []
 
-        for text in texts:
-            embedding = self.client.get_embedding(text)
-            embeddings.append(embedding)
+        # 把数据从嵌套展开到平铺
+        for color_category, details in data_dict.items():
+            licenses = details.get("licenses", [])
+            for license_name in licenses:
+                item = {
+                    'license': license_name,
+                    'color_category': color_category,
+                    'risk_level': details.get('risk_level', ''),
+                    'risk_reason': details.get('risk_reason', ''),
+                    'obligations': details.get('obligations', '')
+                }
 
-        embeddings = np.vstack(embeddings)
+                serialized_text = self.serialize_to_text(item)
+                embedding = self.client.get_embedding(serialized_text)
 
+                embeddings.append(embedding)
+                self.texts.append(item)
+
+        embeddings = np.vstack(embeddings).astype('float32')
+
+        # 确保使用的维度与你模型使用的Embedding维度一致
         self.index = faiss.IndexFlatL2(self.dimension)
-        self.index.add(embeddings.astype('float32'))
+        self.index.add(embeddings)
+
+        print(f"✅ 索引构建完成，共 {len(self.texts)} 个license条目被索引。")
+
+    def serialize_to_text(self, item):
+        """结构化json序列化为可读清晰文本（专为license数据设计）"""
+        
+        obligations = item['obligations']
+        if isinstance(obligations, list):
+            obligations = "；".join(obligations)
+
+        serialized_text = (
+            f"License Name: {item['license']}; "
+            f"Color Category: {item['color_category']}; "
+            f"Risk Level: {item['risk_level']}; "
+            f"Risk Reason: {item['risk_reason']}; "
+            f"Obligations: {obligations}."
+        )
+
+        return serialized_text
 
     def search(self,query, k=5):
         """搜索最相近的文本"""
@@ -47,14 +81,14 @@ class VectorDatabase:
     def save(self, path):
         """保存索引和文本"""
         os.makedirs(path, exist_ok=True)
-        faiss.write_index(self.index, f"{path}/index.faiss")
-        with open(f"{path}/texts.pkl", 'wb') as f:
+        faiss.write_index(self.index, f"./database/{path}.faiss")
+        with open(f"./database/{path}.pkl", 'wb') as f:
             pickle.dump(self.texts, f)
 
     def load(self, path):
         """加载索引和文本"""
-        self.index = faiss.read_index(f"{path}/index.faiss")
-        with open(f"{path}/texts.pkl", 'rb') as f:
+        self.index = faiss.read_index(f"./database/{path}.faiss")
+        with open(f"./database/{path}.pkl", 'rb') as f:
             self.texts = pickle.load(f)
 
 def main():
@@ -226,10 +260,10 @@ def main():
             ]
         }
     }
-
+    
     db = VectorDatabase()
     db.build_index(license_info)
-    db.save(r"\database")
+    db.save(r"LicenseTable")
     result = db.search("Sleep")
     print(result)
 
