@@ -1,11 +1,11 @@
 {
   "1: Apache License 2.0⇧": {
     "level": "low",
-    "reason": "The Apache License 2.0 is permissive and does not impose copyleft obligations."
+    "reason": "The license permits wide use without copyleft obligations."
   },
   "2: Apache-2.0⇧": {
     "level": "low",
-    "reason": "The license allows use, reproduction, and distribution with minimal restrictions, lacking copyleft obligations."
+    "reason": "The license allows for broad use, reproduction, and distribution without copyleft obligations."
   },
   "3: Apache-2.0⇧": {
     "level": "low",
@@ -13,39 +13,39 @@
   },
   "4: Apache-2.0⇧": {
     "level": "low",
-    "reason": "Permissive license without copyleft obligations"
+    "reason": "Permissive license with no copyleft obligations."
   },
   "5: Apache-2.0⇧": {
     "level": "low",
-    "reason": "Permissive license without copyleft obligations."
+    "reason": "Permissive license without copyleft obligations"
   },
   "6: Apache-2.0⇧": {
     "level": "low",
-    "reason": "The license is permissive and does not impose strong copyleft obligations."
+    "reason": "The license allows use, reproduction, and distribution without strong copyleft requirements."
   },
   "7: Apache-2.0⇧": {
     "level": "low",
-    "reason": "Permissive license without copyleft obligations."
+    "reason": "Permissive license without copyleft obligations"
   },
   "8: Apache-2.0⇧": {
     "level": "low",
-    "reason": "The Apache License 2.0 allows for modification and redistribution without strong copyleft requirements."
+    "reason": "This license is permissive and does not impose copyleft obligations."
   },
   "9: Apache-2.0⇧": {
     "level": "low",
-    "reason": "The Apache License 2.0 permits wide usage without copyleft requirements."
+    "reason": "Permissive license without copyleft obligations"
   },
   "10: Apache-2.0⇧": {
     "level": "low",
-    "reason": "The Apache License 2.0 is a permissive license that does not impose copyleft requirements."
+    "reason": "The license allows for free use, modification, and distribution without imposing strong copyleft requirements."
   },
   "11: Apache-2.0⇧": {
     "level": "low",
-    "reason": "The license is permissive and does not impose copyleft obligations."
+    "reason": "Permissive license without copyleft obligations"
   },
   "12: Apache-2.0⇧": {
     "level": "low",
-    "reason": "Permissive license that allows for use, reproduction, and distribution without copyleft obligations."
+    "reason": "The license is permissive and does not impose copyleft obligations."
   },
   "13: BSD 3-Clause \"New\" or \"Revised\" License⇧": {
     "level": "low",
@@ -53,7 +53,7 @@
   },
   "14: BSD-3-Clause⇧": {
     "level": "low",
-    "reason": "The license allows redistribution and modification without strong copyleft obligations."
+    "reason": "Permissive license without copyleft obligations"
   },
   "15: BSD-3-Clause⇧": {
     "level": "low",
@@ -61,31 +61,31 @@
   },
   "16: CC-BY-4.0⇧": {
     "level": "low",
-    "reason": "The license allows users to share and adapt material with minimal restrictions, promoting free use without copyleft obligations."
+    "reason": "The license allows for redistribution and adaptation with attribution but does not impose copyleft obligations."
   },
   "17: CDDL-1.0⇧": {
     "level": "medium",
-    "reason": "The license contains limited copyleft provisions, requiring modified versions to remain under the same license but allowing the combination with proprietary code."
+    "reason": "The license includes copyleft provisions that require source code availability for modifications, but allows distribution under different terms."
   },
   "18: Dual-license⇧": {
-    "level": "high",
-    "reason": "The dual-license includes GPL 2.0, which has strong copyleft requirements."
+    "level": "medium",
+    "reason": "The presence of a dual license with one copyleft license imposes some restrictions on redistribution."
   },
   "19: Eclipse Public License 1.0⇧": {
     "level": "medium",
-    "reason": "The license includes copyleft provisions that require modifications to be licensed under the same terms, but does not impose strict network distribution requirements."
+    "reason": "This license requires derivative works to be distributed under the same terms, indicating limited copyleft."
   },
   "20: GNU General Public License v2.0 only⇧": {
     "level": "high",
-    "reason": "This license has strong copyleft requirements that compel derived works to be distributed under the same license."
+    "reason": "The license imposes strong copyleft requirements, mandating that derivative works must also be distributed under the same terms."
   },
   "21: GPL-2.0⇧": {
     "level": "high",
-    "reason": "This license imposes strong copyleft requirements, requiring derivative works to be licensed under the same terms."
+    "reason": "This license mandates that derivative works must also be distributed under the same terms, ensuring strong copyleft."
   },
   "22: GPL-2.0-with-classpath-exception⇧": {
-    "level": "high",
-    "reason": "The license imposes strong copyleft requirements that necessitate derivative works to also be licensed under the same terms."
+    "level": "medium",
+    "reason": "This license includes a copyleft provision requiring derivative works to also be licensed under the same terms, but allows linking with other independent modules under different licenses."
   },
   "23: MIT⇧": {
     "level": "low",
@@ -97,10 +97,10 @@
   },
   "25: Public-domain⇧": {
     "level": "low",
-    "reason": "The license states that the work is in the public domain, posing no copyleft risk."
+    "reason": "The license indicates that the work is in the public domain, carrying no copyleft obligations."
   },
   "26: Public-domain⇧": {
     "level": "low",
-    "reason": "Public domain status implies no licensing restrictions or copyleft obligations."
+    "reason": "Public domain status means there are no licensing restrictions or copyleft obligations."
   }
 }

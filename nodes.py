@@ -2,7 +2,9 @@ from pocketflow import Node, BatchNode
 import re
 from bs4 import BeautifulSoup
 import json
-from utils.licenseReviewer import RiskReviewer
+from utils.LLM_Analyzer import (RiskReviewer, RiskChecker)
+from utils.vectorDB import VectorDatabase
+from utils.callAIattack import AzureOpenAIChatClient
 
 class ParsingOriginalHtml(Node):
     """处理原始OSS-Readme文件，生成Json文件方便后续调用
@@ -174,7 +176,7 @@ class LicenseReviewing(BatchNode):
     
     def exec(self, licenseText):
         lId, lTitle, lText = licenseText
-        reviewer = RiskReviewer(model="api")
+        reviewer = RiskReviewer()
         risk = reviewer.review(lTitle,lText)
 
         return lTitle, risk
@@ -196,9 +198,10 @@ class LicenseReviewing(BatchNode):
     
 class RiskCheckingRAG(BatchNode):
 
-    def __init__(self, deployment, max_retries=1, wait=0):
+    def __init__(self, deployment = None, embedding_deployment = None,max_retries=1, wait=0):
         super().__init__(max_retries, wait)
         self.deployment = deployment
+        self.embedding_deployment = embedding_deployment
 
     def prep(self, shared):
         originalRiskAnalysis = [ (k, v["level"], v["reason"]) for k,v in shared["riskAnalysis"].items()]
@@ -206,5 +209,19 @@ class RiskCheckingRAG(BatchNode):
     
     def exec(self, item):
         reviewedTitle, reviewedLevel, reviewedReason = item
-        
-        return 
+        db1 = VectorDatabase()
+        db1.load("LicenseTable")
+        retrievedDocument = db1.search(reviewedTitle)
+        checker = RiskChecker()
+        checkedRisk = checker.review(reviewedTitle,reviewedLevel,reviewedReason,retrievedDocument)
+        # 姑且以checker的结果为标准吧
+        return checkedRisk
+    
+    def post(self, shared, prep_res, exec_res):
+
+        shared["checkedRisk"] = exec_res
+
+        with open("checkedRisk.json","w", encoding="utf-8" ) as f1:
+            json.dump(shared["checkedRisk"],f1,ensure_ascii=False,indent=2)
+
+        return "default"

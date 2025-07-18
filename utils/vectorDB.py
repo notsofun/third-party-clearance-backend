@@ -1,10 +1,14 @@
-from utils.requestAIattack import AzureOpenAIChatClient
+from utils.callAIattack import AzureOpenAIChatClient
 import numpy as np
 import faiss
 import pickle
 import os
 
 class VectorDatabase:
+    """
+    实例化使用时需要用load()去加载数据库，否则无法查询
+    
+    """
     def __init__(self,dimension=3072):
         self.dimension = dimension
         self.client = AzureOpenAIChatClient(embedding_deployment="text-embedding-3-large")

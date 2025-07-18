@@ -18,7 +18,7 @@ class AzureOpenAIChatClient:
         """
         self.endpoint = endpoint
         self.deployment = deployment if deployment is not None else "gpt-4o-mini-2024-07-18"
-        self.embedding_deployment = embedding_deployment
+        self.embedding_deployment = embedding_deployment if embedding_deployment is not None else "text-embedding-3-large"
         self.api_version = api_version
 
         # 可以考虑这里要么全部传，要么通过环境变量
