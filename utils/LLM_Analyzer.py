@@ -239,6 +239,40 @@ class RiskChecker(AzureOpenAIChatClient):
                 "Justification": f"自动审核失败，原因：{str(e)}"
             }
 
+class ComponentsConfirmer(AzureOpenAIChatClient):
+    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None):
+        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id)
+
+    def highRiskExplainer(self, component):
+        prompt = [
+            {
+                "role": "system",
+                "content": (
+                    "You are an expert specializing in open-source license analysis and legal risk assessment. "
+                    "Your current responsibility is to articulate clearly, in plain and direct language, the potential risks associated with the use of open-source licenses identified as high risk.\n\n"
+                    "You will be provided the following information:\n"
+                    "- licenseName: The name of the high-risk license or open-source component.\n"
+                    "- CheckedLevel: The previously assessed risk level for this license or component ('very high', 'high', 'medium', 'low').\n"
+                    "- Justification: The reasoning and context that led to the license/component being rated at this risk level.\n\n"
+                    "Given this information, your task is to clearly and comprehensively explain the concrete and specific risks (e.g., legal issues, compliance burdens, security vulnerabilities, business or reputational impacts) that could result if a user insists on using this high-risk license or component. "
+                    "You should respond strictly in plain textual form without using bullet points or structured JSON format."
+                )
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"Please clearly explain the specific risks associated with insisting on the use of the following high-risk license/component:\n\n"
+                    f"licenseName: {component['title']}\n"
+                    f"CheckedLevel: {component['CheckedLevel']}\n"
+                    f"Justification: {component['Justification']}\n\n"
+                    "Provide a clear and detailed explanation in plain text form."
+                )
+            }
+        ]
+
+        response = self.chat(prompt)
+
+        return response.choices[0].message.content
 # ------ 用法示例 ------
 if __name__ == "__main__":
     # 假设 license_texts 从你的oss结构读取/分块提取

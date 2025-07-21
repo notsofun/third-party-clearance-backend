@@ -2,9 +2,10 @@ from pocketflow import Node, BatchNode
 import re
 from bs4 import BeautifulSoup
 import json
-from utils.LLM_Analyzer import (RiskReviewer, RiskChecker)
+from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, ComponentsConfirmer)
 from utils.vectorDB import VectorDatabase
 from utils.callAIattack import AzureOpenAIChatClient
+from utils.tools import (clean_license_title, reverse_exec)
 
 class ParsingOriginalHtml(Node):
     """处理原始OSS-Readme文件，生成Json文件方便后续调用
@@ -153,8 +154,8 @@ class ParsingOriginalHtml(Node):
     
     def post(self, shared, prep_res, exec_res):
         shared["parsedHtml"] =  exec_res
-        # with open("pased_original_oss.json","w",encoding="utf-8") as f:
-        #     json.dump(exec_res,f,ensure_ascii=False,indent=2)
+        with open("parsed_original_oss.json","w",encoding="utf-8") as f:
+            json.dump(exec_res,f,ensure_ascii=False,indent=2)
         return "default"
 
 class LicenseReviewing(BatchNode):
@@ -221,7 +222,92 @@ class RiskCheckingRAG(BatchNode):
 
         shared["checkedRisk"] = exec_res
 
+        
+        toBeConfrimed_risk_comps = [
+            info for info in exec_res
+            if info.get("CheckedLevel") == "high" or "medium"
+        ]
+
+        shared["toBeConfirmedComps"] = toBeConfrimed_risk_comps
+
         with open("checkedRisk.json","w", encoding="utf-8" ) as f1:
             json.dump(shared["checkedRisk"],f1,ensure_ascii=False,indent=2)
 
         return "default"
+    
+class getFinalOSS(Node):
+    """这个节点的作用应该是传入最终的组件清单，
+    和之前的解析的html文件中不变的部分组合，并逆向当时的解析过程，给到最终的html文件"""
+    def __init__(self, max_retries=1, wait=0):
+        super().__init__(max_retries, wait)
+
+    def prep(self, shared):
+        
+        final_licenses = shared["final_licenses"]
+
+        final_releases = shared["final_releases"]
+
+        final_overview = shared["final_overview"]
+
+        parsedHtml = shared["parsedHtml"]
+
+
+    # 高风险组件需要让人去确认，不应该删除，加一个chat的环节，也有无论如何都要用的
+
+        return {
+            "meta" : parsedHtml["meta"],
+            "intro_html" : parsedHtml["intro_html"],
+            "release_overview" : final_overview,
+            "releases":final_releases,
+            "license_texts":final_licenses,
+            "extra_html":parsedHtml["extra_html"]
+        }
+    
+    def exec(self, prep_res):
+        reconstructedHtml = reverse_exec(prep_res)
+        return reconstructedHtml
+    
+    def post(self, shared, prep_res, exec_res):
+        shared["reconstructedHtml"] = exec_res
+        return super().post(shared, prep_res, exec_res)
+    
+class GetUserConfirming(Node):
+
+    def __init__(self, max_retries=1, wait=0):
+        super().__init__(max_retries, wait)
+        # 是不是得在flow里面去写，这个判定的流程
+        # 我看PocketFlow给的这个是把上下文的存储和获取都放在shared里面了，但是我这个适合这样吗？
+        # 通过post的返回为“continue”还是“exit”来确定是否推进
+
+
+    def prep(self, shared):
+        # 但是这种方式，就没有单个会话的上下文了呀，还得维护一个三问三答的上下文
+        if shared["toBeConfirmedComps"] is None:
+            print("Now we have checked all risky components!")
+            return None
+
+        print(f"Now we are confirming {shared["toBeConfirmedComps"][0]['title']}")
+        return shared["toBeConfirmedComps"][0]
+    
+    def exec(self, prep_res):
+        if prep_res == None:
+             return None
+        
+        confirmer = ComponentsConfirmer()
+         
+        # 先处理高风险组件，要求用户确认是否删除，并提供理由
+        if prep_res['CheckedLevel'] == "high":
+            explanation = confirmer.highRiskExplainer(prep_res)
+            print(f"{explanation}\n Are you sure you want to keep this component?")
+            user_res = input("Please provide your answer (Yes/No)")
+            if user_res == "Yes":
+                reason = print("Plese provide your reason")
+                pass
+            elif user_res == "No":
+                pass
+            else:
+                print("Please input Yes or No!")
+
+
+        # 再处理中风险组件，要求用户确认是否按照标准来处理
+        return super().exec(prep_res)
