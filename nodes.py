@@ -2,7 +2,7 @@ from pocketflow import Node, BatchNode
 import re
 from bs4 import BeautifulSoup
 import json
-from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, ComponentsConfirmer)
+from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, ComponentsConfirmer, HighRiskChater)
 from utils.vectorDB import VectorDatabase
 from utils.callAIattack import AzureOpenAIChatClient
 from utils.tools import (clean_license_title, reverse_exec)
@@ -291,10 +291,10 @@ class GetUserConfirming(Node):
     
     def exec(self, prep_res):
         if prep_res == None:
-             return None
+            return None
         
-        confirmer = ComponentsConfirmer()
-         
+        confirmer = HighRiskChater(prep_res)
+        
         # 先处理高风险组件，要求用户确认是否删除，并提供理由
         if prep_res['CheckedLevel'] == "high":
             explanation = confirmer.highRiskExplainer(prep_res)

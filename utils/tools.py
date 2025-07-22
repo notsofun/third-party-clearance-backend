@@ -95,6 +95,27 @@ def reverse_exec(final_result):
     
     return reconstructed_html
 
+def get_strict_json(bot, user_input, prompt=None):
+    """
+    Try response up to 5 times until getting strictly valid JSON.
+    No user perception of retries.
+    """
+    for _ in range(5):
+        if prompt:
+            response = bot.chat(prompt)
+            prompt = None
+        else:
+            response = bot.chat(user_input)
+            # print("retrying, now the response is:",response)
+        try:
+            data = json.loads(response)
+            if isinstance(data, dict) and "result" in data and "talking" in data:
+                return data
+        except Exception:
+            pass
+        user_input = "Please provide ONLY the exact JSON object as required, no extra text."
+    raise RuntimeError("Model did not give valid JSON after retries.")
+
 if __name__ == "__main__":
     with open(r"C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\parsed_original_oss.json","r",encoding="utf-8") as f:
         final_result = json.load(f)

@@ -1,6 +1,11 @@
 import json
 from utils.callAIattack import AzureOpenAIChatClient
 import time
+from utils.tools import get_strict_json
+from langchain_openai import AzureChatOpenAI
+from langchain.memory import ConversationBufferMemory
+from langchain.chains import LLMChain
+from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 class RiskReviewer(AzureOpenAIChatClient):
     """
@@ -239,7 +244,8 @@ class RiskChecker(AzureOpenAIChatClient):
                 "Justification": f"自动审核失败，原因：{str(e)}"
             }
 
-class ComponentsConfirmer(AzureOpenAIChatClient):
+class YesorNoChecker(AzureOpenAIChatClient):
+
     def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None):
         super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id)
 
@@ -273,9 +279,65 @@ class ComponentsConfirmer(AzureOpenAIChatClient):
         response = self.chat(prompt)
 
         return response.choices[0].message.content
-# ------ 用法示例 ------
-if __name__ == "__main__":
-    # 假设 license_texts 从你的oss结构读取/分块提取
+    
+class Chatbot(AzureOpenAIChatClient):
+    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, system_prompt = None):
+        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id)
+        self.llm = AzureChatOpenAI(
+            api_version=self.api_version,
+            azure_endpoint=self.endpoint,
+            azure_ad_token=self.access_token,
+            azure_deployment=self.deployment
+        )
+
+        self.memory = ConversationBufferMemory(memory_key="history", return_messages=True)
+        self.prompt = ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            MessagesPlaceholder(variable_name="history"),
+            ("human", "{input}")
+        ])
+        self.chain = LLMChain(
+            llm=self.llm,
+            prompt=self.prompt,
+            memory=self.memory,
+            verbose=True
+        )
+    
+    def chat(self, user_input):
+        response = self.chain.invoke({"input": user_input})
+        return response["text"]
+
+class HighRiskChater(Chatbot):
+
+    def __init__(self, comp):
+        super().__init__(
+            system_prompt= f"""
+            You are an expert in open-source license analysis and legal risk assessment. Your task is the following:
+
+            When given these inputs:
+            licenseName: {comp['title']}
+            CheckedLevel: {comp['CheckedLevel']}
+            Justification: {comp['Justification']}
+
+            1. In plain, direct English (without bullet points or JSON), explain in detail the concrete risks that could arise if someone insists on using this high-risk license or component—such as legal disputes, compliance burdens, security vulnerabilities, business interruptions, or reputational harm.  
+            2. When your explanation is complete, ask the user:
+            “Do you decide to retain this license or component? If yes, please provide your rationale for keeping it.”
+            3. After the user replies:
+            - If they decide not to retain it, output in JSON Object exactly:
+                "result":"discarded","talking":"This license or component has been discarded, fully mitigating the identified risks."
+            - If they decide to retain it and their rationale adequately addresses the risks, output in JSON Object exactly:
+                "result":"passed","talking":"Your rationale is well-constructed and addresses the key risks appropriately."
+            - If they decide to retain it but their rationale does not sufficiently address the risks, output in JSON Object exactly:
+                "result":"not passed","talking":"Your rationale still requires further refinement to address the identified risks. Please provide a stronger explanation of why retaining this license or component outweighs those risks."
+            - It they repely with other messages, output in JSON object, in the talking part, You could simply reply to users' reply and continue chatting:
+                "result":"continue", "talking": ""
+            Do not include any other text outside of the requested explanation, question, and final JSON object.
+                """
+        )
+    
+
+def trial2():
+        # 假设 license_texts 从你的oss结构读取/分块提取
     # license_texts = [
     #     {
     #         "id": "licenseTextItem1",
@@ -318,3 +380,40 @@ if __name__ == "__main__":
     for k, v in reviewed.items():
         checkedrisk = checker.review(k,v["level"],v["reason"],context)
         print(f"here we are checking{k}, and the result is {checkedrisk}")
+
+def trial1():
+    license1 =   {
+    "title": "Apache License 2.0",
+    "originalLevel": "low",
+    "CheckedLevel": "low",
+    "Justification": "Apache License 2.0 is a permissive, non-copyleft license: it allows redistribution in proprietary products, does not impose source-code disclosure, and only requires preservation of notices, attribution, and a copy of the license. While it contains an express patent grant with a defensive termination clause, this does not usually create high compliance or business risk; it mainly protects contributors and users. Therefore the overall risk profile remains low compared with copyleft or strong patent-protective licenses."
+    }
+    bot1 = HighRiskChater(license1)
+
+    response1 = bot1.chat("Please start with you explanation")
+
+    print(f"{response1}")
+    
+    chatting = True
+
+    while chatting:
+        user_reply = input("Your input: ")
+        # 强制获得严格JSON（比如用户输入理由/选择后）
+        result_json = None
+        while not result_json:
+            try:
+                result_json = get_strict_json(bot1, user_reply)
+                # print('Now you are trying to keep this item:', result_json)
+            except RuntimeError:
+                continue  # 仍然没拿到，继续要
+        # 判断会话走向
+        if result_json["result"] in ("passed", "discarded"):
+            print(result_json["talking"])
+            break
+        # 引导用户继续完善理由
+        print(result_json["talking"])
+        # 下一次循环，由用户输入更好的理由继续
+        
+# ------ 用法示例 ------
+if __name__ == "__main__":
+    trial1()
