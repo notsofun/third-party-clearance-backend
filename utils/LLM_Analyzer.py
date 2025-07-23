@@ -244,42 +244,6 @@ class RiskChecker(AzureOpenAIChatClient):
                 "Justification": f"自动审核失败，原因：{str(e)}"
             }
 
-class YesorNoChecker(AzureOpenAIChatClient):
-
-    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None):
-        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id)
-
-    def highRiskExplainer(self, component):
-        prompt = [
-            {
-                "role": "system",
-                "content": (
-                    "You are an expert specializing in open-source license analysis and legal risk assessment. "
-                    "Your current responsibility is to articulate clearly, in plain and direct language, the potential risks associated with the use of open-source licenses identified as high risk.\n\n"
-                    "You will be provided the following information:\n"
-                    "- licenseName: The name of the high-risk license or open-source component.\n"
-                    "- CheckedLevel: The previously assessed risk level for this license or component ('very high', 'high', 'medium', 'low').\n"
-                    "- Justification: The reasoning and context that led to the license/component being rated at this risk level.\n\n"
-                    "Given this information, your task is to clearly and comprehensively explain the concrete and specific risks (e.g., legal issues, compliance burdens, security vulnerabilities, business or reputational impacts) that could result if a user insists on using this high-risk license or component. "
-                    "You should respond strictly in plain textual form without using bullet points or structured JSON format."
-                )
-            },
-            {
-                "role": "user",
-                "content": (
-                    f"Please clearly explain the specific risks associated with insisting on the use of the following high-risk license/component:\n\n"
-                    f"licenseName: {component['title']}\n"
-                    f"CheckedLevel: {component['CheckedLevel']}\n"
-                    f"Justification: {component['Justification']}\n\n"
-                    "Provide a clear and detailed explanation in plain text form."
-                )
-            }
-        ]
-
-        response = self.chat(prompt)
-
-        return response.choices[0].message.content
-    
 class Chatbot(AzureOpenAIChatClient):
     def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, system_prompt = None):
         super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id)
@@ -303,38 +267,122 @@ class Chatbot(AzureOpenAIChatClient):
             verbose=True
         )
     
-    def chat(self, user_input):
+    def _request(self, user_input):
         response = self.chain.invoke({"input": user_input})
         return response["text"]
-
-class HighRiskChater(Chatbot):
-
-    def __init__(self, comp):
-        super().__init__(
-            system_prompt= f"""
-            You are an expert in open-source license analysis and legal risk assessment. Your task is the following:
-
-            When given these inputs:
-            licenseName: {comp['title']}
-            CheckedLevel: {comp['CheckedLevel']}
-            Justification: {comp['Justification']}
-
-            1. In plain, direct English (without bullet points or JSON), explain in detail the concrete risks that could arise if someone insists on using this high-risk license or component—such as legal disputes, compliance burdens, security vulnerabilities, business interruptions, or reputational harm.  
-            2. When your explanation is complete, ask the user:
-            “Do you decide to retain this license or component? If yes, please provide your rationale for keeping it.”
-            3. After the user replies:
-            - If they decide not to retain it, output in JSON Object exactly:
-                "result":"discarded","talking":"This license or component has been discarded, fully mitigating the identified risks."
-            - If they decide to retain it and their rationale adequately addresses the risks, output in JSON Object exactly:
-                "result":"passed","talking":"Your rationale is well-constructed and addresses the key risks appropriately."
-            - If they decide to retain it but their rationale does not sufficiently address the risks, output in JSON Object exactly:
-                "result":"not passed","talking":"Your rationale still requires further refinement to address the identified risks. Please provide a stronger explanation of why retaining this license or component outweighs those risks."
-            - It they repely with other messages, output in JSON object, in the talking part, You could simply reply to users' reply and continue chatting:
-                "result":"continue", "talking": ""
-            Do not include any other text outside of the requested explanation, question, and final JSON object.
-                """
-        )
     
+    def toChat(self,conditions:dict) -> dict:
+        """
+        conditions应该是一个字典结构，包含
+        {"Go_on":(一个由字符串构建的元组),
+        "End":(一个由字符串构建的元组)}
+        Go_on表示条件为继续的关键词，End表示会话终止的关键词
+        """
+
+        chatting = True
+
+        while chatting:
+            user_reply = input("Your input: ")
+            # 强制获得严格JSON（比如用户输入理由/选择后）
+            result_json = None
+            while not result_json:
+                try:
+                    result_json = get_strict_json(self, user_reply)
+                    # print('Now you are trying to keep this item:', result_json)
+                except RuntimeError:
+                    continue  # 仍然没拿到，继续要
+            # 判断会话走向
+            if result_json["result"] in conditions['End']:
+                print(result_json["talking"])
+                break
+            # 引导用户继续完善理由
+            print(result_json["talking"])
+
+        return result_json
+
+class RiskBot(Chatbot):
+
+    def __init__(self):
+        super().__init__(
+            system_prompt= """
+            You are an expert in open-source license analysis and legal risk assessment. Your job is to guide the user through a risk and compliance decision process for software licenses or components, supporting clear mode switching and workflow status.
+
+            Inputs:
+            - licenseName (string): the name of the software license or component.
+            - CheckedLevel (string): "high", "medium", or "low".
+            - Justification (string): any rationale or context from the user.
+
+            **Core Workflow & State Definitions**
+            You must always operate as a strict JSON response engine, outputting only JSON objects of the form `"result": ..., "talking": ... `. The "talking" value is where your full analysis, reasoning, and response must go; do not write outside it.
+
+            **Workflow States (for internal management, not shown verbatim to the user):**
+            - `needingHighReason`: Awaiting user’s choice and rationale for a high-risk license.
+            - `HighReasonNotPassed`: User's high-risk rationale was insufficient, awaiting stronger rationale.
+            - `HighReasonPasses`: User provided sufficient rationale for high-risk; now issue compliance steps and confirm.
+            - `ComplianceChecking`: User needs to confirm completion of compliance for medium/low risk, or after high-risk rationale is sufficient.
+            - `Over`: Assessment is complete and the process is concluded (license discarded or passed with mitigations).
+            - `Continue`: For all cases where a clear pathway or answer is not yet established.
+
+            **Decision Flow**
+
+            1. When a new license is presented:
+                - If CheckedLevel is "high":
+                    - In the "talking" field, provide an in-depth explanation of potential risks (legal, compliance, security, business, reputational, etc.) based on the given licenseName.
+                    - End by prompting: “Do you decide to retain this license or component? If yes, please provide your rationale for keeping it.”
+                    - Output:
+                        "result": "continue", "talking": "(detailed risks + question—state: needingHighReason)"
+                - If CheckedLevel is "medium" or "low":
+                    - List all required compliance measures for the license/component.
+                    - Prompt: “Please confirm if these measures have been completed.”
+                    - Output:
+                    "result": "continue", "talking": "(compliance measures + confirmation prompt—state: ComplianceChecking)"
+
+            2. On user reply after a high-risk prompt:
+                - If user says to discard (e.g., "no", "discard", "不保留", "放弃"):
+                    - Output:
+                        "result": "discarded", "talking": "This license or component has been discarded, fully mitigating the identified risks."
+                    - (state: Over)
+                - If user explains YES (retain) with rationale:
+                    - If rationale is INSUFFICIENT:
+                        "result": "not passed", "talking": "Your rationale still requires further refinement to address the identified risks. Please provide a stronger explanation of why retaining this license or component outweighs those risks."
+                        (state: HighReasonNotPassed)
+                    - If rationale ADEQUATELY addresses the risks:
+                        - Acknowledge.
+                        - List concrete compliance measures required for mitigating those risks, tailored for the actual scenario and rationale.
+                        - Prompt: “Please confirm if these measures have been completed.”
+                        - Output:
+                            "result": "continue", "talking": "(acknowledgement + compliance measures + confirmation prompt—state: HighReasonPasses / ComplianceChecking)"
+
+            3. On compliance confirmation (either after high/medium/low):
+                - If user confirms (e.g., “已完成”, “done”, “yes”):
+                    - Output:
+                        "result": "passed", "talking": "All required compliance measures have been confirmed as completed for this license or component. The risk is now considered mitigated."
+                    - (state: Over)
+                - If user says not completed, unclear, or something else:
+                    - Output:
+                        "result": "continue", "talking": "(Prompt for required confirmation, clarify issues, or further assist. State: Continue or ComplianceChecking)"
+
+            4. On further user responses (after rationale was insufficient or more information is needed):
+                - If rationale becomes sufficient: go back to step 2 as above.
+                - Otherwise, continue prompting as needed.
+
+            **Always use a strict JSON output as below. Do not include any additional commentary, intro, or explanation outside the JSON. Do not summarize states to user, but always internally align to these states to manage conversation flow. Every message must adhere to the logic above.**
+        """
+        )
+        self.conditions = {
+            "Go_on": ("continue"),
+            "End" : ("passed","discarded")
+        }
+    
+    def toConfirm(self,comp):
+
+        json_welcome = get_strict_json(self,f"here is the licenseName: {comp['title']}, CheckedLevel: {comp['CheckedLevel']}, and Justification: {comp['Justification']}")
+
+        print(json_welcome['talking'])
+
+        result_json = self.toChat(conditions=self.conditions)
+
+        return result_json
 
 def trial2():
         # 假设 license_texts 从你的oss结构读取/分块提取
@@ -381,39 +429,13 @@ def trial2():
         checkedrisk = checker.review(k,v["level"],v["reason"],context)
         print(f"here we are checking{k}, and the result is {checkedrisk}")
 
-def trial1():
-    license1 =   {
-    "title": "Apache License 2.0",
-    "originalLevel": "low",
-    "CheckedLevel": "low",
-    "Justification": "Apache License 2.0 is a permissive, non-copyleft license: it allows redistribution in proprietary products, does not impose source-code disclosure, and only requires preservation of notices, attribution, and a copy of the license. While it contains an express patent grant with a defensive termination clause, this does not usually create high compliance or business risk; it mainly protects contributors and users. Therefore the overall risk profile remains low compared with copyleft or strong patent-protective licenses."
-    }
-    bot1 = HighRiskChater(license1)
-
-    response1 = bot1.chat("Please start with you explanation")
-
-    print(f"{response1}")
-    
-    chatting = True
-
-    while chatting:
-        user_reply = input("Your input: ")
-        # 强制获得严格JSON（比如用户输入理由/选择后）
-        result_json = None
-        while not result_json:
-            try:
-                result_json = get_strict_json(bot1, user_reply)
-                # print('Now you are trying to keep this item:', result_json)
-            except RuntimeError:
-                continue  # 仍然没拿到，继续要
-        # 判断会话走向
-        if result_json["result"] in ("passed", "discarded"):
-            print(result_json["talking"])
-            break
-        # 引导用户继续完善理由
-        print(result_json["talking"])
-        # 下一次循环，由用户输入更好的理由继续
-        
 # ------ 用法示例 ------
 if __name__ == "__main__":
-    trial1()
+    license1 = {
+    "title": "GNU General Public License v2.0 only",
+    "originalLevel": "high",
+    "CheckedLevel": "high",
+    "Justification": "GPL-2.0 is a strong copyleft license: any distribution of derivative works (including statically or dynamically linked binaries) must be licensed as a whole under GPL-2.0, source code must be made available, and sublicensing under more permissive terms is not allowed. These obligations create significant license-compatibility and release requirements for proprietary or mixed-license projects, leading to a high compliance and business risk profile. However, it does not include additional network-service copyleft (like AGPL) or patent retaliation clauses that might elevate it to a “very high” category. Therefore, a \"high\" risk rating is appropriate and is confirmed."
+    }
+    bot1 = RiskBot()
+    bot1.toConfirm(license1)

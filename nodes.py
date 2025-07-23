@@ -2,10 +2,20 @@ from pocketflow import Node, BatchNode
 import re
 from bs4 import BeautifulSoup
 import json
-from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, ComponentsConfirmer, HighRiskChater)
+from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot)
 from utils.vectorDB import VectorDatabase
 from utils.callAIattack import AzureOpenAIChatClient
-from utils.tools import (clean_license_title, reverse_exec)
+from utils.tools import (reverse_exec)
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
+logging.getLogger("azure").setLevel(logging.WARNING)
+logging.getLogger("msal").setLevel(logging.WARNING)
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("requests").setLevel(logging.WARNING)
+logging.getLogger("openai").setLevel(logging.WARNING)
+
+logger = logging.getLogger(__name__)
 
 class ParsingOriginalHtml(Node):
     """处理原始OSS-Readme文件，生成Json文件方便后续调用
@@ -18,9 +28,10 @@ class ParsingOriginalHtml(Node):
     def __init__(self):
         """初始化预处理节点，生成json格式文件方便后续处理"""
         super().__init__()
-        
+
     def prep(self,shared):
         """开始解析，先读取该文档"""
+        logger.info("Now we are parsing the original HTML File")
         html_path = shared["html_path"]
         # shared就是需要提供的html路径
         with open(html_path, "r", encoding="utf-8") as html:
@@ -156,6 +167,7 @@ class ParsingOriginalHtml(Node):
         shared["parsedHtml"] =  exec_res
         with open("parsed_original_oss.json","w",encoding="utf-8") as f:
             json.dump(exec_res,f,ensure_ascii=False,indent=2)
+        logger.info("Successfully parsed!")
         return "default"
 
 class LicenseReviewing(BatchNode):
@@ -169,16 +181,19 @@ class LicenseReviewing(BatchNode):
         self.deployment = deployment
 
     def prep(self, shared):
+        logger.info('Now we are reviewing the components list')
         # super的prep的话就是そのまま把数据搞出来了
         parsedHtml = shared["parsedHtml"]
         licenseTexts = [(item['id'], item['title'], item['text']) 
                         for item in parsedHtml['license_texts']]
+        logger.info(f'We have {len(licenseTexts)} to review')
         return licenseTexts
     
     def exec(self, licenseText):
         lId, lTitle, lText = licenseText
         reviewer = RiskReviewer()
         risk = reviewer.review(lTitle,lText)
+        logger.info('We have reviewed one component')
 
         return lTitle, risk
     
@@ -195,6 +210,7 @@ class LicenseReviewing(BatchNode):
         with open("analysisOfRisk.json","w", encoding="utf-8" ) as f1:
             json.dump(shared["riskAnalysis"],f1,ensure_ascii=False,indent=2)
 
+        logger.info('Completely Reviewed.')
         return "default"
     
 class RiskCheckingRAG(BatchNode):
@@ -205,7 +221,9 @@ class RiskCheckingRAG(BatchNode):
         self.embedding_deployment = embedding_deployment
 
     def prep(self, shared):
+        logger.info('Now checking the reviewed risks')
         originalRiskAnalysis = [ (k, v["level"], v["reason"]) for k,v in shared["riskAnalysis"].items()]
+        logger.info(f'We have {len(originalRiskAnalysis)} components to check')
         return originalRiskAnalysis
     
     def exec(self, item):
@@ -216,6 +234,7 @@ class RiskCheckingRAG(BatchNode):
         checker = RiskChecker()
         checkedRisk = checker.review(reviewedTitle,reviewedLevel,reviewedReason,retrievedDocument)
         # 姑且以checker的结果为标准吧
+        logger.info('We have checked one component')
         return checkedRisk
     
     def post(self, shared, prep_res, exec_res):
@@ -233,8 +252,86 @@ class RiskCheckingRAG(BatchNode):
         with open("checkedRisk.json","w", encoding="utf-8" ) as f1:
             json.dump(shared["checkedRisk"],f1,ensure_ascii=False,indent=2)
 
+        logger.info('finished checking, now we are starting the chat...')
+
+        shared['toInitialize'] = 'riskBot'
         return "default"
     
+class initializeSession(Node):
+    """
+    这个节点用来维护一个会话，方便管理上下文
+    """
+    def __init__(self, max_retries=1, wait=0):
+        super().__init__(max_retries, wait)
+
+    def prep(self, shared):
+
+        """依赖上个节点对toInitialize的修改来决定创建哪个类型的会话"""
+        if shared.get('toInitialize', '') != '':
+            return shared['toInitialize']
+        
+    def exec(self, prep_res):
+        if prep_res == 'riskBot':
+            riskBot = RiskBot()
+            logger.info('Initialized session successfully, waiting for the bot to start conversation')
+        return riskBot
+    
+    def post(self, shared, prep_res, exec_res):
+        if prep_res == 'riskBot':
+            shared[prep_res] = exec_res
+        
+        return 'default'
+
+class GetUserConfirming(Node):
+    # 还需要保留什么数据呢？
+    def __init__(self, max_retries=1, wait=0):
+        super().__init__(max_retries, wait)
+        # 是不是得在flow里面去写，这个判定的流程
+        # 通过post的返回为“continue”还是“exit”来确定是否推进
+
+    def prep(self, shared):
+        logger.info('Preparing the explanation')
+        comps = shared.get("toBeConfirmedComps", [])
+        riskbot = shared['riskBot']
+        for idx, comp in enumerate(comps):
+            if comp.get("status",'') == "":
+                print(f"Now we are confirming {comp['title']}")
+                return (comp, idx, riskbot)
+        print("All risky components have been confirmed!")
+        return None
+    
+    def exec(self, prep_res):
+        if prep_res is None:
+            return None
+        comp, idx, riskbot = prep_res
+
+        # 返回沟通结果，discarded或passed
+        currResult = riskbot.toConfirm(comp)
+        return currResult, idx
+        
+    def post(self, shared, prep_res, exec_res):
+        if prep_res is None:
+            return "over"
+        # exec_res: (结果, 索引)
+        result, idx = exec_res if isinstance(exec_res, tuple) else (exec_res, None)
+        if idx is not None:
+            shared['toBeConfirmedComps'][idx]["status"] = result
+        # 检查是否所有组件都已确认
+        comps = shared.get('toBeConfirmedComps', [])
+        if all(comp.get('status', '') != '' for comp in comps):
+            return "over"
+        return "continue"
+    
+class ossGenerating(Node):
+
+    def __init__(self, max_retries=1, wait=0):
+        super().__init__(max_retries, wait)
+
+    def prep(self, shared):
+        with open("confirmedComponents.json","w", encoding="utf-8" ) as f1:
+            json.dump(shared["toBeConfirmedComps"],f1,ensure_ascii=False,indent=2)
+        return super().prep(shared)
+
 class getFinalOSS(Node):
     """这个节点的作用应该是传入最终的组件清单，
     和之前的解析的html文件中不变的部分组合，并逆向当时的解析过程，给到最终的html文件"""
@@ -270,44 +367,3 @@ class getFinalOSS(Node):
     def post(self, shared, prep_res, exec_res):
         shared["reconstructedHtml"] = exec_res
         return super().post(shared, prep_res, exec_res)
-    
-class GetUserConfirming(Node):
-
-    def __init__(self, max_retries=1, wait=0):
-        super().__init__(max_retries, wait)
-        # 是不是得在flow里面去写，这个判定的流程
-        # 我看PocketFlow给的这个是把上下文的存储和获取都放在shared里面了，但是我这个适合这样吗？
-        # 通过post的返回为“continue”还是“exit”来确定是否推进
-
-
-    def prep(self, shared):
-        # 但是这种方式，就没有单个会话的上下文了呀，还得维护一个三问三答的上下文
-        if shared["toBeConfirmedComps"] is None:
-            print("Now we have checked all risky components!")
-            return None
-
-        print(f"Now we are confirming {shared["toBeConfirmedComps"][0]['title']}")
-        return shared["toBeConfirmedComps"][0]
-    
-    def exec(self, prep_res):
-        if prep_res == None:
-            return None
-        
-        confirmer = HighRiskChater(prep_res)
-        
-        # 先处理高风险组件，要求用户确认是否删除，并提供理由
-        if prep_res['CheckedLevel'] == "high":
-            explanation = confirmer.highRiskExplainer(prep_res)
-            print(f"{explanation}\n Are you sure you want to keep this component?")
-            user_res = input("Please provide your answer (Yes/No)")
-            if user_res == "Yes":
-                reason = print("Plese provide your reason")
-                pass
-            elif user_res == "No":
-                pass
-            else:
-                print("Please input Yes or No!")
-
-
-        # 再处理中风险组件，要求用户确认是否按照标准来处理
-        return super().exec(prep_res)

@@ -3,156 +3,156 @@
     "title": "Apache License 2.0",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "Apache License 2.0 is a permissive, non-copyleft license: it allows redistribution in proprietary products, does not impose source-code disclosure, and only requires preservation of notices, attribution, and a copy of the license. While it contains an express patent grant with a defensive termination clause, this does not usually create high compliance or business risk; it mainly protects contributors and users. Therefore the overall risk profile remains low compared with copyleft or strong patent-protective licenses."
+    "Justification": "Apache License 2.0 is a widely-used permissive license. It allows commercial and proprietary use, modification, and distribution without imposing copyleft requirements. Obligations are limited to preservation of notices, inclusion of the license text, and attribution, plus a patent grant with a termination clause if the licensee initiates patent litigation. These obligations are straightforward to comply with and present minimal legal or operational risk compared to copyleft licenses. Therefore the overall risk remains low."
   },
   {
     "title": "2: Apache-2.0⇧",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "The Apache License 2.0 is a permissive license: it imposes no copyleft requirements and allows redistribution of binaries under proprietary terms. Its primary obligations are to include the license text, copyright notices, NOTICE file (if present), and to mark modified files—requirements that are straightforward to satisfy. Although it contains a patent grant with a termination clause triggered by patent litigation, this provision generally reduces rather than increases legal risk for typical users. There are no viral or reciprocity clauses that could force disclosure of proprietary source code. Consequently, overall compliance and strategic risk remain low, aligning with the previous reviewer’s assessment."
+    "Justification": "The Apache License 2.0 is a permissive license that allows redistribution (in source or binary form) with minimal obligations: preservation of copyright notices, inclusion of the license text, and provision of a NOTICE file if one exists. It does not impose copyleft requirements, and its patent grant/termination clause is generally regarded as protective rather than burdensome. Consequently, the legal and operational risks associated with compliance are minimal compared with copyleft or more restrictive licenses. Therefore, a \"low\" risk designation is appropriate."
+  },
+  {
+    "title": "3: Apache-2.0⇧",
+    "originalLevel": "low",
+    "CheckedLevel": "low",
+    "Justification": "Apache License 2.0 is a widely accepted permissive license. It allows redistribution in proprietary or open-source form without copyleft obligations, only requiring preservation of copyright, license text, and NOTICE file, plus providing a patent grant with defensive termination. Compared with copyleft or strong network licenses, the legal and operational burdens are minimal and compatibility is high; therefore the overall compliance and business risk is generally considered low."
   },
   {
     "title": "Apache-2.0",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "The Apache License 2.0 is a widely-used permissive license. It allows redistribution in source or binary form, with or without modification, under only modest obligations: include the LICENSE and NOTICE files, preserve copyright notices, indicate any changes, and refrain from using trademarks. It does not impose copyleft or reciprocity requirements, and its explicit patent grant actually decreases legal exposure. There are no viral effects or strong share-alike terms that could contaminate proprietary codebases. Because compliance is straightforward and the legal obligations are limited and well-understood, the overall compliance and business risk is considered low."
-  },
-  {
-    "title": "4: Apache-2.0⇧",
-    "originalLevel": "low",
-    "CheckedLevel": "low",
-    "Justification": "Apache License 2.0 is a widely-used permissive license that allows redistribution of source and binary forms (with or without modification) under relatively few conditions. It does not impose copyleft requirements, so it is generally regarded as low compliance risk. Obligations are limited to retaining copyright and license notices, providing a NOTICE file if one is included, and acknowledging modifications. While the license contains a patent grant with a defensive termination clause, this is standard and does not materially elevate the overall risk into medium or higher categories for typical commercial use. Therefore, the previous assessment of \"low\" risk is appropriate."
+    "Justification": "The Apache License 2.0 is a widely-used permissive license. It allows commercial use, modification, sub-licensing, and redistribution of source or binary forms without imposing reciprocal (copyleft) obligations. Its primary requirements are: (1) preservation of license and copyright notices, (2) inclusion of a NOTICE file and attribution of significant changes, and (3) acceptance of a patent grant with termination only for patent litigation against contributors. These obligations are straightforward to comply with and do not require open-sourcing derivative works. Because there are no strong copyleft provisions and the compliance burden is minimal, industry practice consistently categorizes Apache-2.0 as low legal/compliance risk."
   },
   {
     "title": "Apache-2.0",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "The Apache License 2.0 is a well-known permissive OSS license. It allows use, modification, and distribution (including proprietary relicensing) with minimal obligations: (1) retain copyright notice and license text, (2) include NOTICE file if provided, (3) state changes to files, and (4) provide patent license and accept its termination clause when initiating patent litigation. There is no copyleft or source-code disclosure requirement, so integration into proprietary codebases does not trigger reciprocity. The additional patent provisions reduce, rather than increase, legal exposure for downstream users. Compliance tasks are straightforward and low-cost. Therefore the overall legal and operational risk is appropriately classified as low."
-  },
-  {
-    "title": "6: Apache-2.0⇧",
-    "originalLevel": "low",
-    "CheckedLevel": "low",
-    "Justification": "The Apache License 2.0 is a well-known permissive license. It allows use, modification, and redistribution of the code (including in proprietary products) without imposing any copyleft or source-code disclosure obligations. The main obligations are notice preservation, inclusion of the license text, and (when applicable) inclusion of a NOTICE file. These are straightforward compliance steps that do not materially affect distribution models. The license also provides an explicit patent grant, which reduces (rather than increases) patent risk, and its patent-termination clause only activates if the licensee initiates patent litigation against the licensor—this is a common and accepted mechanism. There are no viral effects, no mandatory open-sourcing of derivatives, and no unusual restrictions that would significantly impact commercial usage. Consequently, the overall legal/compliance risk is appropriately classified as low."
-  },
-  {
-    "title": "7: Apache-2.0⇧",
-    "originalLevel": "low",
-    "CheckedLevel": "low",
-    "Justification": "The Apache License 2.0 is a well-known permissive license. It allows use, modification, and distribution (including in proprietary products) with minimal obligations: preservation of copyright notice, license text, and NOTICE file; attribution of significant changes; and inclusion of a patent grant with termination only if the licensee initiates patent litigation. These requirements impose little operational or copyleft risk compared with strong copyleft (e.g., GPL) or network-copyleft (e.g., AGPL) licenses. The patent clause actually reduces risk for downstream users. No source-code disclosure or license inheritance is mandated. Therefore the appropriate overall compliance/legal risk remains “low.”"
+    "Justification": "Apache License 2.0 is a widely-used permissive license. It allows distribution of binary or source with minimal obligations: preserve copyright notices, include a copy of the license, document changes, and, if the work contains a NOTICE file, include it. There is no copyleft or reciprocal requirement, and the patent grant/termination clause actually lowers patent risk rather than increasing it. Therefore, from a compliance and business perspective, the overall risk is considered low."
   },
   {
     "title": "Apache-2.0",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "The Apache License 2.0 is a widely-used permissive license. It allows redistribution in source or binary form, with or without modification, under relatively simple obligations: keep copyright and license notices, include a NOTICE file if one exists, and document any changes. It imposes no copyleft or share-alike requirements, so it does not contaminate proprietary code. While it contains a patent grant and a patent retaliation clause, these provisions generally reduce rather than increase legal risk for downstream users. Therefore, from a compliance and viral-effect standpoint, the risk is typically categorized as low."
+    "Justification": "Apache License 2.0 is a well-known permissive license. It allows redistribution in source or binary form, modification, private use, and sublicensing without copyleft requirements. Obligations are limited to preserving copyright notice, license text, NOTICE file, and providing attribution. Although it contains a patent grant with termination on patent litigation, this is generally viewed as reducing rather than increasing legal risk. No viral or reciprocal clauses exist, and commercial use is unrestricted. Therefore the overall compliance and business risk remains low."
+  },
+  {
+    "title": "Apache-2.0",
+    "originalLevel": "low",
+    "CheckedLevel": "low",
+    "Justification": "The Apache License 2.0 is a well-known permissive license that imposes minimal obligations: preservation of copyright, inclusion of the license text, and distribution of a NOTICE file when required. It has no copyleft requirements and allows proprietary relicensing of derivatives. The patent grant/termination clause introduces only a limited, industry-standard obligation that does not typically elevate overall legal or operational risk. Therefore, the original assessment of a low risk level is appropriate."
+  },
+  {
+    "title": "8: Apache-2.0⇧",
+    "originalLevel": "low",
+    "CheckedLevel": "low",
+    "Justification": "The Apache License 2.0 is a widely-adopted permissive license. It does not impose reciprocal (copyleft) obligations on derivative or combined works; redistribution in source or binary form only requires preservation of copyright notices, license text, and NOTICE file. Although it includes a patent grant with a termination clause, this is generally viewed as lowering rather than increasing legal risk when compared with licenses lacking an explicit patent license. It contains no constraints on proprietary relicensing of modifications. Industry best-practice classifications (including most corporate open-source policies) consistently rate Apache-2.0 as a low-risk license. Therefore the previous assessment of “low” risk remains appropriate."
   },
   {
     "title": "9: Apache-2.0⇧",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "Apache License 2.0 is a widely-used permissive license. It imposes no copyleft or share-alike requirements; derivative and proprietary works may be distributed under any terms. Compliance obligations are limited to preservation of copyright, license and NOTICE files, attribution and disclaimer of warranty. The embedded patent grant and patent-termination clause actually reduce legal risk rather than increase it. No viral effects or incompatibilities that would force source disclosure exist. Therefore the overall compliance and strategic risk remains low, consistent with the previous assessment."
-  },
-  {
-    "title": "10: Apache-2.0⇧",
-    "originalLevel": "low",
-    "CheckedLevel": "low",
-    "Justification": "Apache License 2.0 is a well-understood permissive license. It allows commercial use, modification, sublicensing and distribution of both source and binary forms without imposing copyleft requirements. The primary obligations are attribution, inclusion of the NOTICE file, preservation of copyright statements, and a patent grant with termination for patent litigation—all of which are straightforward to comply with and do not require disclosure of source code. These obligations do not materially increase operational or legal risk for most organizations as long as standard compliance processes are followed. Therefore, the previously assigned \"low\" risk level is appropriate."
+    "Justification": "Apache License 2.0 is a widely-used permissive license with no copyleft requirements. Its primary obligations are to retain notices, provide a copy of the license, and state changes—obligations generally considered minor. Although it contains a patent grant and termination clause, these are favorable to downstream users and do not impose material operational or distribution restrictions that would elevate risk. Therefore, the overall compliance and litigation risk profile remains low."
   },
   {
     "title": "Apache-2.0",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "Apache License 2.0 is a permissive, non-copyleft license. It allows proprietary redistribution of derivative works, imposes no share-alike or source-code disclosure obligations, and is broadly compatible with commercial use. The main obligations (include license text, copyright notices, NOTICE file, mark modified files) are straightforward to satisfy and present minimal compliance burden. The patent grant and reciprocal termination clause actually reduce patent risk for licensees rather than increase it. Consequently, overall legal/compliance risk is considered low."
+    "Justification": "Apache License 2.0 is a widely adopted permissive license. It allows commercial use, modification, sublicensing, and distribution of source or binary forms without any copyleft requirement. The primary obligations are (1) inclusion of the license text and any required NOTICE file, (2) attribution of original copyright holders, and (3) prominent notice of modifications. It also provides an express patent grant, which reduces—rather than increases—patent-related risk, although it contains a standard patent-termination clause should the licensee initiate patent litigation. Because it imposes no reciprocal source-code disclosure, has clear disclaimer of warranties and liabilities, and its obligations are straightforward and easy to comply with, the overall legal/compliance risk is generally classified as low."
   },
   {
     "title": "Apache-2.0",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "Apache License 2.0 is a widely-used permissive license that allows redistribution in proprietary products without requiring source code disclosure. Its main obligations are: (1) retain copyright and license notices, (2) include a NOTICE file if one exists, and (3) provide attribution of modifications. There is no copyleft or reciprocal requirement. While it contains a patent grant and termination clause, these provisions generally reduce risk rather than increase it, provided users avoid patent litigation. Consequently, from a compliance and business perspective, the overall legal risk remains low compared to copyleft or more restrictive licenses."
+    "Justification": "Apache License 2.0 is a permissive, non-copyleft license. It allows use, modification, and distribution of source and binary forms with minimal obligations: preservation of copyright and license notices, inclusion of a NOTICE file (if provided), and indication of changes. Although it contains a patent grant with termination if the licensee initiates patent litigation, this provision is protective rather than burdensome and does not impose reciprocal (copyleft) requirements on derivative works. No source-code disclosure, viral effect, or stringent compatibility constraints exist. Therefore, from a compliance and business perspective, the overall legal risk remains low."
   },
   {
-    "title": "13: BSD 3-Clause \"New\" or \"Revised\" License⇧",
+    "title": "Apache-2.0",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "The BSD 3-Clause license is a well-established permissive license. It imposes only minimal obligations (retaining copyright notice and license text), contains no copyleft or reciprocal provisions, and does not require source code disclosure. Patent terms are handled through an implied license, which is typical for permissive licenses and generally not considered to raise the risk above the low category. Therefore, the previous assessment of \"low\" risk is appropriate."
+    "Justification": "The Apache License 2.0 is widely regarded as a permissive, business-friendly license. It imposes no copyleft or source-code disclosure obligations, allowing proprietary relicensing of derivative works. Primary requirements are preservation of the license text, attribution/NOTICE file, and a patent retaliation clause—none of which typically create significant operational or compliance burden. The patent grant actually reduces legal exposure. Consequently, overall compliance and litigation risk remain low, consistent with the prior assessment."
+  },
+  {
+    "title": "BSD 3-Clause \"New\" or \"Revised\" License",
+    "originalLevel": "low",
+    "CheckedLevel": "low",
+    "Justification": "The BSD 3-Clause license is a widely adopted permissive license. It imposes only minimal obligations: preservation of copyright notices, license text, and the non-endorsement clause. It has no copyleft requirements, no share-alike obligation, no disclosure of source mandate, and allows sublicensing and proprietary reuse. While it does not include an explicit patent grant, industry practice still treats its patent risk as low compared with strong copyleft or reciprocal licenses. Therefore the overall compliance and legal risk remains low, consistent with the previous assessment."
   },
   {
     "title": "14: BSD-3-Clause⇧",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "The BSD-3-Clause license is a well-known permissive license with no copyleft requirement and only minimal obligations (retention of copyright notice, license text, and disclaimer). It permits proprietary redistribution and does not impose source-code disclosure. Although it offers no explicit patent grant, industry practice generally treats it as low compliance risk. Therefore the previous assessment of \"low\" risk is appropriate."
+    "Justification": "The BSD-3-Clause license is a widely-used permissive license that imposes only minimal obligations: preservation of copyright notices, license text, and a non-endorsement clause. It contains no reciprocal (copyleft) requirements, no viral effect on derivatives, and no explicit patent retaliation terms that would elevate compliance complexity. Consequently, legal, operational, and strategic risks remain limited compared with copyleft or patent-heavy licenses. Industry practice and the referenced context both categorize BSD-3-Clause as low risk, and there is no significant factor warranting an increased rating."
   },
   {
     "title": "15: BSD-3-Clause⇧",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "The BSD-3-Clause license is a classic permissive license. It imposes only minimal obligations: preservation of copyright notices, license text, and disclaimer; no copyleft or reciprocal source-code release requirements apply. There are no additional clauses such as the BSD-4 advertising clause, and while the license lacks an explicit patent grant, industry practice and jurisprudence generally treat it as granting an implied patent license, keeping overall legal exposure limited. Consequently, compliance costs and infection risk are low, matching the previous reviewer’s assessment."
+    "Justification": "The BSD-3-Clause license is a standard permissive license with minimal obligations limited to preserving copyright notices and license text. It imposes no copyleft or source-code disclosure requirements, contains a broad disclaimer of warranty, and is widely accepted as business-friendly. Therefore, overall compliance and litigation risk is considered low."
   },
   {
     "title": "16: CC-BY-4.0⇧",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "Creative Commons Attribution 4.0 (CC-BY-4.0) is an attribution-only license. It permits commercial use, modification, sublicensing and redistribution in any form, provided that appropriate credit is given, a link to the license is supplied, and changes are indicated. It imposes no share-alike (copyleft) requirement, no non-commercial restriction, and no viral effect on derivative works. The obligations (attribution and notice) are minimal and do not contaminate the combined work’s license. Although CC licenses are not tailored for software and do not grant explicit patent rights, this omission typically raises concern only to a moderate extent; in practice CC-BY-4.0 is generally treated as a permissive, low-risk license comparable to BSD or MIT in terms of copyleft impact. Therefore the previous “low” risk classification is appropriate and is confirmed."
+    "Justification": "Creative Commons Attribution 4.0 (CC-BY-4.0) is a permissive content license. The only core obligation is proper attribution and inclusion of the license text; there is no Share-Alike or copyleft requirement, no Non-Commercial restriction, and no patent clause that would impose additional downstream constraints. Therefore, for software or documentation usage, its compliance obligations are limited and do not trigger source-code disclosure or reciprocal licensing. Compared with other licenses listed in the context (CC-BY-NC-SA, CC-BY-SA) that impose higher obligations, CC-BY-4.0 justifiably carries a lower compliance and compatibility risk. Consequently, the previous reviewer’s \"low\" risk rating is appropriate."
   },
   {
     "title": "17: CDDL-1.0⇧",
     "originalLevel": "medium",
     "CheckedLevel": "medium",
-    "Justification": "The Common Development and Distribution License 1.0 imposes a file-level (weak) copyleft: any modifications to the original licensed files must be released under CDDL, but code in separate files may remain under other (including proprietary) terms. This creates moderate compliance obligations (license notice retention, source availability for modified files) and some incompatibility issues with strong-copyleft licenses like GPL, yet it does not extend the copyleft to the entire combined work. Consequently, the overall legal/commercial exposure is higher than for permissive licenses but lower than for strong or network copyleft licenses. Therefore a \"medium\" risk rating is appropriate."
+    "Justification": "CDDL-1.0 is a weak / file-level copyleft license. Obligations are limited to: (1) keeping copyright & license notices, and (2) making any modifications to existing CDDL files available in source form under CDDL. Code merely linked to or in separate files can remain under any license, so the reciprocal scope is narrower than strong copyleft licenses (e.g., GPL). However, the presence of a reciprocal obligation plus well-known incompatibility with GPL family licenses introduces more than minimal legal/compliance risk. Consequently the license is typically classified as medium risk—higher than permissive (low) but lower than strong copyleft (high/very high). Therefore the previous “medium” rating is confirmed."
   },
   {
     "title": "18: Dual-license⇧",
     "originalLevel": "medium",
     "CheckedLevel": "low",
-    "Justification": "In a dual-license model the recipient may freely choose which of the offered licenses to comply with. If one of the options is a permissive license (e.g., MIT) the user can avoid the copyleft obligations entirely by selecting the permissive alternative, leaving only the minimal obligations typical of such licenses (e.g., preservation of copyright and license notice). Therefore the mere existence of a second, copyleft option does not impose additional mandatory restrictions on redistribution. Given the absence of other complicating factors in the provided context, overall legal and operational risk remains low."
+    "Justification": "The information provided indicates that both licensing options available under this dual-licence scheme are permissive (comparable to MIT, MIT-CMU, APL-1.0, etc.), which impose only minimal obligations (primarily notice and attribution). There is no evidence of a strong‐copyleft or network-copyleft alternative that would elevate compliance complexity or create derivative-work distribution obligations. Therefore the overall legal/compliance risk is consistent with other permissive licences and should be classified as low rather than medium."
   },
   {
     "title": "Eclipse Public License 1.0",
     "originalLevel": "medium",
     "CheckedLevel": "medium",
-    "Justification": "EPL-1.0 is a weak/limited copyleft license. It requires that modifications to EPL-licensed code be distributed under EPL, but permits linking and independent modules under different licenses, reducing viral reach relative to the GPL family. The license includes a patent grant with termination, introducing additional diligence requirements, and its GPL incompatibility can create integration constraints. These obligations elevate risk above permissive licenses yet remain lower than strong copyleft licenses. Therefore a \"medium\" risk rating is appropriate and the previous assessment is confirmed."
+    "Justification": "EPL-1.0 is a weak (file-based) copyleft license. Distribution of modified EPL-covered code triggers obligations to provide source under EPL, and there is a patent retaliation clause. However, it permits combining with proprietary code (separate modules may remain under independent licensing) so its copyleft scope is limited compared with strong copyleft licenses like GPL. These obligations create more risk than permissive licenses but less than strong copyleft, which is typically classified as a medium risk in compliance practice. The previous assessment is therefore accurate."
   },
   {
     "title": "GNU General Public License v2.0 only",
     "originalLevel": "high",
     "CheckedLevel": "high",
-    "Justification": "GPL-2.0 is a strong copyleft license: any distribution of derivative works (including statically or dynamically linked binaries) must be licensed as a whole under GPL-2.0, source code must be made available, and sublicensing under more permissive terms is not allowed. These obligations create significant license-compatibility and release requirements for proprietary or mixed-license projects, leading to a high compliance and business risk profile. However, it does not include additional network-service copyleft (like AGPL) or patent retaliation clauses that might elevate it to a “very high” category. Therefore, a \"high\" risk rating is appropriate and is confirmed."
+    "Justification": "GPL-2.0 imposes strong copyleft: if the covered code is combined into a larger work that is distributed, the entire derivative must be licensed under GPL-2.0 and corresponding source code must be offered. This can force disclosure of proprietary code, create license-compatibility barriers, and trigger complex compliance obligations (source delivery, license notices, etc.). Such obligations present significant legal and business risk for organizations wishing to keep their own code proprietary. However, the license is well-established, its terms are well-understood, and compliance is manageable with proper processes, so the risk does not typically rise to an exceptional or catastrophic (\"very high\") level. Therefore the appropriate classification remains \"high.\""
   },
   {
     "title": "GPL-2.0",
     "originalLevel": "high",
     "CheckedLevel": "high",
-    "Justification": "GPL-2.0 imposes a strong reciprocal (copyleft) requirement: if the software is conveyed in binary or modified form, complete corresponding source code must be offered under GPL-2.0. Any derivative or combined work that forms a single program must also be licensed under GPL-2.0. This creates a significant compliance and business impact (e.g., disclosure of proprietary modifications, incompatibility with proprietary licensing). However, the obligations are well-defined and manageable if the organization is willing to publish source code; it does not contain the additional SaaS/network copyleft trigger of AGPL, nor does it add unusual patent or ethical clauses that would make compliance exceptionally difficult. Therefore the appropriate risk category remains “high,” not “very high.”"
+    "Justification": "The GNU General Public License version 2 is a strong copyleft license. Any distribution of derivative works or combined works that include GPL-2.0 code must be released under GPL-2.0 and accompanied by complete corresponding source code. This viral obligation can impose significant legal and compliance burdens on proprietary or mixed-license projects, but it is well understood and manageable with proper processes. It does not, however, introduce additional extreme restrictions (such as network copyleft of the AGPL) or unique patent termination clauses that would push the risk classification to “very high.” Industry practice and standard compliance matrices generally rate GPL-2.0 as “high” risk. Therefore, the previous reviewer’s assessment is confirmed."
   },
   {
     "title": "22: GPL-2.0-with-classpath-exception⇧",
-    "originalLevel": "medium",
+    "originalLevel": "high",
     "CheckedLevel": "medium",
-    "Justification": "The GPL-2.0 base license is strong copyleft, which would normally warrant a high risk rating. However, the Classpath Exception explicitly permits linking the covered code with independent modules (including proprietary ones) without subjecting those modules to the GPL’s copyleft requirements. Only modifications to the licensed library itself must remain under GPL-2.0, while the surrounding code may be distributed under other terms. This weakens the copyleft to a level comparable to LGPL and other limited-copyleft licenses. The obligations are therefore more than a permissive license (display license text, disclose changes to the library) but less onerous than full GPL. Industry practice and compliance frameworks generally classify such weak-copyleft licenses as medium risk. Hence the original “medium” assessment is confirmed."
+    "Justification": "GPL-2.0-with-classpath-exception relaxes the standard GPLv2 copyleft for works that merely link to the covered code (e.g., using Java classpath). Proprietary or differently-licensed components that only link are not required to fall under the GPL, resembling the weak-copyleft behavior of LGPL. Obligations apply mainly to modifications of the original code itself, significantly reducing viral risk compared with pure GPLv2. Consequently, while some copyleft obligations remain, the overall compliance and redistribution risk is lower than \"high\" and is more appropriately classified as \"medium.\""
   },
   {
     "title": "23: MIT⇧",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "The MIT license is a highly permissive, non-copyleft license. Its primary obligations are limited to retaining the copyright notice and license text in redistributions. It imposes no requirement to open-source derivative or combined works, has no patent retaliation clauses that create additional exposure, and is broadly compatible with both proprietary and other open-source licenses. Consequently, from a compliance and business perspective, it presents minimal legal or operational risk. Therefore, the originally assigned risk level of \"low\" is appropriate."
+    "Justification": "The MIT license is a highly permissive license that allows redistribution and modification with minimal obligations limited to preserving copyright and license notices. It imposes no copyleft requirements, has broad compatibility with other licenses, and poses minimal legal or operational risk. Obligations (notice preservation) are straightforward to fulfill, so the overall risk remains low."
   },
   {
     "title": "24: MIT⇧",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "The MIT license is a permissive license with minimal obligations limited to preserving copyright notices and the license text. It lacks copyleft provisions, patent retaliation clauses, or other restrictive terms that could elevate compliance or business risk. Industry practice and standard risk matrices classify MIT as low risk. Therefore, the previously assigned low risk level is confirmed."
+    "Justification": "The MIT family of licenses is a well-known permissive license type. It imposes minimal obligations – primarily preservation of copyright notice and disclaimer – and contains no copyleft, patent retaliation, source-code disclosure, or other restrictive clauses that would elevate legal or operational risk. The context entries corroborate this classification, consistently listing MIT and close variants as low-risk. Nothing in the variant designation (\"MIT⇧\") suggests additional obligations beyond the standard MIT terms. Therefore the previously assigned risk level of \"low\" is appropriate."
   },
   {
     "title": "25: Public-domain⇧",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "Material that is truly in the public domain is free of copyright restrictions; hence there are no copyleft or reciprocity obligations, no notice-preservation requirements beyond good practice, and no viral effects. The chief residual concerns (possible uncertainty about whether the work is actually in the public domain in all jurisdictions, lack of warranty or patent grant) are minor compared with copyleft or proprietary obligations and are normally managed through standard due diligence. Therefore the overall compliance and redistribution risk remains low."
+    "Justification": "A public-domain dedication relinquishes copyright and related rights to the fullest extent possible, leaving the work free for any use, modification, and distribution without copyleft or reciprocity obligations. Compliance duties are minimal (typically attribution or license text display if requested), and there are no patent clauses or viral terms. Although enforceability of a public-domain waiver can vary by jurisdiction and some residual moral rights may persist, these factors do not materially raise the legal or operational risk compared with permissive licenses. Industry practice and precedent consistently classify public-domain content as low-risk."
   },
   {
     "title": "26: Public-domain⇧",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "Material that is genuinely in the public domain is free of copyright, so there are no copyleft reciprocity requirements, patent clauses, or other obligations that typically create compliance or litigation risk. The primary residual concerns (e.g., accuracy of public-domain status in all jurisdictions, possible moral rights) are minimal and are generally managed by normal due-diligence practices. Therefore the overall legal and operational risk is appropriately classified as low."
+    "Justification": "A valid public-domain dedication (e.g., CC0 or an unencumbered U.S. Government work) places the work outside copyright, meaning there are effectively no copyright-based obligations such as copyleft, notice, or liability provisions. Although minor residual risks exist—such as uncertain enforceability of the dedication in some jurisdictions, possible persistence of moral rights, or undisclosed patents—these issues are generally considered remote and do not impose affirmative legal duties on downstream users. Therefore, relative to other open-source licenses, the overall compliance and liability risk remains at the lowest category."
   }
 ]

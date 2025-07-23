@@ -1,5 +1,5 @@
 from pocketflow import Flow
-from nodes import (ParsingOriginalHtml, LicenseReviewing, RiskCheckingRAG)
+from nodes import (ParsingOriginalHtml, LicenseReviewing, RiskCheckingRAG, ossGenerating,initializeSession, GetUserConfirming)
 
 def review_oss_readme():
     """
@@ -12,7 +12,14 @@ def review_oss_readme():
 
     riskCheckingNode = RiskCheckingRAG()
 
-    parsingNode >> riskAnalysisNode >> riskCheckingNode
+    sessionNode = initializeSession()
+
+    confirmingNode = GetUserConfirming()
+
+    parsingNode >> riskAnalysisNode >> riskCheckingNode >> sessionNode >> confirmingNode
+
+    confirmingNode - 'continue' >> confirmingNode
+    confirmingNode - 'over' >> ossGenerating()
 
     review_flow = Flow(start=parsingNode)
 

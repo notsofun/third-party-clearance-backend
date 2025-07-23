@@ -102,13 +102,20 @@ def get_strict_json(bot, user_input, prompt=None):
     """
     for _ in range(5):
         if prompt:
-            response = bot.chat(prompt)
+            response = bot._request(prompt)
             prompt = None
         else:
-            response = bot.chat(user_input)
-            # print("retrying, now the response is:",response)
+            response = bot._request(user_input)
+        # 后处理：去除 ```json ... ``` 或 ``` ... ```
+        response_strip = response.strip()
+        if response_strip.startswith('```json'):
+            response_strip = response_strip[7:].strip()
+        if response_strip.startswith('```'):
+            response_strip = response_strip[3:].strip()
+        if response_strip.endswith('```'):
+            response_strip = response_strip[:-3].strip()
         try:
-            data = json.loads(response)
+            data = json.loads(response_strip)
             if isinstance(data, dict) and "result" in data and "talking" in data:
                 return data
         except Exception:
