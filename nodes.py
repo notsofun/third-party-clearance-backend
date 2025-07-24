@@ -7,6 +7,7 @@ from utils.vectorDB import VectorDatabase
 from utils.callAIattack import AzureOpenAIChatClient
 from utils.tools import (reverse_exec)
 import logging
+import random
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 logging.getLogger("azure").setLevel(logging.WARNING)
@@ -184,14 +185,16 @@ class LicenseReviewing(BatchNode):
         logger.info('Now we are reviewing the components list')
         # super的prep的话就是そのまま把数据搞出来了
         parsedHtml = shared["parsedHtml"]
-        licenseTexts = [(item['id'], item['title'], item['text']) 
+        random_int = random.getrandbits(64)
+        licenseTexts = [(item['id'], item['title'], item['text'],random_int)
                         for item in parsedHtml['license_texts']]
         logger.info(f'We have {len(licenseTexts)} to review')
         return licenseTexts
     
     def exec(self, licenseText):
-        lId, lTitle, lText = licenseText
-        reviewer = RiskReviewer()
+        lId, lTitle, lText, randInt = licenseText
+        
+        reviewer = RiskReviewer(session_id=f'review{randInt:016x}')
         risk = reviewer.review(lTitle,lText)
         logger.info('We have reviewed one component')
 
@@ -222,16 +225,17 @@ class RiskCheckingRAG(BatchNode):
 
     def prep(self, shared):
         logger.info('Now checking the reviewed risks')
-        originalRiskAnalysis = [ (k, v["level"], v["reason"]) for k,v in shared["riskAnalysis"].items()]
+        random_int = random.getrandbits(64)
+        originalRiskAnalysis = [ (k, v["level"], v["reason"],random_int) for k,v in shared["riskAnalysis"].items()]
         logger.info(f'We have {len(originalRiskAnalysis)} components to check')
         return originalRiskAnalysis
     
     def exec(self, item):
-        reviewedTitle, reviewedLevel, reviewedReason = item
+        reviewedTitle, reviewedLevel, reviewedReason, randInt = item
         db1 = VectorDatabase()
         db1.load("LicenseTable")
         retrievedDocument = db1.search(reviewedTitle)
-        checker = RiskChecker()
+        checker = RiskChecker(session_id=f'check{randInt:016x}')
         checkedRisk = checker.review(reviewedTitle,reviewedLevel,reviewedReason,retrievedDocument)
         # 姑且以checker的结果为标准吧
         logger.info('We have checked one component')
@@ -272,7 +276,8 @@ class initializeSession(Node):
         
     def exec(self, prep_res):
         if prep_res == 'riskBot':
-            riskBot = RiskBot()
+            random_int = random.getrandbits(64)
+            riskBot = RiskBot(session_id=f"riskBot{random_int:016x}")
             logger.info('Initialized session successfully, waiting for the bot to start conversation')
         return riskBot
     

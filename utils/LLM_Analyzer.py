@@ -6,6 +6,16 @@ from langchain_openai import AzureChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import LLMChain
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
+logging.getLogger("azure").setLevel(logging.WARNING)
+logging.getLogger("msal").setLevel(logging.WARNING)
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("requests").setLevel(logging.WARNING)
+logging.getLogger("openai").setLevel(logging.WARNING)
+
+logger = logging.getLogger(__name__)
 
 class RiskReviewer(AzureOpenAIChatClient):
     """
@@ -13,8 +23,8 @@ class RiskReviewer(AzureOpenAIChatClient):
     支持不同模型引擎：如'rule', 'gpt', 'api'
     """
 
-    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None):
-        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id)
+    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com",session_id = 'default', deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None):
+        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id,session_id)
 
     def _call_api(self, title, text):
         """
@@ -49,9 +59,8 @@ class RiskReviewer(AzureOpenAIChatClient):
                 """}, 
             {"role": "user", "content": f"Analyze this license:\nTitle: {title}\nText: {text}"}
         ]
-        
-        result = self.chat(query)
-        return result.choices[0].message.content
+        result = self.inChat(query)
+        return result
 
     def _evaluate_api(self, title, text):
         """
@@ -116,9 +125,10 @@ class RiskReviewer(AzureOpenAIChatClient):
 
 class RiskChecker(AzureOpenAIChatClient):
 
-    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None):
-        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id)
+    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, session_id = 'default'):
+        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id, session_id)
         self.deployment = "o3-2025-04-16"
+        self.session_id = session_id
 
     def _call_api(self, title, level, reason, context):
         """
@@ -162,9 +172,9 @@ class RiskChecker(AzureOpenAIChatClient):
                 )
             }
         ]
-        result = self.chat(prompt)
+        result = self.inChat(prompt)
 
-        return result.choices[0].message.content
+        return result
     
     def _evaluate_license_response(self, title, originalLevel, reason, context):
         """
@@ -245,8 +255,8 @@ class RiskChecker(AzureOpenAIChatClient):
             }
 
 class Chatbot(AzureOpenAIChatClient):
-    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, system_prompt = None):
-        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id)
+    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, system_prompt = None, session_id = 'default'):
+        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id,session_id)
         self.llm = AzureChatOpenAI(
             api_version=self.api_version,
             azure_endpoint=self.endpoint,
@@ -268,7 +278,14 @@ class Chatbot(AzureOpenAIChatClient):
         )
     
     def _request(self, user_input):
-        response = self.chain.invoke({"input": user_input})
+        response = self.chain.invoke(
+            {"input": user_input},
+            config = {
+            'callbacks' : [self.langfuse_handler],
+            'metadata' : {
+                "langfuse_session_id": f"{self.session_id}",
+                "langfuse_user_id" : "NotSoFun"}
+        })
         return response["text"]
     
     def toChat(self,conditions:dict) -> dict:
@@ -302,7 +319,7 @@ class Chatbot(AzureOpenAIChatClient):
 
 class RiskBot(Chatbot):
 
-    def __init__(self):
+    def __init__(self, session_id):
         super().__init__(
             system_prompt= """
             You are an expert in open-source license analysis and legal risk assessment. Your job is to guide the user through a risk and compliance decision process for software licenses or components, supporting clear mode switching and workflow status.
@@ -368,7 +385,9 @@ class RiskBot(Chatbot):
 
             **Always use a strict JSON output as below. Do not include any additional commentary, intro, or explanation outside the JSON. Do not summarize states to user, but always internally align to these states to manage conversation flow. Every message must adhere to the logic above.**
         """
+            , session_id = 'default'
         )
+        self.session_id = session_id
         self.conditions = {
             "Go_on": ("continue"),
             "End" : ("passed","discarded")
@@ -385,32 +404,6 @@ class RiskBot(Chatbot):
         return result_json
 
 def trial2():
-        # 假设 license_texts 从你的oss结构读取/分块提取
-    # license_texts = [
-    #     {
-    #         "id": "licenseTextItem1",
-    #         "title": "1: Apache License 2.0↩",
-    #         "text": "Apache License\n\nVersion 2.0, January 2004\n..."
-    #     },
-    #     # {
-    #     #     "id": "licenseTextItem20",
-    #     #     "title": "20: GNU General Public License v2.0 only",
-    #     #     "text": "GNU General Public License, version 2\n\n..."
-    #     # },
-    #     # {
-    #     #     "id": "licenseTextItem14",
-    #     #     "title": "14: BSD-3-Clause",
-    #     #     "text": "Redistribution and use in source and binary forms, ..."
-    #     # }
-    # ]
-
-    # title1 = "1: Apache License 2.0↩"
-    # text1 = "Apache License\n\nVersion 2.0, January 2004\n..."
-    # # 实例化，并选择你要的评审方式
-    # reviewer = RiskReviewer(model="api")  # "rule", "gpt", "api"
-    # risk_json = reviewer.review(title=title1,text=text1)
-    # print(risk_json)
-    # print(json.dumps(risk_json, ensure_ascii=False, indent=2))
 
     reviewed = {
         "1: Apache License 2.0⇧": {
@@ -429,6 +422,34 @@ def trial2():
         checkedrisk = checker.review(k,v["level"],v["reason"],context)
         print(f"here we are checking{k}, and the result is {checkedrisk}")
 
+def trial1():
+    # 假设 license_texts 从你的oss结构读取/分块提取
+    license_texts = [
+        {
+            "id": "licenseTextItem1",
+            "title": "1: Apache License 2.0↩",
+            "text": "Apache License\n\nVersion 2.0, January 2004\n..."
+        },
+        # {
+        #     "id": "licenseTextItem20",
+        #     "title": "20: GNU General Public License v2.0 only",
+        #     "text": "GNU General Public License, version 2\n\n..."
+        # },
+        # {
+        #     "id": "licenseTextItem14",
+        #     "title": "14: BSD-3-Clause",
+        #     "text": "Redistribution and use in source and binary forms, ..."
+        # }
+    ]
+
+    title1 = "1: Apache License 2.0↩"
+    text1 = "Apache License\n\nVersion 2.0, January 2004\n..."
+    # 实例化，并选择你要的评审方式
+    reviewer = RiskReviewer(model="api")  # "rule", "gpt", "api"
+    risk_json = reviewer.review(title=title1,text=text1)
+    print(risk_json)
+    print(json.dumps(risk_json, ensure_ascii=False, indent=2))
+
 # ------ 用法示例 ------
 if __name__ == "__main__":
     license1 = {
@@ -437,5 +458,5 @@ if __name__ == "__main__":
     "CheckedLevel": "high",
     "Justification": "GPL-2.0 is a strong copyleft license: any distribution of derivative works (including statically or dynamically linked binaries) must be licensed as a whole under GPL-2.0, source code must be made available, and sublicensing under more permissive terms is not allowed. These obligations create significant license-compatibility and release requirements for proprietary or mixed-license projects, leading to a high compliance and business risk profile. However, it does not include additional network-service copyleft (like AGPL) or patent retaliation clauses that might elevate it to a “very high” category. Therefore, a \"high\" risk rating is appropriate and is confirmed."
     }
-    bot1 = RiskBot()
+    bot1 = RiskBot(session_id = 'ChatbotTrial')
     bot1.toConfirm(license1)
