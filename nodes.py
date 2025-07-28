@@ -2,7 +2,7 @@ from pocketflow import Node, BatchNode
 import re
 from bs4 import BeautifulSoup
 import json
-from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot)
+from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot, credentialChecker)
 from utils.vectorDB import VectorDatabase
 from utils.callAIattack import AzureOpenAIChatClient
 from utils.tools import (reverse_exec)
@@ -174,7 +174,8 @@ class ParsingOriginalHtml(Node):
 class LicenseReviewing(BatchNode):
     
     """
-    对上文生成的包含原始OSS readme消息的内容做风险评估，并生成一个新的仅包含组件名、风险的json文件
+    对上文生成的包含原始OSS readme消息的内容做风险评估，并生成一个新的仅包含组件名、风险的json文件，
+    同时生成对于许可证是否需要授权的判断
     """
 
     def __init__(self, deployment=None):
@@ -195,10 +196,13 @@ class LicenseReviewing(BatchNode):
         lId, lTitle, lText, randInt = licenseText
         
         reviewer = RiskReviewer(session_id=f'review{randInt:016x}')
+        creChecker = credentialChecker(session_id=f'credentialCheck{randInt:016x}')
+
         risk = reviewer.review(lTitle,lText)
+        credentialOrNot = creChecker.check(lTitle,lText)
         logger.info('We have reviewed one component')
 
-        return lTitle, risk
+        return lTitle,risk, credentialOrNot
     
     def post(self, shared, prep_res, exec_res_list):
 
@@ -206,8 +210,11 @@ class LicenseReviewing(BatchNode):
         遍历全部license文本后合并风险评级
         """
         shared["riskAnalysis"] = {
-            lTitle : risk
-            for lTitle, risk in exec_res_list
+            lTitle : {
+                'risk' : risk,
+                'credentialOrNot': credential,
+            }
+            for lTitle, risk, credential in exec_res_list
         }
 
         with open("analysisOfRisk.json","w", encoding="utf-8" ) as f1:
@@ -215,7 +222,7 @@ class LicenseReviewing(BatchNode):
 
         logger.info('Completely Reviewed.')
         return "default"
-    
+
 class RiskCheckingRAG(BatchNode):
 
     def __init__(self, deployment = None, embedding_deployment = None,max_retries=1, wait=0):

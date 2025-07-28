@@ -95,32 +95,37 @@ def reverse_exec(final_result):
     
     return reconstructed_html
 
-def get_strict_json(bot, user_input, prompt=None):
+def json_strip(text:str) -> str:
+
+    # 后处理：去除 ```json ... ``` 或 ``` ... ```
+    response_strip = text.strip()
+    if response_strip.startswith('```json'):
+        response_strip = response_strip[7:].strip()
+    if response_strip.startswith('```'):
+        response_strip = response_strip[3:].strip()
+    if response_strip.endswith('```'):
+        response_strip = response_strip[:-3].strip()
+    try:
+        data = json.loads(response_strip)
+        if isinstance(data, dict):
+            return data
+    except json.JSONDecodeError: # 更具体的捕获 JSON 解析错误
+        return None # 失败时返回 None
+    except Exception: # 捕获其他可能的异常
+        return None
+
+
+def get_strict_json(model:object, user_input):
     """
     Try response up to 5 times until getting strictly valid JSON.
     No user perception of retries.
+    model could be an object of a bot or a langchain model.
     """
     for _ in range(5):
-        if prompt:
-            response = bot._request(prompt)
-            prompt = None
-        else:
-            response = bot._request(user_input)
-        # 后处理：去除 ```json ... ``` 或 ``` ... ```
-        response_strip = response.strip()
-        if response_strip.startswith('```json'):
-            response_strip = response_strip[7:].strip()
-        if response_strip.startswith('```'):
-            response_strip = response_strip[3:].strip()
-        if response_strip.endswith('```'):
-            response_strip = response_strip[:-3].strip()
-        try:
-            data = json.loads(response_strip)
-            if isinstance(data, dict) and "result" in data and "talking" in data:
-                return data
-        except Exception:
-            pass
-        user_input = "Please provide ONLY the exact JSON object as required, no extra text."
+        response = model._request(user_input)
+        result = json_strip(response)
+        if result:
+            return result
     raise RuntimeError("Model did not give valid JSON after retries.")
 
 if __name__ == "__main__":

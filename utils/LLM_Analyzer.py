@@ -23,43 +23,21 @@ class RiskReviewer(AzureOpenAIChatClient):
     支持不同模型引擎：如'rule', 'gpt', 'api'
     """
 
-    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com",session_id = 'default', deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None):
-        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id,session_id)
-
+    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, session_id='default', promptName='automation/riskChecker'):
+        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id, session_id, promptName)
+        self.promptName = promptName
+    
     def _call_api(self, title, text):
         """
         纯调用API函数
         """
-        query = [
-            {"role": "system", "content": """
-                You are a License Risk Classifier that MUST output in strict JSON format.
-                
-                STRICT OUTPUT FORMAT:
-                {
-                    "level": <risk_level>,
-                    "reason": <one_sentence_explanation>
-                }
-                
-                RULES:
-                1. ONLY use these risk levels:
-                - "low" (for no copyleft)
-                - "medium" (for limited copyleft)
-                - "high" (for strong copyleft)
-                - "very high - do not use -" (for network copyleft)
-                
-                2. 'reason' must be a single sentence explaining the risk level
-                
-                3. DO NOT include any other fields in the JSON
-                4. DO NOT include any explanations outside the JSON
-                5. DO NOT include the license name in the output
-                6. ENSURE the output is valid JSON with ONLY 'level' and 'reason' fields
-                
-                Example correct output:
-                {"level":"low","reason":"Permissive license without copyleft obligations"}
-                """}, 
-            {"role": "user", "content": f"Analyze this license:\nTitle: {title}\nText: {text}"}
-        ]
-        result = self.inChat(query)
+
+        message = {
+            'title': title,
+            'text': text
+        }
+
+        result = self._request(message)
         return result
 
     def _evaluate_api(self, title, text):
@@ -125,10 +103,10 @@ class RiskReviewer(AzureOpenAIChatClient):
 
 class RiskChecker(AzureOpenAIChatClient):
 
-    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, session_id = 'default'):
-        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id, session_id)
+    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, session_id='default', promptName='automation/riskReviewer'):
+        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id, session_id, promptName)
         self.deployment = "o3-2025-04-16"
-        self.session_id = session_id
+        self.promptName = promptName
 
     def _call_api(self, title, level, reason, context):
         """
@@ -138,41 +116,14 @@ class RiskChecker(AzureOpenAIChatClient):
         context：在此层获取到的相关知识内容
         """
 
-        prompt = [
-            {
-                "role": "system",
-                "content": (
-                    "You are an expert specializing in evaluating the risks associated with open-source licenses. "
-                    "Your job is to review and validate the risk level assessment provided by the previous reviewer. "
-                    "You will receive information in the following structure:\n\n"
-                    "title: the license name under review\n"
-                    "level: the risk level suggested by the previous reviewer\n"
-                    "reason: the justification or reasoning provided for that risk level by the previous reviewer\n"
-                    "context: additional relevant information or background knowledge retrieved by current review\n\n"
-                    "Based on the provided context, carefully examine the previous risk rating (level). "
-                    "Then, make your assessment strictly according to your professional knowledge and expertise.\n"
-                    "Provide your decision only in the following JSON format:\n\n"
-                    "{\n"
-                    "  \"title\": license name,\n"
-                    "  \"originalLevel\": risk level provided by previous reviewer,\n"
-                    "  \"CheckedLevel\": your evaluated risk level (choose from: \"very high\", \"high\", \"medium\", \"low\"; either same as or different from previous result),\n"
-                    "  \"Justification\": detailed reasoning and basis for your decision\n"
-                    "}\n\n"
-                    "You must respond strictly in this JSON format without any additional explanations or notes."
-                )
-            },
-            {
-                "role": "user",
-                "content": (
-                    "Please review the risk assessment according to the given information and respond exactly in the specified JSON format:\n\n"
-                    f"title: {title}\n"
-                    f"level: {level}\n"
-                    f"reason: {reason}\n"
-                    f"context: {context}\n"
-                )
-            }
-        ]
-        result = self.inChat(prompt)
+        message = {
+            'context':context,
+            'level':level,
+            'reason':reason,
+            'title':title,
+        }
+
+        result = self._request(message)
 
         return result
     
@@ -254,9 +205,27 @@ class RiskChecker(AzureOpenAIChatClient):
                 "Justification": f"自动审核失败，原因：{str(e)}"
             }
 
+class credentialChecker(AzureOpenAIChatClient):
+    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, session_id='default', promptName="automation/CredentialChecker"):
+        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id, session_id, promptName)
+        self.promptName = promptName
+
+    def check(self,title:str,text:str) -> str:
+        """
+        result should be a json object:{"LicenseName":"Apache License 2.0","CredentialOrNot":false}
+        """
+        message = {
+            "license_name" : title,
+            "license_text" : text,
+        }
+        result = get_strict_json(self,user_input=message)
+
+        return result
+
 class Chatbot(AzureOpenAIChatClient):
-    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, system_prompt = None, session_id = 'default'):
-        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id,session_id)
+
+    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, session_id='default', promptName='default',system_prompt=None):
+        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id, session_id, promptName)
         self.llm = AzureChatOpenAI(
             api_version=self.api_version,
             azure_endpoint=self.endpoint,
@@ -264,9 +233,11 @@ class Chatbot(AzureOpenAIChatClient):
             azure_deployment=self.deployment
         )
 
+        self.system_prompt = self.langfusePrompt.prompt
+
         self.memory = ConversationBufferMemory(memory_key="history", return_messages=True)
         self.prompt = ChatPromptTemplate.from_messages([
-            ("system", system_prompt),
+            ("system", self.system_prompt),
             MessagesPlaceholder(variable_name="history"),
             ("human", "{input}")
         ])
@@ -278,6 +249,10 @@ class Chatbot(AzureOpenAIChatClient):
         )
     
     def _request(self, user_input):
+
+        if not isinstance(user_input, str):
+            raise TypeError("Input 'user_input' must be a string.")
+    
         response = self.chain.invoke(
             {"input": user_input},
             config = {
@@ -321,71 +296,8 @@ class RiskBot(Chatbot):
 
     def __init__(self, session_id):
         super().__init__(
-            system_prompt= """
-            You are an expert in open-source license analysis and legal risk assessment. Your job is to guide the user through a risk and compliance decision process for software licenses or components, supporting clear mode switching and workflow status.
-
-            Inputs:
-            - licenseName (string): the name of the software license or component.
-            - CheckedLevel (string): "high", "medium", or "low".
-            - Justification (string): any rationale or context from the user.
-
-            **Core Workflow & State Definitions**
-            You must always operate as a strict JSON response engine, outputting only JSON objects of the form `"result": ..., "talking": ... `. The "talking" value is where your full analysis, reasoning, and response must go; do not write outside it.
-
-            **Workflow States (for internal management, not shown verbatim to the user):**
-            - `needingHighReason`: Awaiting user’s choice and rationale for a high-risk license.
-            - `HighReasonNotPassed`: User's high-risk rationale was insufficient, awaiting stronger rationale.
-            - `HighReasonPasses`: User provided sufficient rationale for high-risk; now issue compliance steps and confirm.
-            - `ComplianceChecking`: User needs to confirm completion of compliance for medium/low risk, or after high-risk rationale is sufficient.
-            - `Over`: Assessment is complete and the process is concluded (license discarded or passed with mitigations).
-            - `Continue`: For all cases where a clear pathway or answer is not yet established.
-
-            **Decision Flow**
-
-            1. When a new license is presented:
-                - If CheckedLevel is "high":
-                    - In the "talking" field, provide an in-depth explanation of potential risks (legal, compliance, security, business, reputational, etc.) based on the given licenseName.
-                    - End by prompting: “Do you decide to retain this license or component? If yes, please provide your rationale for keeping it.”
-                    - Output:
-                        "result": "continue", "talking": "(detailed risks + question—state: needingHighReason)"
-                - If CheckedLevel is "medium" or "low":
-                    - List all required compliance measures for the license/component.
-                    - Prompt: “Please confirm if these measures have been completed.”
-                    - Output:
-                    "result": "continue", "talking": "(compliance measures + confirmation prompt—state: ComplianceChecking)"
-
-            2. On user reply after a high-risk prompt:
-                - If user says to discard (e.g., "no", "discard", "不保留", "放弃"):
-                    - Output:
-                        "result": "discarded", "talking": "This license or component has been discarded, fully mitigating the identified risks."
-                    - (state: Over)
-                - If user explains YES (retain) with rationale:
-                    - If rationale is INSUFFICIENT:
-                        "result": "not passed", "talking": "Your rationale still requires further refinement to address the identified risks. Please provide a stronger explanation of why retaining this license or component outweighs those risks."
-                        (state: HighReasonNotPassed)
-                    - If rationale ADEQUATELY addresses the risks:
-                        - Acknowledge.
-                        - List concrete compliance measures required for mitigating those risks, tailored for the actual scenario and rationale.
-                        - Prompt: “Please confirm if these measures have been completed.”
-                        - Output:
-                            "result": "continue", "talking": "(acknowledgement + compliance measures + confirmation prompt—state: HighReasonPasses / ComplianceChecking)"
-
-            3. On compliance confirmation (either after high/medium/low):
-                - If user confirms (e.g., “已完成”, “done”, “yes”):
-                    - Output:
-                        "result": "passed", "talking": "All required compliance measures have been confirmed as completed for this license or component. The risk is now considered mitigated."
-                    - (state: Over)
-                - If user says not completed, unclear, or something else:
-                    - Output:
-                        "result": "continue", "talking": "(Prompt for required confirmation, clarify issues, or further assist. State: Continue or ComplianceChecking)"
-
-            4. On further user responses (after rationale was insufficient or more information is needed):
-                - If rationale becomes sufficient: go back to step 2 as above.
-                - Otherwise, continue prompting as needed.
-
-            **Always use a strict JSON output as below. Do not include any additional commentary, intro, or explanation outside the JSON. Do not summarize states to user, but always internally align to these states to manage conversation flow. Every message must adhere to the logic above.**
-        """
-            , session_id = 'default'
+            promptName="bot/RiskBot",
+            session_id = 'default'
         )
         self.session_id = session_id
         self.conditions = {
@@ -460,3 +372,12 @@ if __name__ == "__main__":
     }
     bot1 = RiskBot(session_id = 'ChatbotTrial')
     bot1.toConfirm(license1)
+    # message = {
+    #     "license_name":"1: Apache License 2.0⇧",
+    #     "license_text":"Apache License\n\nVersion 2.0, January 2004\n\nhttp://www.apache.org/licenses/ TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION\n\n   1. Definitions.\n\n      \n\n      \"License\" shall mean the terms and conditions for use, reproduction, and distribution as defined by Sections 1 through 9 of this document.\n\n      \n\n      \"Licensor\" shall mean the copyright owner or entity authorized by the copyright owner that is granting the License.\n\n      \n\n      \"Legal Entity\" shall mean the union of the acting entity and all other entities that control, are controlled by, or are under common control with that entity. For the purposes of this definition, \"control\" means (i) the power, direct or indirect, to cause the direction or management of such entity, whether by contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the outstanding shares, or (iii) beneficial ownership of such entity.\n\n      \n\n      \"You\" (or \"Your\") shall mean an individual or Legal Entity exercising permissions granted by this License.\n\n      \n\n      \"Source\" form shall mean the preferred form for making modifications, including but not limited to software source code, documentation source, and configuration files.\n\n      \n\n      \"Object\" form shall mean any form resulting from mechanical transformation or translation of a Source form, including but not limited to compiled object code, generated documentation, and conversions to other media types.\n\n      \n\n      \"Work\" shall mean the work of authorship, whether in Source or Object form, made available under the License, as indicated by a copyright notice that is included in or attached to the work (an example is provided in the Appendix below).\n\n      \n\n      \"Derivative Works\" shall mean any work, whether in Source or Object form, that is based on (or derived from) the Work and for which the editorial revisions, annotations, elaborations, or other modifications represent, as a whole, an original work of authorship. For the purposes of this License, Derivative Works shall not include works that remain separable from, or merely link (or bind by name) to the interfaces of, the Work and Derivative Works thereof.\n\n      \n\n      \"Contribution\" shall mean any work of authorship, including the original version of the Work and any modifications or additions to that Work or Derivative Works thereof, that is intentionally submitted to Licensor for inclusion in the Work by the copyright owner or by an individual or Legal Entity authorized to submit on behalf of the copyright owner. For the purposes of this definition, \"submitted\" means any form of electronic, verbal, or written communication sent to the Licensor or its representatives, including but not limited to communication on electronic mailing lists, source code control systems, and issue tracking systems that are managed by, or on behalf of, the Licensor for the purpose of discussing and improving the Work, but excluding communication that is conspicuously marked or otherwise designated in writing by the copyright owner as \"Not a Contribution.\"\n\n      \n\n      \"Contributor\" shall mean Licensor and any individual or Legal Entity on behalf of whom a Contribution has been received by Licensor and subsequently incorporated within the Work.\n\n   2. Grant of Copyright License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to reproduce, prepare Derivative Works of, publicly display, publicly perform, sublicense, and distribute the Work and such Derivative Works in Source or Object form.\n\n   3. Grant of Patent License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this section) patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the Work, where such license applies only to those patent claims licensable by such Contributor that are necessarily infringed by their Contribution(s) alone or by combination of their Contribution(s) with the Work to which such Contribution(s) was submitted. If You institute patent litigation against any entity (including a cross-claim or counterclaim in a lawsuit) alleging that the Work or a Contribution incorporated within the Work constitutes direct or contributory patent infringement, then any patent licenses granted to You under this License for that Work shall terminate as of the date such litigation is filed.\n\n   4. Redistribution. You may reproduce and distribute copies of the Work or Derivative Works thereof in any medium, with or without modifications, and in Source or Object form, provided that You meet the following conditions:\n\n      (a) You must give any other recipients of the Work or Derivative Works a copy of this License; and\n\n      (b) You must cause any modified files to carry prominent notices stating that You changed the files; and\n\n      (c) You must retain, in the Source form of any Derivative Works that You distribute, all copyright, patent, trademark, and attribution notices from the Source form of the Work, excluding those notices that do not pertain to any part of the Derivative Works; and\n\n      (d) If the Work includes a \"NOTICE\" text file as part of its distribution, then any Derivative Works that You distribute must include a readable copy of the attribution notices contained within such NOTICE file, excluding those notices that do not pertain to any part of the Derivative Works, in at least one of the following places: within a NOTICE text file distributed as part of the Derivative Works; within the Source form or documentation, if provided along with the Derivative Works; or, within a display generated by the Derivative Works, if and wherever such third-party notices normally appear. The contents of the NOTICE file are for informational purposes only and do not modify the License. You may add Your own attribution notices within Derivative Works that You distribute, alongside or as an addendum to the NOTICE text from the Work, provided that such additional attribution notices cannot be construed as modifying the License.\n\n      You may add Your own copyright statement to Your modifications and may provide additional or different license terms and conditions for use, reproduction, or distribution of Your modifications, or for any such Derivative Works as a whole, provided Your use, reproduction, and distribution of the Work otherwise complies with the conditions stated in this License.\n\n   5. Submission of Contributions. Unless You explicitly state otherwise, any Contribution intentionally submitted for inclusion in the Work by You to the Licensor shall be under the terms and conditions of this License, without any additional terms or conditions. Notwithstanding the above, nothing herein shall supersede or modify the terms of any separate license agreement you may have executed with Licensor regarding such Contributions.\n\n   6. Trademarks. This License does not grant permission to use the trade names, trademarks, service marks, or product names of the Licensor, except as required for reasonable and customary use in describing the origin of the Work and reproducing the content of the NOTICE file.\n\n   7. Disclaimer of Warranty. Unless required by applicable law or agreed to in writing, Licensor provides the Work (and each Contributor provides its Contributions) on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible for determining the appropriateness of using or redistributing the Work and assume any risks associated with Your exercise of permissions under this License.\n\n   8. Limitation of Liability. In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.\n\n   9. Accepting Warranty or Additional Liability. While redistributing the Work or Derivative Works thereof, You may choose to offer, and charge a fee for, acceptance of support, warranty, indemnity, or other liability obligations and/or rights consistent with this License. However, in accepting such obligations, You may act only on Your own behalf and on Your sole responsibility, not on behalf of any other Contributor, and only if You agree to indemnify, defend, and hold each Contributor harmless for any liability incurred by, or claims asserted against, such Contributor by reason of your accepting any such warranty or additional liability. END OF TERMS AND CONDITIONS\n\nAPPENDIX: How to apply the Apache License to your work.\n\nTo apply the Apache License to your work, attach the following boilerplate notice, with the fields enclosed by brackets \"[]\" replaced with your own identifying information. (Don't include the brackets!) The text should be enclosed in the appropriate comment syntax for the file format. We also recommend that a file or class name and description of purpose be included on the same \"printed page\" as the copyright notice for easier identification within third-party archives.\n\nCopyright [yyyy] [name of copyright owner]\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\n\nyou may not use this file except in compliance with the License.\n\nYou may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\n\ndistributed under the License is distributed on an \"AS IS\" BASIS,\n\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n\nSee the License for the specific language governing permissions and\n\nlimitations under the License."}
+    # riskReviewer = RiskReviewer(session_id='trial')
+    # riskChecker = RiskChecker(session_id='trial')
+
+    # # result = riskReviewer.review(message['license_name'],message['license_text'])
+    # result = riskChecker.review("BSD-3-Clause","low","Permissive license without copyleft obligations","I like it")
+    # print(result)

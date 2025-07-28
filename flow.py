@@ -16,10 +16,12 @@ def review_oss_readme():
 
     confirmingNode = GetUserConfirming()
 
-    parsingNode >> riskAnalysisNode >> riskCheckingNode >> sessionNode >> confirmingNode
+    parsingNode >> riskAnalysisNode 
+    
+    # >> riskCheckingNode >> sessionNode >> confirmingNode
 
-    confirmingNode - 'continue' >> confirmingNode
-    confirmingNode - 'over' >> ossGenerating()
+    # confirmingNode - 'continue' >> confirmingNode
+    # confirmingNode - 'over' >> ossGenerating()
 
     review_flow = Flow(start=parsingNode)
 
