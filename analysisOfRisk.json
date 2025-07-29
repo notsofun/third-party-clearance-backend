@@ -1,155 +1,259 @@
 {
   "1: Apache License 2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
     "credentialOrNot": {
       "LicenseName": "Apache License 2.0",
       "CredentialOrNot": false
     }
   },
   "2: Apache-2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
       "CredentialOrNot": false
     }
   },
   "3: Apache-2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "The license is permissive and does not impose copyleft obligations."
+    },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
       "CredentialOrNot": false
     }
   },
   "4: Apache-2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "The license allows for wide usage and redistribution without any copyleft obligations."
+    },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
       "CredentialOrNot": false
     }
   },
   "5: Apache-2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "This license is permissive and does not impose copyleft obligations."
+    },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
       "CredentialOrNot": false
     }
   },
   "6: Apache-2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
       "CredentialOrNot": false
     }
   },
   "7: Apache-2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations."
+    },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
       "CredentialOrNot": false
     }
   },
   "8: Apache-2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
       "CredentialOrNot": false
     }
   },
   "9: Apache-2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
       "CredentialOrNot": false
     }
   },
   "10: Apache-2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license with no copyleft obligations."
+    },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
       "CredentialOrNot": false
     }
   },
   "11: Apache-2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
       "CredentialOrNot": false
     }
   },
   "12: Apache-2.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "The license is permissive and does not impose copyleft obligations."
+    },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
       "CredentialOrNot": false
     }
   },
   "13: BSD 3-Clause \"New\" or \"Revised\" License⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
     "credentialOrNot": {
       "LicenseName": "13: BSD 3-Clause \"New\" or \"Revised\" License",
-      "CredentialOrNot": true
+      "CredentialOrNot": false
     }
   },
   "14: BSD-3-Clause⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
     "credentialOrNot": {
       "LicenseName": "14: BSD-3-Clause",
       "CredentialOrNot": false
     }
   },
   "15: BSD-3-Clause⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
     "credentialOrNot": {
-      "LicenseName": "BSD-3-Clause",
+      "LicenseName": "15: BSD-3-Clause",
       "CredentialOrNot": true
     }
   },
   "16: CC-BY-4.0⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "The license allows for sharing and adaptation without strict copyleft requirements."
+    },
     "credentialOrNot": {
       "LicenseName": "CC-BY-4.0",
       "CredentialOrNot": false
     }
   },
   "17: CDDL-1.0⇧": {
+    "risk": {
+      "level": "medium",
+      "reason": "The license includes copyleft provisions that require source code distribution but allows for combining with other proprietary software."
+    },
     "credentialOrNot": {
-      "LicenseName": "CDDL-1.0",
+      "LicenseName": "17: CDDL-1.0",
       "CredentialOrNot": true
     }
   },
   "18: Dual-license⇧": {
+    "risk": {
+      "level": "medium",
+      "reason": "This license includes limited copyleft provisions through the GPL 2.0."
+    },
     "credentialOrNot": {
       "LicenseName": "18: Dual-license",
       "CredentialOrNot": false
     }
   },
   "19: Eclipse Public License 1.0⇧": {
+    "risk": {
+      "level": "medium",
+      "reason": "The license includes limited copyleft obligations for derived works."
+    },
     "credentialOrNot": {
-      "LicenseName": "19: Eclipse Public License 1.0",
+      "LicenseName": "Eclipse Public License 1.0",
       "CredentialOrNot": true
     }
   },
   "20: GNU General Public License v2.0 only⇧": {
+    "risk": {
+      "level": "high",
+      "reason": "The license has strong copyleft provisions, requiring derivative works to be licensed under the same terms."
+    },
     "credentialOrNot": {
       "LicenseName": "20: GNU General Public License v2.0 only",
       "CredentialOrNot": false
     }
   },
   "21: GPL-2.0⇧": {
+    "risk": {
+      "level": "high",
+      "reason": "This license imposes strong copyleft requirements on derivative works, requiring them to be licensed under the same terms."
+    },
     "credentialOrNot": {
-      "LicenseName": "21: GPL-2.0⇧",
+      "LicenseName": "GPL-2.0",
       "CredentialOrNot": false
     }
   },
   "22: GPL-2.0-with-classpath-exception⇧": {
+    "risk": {
+      "level": "high",
+      "reason": "The license includes strong copyleft provisions requiring derivative works to also be licensed under the same terms."
+    },
     "credentialOrNot": {
       "LicenseName": "22: GPL-2.0-with-classpath-exception",
       "CredentialOrNot": false
     }
   },
   "23: MIT⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
     "credentialOrNot": {
       "LicenseName": "23: MIT⇧",
       "CredentialOrNot": false
     }
   },
   "24: MIT⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
     "credentialOrNot": {
-      "LicenseName": "24: MIT⇧",
+      "LicenseName": "MIT",
       "CredentialOrNot": false
     }
   },
   "25: Public-domain⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "This is a public domain license which imposes no restrictions on use."
+    },
     "credentialOrNot": {
-      "LicenseName": "25: Public-domain",
+      "LicenseName": "25: Public-domain⇧",
       "CredentialOrNot": false
     }
   },
   "26: Public-domain⇧": {
+    "risk": {
+      "level": "low",
+      "reason": "Public domain license imposes no copyleft obligations."
+    },
     "credentialOrNot": {
       "LicenseName": "26: Public-domain⇧",
       "CredentialOrNot": false

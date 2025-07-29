@@ -1,5 +1,5 @@
 from pocketflow import Node, BatchNode
-import re
+import re, os
 from bs4 import BeautifulSoup
 import json
 from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot, credentialChecker)
@@ -30,19 +30,24 @@ class ParsingOriginalHtml(Node):
         """初始化预处理节点，生成json格式文件方便后续处理"""
         super().__init__()
 
-    def prep(self,shared):
-        """开始解析，先读取该文档"""
+    def prep(self, shared):
         logger.info("Now we are parsing the original HTML File")
         html_path = shared["html_path"]
-        # shared就是需要提供的html路径
-        with open(html_path, "r", encoding="utf-8") as html:
-            html_content = html.read()
-
-            soup = BeautifulSoup(html_content,"html.parser")
-
-        shared["data"] = soup
-
-        return shared["data"]
+        
+        # 确保文件存在
+        if not os.path.exists(html_path):
+            raise FileNotFoundError(f"HTML file not found: {html_path}")
+            
+        # 读取文件
+        try:
+            with open(html_path, "r", encoding="utf-8") as html:
+                html_content = html.read()
+                soup = BeautifulSoup(html_content, "html.parser")
+                shared["data"] = soup
+                return shared["data"]
+        except Exception as e:
+            logger.error(f"Error parsing HTML: {str(e)}")
+            raise
     
     
     def exec(self, data):
@@ -233,7 +238,7 @@ class RiskCheckingRAG(BatchNode):
     def prep(self, shared):
         logger.info('Now checking the reviewed risks')
         random_int = random.getrandbits(64)
-        originalRiskAnalysis = [ (k, v["level"], v["reason"],random_int) for k,v in shared["riskAnalysis"].items()]
+        originalRiskAnalysis = [ (k, v["risk"]['level'], v["risk"]['reason'],random_int) for k,v in shared["riskAnalysis"].items()]
         logger.info(f'We have {len(originalRiskAnalysis)} components to check')
         return originalRiskAnalysis
     

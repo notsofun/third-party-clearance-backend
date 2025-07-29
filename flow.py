@@ -1,28 +1,25 @@
 from pocketflow import Flow
-from nodes import (ParsingOriginalHtml, LicenseReviewing, RiskCheckingRAG, ossGenerating,initializeSession, GetUserConfirming)
+from nodes import (ParsingOriginalHtml, LicenseReviewing, RiskCheckingRAG,
+                    ossGenerating, initializeSession, GetUserConfirming)
 
-def review_oss_readme():
-    """
-    To delete risky components in this project
-    """
-
+def pre_chat_flow():
+    """解析和风险分析流程"""
     parsingNode = ParsingOriginalHtml()
-
     riskAnalysisNode = LicenseReviewing()
-
     riskCheckingNode = RiskCheckingRAG()
-
     sessionNode = initializeSession()
-
-    confirmingNode = GetUserConfirming()
-
-    parsingNode >> riskAnalysisNode 
     
-    # >> riskCheckingNode >> sessionNode >> confirmingNode
+    parsingNode >> riskAnalysisNode >> riskCheckingNode >> sessionNode
+    return Flow(start=parsingNode)
 
-    # confirmingNode - 'continue' >> confirmingNode
-    # confirmingNode - 'over' >> ossGenerating()
+def chat_flow():
+    """交互确认流程"""
+    confirmingNode = GetUserConfirming()
+    confirmingNode - 'continue' >> confirmingNode
 
-    review_flow = Flow(start=parsingNode)
+    return Flow(start=confirmingNode)
 
-    return review_flow
+def post_chat_flow():
+    """报告生成流程"""
+    ossGenNode = ossGenerating()
+    return Flow(start=ossGenNode)
