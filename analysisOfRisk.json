@@ -2,7 +2,7 @@
   "1: Apache License 2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "Permissive license without copyleft obligations"
+      "reason": "The license is permissive and allows modifications and redistribution without strong copyleft obligations."
     },
     "credentialOrNot": {
       "LicenseName": "Apache License 2.0",
@@ -22,7 +22,7 @@
   "3: Apache-2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "The license is permissive and does not impose copyleft obligations."
+      "reason": "Permissive license without copyleft obligations"
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
@@ -32,7 +32,7 @@
   "4: Apache-2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "The license allows for wide usage and redistribution without any copyleft obligations."
+      "reason": "Permissive license allowing for use and distribution without copyleft obligations."
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
@@ -42,7 +42,7 @@
   "5: Apache-2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "This license is permissive and does not impose copyleft obligations."
+      "reason": "Permissive license without copyleft obligations"
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
@@ -52,7 +52,7 @@
   "6: Apache-2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "Permissive license without copyleft obligations"
+      "reason": "The license permits use, modification, and distribution without strong copyleft requirements."
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
@@ -62,7 +62,7 @@
   "7: Apache-2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "Permissive license without copyleft obligations."
+      "reason": "Permissive license without copyleft obligations"
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
@@ -82,7 +82,7 @@
   "9: Apache-2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "Permissive license without copyleft obligations"
+      "reason": "The license is permissive and does not impose copyleft obligations."
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
@@ -92,7 +92,7 @@
   "10: Apache-2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "Permissive license with no copyleft obligations."
+      "reason": "Permissive license without copyleft obligations."
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
@@ -102,7 +102,7 @@
   "11: Apache-2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "Permissive license without copyleft obligations"
+      "reason": "Permissive license without copyleft obligations."
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
@@ -112,7 +112,7 @@
   "12: Apache-2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "The license is permissive and does not impose copyleft obligations."
+      "reason": "The license allows for freedom to use, modify, and distribute without strong copyleft requirements."
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
@@ -126,13 +126,13 @@
     },
     "credentialOrNot": {
       "LicenseName": "13: BSD 3-Clause \"New\" or \"Revised\" License",
-      "CredentialOrNot": false
+      "CredentialOrNot": true
     }
   },
   "14: BSD-3-Clause⇧": {
     "risk": {
       "level": "low",
-      "reason": "Permissive license without copyleft obligations"
+      "reason": "Permissive license without copyleft obligations."
     },
     "credentialOrNot": {
       "LicenseName": "14: BSD-3-Clause",
@@ -152,7 +152,7 @@
   "16: CC-BY-4.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "The license allows for sharing and adaptation without strict copyleft requirements."
+      "reason": "The license allows sharing and adapting the material with proper attribution but imposes no copyleft obligations."
     },
     "credentialOrNot": {
       "LicenseName": "CC-BY-4.0",
@@ -162,7 +162,7 @@
   "17: CDDL-1.0⇧": {
     "risk": {
       "level": "medium",
-      "reason": "The license includes copyleft provisions that require source code distribution but allows for combining with other proprietary software."
+      "reason": "The license contains limited copyleft provisions requiring modifications to be released under the same license."
     },
     "credentialOrNot": {
       "LicenseName": "17: CDDL-1.0",
@@ -172,7 +172,7 @@
   "18: Dual-license⇧": {
     "risk": {
       "level": "medium",
-      "reason": "This license includes limited copyleft provisions through the GPL 2.0."
+      "reason": "The dual licensing model allows for limited copyleft under the GPL terms."
     },
     "credentialOrNot": {
       "LicenseName": "18: Dual-license",
@@ -182,7 +182,7 @@
   "19: Eclipse Public License 1.0⇧": {
     "risk": {
       "level": "medium",
-      "reason": "The license includes limited copyleft obligations for derived works."
+      "reason": "The license has limited copyleft provisions requiring modifications to be shared under the same license, but allows separate distribution of certain contributions under different licensing terms."
     },
     "credentialOrNot": {
       "LicenseName": "Eclipse Public License 1.0",
@@ -192,7 +192,7 @@
   "20: GNU General Public License v2.0 only⇧": {
     "risk": {
       "level": "high",
-      "reason": "The license has strong copyleft provisions, requiring derivative works to be licensed under the same terms."
+      "reason": "Strong copyleft requirements enforce that derivative works be licensed under the same terms."
     },
     "credentialOrNot": {
       "LicenseName": "20: GNU General Public License v2.0 only",
@@ -202,7 +202,7 @@
   "21: GPL-2.0⇧": {
     "risk": {
       "level": "high",
-      "reason": "This license imposes strong copyleft requirements on derivative works, requiring them to be licensed under the same terms."
+      "reason": "Strong copyleft requirements ensure that derivative works are also licensed under the same terms."
     },
     "credentialOrNot": {
       "LicenseName": "GPL-2.0",
@@ -212,7 +212,7 @@
   "22: GPL-2.0-with-classpath-exception⇧": {
     "risk": {
       "level": "high",
-      "reason": "The license includes strong copyleft provisions requiring derivative works to also be licensed under the same terms."
+      "reason": "The license includes strong copyleft provisions that require derivative works to be licensed under the same terms."
     },
     "credentialOrNot": {
       "LicenseName": "22: GPL-2.0-with-classpath-exception",
@@ -242,17 +242,17 @@
   "25: Public-domain⇧": {
     "risk": {
       "level": "low",
-      "reason": "This is a public domain license which imposes no restrictions on use."
+      "reason": "Public domain status indicates no copyright restrictions or copyleft obligations."
     },
     "credentialOrNot": {
-      "LicenseName": "25: Public-domain⇧",
+      "LicenseName": "25: Public-domain",
       "CredentialOrNot": false
     }
   },
   "26: Public-domain⇧": {
     "risk": {
       "level": "low",
-      "reason": "Public domain license imposes no copyleft obligations."
+      "reason": "The license explicitly states public domain, which imposes no restrictions on usage."
     },
     "credentialOrNot": {
       "LicenseName": "26: Public-domain⇧",

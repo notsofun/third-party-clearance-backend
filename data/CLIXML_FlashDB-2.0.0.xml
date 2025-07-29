@@ -1,0 +1,979 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ComponentLicenseInformation component="FlashDB-2.0.0.zip" creator="priyanaik@siemens.com" date="2023-08-04" baseDoc="" toolUsed="FOSSologyNG" componentID=""  componentSHA1="f0557d92301c3841e20a187170577b1b52fd3322" version="1.6">
+
+  <GeneralInformation>
+    <ReportId>1b3691c8-328c-11ee-971f-005056ba5969</ReportId>
+    
+    <ComponentName>FlashDB</ComponentName>
+    <Community>Armink https://github.com/armink</Community>
+    <ComponentVersion>2.0.0</ComponentVersion>
+    <ComponentHash>F0557D92301C3841E20A187170577B1B52FD3322</ComponentHash>
+    <ComponentReleaseDate>28-May-2023 https://github.com/armink/FlashDB/releases/tag/2.0.0</ComponentReleaseDate>
+    <LinkComponentManagement><![CDATA[https://sw360.siemens.com/group/guest/components/-/component/release/detailRelease/4a498005278f4752a17ce49c572c042d/2978f6d679eb4cd8ab2d72ead36bcce2#/tab-Summary]]></LinkComponentManagement>
+    <LinkScanTool><![CDATA[http://fossology.pun.ctrda.siemens.co.in/repo/?mod=browse&upload=21217&item=103902842]]></LinkScanTool>
+  </GeneralInformation>
+
+  <AssessmentSummary>
+    <GeneralAssessment><![CDATA[OSS component covered under Apache-2.0 license which has no copyleft effect.]]></GeneralAssessment>
+    <CriticalFilesFound>None</CriticalFilesFound>
+    <DependencyNotes>None</DependencyNotes>
+    <ExportRestrictionsFound>None</ExportRestrictionsFound>
+    <UsageRestrictionsFound>None</UsageRestrictionsFound>
+    <AdditionalNotes><![CDATA[1) Apache NOTICE file is not found.  2) Apache-2.0 Risk: If the changes made to the software are to be sent back to ASF, they will have to be covered under Apache-2.0. This can be avoided by NOT submitting the changes back to ASF.  Contact BU Representative or Third-Party License Manager if you plan to contribute fixes back to the community. 3) The clearing team has checked for the dependencies for this package via the scan tool only. Additional manual steps (scripts run on source files) to identify dependencies were not performed.  Identifying and listing the dependencies is the responsibility of the project team. The clearing team shall not be held responsible for not identifying or listing the same during clearing of any packages.]]></AdditionalNotes>
+  </AssessmentSummary>
+
+  <License type="global" name="Apache-2.0" spdxidentifier="Apache-2.0">
+    <Content><![CDATA[Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. Definitions.
+
+"License" shall mean the terms and conditions for use, reproduction, and distribution as defined by Sections 1 through 9 of this document.
+
+"Licensor" shall mean the copyright owner or entity authorized by the copyright owner that is granting the License.
+
+"Legal Entity" shall mean the union of the acting entity and all other entities that control, are controlled by, or are under common control with that entity. For the purposes of this definition, "control" means (i) the power, direct or indirect, to cause the direction or management of such entity, whether by contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the outstanding shares, or (iii) beneficial ownership of such entity.
+
+"You" (or "Your") shall mean an individual or Legal Entity exercising permissions granted by this License.
+
+"Source" form shall mean the preferred form for making modifications, including but not limited to software source code, documentation source, and configuration files.
+
+"Object" form shall mean any form resulting from mechanical transformation or translation of a Source form, including but not limited to compiled object code, generated documentation, and conversions to other media types.
+
+"Work" shall mean the work of authorship, whether in Source or Object form, made available under the License, as indicated by a copyright notice that is included in or attached to the work (an example is provided in the Appendix below).
+
+"Derivative Works" shall mean any work, whether in Source or Object form, that is based on (or derived from) the Work and for which the editorial revisions, annotations, elaborations, or other modifications represent, as a whole, an original work of authorship. For the purposes of this License, Derivative Works shall not include works that remain separable from, or merely link (or bind by name) to the interfaces of, the Work and Derivative Works thereof.
+
+"Contribution" shall mean any work of authorship, including the original version of the Work and any modifications or additions to that Work or Derivative Works thereof, that is intentionally submitted to Licensor for inclusion in the Work by the copyright owner or by an individual or Legal Entity authorized to submit on behalf of the copyright owner. For the purposes of this definition, "submitted" means any form of electronic, verbal, or written communication sent to the Licensor or its representatives, including but not limited to communication on electronic mailing lists, source code control systems, and issue tracking systems that are managed by, or on behalf of, the Licensor for the purpose of discussing and improving the Work, but excluding communication that is conspicuously marked or otherwise designated in writing by the copyright owner as "Not a Contribution."
+
+"Contributor" shall mean Licensor and any individual or Legal Entity on behalf of whom a Contribution has been received by Licensor and subsequently incorporated within the Work.
+
+2. Grant of Copyright License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to reproduce, prepare Derivative Works of, publicly display, publicly perform, sublicense, and distribute the Work and such Derivative Works in Source or Object form.
+
+3. Grant of Patent License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this section) patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the Work, where such license applies only to those patent claims licensable by such Contributor that are necessarily infringed by their Contribution(s) alone or by combination of their Contribution(s) with the Work to which such Contribution(s) was submitted. If You institute patent litigation against any entity (including a cross-claim or counterclaim in a lawsuit) alleging that the Work or a Contribution incorporated within the Work constitutes direct or contributory patent infringement, then any patent licenses granted to You under this License for that Work shall terminate as of the date such litigation is filed.
+
+4. Redistribution. You may reproduce and distribute copies of the Work or Derivative Works thereof in any medium, with or without modifications, and in Source or Object form, provided that You meet the following conditions:
+
+     (a) You must give any other recipients of the Work or Derivative Works a copy of this License; and
+
+     (b) You must cause any modified files to carry prominent notices stating that You changed the files; and
+
+     (c) You must retain, in the Source form of any Derivative Works that You distribute, all copyright, patent, trademark, and attribution notices from the Source form of the Work, excluding those notices that do not pertain to any part of the Derivative Works; and
+
+     (d) If the Work includes a "NOTICE" text file as part of its distribution, then any Derivative Works that You distribute must include a readable copy of the attribution notices contained within such NOTICE file, excluding those notices that do not pertain to any part of the Derivative Works, in at least one of the following places: within a NOTICE text file distributed as part of the Derivative Works; within the Source form or documentation, if provided along with the Derivative Works; or, within a display generated by the Derivative Works, if and wherever such third-party notices normally appear. The contents of the NOTICE file are for informational purposes only and do not modify the License. You may add Your own attribution notices within Derivative Works that You distribute, alongside or as an addendum to the NOTICE text from the Work, provided that such additional attribution notices cannot be construed as modifying the License.
+
+     You may add Your own copyright statement to Your modifications and may provide additional or different license terms and conditions for use, reproduction, or distribution of Your modifications, or for any such Derivative Works as a whole, provided Your use, reproduction, and distribution of the Work otherwise complies with the conditions stated in this License.
+
+5. Submission of Contributions. Unless You explicitly state otherwise, any Contribution intentionally submitted for inclusion in the Work by You to the Licensor shall be under the terms and conditions of this License, without any additional terms or conditions. Notwithstanding the above, nothing herein shall supersede or modify the terms of any separate license agreement you may have executed with Licensor regarding such Contributions.
+
+6. Trademarks. This License does not grant permission to use the trade names, trademarks, service marks, or product names of the Licensor, except as required for reasonable and customary use in describing the origin of the Work and reproducing the content of the NOTICE file.
+
+7. Disclaimer of Warranty. Unless required by applicable law or agreed to in writing, Licensor provides the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible for determining the appropriateness of using or redistributing the Work and assume any risks associated with Your exercise of permissions under this License.
+
+8. Limitation of Liability. In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.
+
+9. Accepting Warranty or Additional Liability. While redistributing the Work or Derivative Works thereof, You may choose to offer, and charge a fee for, acceptance of support, warranty, indemnity, or other liability obligations and/or rights consistent with this License. However, in accepting such obligations, You may act only on Your own behalf and on Your sole responsibility, not on behalf of any other Contributor, and only if You agree to indemnify, defend, and hold each Contributor harmless for any liability incurred by, or claims asserted against, such Contributor by reason of your accepting any such warranty or additional liability.
+
+END OF TERMS AND CONDITIONS
+
+APPENDIX: How to apply the Apache License to your work.
+
+To apply the Apache License to your work, attach the following boilerplate notice, with the fields enclosed by brackets "[]" replaced with your own identifying information. (Don't include the brackets!)  The text should be enclosed in the appropriate comment syntax for the file format. We also recommend that a file or class name and description of purpose be included on the same "printed page" as the copyright notice for easier identification within third-party archives.
+
+Copyright [yyyy] [name of copyright owner]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+]]></Content>
+    <Files><![CDATA[LICENSE
+README_zh.md
+README.md
+port/fal/README_ZH.md
+port/fal/README.md
+inc/fdb_cfg.h
+port/fal/samples/porting/fal_cfg.h
+port/fal/samples/porting/fal_flash_sfud_port.c
+port/fal/src/fal.c
+port/fal/src/fal_rtt.c
+port/fal/src/fal_flash.c
+port/fal/inc/fal.h
+port/fal/samples/porting/fal_flash_stm32l4.c
+port/fal/samples/porting/fal_flash_stm32f2_port.c
+port/fal/samples/porting/fal_flash_stm32f4.c
+port/fal/src/fal_partition.c
+port/fal/inc/fal_def.h
+tests/fdb_kvdb_tc.c
+tests/fdb_tsdb_tc.c
+samples/tsdb_sample.c
+src/fdb_kvdb.c
+src/fdb.c
+src/fdb_file.c
+src/fdb_utils.c
+inc/fdb_low_lvl.h
+src/fdb_tsdb.c
+inc/fdb_def.h
+inc/flashdb.h
+port/fal/LICENSE
+]]></Files>
+    <FileHash><![CDATA[7df059597099bb7dcf25d2a9aedfaf4465f72d8d
+fb53bfccb561a518469aff10eaa70b5e2b012f1a
+cfa3861e4a6312ae93950151cb94d4d1bb2e396d
+b4ae5c8a5c468bd581ca9122f3c7e948c68cba3b
+24702f476ce57d88d7ec3b5609520d66052a4f5a
+01ad5d54e3224f99bdf31154d5321b5ac4773b05
+51d567d1eebe071a17b30d9802da4bcd6c433efa
+e74fd0512ec56114b55e4c9f1ab7e3f6c093d02a
+3a47d052e28284c4ce46764c4230ae69570815fa
+760c572c29489673a162b631c660d88a6627e65b
+530b3f481dd69eaa8b74f0b664331377d9233906
+69dc2d65c612bcad15f665298a4dd0f52482e9a6
+af4321d15b79281226634b9ea784cb4ce98e732f
+37aa68b35a72d329b0b25af9c62ad6acc5ed8a0e
+bf79a5a7672606c882f7c4b4b978b92a1e1cd99f
+0b9a3cd02e12be3803054eb5e79195faa30dc9b2
+82f06d7ee50ff15e681dbf9259aac2d594851983
+1c4145e8cff0092aa2b0633bec62421b39604257
+e36be97c57e6f3c9972fb32261d943ae2ec928be
+df43547f04cbe1e0f81314e7a32cf2d829f1b1cd
+f72b83282505fa954483d1f0385807d4adefcc6c
+c5d16f38c4bd591a4597e9651835a166ab3bda75
+1be143f5eaebd1db623e37a86ba0bf376f49894a
+bea77894b60982a7d8af3cdcbee4f0a4c20e26ed
+df1cf3df87183891e90d65d21ffae3ade9a5d4cd
+85ce6696369b4ccf5902802f87422d9aa89e355b
+d829ff539c3efff683307aeb0606f67f6002b05f
+9ae144eb90834fdd9d39b62fd921fec534c15d1e
+7df059597099bb7dcf25d2a9aedfaf4465f72d8d
+]]></FileHash>
+  </License>
+  <Obligation>
+    <Topic><![CDATA[Provide acknowledgement
+]]></Topic>
+    <Text><![CDATA[Add all relevant acknowledgements to Readme_OSS
+]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[Risk of termination of the rights upon patent proceedings
+]]></Topic>
+    <Text><![CDATA[Siemens will lose all rights (i.e. copyright and patent rights) granted to Siemens for the open source code if Siemens makes legal claims regarding Siemens patents in such covered open source code.
+]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[marking modifications
+]]></Topic>
+    <Text><![CDATA[Note for Apache-2.0, ECL-2.0:  
+If you modify this component and do not intend to contribute the modifications/the modified work back to open source community, you must conspicuously mark or designate the modifications as “Not a Contribution”.
+
+If you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.
+
+Note for CDDL-1.0:  
+If you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.
+]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[Provide acknowledgement
+]]></Topic>
+    <Text><![CDATA[Add all relevant acknowledgements to Readme_OSS 
+
+Note for Apache-2.0: 
+The content of the NOTICE file must be made available in readable form. The content of the NOTICE file is made available in readable form as acknowledgement.
+
+Note for Catharon Open Source LICENSE:
+Portions of this software are copyright © Catharon Productions, Inc. All rights reserved
+
+Note for all CC licenses:
+In CC licenses this acknowledgement (in CC terms "appropriate credit") shall inculde:
+ - name of the creator 
+ - copyright notice 
+ - license notice 
+ - disclaimer 
+ - link to the material
+
+Note for ECL-2.0: 
+The content of the NOTICE file must be made available in readable form. The content of the NOTICE file is made available in readable form as acknowledgement.
+
+Note for all OWFa-1.0:
+ - the acknowledgement must contain at minimum the specification name and version number
+
+Note for Independent JPEG Group License
+ - the acknowledgement is: "this software is based in part on the work of the Independent JPEG Group"
+
+Note for Apache-1.1 and Apache-1.1-jakarta-oro-variant:
+ - the acknowledgement is: "This product includes software developed by the
+       Apache Software Foundation (http://www.apache.org/)."
+
+Note for Apache-1.1-JRDF-Project:
+ - the acknowledgement is: "This product includes software developed by the 
+         the JRDF Project (http://jrdf.sf.net/)."
+
+Note for  Apache-1.1-University-of-Chicago:
+ - the acknowledgement is: "This product includes software developed by the
+   University of Chicago, as Operator of Argonne National Laboratory."
+
+Note for Dual License, Multiple License and Triple License:
+ - the acknowledgement is the licensing decision: "To the extend files may be licensed under ABC or XYZ, in this context ABC has been chosen. This shall not restrict the freedom of other users to choose ABC or XYZ. For convenience both license texts are provided"
+
+Note for FTL-License:
+ - the acknowledgement must contain the text: "Portions of this software are copyright © The FreeType Project (www.freetype.org). All rights reserved."
+
+Note for Indiana-Extrem-License-1.1:
+ - the acknowledgement is: "This product includes software developed by the 
+         the Indiana University Extreme! Lab.For further information please visit  http://www.extreme.indiana.edu/."
+
+Note for LDL-License:
+ - the acknowledgement must contain the text: "With permission of ..."
+
+Note for RSA-Security License:
+ - the acknowledgement must contain the text: "This product includes software derived from the RSA Data Security, Inc. MD5 Message-Digest Algorithm"
+
+Note for Nunit License:
+- the acknowledgement must contain the text: " Portions Copyright © 2002-2012 Charlie Poole or Copyright © 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov or Copyright © 2000-2002 Philip A. Craig "
+
+Note for JDOM-License:
+- the acknowledgement shall contain the text: "This product includes software developed by the JDOM Project (http://www.jdom.org/)."
+
+Note for OpenSSL, SSLeay License:
+- the acknowledgement text must contain the text:
+"This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/)"
+"This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
+"This product includes cryptographic software written by Eric Young (eay@cryptsoft.com)"
+]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[Risk of termination of patent licenses upon patent proceedings
+]]></Topic>
+    <Text><![CDATA[If [Your Legal Entity] sues contributors regarding [Your Legal Entity] patents, any patent license granted to [Your Legal Entity] for this component will automatically terminate
+]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2022, Spider, <spider@spider.vc>
+]]></Content>
+    <Files><![CDATA[port/fal/samples/porting/fal_flash_stm32l4.c
+]]></Files>
+    <FileHash><![CDATA[af4321d15b79281226634b9ea784cb4ce98e732f
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2020-2023, Armink, <armink.ztl@gmail.com>
+]]></Content>
+    <Files><![CDATA[inc/fdb_def.h
+]]></Files>
+    <FileHash><![CDATA[d829ff539c3efff683307aeb0606f67f6002b05f
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2020, enkiller, <462747508@qq.com>
+]]></Content>
+    <Files><![CDATA[src/fdb_file.c
+]]></Files>
+    <FileHash><![CDATA[1be143f5eaebd1db623e37a86ba0bf376f49894a
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2020, Armink, <armink.ztl@gmail.com>
+]]></Content>
+    <Files><![CDATA[inc/fdb_cfg.h
+port/fal/samples/porting/fal_flash_stm32f2_port.c
+port/fal/samples/porting/fal_flash_stm32f4.c
+tests/fdb_kvdb_tc.c
+tests/fdb_tsdb_tc.c
+samples/tsdb_sample.c
+src/fdb_kvdb.c
+src/fdb_file.c
+src/fdb.c
+src/fdb_tsdb.c
+src/fdb_utils.c
+inc/fdb_low_lvl.h
+inc/flashdb.h
+]]></Files>
+    <FileHash><![CDATA[01ad5d54e3224f99bdf31154d5321b5ac4773b05
+37aa68b35a72d329b0b25af9c62ad6acc5ed8a0e
+bf79a5a7672606c882f7c4b4b978b92a1e1cd99f
+1c4145e8cff0092aa2b0633bec62421b39604257
+e36be97c57e6f3c9972fb32261d943ae2ec928be
+df43547f04cbe1e0f81314e7a32cf2d829f1b1cd
+f72b83282505fa954483d1f0385807d4adefcc6c
+1be143f5eaebd1db623e37a86ba0bf376f49894a
+c5d16f38c4bd591a4597e9651835a166ab3bda75
+85ce6696369b4ccf5902802f87422d9aa89e355b
+bea77894b60982a7d8af3cdcbee4f0a4c20e26ed
+df1cf3df87183891e90d65d21ffae3ade9a5d4cd
+9ae144eb90834fdd9d39b62fd921fec534c15d1e
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2006-2018, RT-Thread Development Team
+]]></Content>
+    <Files><![CDATA[port/fal/samples/porting/fal_cfg.h
+port/fal/samples/porting/fal_flash_sfud_port.c
+port/fal/src/fal.c
+port/fal/src/fal_rtt.c
+port/fal/src/fal_flash.c
+port/fal/inc/fal.h
+port/fal/src/fal_partition.c
+port/fal/inc/fal_def.h
+]]></Files>
+    <FileHash><![CDATA[51d567d1eebe071a17b30d9802da4bcd6c433efa
+e74fd0512ec56114b55e4c9f1ab7e3f6c093d02a
+3a47d052e28284c4ce46764c4230ae69570815fa
+760c572c29489673a162b631c660d88a6627e65b
+530b3f481dd69eaa8b74f0b664331377d9233906
+69dc2d65c612bcad15f665298a4dd0f52482e9a6
+0b9a3cd02e12be3803054eb5e79195faa30dc9b2
+82f06d7ee50ff15e681dbf9259aac2d594851983
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[(C) Keil Software
+]]></Content>
+    <Files><![CDATA[demos/stm32f405rg_spi_flash/RVMDK/FlashDB.uvprojx
+demos/stm32f405rg_spi_flash/RVMDK/FlashDB.uvoptx
+demos/stm32f405rg/RVMDK/FlashDB.uvprojx
+demos/stm32f405rg/RVMDK/FlashDB.uvoptx
+demos/stm32f103ve/RVMDK/FlashDB.uvprojx
+demos/stm32f103ve/RVMDK/FlashDB.uvoptx
+]]></Files>
+    <FileHash><![CDATA[a5c74d1c63a18e959a7745da39acc2597ba22b2a
+45b42e7f0656c3e915581a2fa6a0dc2b984bcb58
+a374f8dd2271331585b10dfd2824303acc06c206
+d867312a941d86fa0ad09fa983fffdcf38cd7c36
+aa526e07dcbcce16215d28edb54b1737135f2398
+cbb58fc028c3e7a1af6c06810902fb53687d7d61
+]]></FileHash>
+  </Copyright>
+
+  <IrrelevantFiles>
+    <Files><![CDATA[port/fal/samples/porting/fal_flash_stm32f1_port.c
+samples/kvdb_type_string_sample.c
+samples/kvdb_basic_sample.c
+samples/kvdb_type_blob_sample.c
+demos/stm32f405rg_spi_flash/drivers/board.c
+demos/stm32f405rg_spi_flash/drivers/uart_config.h
+demos/stm32f405rg_spi_flash/drivers/board.h
+demos/stm32f405rg_spi_flash/drivers/drv_clk.c
+demos/stm32f405rg_spi_flash/drivers/stm32f4xx_hal_conf.h
+demos/stm32f405rg_spi_flash/drivers/drv_spi_flash.c
+demos/stm32f405rg_spi_flash/drivers/stm32f4xx_hal_msp.c
+demos/stm32f405rg_spi_flash/drivers/drv_usart.c
+demos/stm32f405rg_spi_flash/drivers/drv_common.c
+demos/stm32f405rg_spi_flash/applications/fal_cfg.h
+demos/stm32f405rg_spi_flash/applications/main.c
+demos/stm32f405rg_spi_flash/applications/syscall_newlib.c
+demos/stm32f405rg_spi_flash/applications/fdb_cfg.h
+demos/stm32f405rg_spi_flash/applications/syscall_armlibc.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_ltdc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_wwdg.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_iwdg.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_dma2d.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hash_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_spi.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_dma.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rng.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pccard.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sai.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_gpio.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_utils.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usart.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_eth.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_dac.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32_assert_template.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rcc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_system.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_usart.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_qspi.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_mmc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_smartcard.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_tim.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cryp_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/Legacy/stm32f4xx_hal_can_legacy.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_smbus.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sdram.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spdifrx.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_fmpi2c.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma2d.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_lptim.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_wwdg.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_lptim.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_exti.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_pwr.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_ltdc_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_fmpi2c_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_irda.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fmc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hcd.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_nor.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dsi.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_iwdg.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sai_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dfsdm.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_crc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cec.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_cortex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_conf_template.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_nand.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_i2c.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hash.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cryp.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi_ex.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_bus.h
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sai.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_eth.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nand.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sai_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dfsdm.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hcd.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_smbus.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dsi.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma2d.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hash.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sram.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/Legacy/stm32f4xx_hal_can.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_irda.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_fmpi2c_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_mmc.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_ltdc_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spdifrx.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dcmi.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sdram.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cec.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_qspi.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_wwdg.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_fmpi2c.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_lptim.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_ltdc.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hash_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nor.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pccard.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_smartcard.c
+demos/stm32f405rg_spi_flash/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dcmi_ex.c
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/gcc/startup_stm32f405xx.S
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f405xx.s
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Device/ST/STM32F4xx/Include/stm32f405xx.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/tz_context.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/cmsis_armcc.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/cmsis_compiler.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/mpu_armv7.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_sc300.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/cmsis_armclang.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_cm33.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/cmsis_iccarm.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_sc000.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_cm0.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_armv8mbl.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/cmsis_version.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/cmsis_gcc.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_armv8mml.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/mpu_armv8.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_cm0plus.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_cm4.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_cm23.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_cm1.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_cm3.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/Include/core_cm7.h
+demos/stm32f405rg_spi_flash/libraries/CMSIS/RTOS/Template/cmsis_os.h
+demos/stm32f405rg_spi_flash/sfud/port/sfud_port.c
+demos/stm32f405rg_spi_flash/sfud/README.md
+demos/stm32f405rg_spi_flash/sfud/LICENSE
+demos/stm32f405rg_spi_flash/sfud/src/sfud.c
+demos/stm32f405rg_spi_flash/sfud/src/sfud_sfdp.c
+demos/stm32f405rg_spi_flash/sfud/inc/sfud_flash_def.h
+demos/stm32f405rg_spi_flash/sfud/inc/sfud.h
+demos/stm32f405rg_spi_flash/sfud/inc/sfud_def.h
+demos/stm32f405rg_spi_flash/sfud/inc/sfud_cfg.h
+demos/esp32_spi_flash/main/main.c
+demos/esp32_spi_flash/components/FlashDB/inc/fal_cfg.h
+demos/esp32_spi_flash/components/FlashDB/inc/fdb_cfg.h
+demos/esp32_spi_flash/components/FlashDB/porting/fal_flash_esp32_port.c
+demos/stm32f405rg/drivers/board.c
+demos/stm32f405rg/drivers/uart_config.h
+demos/stm32f405rg/drivers/board.h
+demos/stm32f405rg/drivers/drv_clk.c
+demos/stm32f405rg/drivers/stm32f4xx_hal_conf.h
+demos/stm32f405rg/drivers/drv_usart.c
+demos/stm32f405rg/drivers/drv_common.c
+demos/stm32f405rg/applications/fal_cfg.h
+demos/stm32f405rg/applications/main.c
+demos/stm32f405rg/applications/syscall_newlib.c
+demos/stm32f405rg/applications/fdb_cfg.h
+demos/stm32f405rg/applications/syscall_armlibc.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_ltdc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_wwdg.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_iwdg.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_dma2d.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hash_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_spi.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_dma.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rng.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pccard.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sai.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_gpio.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_utils.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usart.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_eth.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_dac.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32_assert_template.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rcc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_system.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_usart.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_qspi.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_mmc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_smartcard.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_tim.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cryp_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/Legacy/stm32f4xx_hal_can_legacy.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_smbus.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sdram.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spdifrx.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_fmpi2c.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma2d.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_lptim.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_wwdg.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_lptim.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_exti.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_pwr.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_ltdc_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_fmpi2c_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_irda.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fmc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hcd.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_nor.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dsi.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_iwdg.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sai_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dfsdm.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_crc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cec.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_cortex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_conf_template.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_nand.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_i2c.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hash.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cryp.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi_ex.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_bus.h
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sai.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_eth.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nand.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sai_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dfsdm.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hcd.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_smbus.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dsi.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma2d.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hash.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sram.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/Legacy/stm32f4xx_hal_can.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_irda.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_fmpi2c_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_mmc.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_ltdc_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spdifrx.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dcmi.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sdram.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cec.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_qspi.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_wwdg.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_fmpi2c.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_lptim.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_ltdc.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hash_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nor.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pccard.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_smartcard.c
+demos/stm32f405rg/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dcmi_ex.c
+demos/stm32f405rg/libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/gcc/startup_stm32f405xx.S
+demos/stm32f405rg/libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f405xx.s
+demos/stm32f405rg/libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+demos/stm32f405rg/libraries/CMSIS/Device/ST/STM32F4xx/Include/stm32f405xx.h
+demos/stm32f405rg/libraries/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
+demos/stm32f405rg/libraries/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
+demos/stm32f405rg/libraries/CMSIS/Include/tz_context.h
+demos/stm32f405rg/libraries/CMSIS/Include/cmsis_armcc.h
+demos/stm32f405rg/libraries/CMSIS/Include/cmsis_compiler.h
+demos/stm32f405rg/libraries/CMSIS/Include/mpu_armv7.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_sc300.h
+demos/stm32f405rg/libraries/CMSIS/Include/cmsis_armclang.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_cm33.h
+demos/stm32f405rg/libraries/CMSIS/Include/cmsis_iccarm.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_sc000.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_cm0.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_armv8mbl.h
+demos/stm32f405rg/libraries/CMSIS/Include/cmsis_version.h
+demos/stm32f405rg/libraries/CMSIS/Include/cmsis_gcc.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_armv8mml.h
+demos/stm32f405rg/libraries/CMSIS/Include/mpu_armv8.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_cm0plus.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_cm4.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_cm23.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_cm1.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_cm3.h
+demos/stm32f405rg/libraries/CMSIS/Include/core_cm7.h
+demos/stm32f405rg/libraries/CMSIS/RTOS/Template/cmsis_os.h
+demos/linux/applications/main.c
+demos/linux/applications/fdb_cfg.h
+demos/esp8266_spi_flash/main/hello_world_main.c
+demos/esp8266_spi_flash/components/FlashDB/inc/fal_cfg.h
+demos/esp8266_spi_flash/components/FlashDB/inc/fdb_cfg.h
+demos/esp8266_spi_flash/components/FlashDB/porting/fal_flash_esp8266_port.c
+demos/stm32f103ve/drivers/board.c
+demos/stm32f103ve/drivers/uart_config.h
+demos/stm32f103ve/drivers/board.h
+demos/stm32f103ve/drivers/drv_clk.c
+demos/stm32f103ve/drivers/drv_usart.c
+demos/stm32f103ve/drivers/stm32f1xx_hal_conf.h
+demos/stm32f103ve/drivers/drv_common.c
+demos/stm32f103ve/applications/fal_cfg.h
+demos/stm32f103ve/applications/main.c
+demos/stm32f103ve/applications/syscall_newlib.c
+demos/stm32f103ve/applications/fdb_cfg.h
+demos/stm32f103ve/applications/syscall_armlibc.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_tim.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_spi.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_adc.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_wwdg.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_smartcard.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dac.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_system.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_exti.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32_assert_template.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dac_ex.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_mmc.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_iwdg.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cec.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_crc.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_gpio.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_hcd.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_utils.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_i2c.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_nand.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/Legacy/stm32f1xx_hal_can_legacy.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/Legacy/stm32f1xx_hal_can_ex_legacy.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio_ex.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_dma.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_irda.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_cortex.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pccard.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_fsmc.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_dac.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_bus.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_iwdg.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_rcc.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_eth.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2s.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usart.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_conf_template.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_nor.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_wwdg.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_rtc.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_usart.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sram.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_pwr.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_exti.h
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_sd.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dac_ex.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_nand.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_usart.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rtc.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_wwdg.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usb.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_mmc.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rtc_ex.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pccard.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_irda.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc_ex.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dac.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_nor.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/Legacy/stm32f1xx_hal_can.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cec.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_iwdg.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_sram.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_hcd.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_can.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pcd_ex.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_smartcard.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2s.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pcd.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_crc.c
+demos/stm32f103ve/libraries/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_eth.c
+demos/stm32f103ve/libraries/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c
+demos/stm32f103ve/libraries/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xe.S
+demos/stm32f103ve/libraries/CMSIS/Device/ST/STM32F1xx/Source/Templates/arm/startup_stm32f103xe.s
+demos/stm32f103ve/libraries/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h
+demos/stm32f103ve/libraries/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h
+demos/stm32f103ve/libraries/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
+demos/stm32f103ve/libraries/CMSIS/Include/tz_context.h
+demos/stm32f103ve/libraries/CMSIS/Include/cmsis_armcc.h
+demos/stm32f103ve/libraries/CMSIS/Include/cmsis_compiler.h
+demos/stm32f103ve/libraries/CMSIS/Include/mpu_armv7.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_sc300.h
+demos/stm32f103ve/libraries/CMSIS/Include/cmsis_armclang.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_cm33.h
+demos/stm32f103ve/libraries/CMSIS/Include/cmsis_iccarm.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_sc000.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_cm0.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_armv8mbl.h
+demos/stm32f103ve/libraries/CMSIS/Include/cmsis_version.h
+demos/stm32f103ve/libraries/CMSIS/Include/cmsis_gcc.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_armv8mml.h
+demos/stm32f103ve/libraries/CMSIS/Include/mpu_armv8.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_cm0plus.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_cm4.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_cm23.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_cm1.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_cm3.h
+demos/stm32f103ve/libraries/CMSIS/Include/core_cm7.h
+demos/stm32f103ve/libraries/CMSIS/RTOS/Template/cmsis_os.h
+docs/zh-cn/README.md
+docs/zh-cn/_coverpage.md
+docs/README.md
+docs/_coverpage.md
+]]></Files>
+  </IrrelevantFiles>
+
+
+  <Comment>
+    <![CDATA[1) Apache NOTICE file is not found.  2) Apache-2.0 Risk: If the changes made to the software are to be sent back to ASF, they will have to be covered under Apache-2.0. This can be avoided by NOT submitting the changes back to ASF.  Contact BU Representative or Third-Party License Manager if you plan to contribute fixes back to the community. 3) The clearing team has checked for the dependencies for this package via the scan tool only. Additional manual steps (scripts run on source files) to identify dependencies were not performed.  Identifying and listing the dependencies is the responsibility of the project team. The clearing team shall not be held responsible for not identifying or listing the same during clearing of any packages.]]>
+  </Comment>
+  <ExternalIds>
+    <![CDATA[https://sw360.siemens.com/group/guest/components/-/component/release/detailRelease/4a498005278f4752a17ce49c572c042d/2978f6d679eb4cd8ab2d72ead36bcce2#/tab-Summary]]>
+  </ExternalIds>
+</ComponentLicenseInformation>
+

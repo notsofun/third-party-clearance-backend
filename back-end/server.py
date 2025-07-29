@@ -89,4 +89,11 @@ async def chat(session_id: str, message: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    uvicorn.run("server:app", host="127.0.0.1", port=8000, reload=True)
+    import uvicorn
+    import importlib
+    import os
+    import sys
+    
+    # 将当前目录加入到Python路径
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    uvicorn.run("back-end.server:app", host="127.0.0.1", port=8000, reload=True)

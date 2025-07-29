@@ -3,21 +3,61 @@ import numpy as np
 import faiss
 import pickle
 import os
+import xml.etree.ElementTree as ET
 
 class VectorDatabase:
     """
     实例化使用时需要用load()去加载数据库，否则无法查询
+    支持根据不同类型数据去处理向量并实现增量积累
     
     """
+    TYPE_LICENSE = 'license'
+    TYPE_XML = 'xml'
+
     def __init__(self,dimension=3072):
         self.dimension = dimension
         self.client = AzureOpenAIChatClient(embedding_deployment="text-embedding-3-large")
+        self.index = None
+        self.texts = []
+        self.embedding = []
     
-    def build_index(self, data_dict):
-        """最终的构建索引函数（数据平展化）"""
-        self.texts = []  # 存索引对应的数据记录
-        embeddings = []
+    def build_index(self, data_dict, data_type = TYPE_LICENSE):
+        """最终的构建索引函数（数据平展化）
+        目前支持
+        xml和license文本"""
+        processor_method = getattr(self, f"_process_{data_type}_data", None)
+        if not processor_method:
+            raise ValueError(f"This type has not been supported yet: {data_type}")
+        
+        items = processor_method(data_dict)
+        new_embeddings = []
+        new_texts = []
 
+        for item in items:
+            item['_data_type'] = data_type
+
+            serialized_text = self._serialize_item(item)
+            embedding = self.client.get_embedding(serialized_text)
+            new_embeddings.append(embedding)
+            new_texts.append(item)
+
+        self.texts.extend(new_texts)
+        self.embedding.extend(new_embeddings)
+
+        if new_embeddings:
+            all_embeddings = np.vstack(self.embedding).astype('float32')
+
+            if self.index is None:
+
+                # 确保使用的维度与你模型使用的Embedding维度一致
+                self.index = faiss.IndexFlatL2(self.dimension)
+                self.index.add(all_embeddings)
+
+        print(f"✅ 索引构建完成，共 {len(self.texts)} 个license条目被索引。")
+
+    def _process_license_data(self, data_dict):
+        """处理license类型的数据字典"""
+        items = []
         # 把数据从嵌套展开到平铺
         for color_category, details in data_dict.items():
             licenses = details.get("licenses", [])
@@ -29,45 +69,171 @@ class VectorDatabase:
                     'risk_reason': details.get('risk_reason', ''),
                     'obligations': details.get('obligations', '')
                 }
+                items.append(item)
+        return items
 
-                serialized_text = self.serialize_to_text(item)
-                embedding = self.client.get_embedding(serialized_text)
-
-                embeddings.append(embedding)
-                self.texts.append(item)
-
-        embeddings = np.vstack(embeddings).astype('float32')
-
-        # 确保使用的维度与你模型使用的Embedding维度一致
-        self.index = faiss.IndexFlatL2(self.dimension)
-        self.index.add(embeddings)
-
-        print(f"✅ 索引构建完成，共 {len(self.texts)} 个license条目被索引。")
-
-    def serialize_to_text(self, item):
-        """结构化json序列化为可读清晰文本（专为license数据设计）"""
+    def _process_xml_data(self, xml_content):
+        """处理XML格式的组件许可证信息"""
+        items = []
         
-        obligations = item['obligations']
+        try:
+            # 解析XML内容
+            root = ET.fromstring(xml_content)
+            
+            # 提取基本信息
+            component_name = ""
+            component_version = ""
+            general_info = root.find("GeneralInformation")
+            if general_info is not None:
+                name_elem = general_info.find("ComponentName")
+                if name_elem is not None and name_elem.text:
+                    component_name = name_elem.text.strip()
+                    
+                version_elem = general_info.find("ComponentVersion")
+                if version_elem is not None and version_elem.text:
+                    component_version = version_elem.text.strip()
+            
+            # 提取评估摘要
+            assessment_text = ""
+            assessment = root.find("AssessmentSummary/GeneralAssessment")
+            if assessment is not None and assessment.text:
+                assessment_text = assessment.text.strip()
+            
+            # 处理许可证信息
+            for license_elem in root.findall("License"):
+                license_name = license_elem.get("name", "")
+                license_type = license_elem.get("type", "")
+                spdx_id = license_elem.get("spdxidentifier", "")
+                
+                # 提取许可证内容摘要
+                content = ""
+                content_elem = license_elem.find("Content")
+                if content_elem is not None and content_elem.text:
+                    # 只取前200个字符作为摘要
+                    content = content_elem.text[:200] + "..."
+                
+                # 提取关联文件数量
+                files_count = 0
+                files_elem = license_elem.find("Files")
+                if files_elem is not None and files_elem.text:
+                    files_count = len(files_elem.text.strip().split("\n"))
+                
+                item = {
+                    'component_name': component_name,
+                    'component_version': component_version,
+                    'license_name': license_name,
+                    'license_spdx': spdx_id,
+                    'license_type': license_type,
+                    'content_summary': content,
+                    'files_count': files_count,
+                    'assessment': assessment_text
+                }
+                items.append(item)
+            
+            # 处理义务信息
+            for obligation in root.findall("Obligation"):
+                topic = ""
+                topic_elem = obligation.find("Topic")
+                if topic_elem is not None and topic_elem.text:
+                    topic = topic_elem.text.strip()
+                
+                text = ""
+                text_elem = obligation.find("Text")
+                if text_elem is not None and text_elem.text:
+                    text = text_elem.text.strip()
+                
+                # 获取相关许可证
+                licenses_elem = obligation.find("Licenses")
+                if licenses_elem is not None:
+                    for lic in licenses_elem.findall("License"):
+                        if lic.text:
+                            item = {
+                                'component_name': component_name,
+                                'component_version': component_version,
+                                'obligation_topic': topic,
+                                'obligation_text': text,
+                                'license_name': lic.text.strip(),
+                                'assessment': assessment_text
+                            }
+                            items.append(item)
+        
+        except Exception as e:
+            print(f"Something wrong with processing xml data: {e}")
+        
+        return items
+
+    def _serialize_item(self, item):
+        """基于数据类型选择合适的序列化方法"""
+        data_type = item.get('_data_type', self.TYPE_LICENSE)
+        if data_type == self.TYPE_LICENSE:
+            return self._serialize_license_item(item)
+        elif data_type == self.TYPE_XML:
+            return self._serialize_xml_item(item)
+        else:
+            # 默认序列化方法
+            return "; ".join(f"{k}: {v}" for k, v in item.items() if k != '_data_type')
+
+    def _serialize_license_item(self, item):
+        """将license类型的条目序列化为文本"""
+        obligations = item.get('obligations', '')
         if isinstance(obligations, list):
             obligations = "；".join(obligations)
 
-        serialized_text = (
-            f"License Name: {item['license']}; "
-            f"Color Category: {item['color_category']}; "
-            f"Risk Level: {item['risk_level']}; "
-            f"Risk Reason: {item['risk_reason']}; "
+        return (
+            f"License Name: {item.get('license', '')}; "
+            f"Color Category: {item.get('color_category', '')}; "
+            f"Risk Level: {item.get('risk_level', '')}; "
+            f"Risk Reason: {item.get('risk_reason', '')}; "
             f"Obligations: {obligations}."
         )
-
-        return serialized_text
+    
+    def _serialize_xml_item(self, item):
+        """将XML类型的条目序列化为文本"""
+        fields = []
+        
+        # 组件信息
+        if 'component_name' in item:
+            fields.append(f"Component: {item['component_name']}")
+        if 'component_version' in item:
+            fields.append(f"Version: {item['component_version']}")
+            
+        # 许可证信息
+        if 'license_name' in item:
+            fields.append(f"License: {item['license_name']}")
+        if 'license_spdx' in item:
+            fields.append(f"SPDX: {item['license_spdx']}")
+        if 'license_type' in item:
+            fields.append(f"Type: {item['license_type']}")
+            
+        # 义务信息
+        if 'obligation_topic' in item:
+            fields.append(f"Obligation: {item['obligation_topic']}")
+        if 'obligation_text' in item:
+            # 限制义务文本长度
+            text = item['obligation_text']
+            if len(text) > 300:
+                text = text[:300] + "..."
+            fields.append(f"Details: {text}")
+            
+        # 其他信息
+        if 'assessment' in item:
+            fields.append(f"Assessment: {item['assessment']}")
+        if 'files_count' in item:
+            fields.append(f"Files: {item['files_count']}")
+            
+        return "; ".join(fields)
 
     def search(self,query, k=5):
         """搜索最相近的文本"""
+
+        if self.index is None or len(self.texts) == 0:
+            raise ValueError("索引未加载或为空，请先加载或构建索引")
+
         query_embedding = self.client.get_embedding(query)
 
         # 搜索最相似的向量
         distances, indices = self.index.search(
-            query_embedding.reshape(1, -1).astype('float32'), 
+            query_embedding.reshape(1, -1).astype('float32'),
             k
         )
         
@@ -76,24 +242,93 @@ class VectorDatabase:
         for i, (dist, idx) in enumerate(zip(distances[0], indices[0])):
             results.append({
                 'text': self.texts[idx],
-                'distance': dist,
+                'distance': float(dist),
                 'rank': i + 1
             })
         
         return results
     
-    def save(self, path):
-        """保存索引和文本"""
-        os.makedirs(path, exist_ok=True)
-        faiss.write_index(self.index, f"./database/{path}.faiss")
-        with open(f"./database/{path}.pkl", 'wb') as f:
-            pickle.dump(self.texts, f)
 
+    def save(self, path):
+
+        """保存索引、文本数据和嵌入向量"""
+
+        os.makedirs("./database", exist_ok=True)
+
+        # 保存文本数据和嵌入向量
+        save_data = {
+            'texts': self.texts,
+            'embeddings': self.embeddings
+        }
+        with open(f"./database/{path}.pkl", 'wb') as f:
+            pickle.dump(save_data, f)
+        # 保存索引
+        if self.index:
+            faiss.write_index(self.index, f"./database/{path}.faiss")
+        print(f"✅ 数据库已保存到 ./database/{path}，共 {len(self.texts)} 条记录")
     def load(self, path):
-        """加载索引和文本"""
-        self.index = faiss.read_index(f"./database/{path}.faiss")
-        with open(f"./database/{path}.pkl", 'rb') as f:
-            self.texts = pickle.load(f)
+        """加载索引、文本数据和嵌入向量"""
+        if not os.path.exists(f"./database/{path}.pkl"):
+            raise FileNotFoundError(f"数据库文件 ./database/{path}.pkl 不存在")
+        
+        try:
+            # 加载文本数据和嵌入向量
+            with open(f"./database/{path}.pkl", 'rb') as f:
+                data = pickle.load(f)
+                
+                # 兼容旧格式
+                if isinstance(data, list):
+                    self.texts = data
+                    self.embeddings = []
+                    print("⚠️ 加载了旧格式数据，缺少嵌入向量信息")
+                else:
+                    self.texts = data.get('texts', [])
+                    self.embeddings = data.get('embeddings', [])
+            
+            # 加载索引
+            if os.path.exists(f"./database/{path}.faiss"):
+                self.index = faiss.read_index(f"./database/{path}.faiss")
+            else:
+                print("⚠️ 未找到索引文件，将在需要时重建")
+                self.index = None
+                
+            # 如果有文本但没有对应的嵌入向量，提醒用户需要重建
+            if len(self.texts) > 0 and len(self.embeddings) == 0:
+                print("⚠️ 检测到文本数据但没有对应的嵌入向量，建议使用rebuild_index()重建索引")
+                
+            print(f"✅ 成功加载数据库，包含 {len(self.texts)} 条记录")
+            
+            # 如果索引和文本数量不匹配，自动重建索引
+            if self.index and self.index.ntotal != len(self.texts):
+                print("⚠️ 索引和文本数量不匹配，自动重建索引")
+                self.rebuild_index()
+                
+        except Exception as e:
+            raise RuntimeError(f"加载数据库失败: {e}")
+    
+    def rebuild_index(self):
+        """重新构建整个索引"""
+        if len(self.texts) == 0:
+            print("没有文本数据，无法构建索引")
+            return
+            
+        print(f"正在为 {len(self.texts)} 条记录重建索引...")
+        
+        # 如果没有预先计算的嵌入向量，需要重新计算
+        if len(self.embeddings) != len(self.texts):
+            print("计算所有文本的嵌入向量...")
+            self.embeddings = []
+            for item in self.texts:
+                serialized_text = self._serialize_item(item)
+                embedding = self.client.get_embedding(serialized_text)
+                self.embeddings.append(embedding)
+        
+        # 构建新索引
+        all_embeddings = np.vstack(self.embeddings).astype('float32')
+        self.index = faiss.IndexFlatL2(self.dimension)
+        self.index.add(all_embeddings)
+        
+        print(f"✅ 索引重建完成，包含 {self.index.ntotal} 个向量")
 
 def main():
     license_info = {
