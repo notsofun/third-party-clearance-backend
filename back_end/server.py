@@ -87,7 +87,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
     try:
         # 处理用户输入
         is_complete, updated_shared, reply = chat_service.process_user_input(
-            session["shared"], 
+            session["shared"],
             chat_message.message
         )
         

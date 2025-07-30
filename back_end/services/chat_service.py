@@ -1,5 +1,6 @@
 import logging
 from typing import Dict, Any, Tuple, Optional
+from utils.tools import get_strict_json
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +54,7 @@ class ChatService:
         if result is False:
             # 更新当前组件状态
             comps[current_idx]["status"] = 'confirmed'
-            logger.info(f"Component {current_comp['title']} confirmed with status: {result['result']}")
+            logger.info(f"Component {current_comp['title']} confirmed.")
             
             # 查找下一个待确认的组件
             next_idx = self._find_next_unconfirmed_component(comps, current_idx)
@@ -62,12 +63,13 @@ class ChatService:
                 # 所有组件都已确认
                 logger.info("All components have been confirmed")
                 shared["all_confirmed"] = True
-                return True, shared, "所有组件已确认完毕！"
+                return True, shared, "All components have been confirmed!"
             else:
                 # 移动到下一个组件
                 shared["current_component_idx"] = next_idx
                 next_comp = comps[next_idx]
-                return False, shared, f"已完成当前组件确认。现在确认: {next_comp['title']}"
+                instruction = get_strict_json(risk_bot,f"here is the licenseName: {next_comp['title']}, CheckedLevel: {next_comp['CheckedLevel']}, and Justification: {next_comp['Justification']}")
+                return False, shared, f"Previous component has been confirmed, now we are confirming: {next_comp['title']} \n {instruction['talking']}"
         else:
             # 继续确认当前组件
             return False, shared, reply
@@ -104,5 +106,9 @@ class ChatService:
         
         shared["current_component_idx"] = first_idx
         first_comp = comps[first_idx]
-        
-        return shared, f"开始组件确认流程。首先确认: {first_comp['title']}"
+
+        risk_bot = shared.get("riskBot")
+
+        json_welcome = get_strict_json(risk_bot,f"here is the licenseName: {first_comp['title']}, CheckedLevel: {first_comp['CheckedLevel']}, and Justification: {first_comp['Justification']}")
+
+        return shared, json_welcome['talking']
