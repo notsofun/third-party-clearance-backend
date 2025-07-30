@@ -317,13 +317,20 @@ class GetUserConfirming(Node):
         print("All risky components have been confirmed!")
         return None
     
-    def exec(self, prep_res):
+    def exec(self, prep_res, user_input):
         if prep_res is None:
             return None
         comp, idx, riskbot = prep_res
 
-        # 返回沟通结果，discarded或passed
-        currResult = riskbot.toConfirm(comp)
+        # 返回沟通结果，discarded或passed，判断是否继续的条件要和输入解耦，这样才能处理前后端异步交互的问题
+        chatting = True
+
+        while chatting:
+            currResult = riskbot.toConfirm(comp,user_input)
+            if currResult is False:
+                chatting = False
+                break
+
         return currResult, idx
         
     def post(self, shared, prep_res, exec_res):

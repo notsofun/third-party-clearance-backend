@@ -263,7 +263,7 @@ class Chatbot(AzureOpenAIChatClient):
         })
         return response["text"]
     
-    def toChat(self,conditions:dict) -> dict:
+    def toChat(self,conditions:dict, user_input) -> dict:
         """
         conditions应该是一个字典结构，包含
         {"Go_on":(一个由字符串构建的元组),
@@ -271,24 +271,21 @@ class Chatbot(AzureOpenAIChatClient):
         Go_on表示条件为继续的关键词，End表示会话终止的关键词
         """
 
-        chatting = True
-
-        while chatting:
-            user_reply = input("Your input: ")
-            # 强制获得严格JSON（比如用户输入理由/选择后）
-            result_json = None
-            while not result_json:
-                try:
-                    result_json = get_strict_json(self, user_reply)
-                    # print('Now you are trying to keep this item:', result_json)
-                except RuntimeError:
-                    continue  # 仍然没拿到，继续要
-            # 判断会话走向
-            if result_json["result"] in conditions['End']:
-                print(result_json["talking"])
-                break
-            # 引导用户继续完善理由
+        user_reply = user_input # 把user_input变成一个变量，让前端来传
+        # 强制获得严格JSON（比如用户输入理由/选择后）
+        result_json = None
+        while not result_json:
+            try:
+                result_json = get_strict_json(self, user_reply)
+                # print('Now you are trying to keep this item:', result_json)
+            except RuntimeError:
+                continue  # 仍然没拿到，继续要
+        # 判断会话走向
+        if result_json["result"] in conditions['End']:
             print(result_json["talking"])
+            return False
+        # 引导用户继续完善理由
+        print(result_json["talking"])
 
         return result_json
 
@@ -305,13 +302,13 @@ class RiskBot(Chatbot):
             "End" : ("passed","discarded")
         }
     
-    def toConfirm(self,comp):
+    def toConfirm(self,comp,user_input):
 
         json_welcome = get_strict_json(self,f"here is the licenseName: {comp['title']}, CheckedLevel: {comp['CheckedLevel']}, and Justification: {comp['Justification']}")
 
         print(json_welcome['talking'])
 
-        result_json = self.toChat(conditions=self.conditions)
+        result_json = self.toChat(conditions=self.conditions,user_input=user_input)
 
         return result_json
 
