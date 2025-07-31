@@ -45,13 +45,15 @@ class VectorDatabase:
         self.embedding.extend(new_embeddings)
 
         if new_embeddings:
-            all_embeddings = np.vstack(self.embedding).astype('float32')
+            new_embeddings_array = np.vstack(new_embeddings).astype('float32')
 
             if self.index is None:
-
-                # 确保使用的维度与你模型使用的Embedding维度一致
+                # 首次创建索引
                 self.index = faiss.IndexFlatL2(self.dimension)
+                all_embeddings = np.vstack(self.embedding).astype('float32')
                 self.index.add(all_embeddings)
+            else:
+                self.index.add(new_embeddings_array)
 
         print(f"✅ 索引构建完成，共 {len(self.texts)} 个license条目被索引。")
 
@@ -258,7 +260,7 @@ class VectorDatabase:
         # 保存文本数据和嵌入向量
         save_data = {
             'texts': self.texts,
-            'embeddings': self.embeddings
+            'embeddings': self.embedding
         }
         with open(f"./database/{path}.pkl", 'wb') as f:
             pickle.dump(save_data, f)
@@ -266,6 +268,7 @@ class VectorDatabase:
         if self.index:
             faiss.write_index(self.index, f"./database/{path}.faiss")
         print(f"✅ 数据库已保存到 ./database/{path}，共 {len(self.texts)} 条记录")
+
     def load(self, path):
         """加载索引、文本数据和嵌入向量"""
         if not os.path.exists(f"./database/{path}.pkl"):
@@ -302,6 +305,7 @@ class VectorDatabase:
             if self.index and self.index.ntotal != len(self.texts):
                 print("⚠️ 索引和文本数量不匹配，自动重建索引")
                 self.rebuild_index()
+                # rebuild的时候没有save
                 
         except Exception as e:
             raise RuntimeError(f"加载数据库失败: {e}")

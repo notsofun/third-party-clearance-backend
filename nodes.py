@@ -2,7 +2,9 @@ from pocketflow import Node, BatchNode
 import re, os
 from bs4 import BeautifulSoup
 import json
-from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot, credentialChecker)
+from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot,
+                                credentialChecker, sourceCodeChecker,
+                                DependecyChecker)
 from utils.vectorDB import VectorDatabase
 from utils.callAIattack import AzureOpenAIChatClient
 from utils.tools import (reverse_exec)
@@ -202,12 +204,14 @@ class LicenseReviewing(BatchNode):
         
         reviewer = RiskReviewer(session_id=f'review{randInt:016x}')
         creChecker = credentialChecker(session_id=f'credentialCheck{randInt:016x}')
+        srcChecker = sourceCodeChecker(session_id=f'credentialCheck{randInt:016x}')
 
         risk = reviewer.review(lTitle,lText)
         credentialOrNot = creChecker.check(lTitle,lText)
+        srcOrNot = srcChecker.check(lTitle,lText)
         logger.info('We have reviewed one component')
 
-        return lTitle,risk, credentialOrNot
+        return lTitle,risk, credentialOrNot, srcOrNot
     
     def post(self, shared, prep_res, exec_res_list):
 
@@ -218,8 +222,9 @@ class LicenseReviewing(BatchNode):
             lTitle : {
                 'risk' : risk,
                 'credentialOrNot': credential,
+                'sourceCodeRequired': srcOrNot,
             }
-            for lTitle, risk, credential in exec_res_list
+            for lTitle, risk, credential,srcOrNot in exec_res_list
         }
 
         with open("analysisOfRisk.json","w", encoding="utf-8" ) as f1:
@@ -228,36 +233,108 @@ class LicenseReviewing(BatchNode):
         logger.info('Completely Reviewed.')
         return "default"
 
+class SpecialLicenseCollecting(BatchNode):
+
+    def __init__(self, max_retries=1, wait=0):
+        super().__init__(max_retries, wait)
+
+    def prep(self, shared):
+        logger.info("Now we are collecing special licenses such as GPL")
+        parsedHtml = shared["parsedHtml"]
+        # 在prep阶段只准备数据，不初始化分类字典
+        licenseTexts = [(item['id'], item['title'], item['text'])
+                        for item in parsedHtml['license_texts']]
+        return licenseTexts
+    
+    def exec(self, licenseText):
+        lId, lTitle, lText = licenseText
+        
+        # 每个exec返回一个包含lTitle和它应该属于哪个类别的元组
+        if "GPLv3" in lTitle or "LGPLv3" in lTitle:
+            category = "GPLv3, LGPLv3"
+        elif "GPL" in lTitle and "Exception" in lTitle:
+            category = "GPL with Exception"
+        elif "LPGPL" in lTitle:
+            category = "LPGPL"
+        elif "LGPL" in lTitle:
+            category = "GPL, LGPL"
+        elif "GPL" in lTitle:
+            category = "GPL"
+        else:
+            category = None
+        
+        # 返回许可证标题和它所属的类别
+        return (lTitle, category) if category else None
+    
+    def post(self, shared, prep_res, exec_res):
+        # 在post阶段创建并填充分类字典
+        categories = {
+            "GPLv3, LGPLv3": [],
+            "GPL with Exception": [],
+            "LPGPL": [],
+            "GPL, LGPL": [],
+            "GPL": []
+        }
+        
+        # exec_res包含了所有exec方法的返回结果
+        for result in exec_res:
+            if result is not None:  # 过滤掉没有匹配的许可证
+                lTitle, category = result
+                categories[category].append(lTitle)
+        
+        # 将结果存入shared
+        shared['specialCollections'] = categories
+        return "default"
+    
 class RiskCheckingRAG(BatchNode):
 
     def __init__(self, deployment = None, embedding_deployment = None,max_retries=1, wait=0):
         super().__init__(max_retries, wait)
         self.deployment = deployment
         self.embedding_deployment = embedding_deployment
-
+    # 这个prompt要改一下，我觉得check也得基于text
     def prep(self, shared):
         logger.info('Now checking the reviewed risks')
+        parsedHtml = shared["parsedHtml"]
         random_int = random.getrandbits(64)
+        licenseTexts = [(item['id'], item['title'], item['text'],random_int)
+                for item in parsedHtml['license_texts']]
         originalRiskAnalysis = [ (k, v["risk"]['level'], v["risk"]['reason'],random_int) for k,v in shared["riskAnalysis"].items()]
         logger.info(f'We have {len(originalRiskAnalysis)} components to check')
-        return originalRiskAnalysis
+
+        # 创建一个基于title的licenseTexts字典
+        license_dict = {}
+        for _, title, text, _ in licenseTexts:
+            license_dict[title] = (text, random_int)
+        
+        # 连接两个列表，基于title
+        combined_data = []
+        for title, risk_level, risk_reason, _ in originalRiskAnalysis:
+            if title in license_dict:
+                license_text, random_int = license_dict[title]
+                # 组合数据：title, license_text, risk_level, risk_reason, random_int
+                combined_data.append((title, license_text, risk_level, risk_reason, random_int))
+        
+        logger.info(f'Successfully combined {len(combined_data)} license and risk records')
+        return combined_data
     
     def exec(self, item):
-        reviewedTitle, reviewedLevel, reviewedReason, randInt = item
+        reviewedTitle, originalText, reviewedLevel, reviewedReason, randInt = item
         db1 = VectorDatabase()
-        db1.load("LicenseTable")
+        db1.load("component_licenses_db")
         retrievedDocument = db1.search(reviewedTitle)
         checker = RiskChecker(session_id=f'check{randInt:016x}')
-        checkedRisk = checker.review(reviewedTitle,reviewedLevel,reviewedReason,retrievedDocument)
+        checkedRisk = checker.review(reviewedTitle,originalText, reviewedLevel,reviewedReason,retrievedDocument)
+
         # 姑且以checker的结果为标准吧
         logger.info('We have checked one component')
+
         return checkedRisk
     
     def post(self, shared, prep_res, exec_res):
 
         shared["checkedRisk"] = exec_res
 
-        
         toBeConfrimed_risk_comps = [
             info for info in exec_res
             if info.get("CheckedLevel") == "high" or "medium"
@@ -268,11 +345,46 @@ class RiskCheckingRAG(BatchNode):
         with open("checkedRisk.json","w", encoding="utf-8" ) as f1:
             json.dump(shared["checkedRisk"],f1,ensure_ascii=False,indent=2)
 
-        logger.info('finished checking, now we are starting the chat...')
-
-        shared['toInitialize'] = 'riskBot'
+        logger.info('finished checking, now we are checking the dependecies')
         return "default"
     
+class DependecyCheckingRAG(BatchNode):
+    
+    def __init__(self, max_retries=1, wait=0):
+        super().__init__(max_retries, wait)
+
+    def prep(self, shared):
+        logger.info("now we start analyzing depencies between components")
+        parsedHtml = shared['parsedHtml']
+        random_int = random.getrandbits(64)
+        components = [ (item['name'], item['block_html'],random_int )
+                    for item in parsedHtml['releases']]
+
+        return components
+    
+    def exec(self, comp):
+        compName, compHtml, randInt = comp
+        db = VectorDatabase()
+        db.load('component_licenses_db')
+        context = db.search(compName)
+        dependecyChecker = DependecyChecker(
+            session_id=f'check{randInt:016x}')
+        dependency = dependecyChecker.check(compName,compHtml,context)
+        logger.info("Now we have checked dependency of one component")
+
+        return dependency
+    
+    def post(self, shared, prep_res, exec_res):
+        
+        shared['dependencies'] = exec_res
+
+        with open("dependecies.json","w", encoding="utf-8" ) as f1:
+            json.dump(shared["dependencies"],f1,ensure_ascii=False,indent=2)
+
+        logger.info('finished checking, now we are starting the chat...')
+        shared['toInitialize'] = 'riskBot'
+
+        return 'default'
 class initializeSession(Node):
     """
     这个节点用来维护一个会话，方便管理上下文
@@ -296,6 +408,8 @@ class initializeSession(Node):
     def post(self, shared, prep_res, exec_res):
         if prep_res == 'riskBot':
             shared[prep_res] = exec_res
+
+        logger.info("Starting Chatting...")
         
         return 'default'
 

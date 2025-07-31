@@ -140,7 +140,7 @@ async def get_session_status(session_id: str):
     }
 
 
-# 在back_end路径下通过uvicorn server:app --reload --host 127.0.0.1 --port 8000激活服务器
+# 在项目根路径下通过uvicorn back_end.server:app --reload --host 127.0.0.1 --port 8000激活服务器
 if __name__ == "__main__":
     import uvicorn
     import importlib

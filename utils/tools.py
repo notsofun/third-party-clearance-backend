@@ -123,10 +123,25 @@ def get_strict_json(model:object, user_input):
     """
     for _ in range(5):
         response = model._request(user_input)
+        # print('让我看看你这个结果是怎样:',response)
         result = json_strip(response)
         if result:
             return result
     raise RuntimeError("Model did not give valid JSON after retries.")
+
+def get_strict_string(model:object, user_input):
+
+    """Try to get responses up to 5 times until getting strictly valid string.
+    No user perception of retries.
+    Model could be an object of a bot or a langchain model.
+    """
+
+    for _ in range(5):
+        response = model._request(user_input)
+        response = response.strip().lower()
+        if isinstance(response,str) and response in ("true", "false"):
+            return response
+    raise RuntimeError("Model did not give a true or false response")
 
 if __name__ == "__main__":
     with open(r"C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\parsed_original_oss.json","r",encoding="utf-8") as f:
