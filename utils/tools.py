@@ -2,6 +2,19 @@ import re
 from bs4 import BeautifulSoup
 import json
 
+def find_key_by_value(d:dict, target_value:str) -> str:
+    """
+    从字典中查找目标值所在的键。
+    
+    :param d: 字典，键值对集合。
+    :param target_value: 目标值，需要查找的值。
+    :return: 如果找到，返回对应的键；否则返回None。
+    """
+    for key, value in d.items():
+        if value == target_value:
+            return key
+    return None
+
 def clean_license_title(title):
     # 去掉前面的编号和冒号，去掉后面的特殊符号和空格
     # 例如 "4: Apache-2.0⇧" -> "Apache-2.0"

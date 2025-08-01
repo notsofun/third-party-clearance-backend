@@ -7,7 +7,7 @@ from pathlib import Path
 from main import run_analysis, run_chat, run_report
 import uuid
 import logging
-from back_end.services.chat_service import ChatService
+from back_end.services.chat_service import ChatService, ConfirmationStatus
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 logging.getLogger("azure").setLevel(logging.WARNING)
@@ -52,18 +52,18 @@ async def analyze_file(file: UploadFile = File(...)):
         # 运行分析流程
         shared = run_analysis(str(file_path.absolute()))
         
-        updated_shared, initial_message = chat_service.initialize_chat(shared)
+        updated_shared, messsage, status = chat_service.initialize_chat(shared,'toOEM')
 
         session_id = str(uuid.uuid4())
         sessions[session_id] = {
             "shared": shared,
-            "state": "in_progress" if not updated_shared.get("all_confirmed") else "completed"
+            "state": status if not updated_shared.get("all_confirmed") else "completed"
         }
         
         return {
             "session_id": session_id,
             "components": updated_shared.get("toBeConfirmedComps", []),
-            "message": initial_message,
+            "message": messsage,
             "status": sessions[session_id]["state"]
         }
         
@@ -77,8 +77,10 @@ async def chat(session_id: str, chat_message: ChatMessage):
     session = sessions.get(session_id)
     if not session:
         raise HTTPException(status_code=404, detail="Session not found")
-    
-    if session["state"] == "completed":
+    # 前端发起请求的时间不一定是在用户点击发送的时候哦，后面再看给前端传什么内容
+    status = session['state']
+
+    if status == "completed":
         return {
             "status": "completed",
             "message": "该会话已完成所有组件确认，请上传新html文件"
@@ -86,15 +88,22 @@ async def chat(session_id: str, chat_message: ChatMessage):
     
     try:
         # 处理用户输入
-        is_complete, updated_shared, reply = chat_service.process_user_input(
+        status, updated_shared, reply = chat_service.process_user_input(
             session["shared"],
-            chat_message.message
+            chat_message.message,
+            status
         )
         
+    # 前后端的流程，应该是切换成新的组件->pre check，判断需不需要走这些特殊流程，这时模型要返回一个state，toOEM->
+    # 用户回答完OEM，模型返回toContract->回答完Contract，模型返回toCredential->回答完credential，模型返回toDependecy
+    # 用户回答完Dependecy，模型返回toCompliance
+    # 已经有session['state]这个字段了，用这个来维护状态转移
+    # process_user_input用于处理用户输入，返回模型判断的状态，这个endpoint用来告诉前端
+
         # 更新会话状态
         session["shared"] = updated_shared
         
-        if is_complete:
+        if status == True:
             session["state"] = "completed"
             
             # 生成确认结果摘要
@@ -113,7 +122,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
             }
         
         return {
-            "status": "continue",
+            "status": status,
             "message": reply,
             "current_component_idx": updated_shared.get("current_component_idx")
         }
