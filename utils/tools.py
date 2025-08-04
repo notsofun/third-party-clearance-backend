@@ -152,9 +152,9 @@ def get_strict_string(model:object, user_input):
     for _ in range(5):
         response = model._request(user_input)
         response = response.strip().lower()
-        if isinstance(response,str) and response in ("true", "false"):
+        if isinstance(response,str):
             return response
-    raise RuntimeError("Model did not give a true or false response")
+    raise RuntimeError("Model did not give a strictly string response")
 
 if __name__ == "__main__":
     with open(r"C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\parsed_original_oss.json","r",encoding="utf-8") as f:

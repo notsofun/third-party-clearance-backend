@@ -1,6 +1,7 @@
 import logging
 from typing import Dict, Any, Tuple, Optional, Union
-from utils.tools import get_strict_json, find_key_by_value
+from back_end.services.chat_flow import WorkflowContext
+from utils.tools import get_strict_json, find_key_by_value, get_strict_string
 from enum import Enum
 
 logger = logging.getLogger(__name__)
@@ -20,7 +21,13 @@ class ComponentStatus(Enum):
 
 class ChatService:
     def __init__(self):
-        """初始化聊天服务"""
+        """
+        初始化聊天服务
+        这个类专注处理消息，根据传入状态不同调用不同的方法。
+        状态转移和维护、处理，交由workflowContext类
+        相当于这里的handle方法，都封装到chat_flow里去了
+        然后instructions的方法说是只是instruction，其实可以理解为某种mode，来切换到不同的判断状态
+        """
         # 状态处理器映射表
         self.status_handlers = {
             ConfirmationStatus.SPECIAL_CHECK.value: self._handle_special_check,
@@ -28,6 +35,7 @@ class ChatService:
             ConfirmationStatus.DEPENDENCY.value: self._handle_dependency,
             ConfirmationStatus.COMPLIANCE.value: self._handle_compliance
         }
+        self.chat_flow = WorkflowContext()
     
     def process_user_input(self, shared: Dict[str, Any], user_input: str, status: str) -> Tuple[bool, Dict[str, Any], str]:
         """
@@ -44,29 +52,51 @@ class ChatService:
             is_complete: 所有组件是否已全部确认完毕
             updated_shared_data: 更新后的会话数据
             reply_message: 返回给用户的消息
-        """
 
+        只负责处理用户后续的每次输入
+        """
 
         # 获取当前组件信息
         component_info = self._get_component_info(shared)
         if not component_info.valid:
             return True, shared, component_info.error_message
             
-        current_idx, comps, current_comp, risk_bot = component_info.data
+        current_idx, comps, current_comp = component_info.data
         
         # 获取并执行对应状态的处理器
         # status_handler是一个字典，get可以用，status是一个查询键，而在status_handler这个字典内，就是通过获取confirmationStatus这个对象的属性，也就是字符串来映射状态的
-        handler = self.status_handlers.get(status, self._handle_compliance)
-        result = handler(current_comp, risk_bot, user_input)
+        resonse = get_strict_json(self.bot, user_input)
+
+        result = resonse['result']
         
+        status = self.chat_flow.process(result).value
+
         # 处理结果
-        if result is False:
+        if status is None:
             # 组件确认完成，移至下一个
-            return self._proceed_to_next_component(comps, current_idx, shared, risk_bot)
+            return self._proceed_to_next_component(comps, current_idx, shared)
         else:
             # 继续当前组件的确认
-            reply = self._extract_reply(result)
+            reply = self._extract_reply(resonse)
             return status, shared, reply # 这里要返回一个to哪一步的结果
+
+    def get_instructions(self,shared:Dict[str,Any], status:str) -> Tuple[str,str]:
+        """
+        用于生成不依赖于用户输入，生成状态变化时的指导性语言
+        """
+
+        # 获取当前组件信息
+        component_info = self._get_component_info(shared)
+        if not component_info.valid:
+            return True, shared, component_info.error_message
+            
+        current_idx, comps, current_comp = component_info.data
+        logger.warning('Now we are in...',status)
+        handler = self.status_handlers.get(status,self._handle_compliance)
+        logger.warning('now we trying to handle',handler.__name__)
+        status, message = handler(shared,status)
+
+        return status, message
 
     def _handle_special_check(self, comp: Dict, risk_bot: Any, user_input: str) -> Any:
         """处理预检查状态"""
@@ -74,13 +104,14 @@ class ChatService:
         # 这里实现预检查逻辑
         return False  # 实际实现中应返回适当的结果
     
-    def _handle_oem(self, comp: Dict, risk_bot: Any, user_input: str, status:str) -> Any:
+    def _handle_oem(self, shared, status:str) -> Tuple[str, str]:
         """处理OEM状态"""
-        logger.info(f"处理OEM组件: {comp['title']}")
-        # 这个触发的时机是在用户发送消息之后诶……
-        # 这里实现OEM处理逻辑
-        result, status = risk_bot.OEMCheck(status,user_input)
-        return result, status  # 实际实现中应返回适当的结果
+        # logger.info(f"处理OEM组件: {comp['title']}")
+        prompt = self.bot.langfuse.get_prompt("bot/OEM").prompt
+        # 这里实现OEM处理逻辑的instructions逻辑
+        response = get_strict_json(self.bot,prompt)
+        status, message = response['result'], response['talking']
+        return status, message  # 实际实现中应返回适当的结果
     
     def _handle_dependency(self, comp: Dict, risk_bot: Any, user_input: str) -> Any:
         """处理依赖状态"""
@@ -116,14 +147,8 @@ class ChatService:
             return ComponentInfo(False, None, "错误：没有找到要确认的组件")
         
         current_comp = comps[current_idx]
-        risk_bot = shared.get("riskBot")
         
-        # 安全检查：风险评估机器人
-        if not risk_bot:
-            logger.error("共享数据中未找到RiskBot")
-            return ComponentInfo(False, None, "系统错误：无法找到风险评估机器人")
-        
-        return ComponentInfo(True, (current_idx, comps, current_comp, risk_bot), "")
+        return ComponentInfo(True, (current_idx, comps, current_comp), "")
 
     def _extract_reply(self, result: Any) -> str:
         """从处理结果中提取回复消息"""
@@ -138,7 +163,7 @@ class ChatService:
             logger.error(f"提取回复时出错: {e}")
             return "处理回复时出现错误"
 
-    def _proceed_to_next_component(self, comps: list, current_idx: int, shared: Dict[str, Any], risk_bot: Any) -> Tuple[bool, Dict[str, Any], str]:
+    def _proceed_to_next_component(self, comps: list, current_idx: int, shared: Dict[str, Any]) -> Tuple[bool, Dict[str, Any], str]:
         """处理当前组件确认完成后的逻辑，准备下一个组件"""
         # 更新当前组件状态
         comps[current_idx]["status"] = ComponentStatus.CONFIRMED.value
@@ -159,7 +184,7 @@ class ChatService:
         
         # 获取下一个组件的说明
         instruction = get_strict_json(
-            risk_bot,
+            self.bot,
             f"here is the licenseName: {next_comp['title']}, "
             f"CheckedLevel: {next_comp['CheckedLevel']}, and "
             f"Justification: {next_comp['Justification']}"
@@ -189,7 +214,7 @@ class ChatService:
         
         return None  # 所有组件都已确认
     
-    def initialize_chat(self, shared: Dict[str, Any], status:str) -> Tuple[Dict[str, Any], str]:
+    def initialize_chat(self, shared: Dict[str, Any]) -> Tuple[Dict[str, Any], str]:
         """
         初始化聊天会话，准备第一个组件
         
@@ -212,24 +237,16 @@ class ChatService:
             return shared, "所有组件已经确认完毕"
         
         shared["current_component_idx"] = first_idx
-        first_comp = comps[first_idx]
+        
         risk_bot = shared.get("riskBot")
         
+        # 安全检查：风险评估机器人
         if not risk_bot:
-            return shared, "错误：未找到风险评估机器人"
-        
-        # 获取第一个组件的指导信息
-        json_welcome = get_strict_json(
-            risk_bot,
-            f"here is the licenseName: {first_comp['title']}, "
-            f"CheckedLevel: {first_comp['CheckedLevel']}, and "
-            f"Justification: {first_comp['Justification']}"
-        )
-        
-        response = risk_bot.OEMCheck(status=status,user_input='')
-        message, status = response
+            raise RuntimeError("共享数据中未找到RiskBot")
 
-        return shared, message, status
+        self.bot = risk_bot
+
+        return shared, "Checking started"
     
     def confirm_input(self, shared: Dict[str, Any], user_input: str) -> int:
         """确认用户输入"""

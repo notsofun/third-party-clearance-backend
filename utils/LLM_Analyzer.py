@@ -346,6 +346,7 @@ class RiskBot(Chatbot):
             "Go_on": ("continue"),
             "End" : ("passed","discarded")
         }
+        # print('here is prompt',self.langfusePrompt)
     
     def OEMCheck(self, status,user_input):
 
@@ -354,7 +355,7 @@ class RiskBot(Chatbot):
         except Exception:
             raise RuntimeError("status should be OEMing or toOEM")
         
-        prompt = self.langfuse.get_prompt("bot/OEM")
+        prompt = self.langfuse.get_prompt("bot/OEM").prompt
 
         if status == 'toOEM':
 

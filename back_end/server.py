@@ -7,7 +7,7 @@ from pathlib import Path
 from main import run_analysis, run_chat, run_report
 import uuid
 import logging
-from back_end.services.chat_service import ChatService, ConfirmationStatus
+from back_end.services.chat_service import ChatService, ConfirmationStatus, WorkflowContext
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 logging.getLogger("azure").setLevel(logging.WARNING)
@@ -39,6 +39,7 @@ class ChatMessage(BaseModel):
 # 确保上传目录存在
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+chat_flow = WorkflowContext()
 
 @app.post("/analyze")
 async def analyze_file(file: UploadFile = File(...)):
@@ -52,7 +53,14 @@ async def analyze_file(file: UploadFile = File(...)):
         # 运行分析流程
         shared = run_analysis(str(file_path.absolute()))
         
-        updated_shared, messsage, status = chat_service.initialize_chat(shared,'toOEM')
+        updated_shared, _ = chat_service.initialize_chat(shared)
+        status = chat_flow.current_state.value
+        status, initial_message = chat_service.get_instructions(shared,status)
+
+        logger.info('now we initialized status as:', status)
+
+        # 设置状态为continue
+        chat_flow.current_state = chat_flow.process(status)
 
         session_id = str(uuid.uuid4())
         sessions[session_id] = {
@@ -63,7 +71,7 @@ async def analyze_file(file: UploadFile = File(...)):
         return {
             "session_id": session_id,
             "components": updated_shared.get("toBeConfirmedComps", []),
-            "message": messsage,
+            "message": initial_message,
             "status": sessions[session_id]["state"]
         }
         
@@ -77,8 +85,8 @@ async def chat(session_id: str, chat_message: ChatMessage):
     session = sessions.get(session_id)
     if not session:
         raise HTTPException(status_code=404, detail="Session not found")
-    # 前端发起请求的时间不一定是在用户点击发送的时候哦，后面再看给前端传什么内容
-    status = session['state']
+    
+    status = chat_flow.current_state
 
     if status == "completed":
         return {
