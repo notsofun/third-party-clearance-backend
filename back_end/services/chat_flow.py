@@ -1,15 +1,7 @@
 from enum import Enum
 from typing import Dict, Optional, Any, Type
 from abc import ABC, abstractmethod
-
-class ConfirmationStatus(Enum):
-    """确认状态的枚举类型
-    """
-    SPECIAL_CHECK = "special_check"
-    OEM = "OEMing"
-    DEPENDENCY = "toDependency"
-    COMPLIANCE = "toCompliance"
-
+from back_end.services.chat_service import ConfirmationStatus
 
 class StateHandler(ABC):
 

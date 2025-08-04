@@ -13,6 +13,7 @@ class ConfirmationStatus(Enum):
     OEM = "OEMing"
     DEPENDENCY = "toDependency"
     COMPLIANCE = "toCompliance"
+    CONTRACT = 'toContract'
 
 class ComponentStatus(Enum):
     """组件状态的枚举类型"""
@@ -33,7 +34,8 @@ class ChatService:
             ConfirmationStatus.SPECIAL_CHECK.value: self._handle_special_check,
             ConfirmationStatus.OEM.value: self._handle_oem,
             ConfirmationStatus.DEPENDENCY.value: self._handle_dependency,
-            ConfirmationStatus.COMPLIANCE.value: self._handle_compliance
+            ConfirmationStatus.COMPLIANCE.value: self._handle_compliance,
+            ConfirmationStatus.CONTRACT.value: self._handle_contract,
         }
         self.chat_flow = WorkflowContext()
     
