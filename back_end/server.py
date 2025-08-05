@@ -30,16 +30,13 @@ app.add_middleware(
 )
 
 sessions = {}
-
-chat_service = ChatService()
-
 class ChatMessage(BaseModel):
     message: str
 
 # 确保上传目录存在
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-chat_flow = WorkflowContext()
+
 
 @app.post("/analyze")
 async def analyze_file(file: UploadFile = File(...)):
@@ -53,19 +50,20 @@ async def analyze_file(file: UploadFile = File(...)):
         # 运行分析流程
         shared = run_analysis(str(file_path.absolute()))
         
+        session_chat_flow = WorkflowContext()
+        chat_service = ChatService(session_chat_flow)
         updated_shared, _ = chat_service.initialize_chat(shared)
-        status = chat_flow.current_state.value
-        status, initial_message = chat_service.get_instructions(shared,status)
+        status = chat_service.chat_flow.current_state.value
+        initial_message = chat_service.get_instructions(shared,status)
 
         logger.info('now we initialized status as:', status)
-
-        # 设置状态为continue
-        chat_flow.current_state = chat_flow.process(status)
 
         session_id = str(uuid.uuid4())
         sessions[session_id] = {
             "shared": shared,
-            "state": status if not updated_shared.get("all_confirmed") else "completed"
+            "state": status if not updated_shared.get("all_confirmed") else "completed",
+            'chat_service': chat_service,
+            'chat_flow': session_chat_flow
         }
         
         return {
@@ -79,14 +77,34 @@ async def analyze_file(file: UploadFile = File(...)):
         logger.error(f"Error during file analysis: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post('/analyze-contract/{session_id}')
+async def analyze_contract(session_id:str, file: UploadFile = File(...) ):
+    
+    session = sessions.get(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    # 这个只会拿到刚初始化的risk bot，无法继承之前的上下文，也无法把合同的数据传下去
+    risk_bot = sessions[session_id]['shared']['riskBot']
+
+    try:
+        file_path = UPLOAD_DIR / file.filename
+        content = await file.read()
+
+    except Exception as e:
+        logger.error(f"Error during contract analysis: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/chat/{session_id}")
 async def chat(session_id: str, chat_message: ChatMessage):
     session = sessions.get(session_id)
     if not session:
         raise HTTPException(status_code=404, detail="Session not found")
-    
-    status = chat_flow.current_state
+    chat_service = session['chat_service']
+    chat_flow = session['chat_flow']
+
+    status = chat_service.chat_flow.current_state
+    logger.info('when processing input, we are in the status of:', status)
 
     if status == "completed":
         return {
@@ -101,12 +119,6 @@ async def chat(session_id: str, chat_message: ChatMessage):
             chat_message.message,
             status
         )
-        
-    # 前后端的流程，应该是切换成新的组件->pre check，判断需不需要走这些特殊流程，这时模型要返回一个state，toOEM->
-    # 用户回答完OEM，模型返回toContract->回答完Contract，模型返回toCredential->回答完credential，模型返回toDependecy
-    # 用户回答完Dependecy，模型返回toCompliance
-    # 已经有session['state]这个字段了，用这个来维护状态转移
-    # process_user_input用于处理用户输入，返回模型判断的状态，这个endpoint用来告诉前端
 
         # 更新会话状态
         session["shared"] = updated_shared
@@ -131,7 +143,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
         
         return {
             "status": status,
-            "message": reply,
+            "message": f"AI: {reply}",
             "current_component_idx": updated_shared.get("current_component_idx")
         }
         

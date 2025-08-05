@@ -1,19 +1,12 @@
 import logging
 from typing import Dict, Any, Tuple, Optional, Union
-from back_end.services.chat_flow import WorkflowContext
+from back_end.services.chat_flow import WorkflowContext, ConfirmationStatus
 from utils.tools import get_strict_json, find_key_by_value, get_strict_string
 from enum import Enum
 
 logger = logging.getLogger(__name__)
 
-class ConfirmationStatus(Enum):
-    """确认状态的枚举类型
-    """
-    SPECIAL_CHECK = "special_check"
-    OEM = "OEMing"
-    DEPENDENCY = "toDependency"
-    COMPLIANCE = "toCompliance"
-    CONTRACT = 'toContract'
+
 
 class ComponentStatus(Enum):
     """组件状态的枚举类型"""
@@ -21,7 +14,7 @@ class ComponentStatus(Enum):
     CONFIRMED = "confirmed"
 
 class ChatService:
-    def __init__(self):
+    def __init__(self, chat_flow: WorkflowContext):
         """
         初始化聊天服务
         这个类专注处理消息，根据传入状态不同调用不同的方法。
@@ -37,7 +30,7 @@ class ChatService:
             ConfirmationStatus.COMPLIANCE.value: self._handle_compliance,
             ConfirmationStatus.CONTRACT.value: self._handle_contract,
         }
-        self.chat_flow = WorkflowContext()
+        self.chat_flow = chat_flow
     
     def process_user_input(self, shared: Dict[str, Any], user_input: str, status: str) -> Tuple[bool, Dict[str, Any], str]:
         """
@@ -65,21 +58,25 @@ class ChatService:
             
         current_idx, comps, current_comp = component_info.data
         
-        # 获取并执行对应状态的处理器
-        # status_handler是一个字典，get可以用，status是一个查询键，而在status_handler这个字典内，就是通过获取confirmationStatus这个对象的属性，也就是字符串来映射状态的
         resonse = get_strict_json(self.bot, user_input)
 
         result = resonse['result']
+        reply = self._extract_reply(resonse)
         
-        status = self.chat_flow.process(result).value
+        updated_status = self.chat_flow.process(result).value
+        logger.info('the new status is:',updated_status)
 
         # 处理结果
         if status is None:
             # 组件确认完成，移至下一个
             return self._proceed_to_next_component(comps, current_idx, shared)
+        if updated_status != status:
+            # 状态发生流转，调用instruction方法
+            message = self.get_instructions(shared, updated_status)
+            logger.info('now we switch to the next state:',updated_status)
+            return updated_status, shared, message
         else:
             # 继续当前组件的确认
-            reply = self._extract_reply(resonse)
             return status, shared, reply # 这里要返回一个to哪一步的结果
 
     def get_instructions(self,shared:Dict[str,Any], status:str) -> Tuple[str,str]:
@@ -96,9 +93,16 @@ class ChatService:
         logger.warning('Now we are in...',status)
         handler = self.status_handlers.get(status,self._handle_compliance)
         logger.warning('now we trying to handle',handler.__name__)
-        status, message = handler(shared,status)
+        message = handler(shared)
 
-        return status, message
+        return message
+
+    def _handle_contract(self, shared) -> Tuple[str, str]:
+
+        prompt = self.bot.langfuse.get_prompt("bot/Contract").prompt
+        response = get_strict_json(self.bot, prompt)
+        message = response['talking']
+        return message
 
     def _handle_special_check(self, comp: Dict, risk_bot: Any, user_input: str) -> Any:
         """处理预检查状态"""
@@ -106,14 +110,14 @@ class ChatService:
         # 这里实现预检查逻辑
         return False  # 实际实现中应返回适当的结果
     
-    def _handle_oem(self, shared, status:str) -> Tuple[str, str]:
+    def _handle_oem(self, shared) -> Tuple[str, str]:
         """处理OEM状态"""
         # logger.info(f"处理OEM组件: {comp['title']}")
         prompt = self.bot.langfuse.get_prompt("bot/OEM").prompt
         # 这里实现OEM处理逻辑的instructions逻辑
         response = get_strict_json(self.bot,prompt)
-        status, message = response['result'], response['talking']
-        return status, message  # 实际实现中应返回适当的结果
+        message = response['talking']
+        return message  # 实际实现中应返回适当的结果
     
     def _handle_dependency(self, comp: Dict, risk_bot: Any, user_input: str) -> Any:
         """处理依赖状态"""

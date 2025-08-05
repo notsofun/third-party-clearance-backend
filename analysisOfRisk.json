@@ -2,7 +2,7 @@
   "1: Apache-2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "The license allows for broad usage, modification, and distribution without strong copyleft requirements."
+      "reason": "The license permits broad use, modification, and distribution without strong copyleft requirements."
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
@@ -13,7 +13,7 @@
   "2: CC-BY-4.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "The license allows use and modification without copyleft obligations."
+      "reason": "The license allows for broad usage and sharing with attribution but imposes no copyleft obligations."
     },
     "credentialOrNot": {
       "LicenseName": "CC-BY-4.0",

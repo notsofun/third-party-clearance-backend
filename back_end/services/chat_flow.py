@@ -1,7 +1,18 @@
 from enum import Enum
 from typing import Dict, Optional, Any, Type
 from abc import ABC, abstractmethod
-from back_end.services.chat_service import ConfirmationStatus
+import logging
+
+logger = logging.getLogger(__name__)
+
+class ConfirmationStatus(Enum):
+    """确认状态的枚举类型
+    """
+    SPECIAL_CHECK = "special_check"
+    OEM = "OEMing"
+    DEPENDENCY = "toDependency"
+    COMPLIANCE = "toCompliance"
+    CONTRACT = 'toContract'
 
 class StateHandler(ABC):
 
@@ -33,7 +44,7 @@ class OEMHandler(StateHandler):
     def handle(self,status:str) -> Optional[ConfirmationStatus]:
         print("执行OEM处理...")
         if status == self.NEXT:
-            return ConfirmationStatus.DEPENDENCY
+            return ConfirmationStatus.CONTRACT
         elif status == self.CONTINUE:
             return ConfirmationStatus.OEM
         else:
@@ -54,6 +65,16 @@ class ComplianceHandler(StateHandler):
             return None  # 流程结束
         return ConfirmationStatus.DEPENDENCY
 
+class ContractHandler(StateHandler):
+    def handle(self, status:str) -> Optional[ConfirmationStatus]:
+        print("执行合同检查...")
+        if status == self.NEXT:
+            return ConfirmationStatus.DEPENDENCY
+        elif status == self.CONTINUE:
+            return ConfirmationStatus.CONTRACT
+        else:
+            raise RuntimeError('Model did not determine to go on or continue')
+
 class WorkflowContext:
     """工作流上下文，管理状态和转换"""
     def __init__(self):
@@ -62,18 +83,21 @@ class WorkflowContext:
             ConfirmationStatus.SPECIAL_CHECK: SpecialCheckHandler(),
             ConfirmationStatus.OEM: OEMHandler(),
             ConfirmationStatus.DEPENDENCY: DependencyHandler(),
-            ConfirmationStatus.COMPLIANCE: ComplianceHandler()
+            ConfirmationStatus.COMPLIANCE: ComplianceHandler(),
+            ConfirmationStatus.CONTRACT: ContractHandler()
         }
         # 这里是初始状态
         self.current_state = ConfirmationStatus.OEM
-    
+
     def process(self,status:str) -> Optional[ConfirmationStatus]:
         """处理当前状态并转移到下一个状态"""
         if not self.current_state or self.current_state not in self.handlers:
             return None
         
+        logger.info('we are processing the state, now the current state is:', self.current_state)
         # 获取当前状态的处理器并执行
         handler = self.handlers[self.current_state]
+        logger.info('now we are using this state handler:', handler)
         next_state = handler.handle(status)
         
         # 更新当前状态
