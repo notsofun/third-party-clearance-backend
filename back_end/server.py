@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
+from utils.tools import create_error_response, create_success_response
 import os
 from pathlib import Path
 from main import run_analysis, run_chat, run_report
@@ -43,9 +44,12 @@ async def analyze_file(file: UploadFile = File(...)):
     try:
         # 保存上传的文件
         file_path = UPLOAD_DIR / file.filename
-        content = await file.read()
-        with open(file_path, "wb") as f:
-            f.write(content)
+        logger.info('the html file is stored at:', file_path)
+
+        # 将上传的文件内容保存到磁盘
+        with open(file_path, "wb") as buffer:
+            content = await file.read()
+            buffer.write(content)
 
         # 运行分析流程
         shared = run_analysis(str(file_path.absolute()))
@@ -78,28 +82,80 @@ async def analyze_file(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post('/analyze-contract/{session_id}')
-async def analyze_contract(session_id:str, file: UploadFile = File(...) ):
+async def analyze_contract(session_id: str, file: UploadFile = File(...)):
     
+    # 检查session是否存在
     session = sessions.get(session_id)
     if not session:
-        raise HTTPException(status_code=404, detail="Session not found")
+        return create_error_response(
+            "SESSION_NOT_FOUND",
+            f"Session {session_id} not found",
+            404
+        )
     
-    # 这个只会拿到刚初始化的risk bot，无法继承之前的上下文，也无法把合同的数据传下去
-    risk_bot = sessions[session_id]['shared']['riskBot']
-
+    # 检查shared数据
+    if 'shared' not in session:
+        return create_error_response(
+            "SHARED_DATA_NOT_FOUND",
+            f"Shared data not found in session {session_id}"
+        )
+    
+    # 检查riskBot
+    if 'riskBot' not in session['shared']:
+        return create_error_response(
+            "RISK_BOT_NOT_FOUND",
+            f"RiskBot not found in session {session_id}"
+        )
+    
+    curr_shared = session['shared']
+    risk_bot = curr_shared['riskBot']
+    chat_flow = session['chat_flow']
+    
+    # 处理文件
     try:
-        file_path = UPLOAD_DIR / file.filename
-        content = await file.read()
+        os.makedirs("uploads", exist_ok=True)
+        
+        # 创建文件路径
+        file_path = os.path.join("uploads", file.filename)
+        
+        # 将上传的文件内容保存到磁盘
+        with open(file_path, "wb") as buffer:
+            content = await file.read()
+            buffer.write(content)
+        
+        logger.info(f'The file is stored at: {file_path}')
+        
+        analysis_result = risk_bot.contract_check(file_path)
+        
+        logger.info(f"Contract analysis completed successfully for session {session_id}")
 
+        sessions[session_id]['contract_analysis'] = analysis_result
+
+        chat_flow.process('next')
+
+        sessions[session_id]['chat_flow'] = chat_flow
+
+        return create_success_response(
+            data={"file_path": str(file_path)},
+            message="Contract analysis completed successfully"
+        )
+        
     except Exception as e:
-        logger.error(f"Error during contract analysis: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        return create_error_response(
+            "ANALYSIS_ERROR",
+            f"Error during contract analysis: {str(e)}",
+            500
+        )
 
 @app.post("/chat/{session_id}")
 async def chat(session_id: str, chat_message: ChatMessage):
     session = sessions.get(session_id)
     if not session:
-        raise HTTPException(status_code=404, detail="Session not found")
+        return create_error_response(
+            "SESSION_NOT_FOUND",
+            f"Session {session_id} not found",
+            404
+        )
     chat_service = session['chat_service']
     chat_flow = session['chat_flow']
 
@@ -149,14 +205,22 @@ async def chat(session_id: str, chat_message: ChatMessage):
         
     except Exception as e:
         logger.error(f"Error during chat: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=str(e))
+        return create_error_response(
+            'CHAT_ERROR',
+            f"Error during contract analysis: {str(e)}",
+            500
+        )
 
 # 获取当前会话状态
 @app.get("/sessions/{session_id}")
 async def get_session_status(session_id: str):
     session = sessions.get(session_id)
     if not session:
-        raise HTTPException(status_code=404, detail="Session not found")
+        return create_error_response(
+            "SESSION_NOT_FOUND",
+            f"Session {session_id} not found",
+            404
+        )
     
     shared = session["shared"]
     current_idx = shared.get("current_component_idx")

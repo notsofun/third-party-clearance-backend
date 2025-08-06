@@ -66,6 +66,9 @@ class ChatService:
         updated_status = self.chat_flow.process(result).value
         logger.info('the new status is:',updated_status)
 
+        # 把这个带有最新上下文的bot传回shared，保证上下文一致
+        shared['riskBot'] = self.bot
+
         # 处理结果
         if status is None:
             # 组件确认完成，移至下一个

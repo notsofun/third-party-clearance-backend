@@ -1,7 +1,7 @@
 import json
 from utils.callAIattack import AzureOpenAIChatClient
 import time
-from utils.tools import get_strict_json, get_strict_string
+from utils.tools import get_strict_json, get_strict_string, read_doc
 from langchain_openai import AzureChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import LLMChain
@@ -308,6 +308,36 @@ class Chatbot(AzureOpenAIChatClient):
         })
         return response["text"]
     
+    def _fixed_request(self, input:str):
+
+        '''
+        为防止影响原有的自由输入并请求的方法，这里对于固定格式请求另起炉灶
+        '''
+
+        response = self.chain.invoke(
+            input=input,
+            config = {
+            'callbacks' : [self.langfuse_handler],
+            'metadata' : {
+                "langfuse_session_id": f"{self.session_id}",
+                "langfuse_user_id" : "NotSoFun"}
+        })
+
+        return response['text']
+    
+    def _req_varibale(self,promptName:str, variable:dict) -> str :
+
+        '''
+        prompt: 储存在langfuse上的promptName
+        variable: 用于储存变量及其对应值的字典
+        '''
+        prompt = self.langfuse.get_prompt(promptName)
+        compiled_prompt = prompt.compile(**variable)
+
+        response = get_strict_json(self, compiled_prompt, True)
+
+        return response
+    
     def toChat(self,conditions:dict, user_input) -> dict:
         """
         conditions应该是一个字典结构，包含
@@ -383,6 +413,16 @@ class RiskBot(Chatbot):
         result_json = self.toChat(conditions=self.conditions,user_input=user_input)
 
         return result_json
+    
+    def contract_check(self, file_path):
+        '''
+        file_path: the directory where the contract exists
+        '''
+        content = read_doc(file_path)
+        message = {'contract': content}
+        response = self._req_varibale("bot/AnalyzeContract", message)
+
+        return response['talking']
 
 def trial2():
 
@@ -453,5 +493,7 @@ if __name__ == "__main__":
         "name": "@ngrx/store 17.2.0 ⇧",
         "block_html": "<li class=\"release\" id=\"@ngrx/store_17.2.0\" title=\"@ngrx/store 17.2.0\">\n<div class=\"inset\">\n<h3 id=\"h3@ngrx/store_17.2.0\">@ngrx/store 17.2.0\n                            <a class=\"top\" href=\"#releaseHeader\">⇧</a>\n</h3>\n</div>\n\n\n                        Acknowledgements:<br>\n<pre class=\"acknowledgements\">\nDisclaimer of Warranties and Limitation of Liability.\n\na. Unless otherwise separately undertaken by the Licensor, to the extent possible, the Licensor offers the Licensed Material as-is and as-available, and makes no representations or warranties of any kind concerning the Licensed Material, whether express, implied, statutory, or other. This includes, without limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable. Where disclaimers of warranties are not allowed in full or in part, this disclaimer may not apply to You.\n\nb. To the extent possible, in no event will the Licensor be liable to You on any legal theory (including, without limitation, negligence) or otherwise for any direct, special, indirect, incidental, consequential, punitive, exemplary, or other losses, costs, expenses, or damages arising out of this Public License or use of the Licensed Material, even if the Licensor has been advised of the possibility of such losses, costs, expenses, or damages. Where a limitation of liability is not allowed in full or in part, this limitation may not apply to You.\n\nc. The disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.\n    </pre>\n\n                    Licenses:<br>\n<ul class=\"licenseEntries\" style=\"list-style-type:none\">\n<li class=\"licenseEntry\" id=\"licenseEntry1\" title=\"Apache-2.0\">\n<a href=\"#licenseTextItem1\">Apache-2.0 (1)</a>\n</li>\n<li class=\"licenseEntry\" id=\"licenseEntry2\" title=\"CC-BY-4.0\">\n<a href=\"#licenseTextItem2\">CC-BY-4.0 (2)</a>\n</li>\n<li class=\"licenseEntry\" id=\"licenseEntry3\" title=\"MIT\">\n<a href=\"#licenseTextItem3\">MIT (3)</a>\n</li>\n</ul>\n<pre class=\"copyrights\">\nCopyright (c) 2017-2020 Nicholas Jamieson and contributors\nCopyright (c) 2015-2018 NgRx.\nCopyright 2009 International Color Consortium\nCopyright (c) 1998 Hewlett-Packard Company\n© Zeno Rocha\nCopyright (c) 2015-2023 Brandon Roberts, Mike Ryan, Victor Savkin, Rob Wormald\nCopyright 2006-2016 Google Inc. All Rights Reserved.\nCopyright Google Inc. All Rights Reserved.\n(c) 2007 Steven Levithan &lt;stevenlevithan.com&gt;\n<h3><a class=\"top\" href=\"#releaseHeader\">⇧</a></h3>\n    </pre>\n</br></br></li>",
     }
-    result = bot1.OEMCheck('toOEM','ii')
+    # result = bot1.OEMCheck('toOEM','ii')
+
+    result = bot1.contract_check(r"C:\Users\z0054unn\Documents\contract_template.docx")
     print(result)

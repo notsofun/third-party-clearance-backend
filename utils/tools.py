@@ -1,6 +1,17 @@
 import re
 from bs4 import BeautifulSoup
-import json
+import json, logging
+from django.http import JsonResponse
+from docx import Document
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
+logging.getLogger("azure").setLevel(logging.WARNING)
+logging.getLogger("msal").setLevel(logging.WARNING)
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("requests").setLevel(logging.WARNING)
+logging.getLogger("openai").setLevel(logging.WARNING)
+
+logger = logging.getLogger(__name__)
 
 def find_key_by_value(d:dict, target_value:str) -> str:
     """
@@ -128,14 +139,19 @@ def json_strip(text:str) -> str:
         return None
 
 
-def get_strict_json(model:object, user_input):
+def get_strict_json(model:object, user_input, var=False):
     """
     Try response up to 5 times until getting strictly valid JSON.
     No user perception of retries.
     model could be an object of a bot or a langchain model.
+
+    var is used to decide whether request with variables or not
     """
     for _ in range(5):
-        response = model._request(user_input)
+        if var:
+            response = model._fixed_request(user_input)
+        else:
+            response = model._request(user_input)
         # print('让我看看你这个结果是怎样:',response)
         result = json_strip(response)
         if result:
@@ -155,6 +171,40 @@ def get_strict_string(model:object, user_input):
         if isinstance(response,str):
             return response
     raise RuntimeError("Model did not give a strictly string response")
+
+def create_error_response(error_code: str, error_message: str, status_code: int = 400):
+    """创建统一的错误响应"""
+    logger.error(f"Error {error_code}: {error_message}")
+    return JsonResponse(
+        status_code=status_code,
+        content={
+            "success": False,
+            "error_code": error_code,
+            "error_message": error_message
+        }
+    )
+
+def create_success_response(data: dict, message: str = "Success"):
+    """创建统一的成功响应"""
+    return {
+        "success": True,
+        "message": message,
+        "data": data
+    }
+
+def read_doc(file_path: str):
+    '''
+    用于阅读指定路径的doc文件，来生成python like的格式
+    '''
+
+    doc = Document(file_path)
+
+    content = [paragraph.text
+                for paragraph in doc.paragraphs]
+
+    full_content = '\n'.join(content)
+
+    return full_content
 
 if __name__ == "__main__":
     with open(r"C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\parsed_original_oss.json","r",encoding="utf-8") as f:
