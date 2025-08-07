@@ -1,7 +1,7 @@
 import re
 from bs4 import BeautifulSoup
 import json, logging
-from django.http import JsonResponse
+from fastapi.responses import JSONResponse
 from docx import Document
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
@@ -175,7 +175,7 @@ def get_strict_string(model:object, user_input):
 def create_error_response(error_code: str, error_message: str, status_code: int = 400):
     """创建统一的错误响应"""
     logger.error(f"Error {error_code}: {error_message}")
-    return JsonResponse(
+    return JSONResponse(
         status_code=status_code,
         content={
             "success": False,

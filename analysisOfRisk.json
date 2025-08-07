@@ -2,7 +2,7 @@
   "1: Apache-2.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "The license allows for modification and distribution without strong copyleft requirements."
+      "reason": "The license is permissive and does not impose copyleft obligations."
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
@@ -13,7 +13,7 @@
   "2: CC-BY-4.0⇧": {
     "risk": {
       "level": "low",
-      "reason": "The license allows sharing and adaptation without any copyleft requirements."
+      "reason": "The license allows for unrestricted use and modification without strong copyleft requirements."
     },
     "credentialOrNot": {
       "LicenseName": "CC-BY-4.0",
@@ -27,7 +27,7 @@
       "reason": "Permissive license without copyleft obligations"
     },
     "credentialOrNot": {
-      "LicenseName": "3: MIT⇧",
+      "LicenseName": "3: MIT",
       "CredentialOrNot": false
     },
     "sourceCodeRequired": "false"

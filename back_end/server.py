@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import uvicorn
 from utils.tools import create_error_response, create_success_response
@@ -56,7 +57,7 @@ async def analyze_file(file: UploadFile = File(...)):
         
         session_chat_flow = WorkflowContext()
         chat_service = ChatService(session_chat_flow)
-        updated_shared, _ = chat_service.initialize_chat(shared)
+        updated_shared = chat_service.initialize_chat(shared)
         status = chat_service.chat_flow.current_state.value
         initial_message = chat_service.get_instructions(shared,status)
 
@@ -131,7 +132,12 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
 
         sessions[session_id]['contract_analysis'] = analysis_result
 
-        chat_flow.process('next')
+        content = {
+            'shared': curr_shared,
+            'status': 'next',
+        }
+
+        chat_flow.process(content)
 
         sessions[session_id]['chat_flow'] = chat_flow
 
@@ -141,10 +147,14 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
         )
         
     except Exception as e:
-        return create_error_response(
-            "ANALYSIS_ERROR",
-            f"Error during contract analysis: {str(e)}",
-            500
+        logger.error(f"Chat error: {str(e)}", exc_info=True)
+        # You can either use create_error_response or directly return JSONResponse
+        return JSONResponse(
+            content={
+                'error': 'CHAT_ERROR',
+                'message': f"Error during contract analysis: {str(e)}"
+            },
+            status_code=500
         )
 
 @app.post("/chat/{session_id}")
@@ -159,7 +169,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
     chat_service = session['chat_service']
     chat_flow = session['chat_flow']
 
-    status = chat_service.chat_flow.current_state
+    status = chat_flow.current_state
     logger.info('when processing input, we are in the status of:', status)
 
     if status == "completed":
@@ -182,24 +192,14 @@ async def chat(session_id: str, chat_message: ChatMessage):
         if status == True:
             session["state"] = "completed"
             
-            # 生成确认结果摘要
-            comps = updated_shared.get("toBeConfirmedComps", [])
-            summary = {
-                "total": len(comps),
-                "passed": len([c for c in comps if c.get("status") == "passed"]),
-                "discarded": len([c for c in comps if c.get("status") == "discarded"])
-            }
-            
             return {
                 "status": "completed",
                 "message": reply,
-                "components": comps,
-                "summary": summary
             }
         
         return {
             "status": status,
-            "message": f"AI: {reply}",
+            "message": reply,
             "current_component_idx": updated_shared.get("current_component_idx")
         }
         

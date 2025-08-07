@@ -335,12 +335,12 @@ class RiskCheckingRAG(BatchNode):
 
         shared["checkedRisk"] = exec_res
 
-        toBeConfrimed_risk_comps = [
+        toBeConfrimed_risk_license = [
             info for info in exec_res
             if info.get("CheckedLevel") == "high" or "medium"
         ]
 
-        shared["toBeConfirmedComps"] = toBeConfrimed_risk_comps
+        shared["toBeConfirmedLicenses"] = toBeConfrimed_risk_license
 
         with open("checkedRisk.json","w", encoding="utf-8" ) as f1:
             json.dump(shared["checkedRisk"],f1,ensure_ascii=False,indent=2)
@@ -376,10 +376,10 @@ class DependecyCheckingRAG(BatchNode):
     
     def post(self, shared, prep_res, exec_res):
         
-        shared['dependencies'] = exec_res
+        shared['toBeConfirmedComponents'] = exec_res
 
         with open("dependecies.json","w", encoding="utf-8" ) as f1:
-            json.dump(shared["dependencies"],f1,ensure_ascii=False,indent=2)
+            json.dump(shared["toBeConfirmedComponents"],f1,ensure_ascii=False,indent=2)
 
         logger.info('finished checking, now we are starting the chat...')
         shared['toInitialize'] = 'riskBot'
@@ -422,7 +422,7 @@ class GetUserConfirming(Node):
 
     def prep(self, shared):
         logger.info('Preparing the explanation')
-        comps = shared.get("toBeConfirmedComps", [])
+        comps = shared.get("toBeConfirmedLicenses", [])
         riskbot = shared['riskBot']
         for idx, comp in enumerate(comps):
             if comp.get("status",'') == "":
@@ -453,9 +453,9 @@ class GetUserConfirming(Node):
         # exec_res: (结果, 索引)
         result, idx = exec_res if isinstance(exec_res, tuple) else (exec_res, None)
         if idx is not None:
-            shared['toBeConfirmedComps'][idx]["status"] = result
+            shared['toBeConfirmedLicenses'][idx]["status"] = result
         # 检查是否所有组件都已确认
-        comps = shared.get('toBeConfirmedComps', [])
+        comps = shared.get('toBeConfirmedLicenses', [])
         if all(comp.get('status', '') != '' for comp in comps):
             return "over"
         return "continue"
@@ -466,8 +466,8 @@ class ossGenerating(Node):
         super().__init__(max_retries, wait)
 
     def prep(self, shared):
-        with open("confirmedComponents.json","w", encoding="utf-8" ) as f1:
-            json.dump(shared["toBeConfirmedComps"],f1,ensure_ascii=False,indent=2)
+        with open("toBeConfirmedLicenses.json","w", encoding="utf-8" ) as f1:
+            json.dump(shared["toBeConfirmedLicenses"],f1,ensure_ascii=False,indent=2)
         return super().prep(shared)
 
 class getFinalOSS(Node):

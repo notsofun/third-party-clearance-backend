@@ -1,17 +1,12 @@
 import logging
-from typing import Dict, Any, Tuple, Optional, Union
+from typing import Dict, Any, Tuple, Optional, Union, Callable
+from enum import Enum
+from .chat_manager import ChatManager
+from .item_types import ItemType, ItemStatus
 from back_end.services.chat_flow import WorkflowContext, ConfirmationStatus
 from utils.tools import get_strict_json, find_key_by_value, get_strict_string
-from enum import Enum
 
 logger = logging.getLogger(__name__)
-
-
-
-class ComponentStatus(Enum):
-    """组件状态的枚举类型"""
-    PENDING = ""
-    CONFIRMED = "confirmed"
 
 class ChatService:
     def __init__(self, chat_flow: WorkflowContext):
@@ -31,6 +26,8 @@ class ChatService:
             ConfirmationStatus.CONTRACT.value: self._handle_contract,
         }
         self.chat_flow = chat_flow
+        self.chat_manager = ChatManager()
+        self.bot = None
     
     def process_user_input(self, shared: Dict[str, Any], user_input: str, status: str) -> Tuple[bool, Dict[str, Any], str]:
         """
@@ -50,49 +47,95 @@ class ChatService:
 
         只负责处理用户后续的每次输入
         """
+        
+        # 这个处理type和状态是分开的，先处理组件
+        processing_type = shared.get('processing_type', 'component')
+        # 感觉也很硬编码
+        item_type = ItemType.LICENSE if processing_type == 'license' else ItemType.COMPONENT
 
-        # 获取当前组件信息
-        component_info = self._get_component_info(shared)
-        if not component_info.valid:
-            return True, shared, component_info.error_message
+        # 获取当前物品信息
+        item_info = self.chat_manager.get_item(shared, item_type)
+        if not item_info.valid:
+            return "completed", shared, item_info.error_message
             
-        current_idx, comps, current_comp = component_info.data
+        current_idx, items, current_item = item_info.data
         
-        resonse = get_strict_json(self.bot, user_input)
+        response = get_strict_json(self.bot, user_input)
 
-        result = resonse['result']
-        reply = self._extract_reply(resonse)
-        
-        updated_status = self.chat_flow.process(result).value
-        logger.info('the new status is:',updated_status)
-
+        result = response.get('result')
+        reply = self._extract_reply(response)
         # 把这个带有最新上下文的bot传回shared，保证上下文一致
         shared['riskBot'] = self.bot
 
+        # 怎么设计遍历组件和许可证的状态？
+        content = {'shared':shared, 'status': result}
+        updated_status = self.chat_flow.process(content).value
+        logger.info('the new status is:',updated_status)
+
         # 处理结果
-        if status is None:
-            # 组件确认完成，移至下一个
-            return self._proceed_to_next_component(comps, current_idx, shared)
+        if updated_status is None:
+            # 这个逻辑不对，updated_status会一直在dependency，也不能handle到下一个状态，因为这样就结束了……（
+            next_item_instruction = self._get_next_item_instruction(item_type,items,current_idx,shared)
+            return self.chat_manager.proceed_to_next_item(items,current_idx,shared,item_type,next_item_instruction)
         if updated_status != status:
             # 状态发生流转，调用instruction方法
             message = self.get_instructions(shared, updated_status)
             logger.info('now we switch to the next state:',updated_status)
             return updated_status, shared, message
         else:
-            # 继续当前组件的确认
+            # 继续当前许可证的确认
             return status, shared, reply # 这里要返回一个to哪一步的结果
+
+    def _get_next_item_instruction(self, item_type: ItemType, items: list, current_idx: int, shared: Dict[str, Any]) -> str:
+        """
+        获取下一个项目的指导文字
+        
+        Args:
+            item_type: 项目类型
+            items: 项目列表
+            current_idx: 当前项目索引
+            shared: 共享数据
+            
+        Returns:
+            下一个项目的指导文字
+        """
+        next_idx = self.chat_manager._find_next_unconfirmed_item(items, current_idx)
+        if next_idx is None:
+            return "所有项目已确认完毕"
+            
+        next_item = items[next_idx]
+
+        instruction_data, _ = self._get_item_instuction(item_type, next_item)
+        return instruction_data.get('talking', '请确认此项目')
+
+    def _get_item_instuction(self, item_type: ItemType, next_item) -> dict:
+        '''
+        获取项目指导文字
+        '''
+        if item_type == ItemType.LICENSE:
+            instruction_data = get_strict_json(
+                self.bot,
+                f"here is the licenseName: {next_item.get('title', '')}, "
+                f"CheckedLevel: {next_item.get('CheckedLevel', '')}, and "
+                f"Justification: {next_item.get('Justification', '')}"
+            )
+            item_name = next_item.get('title', 'unknown license')
+        else:  # ItemType.COMPONENT
+            instruction_data = get_strict_json(
+                self.bot,
+                f"""Here is the name of the component {next_item.get('compName', '')},
+                and it contains dependency of other components, please confirm with user whether add the dependent
+                component into the checklist"""
+            )
+            item_name = next_item.get('compName', 'unknown component')
+
+        return instruction_data, item_name
 
     def get_instructions(self,shared:Dict[str,Any], status:str) -> Tuple[str,str]:
         """
         用于生成不依赖于用户输入，生成状态变化时的指导性语言
         """
 
-        # 获取当前组件信息
-        component_info = self._get_component_info(shared)
-        if not component_info.valid:
-            return True, shared, component_info.error_message
-            
-        current_idx, comps, current_comp = component_info.data
         logger.warning('Now we are in...',status)
         handler = self.status_handlers.get(status,self._handle_compliance)
         logger.warning('now we trying to handle',handler.__name__)
@@ -100,64 +143,44 @@ class ChatService:
 
         return message
 
-    def _handle_contract(self, shared) -> Tuple[str, str]:
-
+    def _handle_contract(self, shared: Dict[str, Any]) -> str:
+        """处理合同状态"""
         prompt = self.bot.langfuse.get_prompt("bot/Contract").prompt
         response = get_strict_json(self.bot, prompt)
-        message = response['talking']
-        return message
-
-    def _handle_special_check(self, comp: Dict, risk_bot: Any, user_input: str) -> Any:
+        return response.get('talking', '请提供合同信息')
+    
+    def _handle_special_check(self, shared: Dict[str, Any]) -> str:
         """处理预检查状态"""
-        logger.info(f"执行预检查: {comp['title']}")
-        # 这里实现预检查逻辑
-        return False  # 实际实现中应返回适当的结果
+        prompt = self.bot.langfuse.get_prompt("bot/SpecialCheck").prompt
+        response = get_strict_json(self.bot, prompt)
+        return response.get('talking', '请进行特殊检查')
     
-    def _handle_oem(self, shared) -> Tuple[str, str]:
+    def _handle_oem(self, shared: Dict[str, Any]) -> str:
         """处理OEM状态"""
-        # logger.info(f"处理OEM组件: {comp['title']}")
         prompt = self.bot.langfuse.get_prompt("bot/OEM").prompt
-        # 这里实现OEM处理逻辑的instructions逻辑
-        response = get_strict_json(self.bot,prompt)
-        message = response['talking']
-        return message  # 实际实现中应返回适当的结果
+        response = get_strict_json(self.bot, prompt)
+        return response.get('talking', '请确认OEM信息')
     
-    def _handle_dependency(self, comp: Dict, risk_bot: Any, user_input: str) -> Any:
+    def _handle_dependency(self, shared: Dict[str, Any]) -> str:
         """处理依赖状态"""
-        logger.info(f"处理依赖组件: {comp['title']}")
-        # 这里实现依赖处理逻辑
-        return False  # 实际实现中应返回适当的结果
+        prompt = self.bot.langfuse.get_prompt("bot/Dependency").prompt
+        response = get_strict_json(self.bot, prompt)
+        return response.get('talking', '请确认依赖关系')
     
-    def _handle_compliance(self, comp: Dict, risk_bot: Any, user_input: str) -> Any:
+    def _handle_compliance(self, shared: Dict[str, Any]) -> str:
         """处理合规性状态"""
-        logger.info(f"执行合规性检查: {comp['title']}")
-        return risk_bot.toConfirm(comp, user_input)
-
-    def _get_component_info(self, shared: Dict[str, Any]) -> Any:
-        """
-        获取当前组件信息，包含安全检查
+        processing_type = shared.get("processing_type", "license")
+        item_type = ItemType.LICENSE if processing_type == "license" else ItemType.COMPONENT
         
-        Returns:
-            ComponentInfo对象，包含组件信息或错误信息
-        """
-        # 创建一个简单的结果对象
-        class ComponentInfo:
-            def __init__(self, valid=True, data=None, error_message=""):
-                self.valid = valid
-                self.data = data
-                self.error_message = error_message
+        item_info = self.chat_manager.get_item(shared, item_type)
+        if not item_info.valid:
+            return item_info.error_message
+            
+        _, _, current_item = item_info.data
         
-        current_idx = shared.get("current_component_idx", 0)
-        comps = shared.get("toBeConfirmedComps", [])
-        
-        # 安全检查：组件列表
-        if not comps or current_idx >= len(comps):
-            logger.error(f"无效的组件索引: {current_idx}, 总组件数: {len(comps)}")
-            return ComponentInfo(False, None, "错误：没有找到要确认的组件")
-        
-        current_comp = comps[current_idx]
-        
-        return ComponentInfo(True, (current_idx, comps, current_comp), "")
+        prompt = self.bot.langfuse.get_prompt("bot/Compliance").prompt
+        response = get_strict_json(self.bot, prompt + f" For {current_item.get('title', current_item.get('compName', '未命名项目'))}")
+        return response.get('talking', '请确认合规信息')
 
     def _extract_reply(self, result: Any) -> str:
         """从处理结果中提取回复消息"""
@@ -172,92 +195,26 @@ class ChatService:
             logger.error(f"提取回复时出错: {e}")
             return "处理回复时出现错误"
 
-    def _proceed_to_next_component(self, comps: list, current_idx: int, shared: Dict[str, Any]) -> Tuple[bool, Dict[str, Any], str]:
-        """处理当前组件确认完成后的逻辑，准备下一个组件"""
-        # 更新当前组件状态
-        comps[current_idx]["status"] = ComponentStatus.CONFIRMED.value
-        logger.info(f"组件 {comps[current_idx]['title']} 已确认")
-        
-        # 查找下一个待确认的组件
-        next_idx = self._find_next_unconfirmed_component(comps, current_idx)
-        
-        if next_idx is None:
-            # 所有组件都已确认
-            logger.info("所有组件已确认完毕")
-            shared["all_confirmed"] = True
-            return True, shared, "所有组件已确认完毕!"
-        
-        # 移动到下一个组件
-        shared["current_component_idx"] = next_idx
-        next_comp = comps[next_idx]
-        
-        # 获取下一个组件的说明
-        instruction = get_strict_json(
-            self.bot,
-            f"here is the licenseName: {next_comp['title']}, "
-            f"CheckedLevel: {next_comp['CheckedLevel']}, and "
-            f"Justification: {next_comp['Justification']}"
-        )
-        
-        return False, shared, f"前一个组件已确认，现在确认: {next_comp['title']} \n {instruction['talking']}"
-
-    def _pre_check_with_condition(self, shared: Dict[str, Any], current_comp: str) -> Union[str, None]:
-        """根据条件进行预检查，返回组件所属的类别"""
-        categories = shared.get('specialCollections', {})
-        return find_key_by_value(categories, current_comp)
-
-    def confirm_input(self, shared, user_input):
-        
-        return 0
-
-    def _find_next_unconfirmed_component(self, comps, current_idx):
-        """查找下一个未确认的组件索引"""
-        for idx in range(current_idx + 1, len(comps)):
-            if comps[idx].get("status", "") == "":
-                return idx
-        
-        # 如果后面没有，从头找
-        for idx in range(0, current_idx):
-            if comps[idx].get("status", "") == "":
-                return idx
-        
-        return None  # 所有组件都已确认
     
     def initialize_chat(self, shared: Dict[str, Any]) -> Tuple[Dict[str, Any], str]:
         """
-        初始化聊天会话，准备第一个组件
+        初始化聊天会话，准备需要确认的组件和许可证
         
+        Args:
+            shared: 共享数据字典
+            
         Returns:
-            Tuple[updated_shared, initial_message]
+            Tuple[更新后的共享数据, 初始消息]
         """
-        comps = shared.get("toBeConfirmedComps", [])
-        if not comps:
-            return shared, "没有找到需要确认的组件"
-        
-        # 找到第一个未确认的组件
-        first_idx = None
-        for idx, comp in enumerate(comps):
-            if comp.get("status", "") == ComponentStatus.PENDING.value:
-                first_idx = idx
-                break
-        
-        if first_idx is None:
-            shared["all_confirmed"] = True
-            return shared, "所有组件已经确认完毕"
-        
-        shared["current_component_idx"] = first_idx
-        
-        risk_bot = shared.get("riskBot")
-        
-        # 安全检查：风险评估机器人
-        if not risk_bot:
-            raise RuntimeError("共享数据中未找到RiskBot")
 
+        # 确保风险评估机器人存在
+        risk_bot = shared.get("riskBot")
+        if not risk_bot:
+            raise ValueError("共享数据中未找到RiskBot")
+        
         self.bot = risk_bot
 
-        return shared, "Checking started"
-    
-    def confirm_input(self, shared: Dict[str, Any], user_input: str) -> int:
-        """确认用户输入"""
-        # 根据需要实现此方法
-        return 0
+        # 这里只需要保证shared里面有一个current值就可以了，具体的在检查许可证和组件的时候再调用
+        updated_shared, _ = self.chat_manager.initialize_session(shared)
+        
+        return updated_shared
