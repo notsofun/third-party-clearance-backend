@@ -45,7 +45,7 @@ async def analyze_file(file: UploadFile = File(...)):
     try:
         # 保存上传的文件
         file_path = UPLOAD_DIR / file.filename
-        logger.info('the html file is stored at:', file_path)
+        logger.info('the html file is stored at: %s', file_path)
 
         # 将上传的文件内容保存到磁盘
         with open(file_path, "wb") as buffer:
@@ -68,7 +68,7 @@ async def analyze_file(file: UploadFile = File(...)):
             "shared": shared,
             "state": status if not updated_shared.get("all_confirmed") else "completed",
             'chat_service': chat_service,
-            'chat_flow': session_chat_flow
+            'chat_flow': chat_service.chat_flow
         }
         
         return {
@@ -93,14 +93,12 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
             f"Session {session_id} not found",
             404
         )
-    
     # 检查shared数据
     if 'shared' not in session:
         return create_error_response(
             "SHARED_DATA_NOT_FOUND",
             f"Shared data not found in session {session_id}"
         )
-    
     # 检查riskBot
     if 'riskBot' not in session['shared']:
         return create_error_response(
@@ -118,18 +116,13 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
         
         # 创建文件路径
         file_path = os.path.join("uploads", file.filename)
-        
         # 将上传的文件内容保存到磁盘
         with open(file_path, "wb") as buffer:
             content = await file.read()
             buffer.write(content)
-        
         logger.info(f'The file is stored at: {file_path}')
-        
         analysis_result = risk_bot.contract_check(file_path)
-        
         logger.info(f"Contract analysis completed successfully for session {session_id}")
-
         sessions[session_id]['contract_analysis'] = analysis_result
 
         content = {
@@ -169,7 +162,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
     chat_service = session['chat_service']
     chat_flow = session['chat_flow']
 
-    status = chat_flow.current_state
+    status = chat_flow.current_state.value
     logger.info('when processing input, we are in the status of:', status)
 
     if status == "completed":

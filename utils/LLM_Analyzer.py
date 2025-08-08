@@ -14,7 +14,7 @@ logging.getLogger("msal").setLevel(logging.WARNING)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("openai").setLevel(logging.WARNING)
-
+logging.getLogger("langchain").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
 class RiskReviewer(AzureOpenAIChatClient):

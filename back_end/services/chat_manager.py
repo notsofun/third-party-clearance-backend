@@ -1,6 +1,7 @@
 import logging
 from typing import Dict, Any, Tuple, Optional, List, Callable
 from .item_types import ItemType, ItemStatus, ItemInfo
+from utils.decorator import deprecated
 
 logger = logging.getLogger(__name__)
 
@@ -47,6 +48,7 @@ class ChatManager:
         
         return ItemInfo(True, (current_idx, items, current_item), "")
     
+    @deprecated(reason='This method has not been used in any class')
     def proceed_to_next_item(self,
                             items: List[Dict],
                             current_idx: int,
@@ -167,11 +169,11 @@ class ChatManager:
             return shared, "所有项目已确认完毕"
         
         # 确定开始处理的项目类型
-        if license_idx is not None:
-            shared["current_license_idx"] = license_idx
-            shared["processing_type"] = "license"
-        elif component_idx is not None:
+        if component_idx is not None:
             shared["current_component_idx"] = component_idx
             shared["processing_type"] = "component"
+        elif license_idx is not None:
+            shared["current_license_idx"] = license_idx
+            shared["processing_type"] = "license"
         
         return shared, "检查已开始，请跟随提示完成确认流程"

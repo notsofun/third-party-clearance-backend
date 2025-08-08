@@ -17,3 +17,20 @@ class ItemInfo(NamedTuple):
     valid: bool
     data: Optional[Tuple[int, List, Dict]]
     error_message: str = ""
+
+class State(Enum):
+    '''确认状态枚举'''
+    COMPLETED = 'completed'
+    INPPROGRESS = 'in_progress'
+    CONTINUE = 'continue'
+    NEXT = 'next'
+
+class ConfirmationStatus(Enum):
+    """确认状态的枚举类型"""
+    SPECIAL_CHECK = "special_check"
+    OEM = "OEMing"
+    DEPENDENCY = "toDependency"
+    COMPLIANCE = "toCompliance"
+    CONTRACT = 'toContract'
+    CREDENTIAL = 'credential'
+

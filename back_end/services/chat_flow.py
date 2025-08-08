@@ -2,27 +2,15 @@ from enum import Enum
 from typing import Dict, Optional, Any, List, Type
 from abc import ABC, abstractmethod
 import logging
-from .item_types import ItemStatus
+from .item_types import ItemStatus, State, ConfirmationStatus
 
 logger = logging.getLogger(__name__)
-
-class ConfirmationStatus(Enum):
-    """确认状态的枚举类型"""
-    SPECIAL_CHECK = "special_check"
-    OEM = "OEMing"
-    DEPENDENCY = "toDependency"
-    COMPLIANCE = "toCompliance"
-    CONTRACT = 'toContract'
-    CREDENTIAL = 'credential'
 
 class StateHandler(ABC):
     """状态处理器抽象基类"""
     def __init__(self):
         self.subtasks = []  # 子任务处理器列表
         self.completed_subtasks = set()  # 已完成子任务集合
-        self.CONTINUE = 'continue'
-        self.NEXT = 'next'
-        self.COMPLETED = 'completed'
 
     def add_subtask(self, handler: 'StateHandler'):
         """添加子任务处理器"""
@@ -55,28 +43,29 @@ class CompositeStateHandler(StateHandler):
         for handler in self.subtasks:
             if handler not in self.completed_subtasks:
                 event = handler.handle(context)
-                if event == self.COMPLETED:
+                if event == State.COMPLETED.value:
                     self.completed_subtasks.add(handler)
         
         # 2. 检查完成状态
         if self.is_completed():
-            return "all_completed"
-        return "in_progress"
+            return State.COMPLETED
+        return State.INPPROGRESS
 
 # 具体状态处理器实现
 class LicenseHandler(StateHandler):
     def handle(self, context: Dict[str, Any]) -> Optional[str]:
         license_data = context.get("shared", {}).get('toBeConfirmedLicenses',[])
         if all(lic.get("status") == ItemStatus.CONFIRMED.value for lic in license_data):
-            return "completed"
-        return "in_progress"
+            return State.COMPLETED
+        return State.INPPROGRESS
 
 class ComponentHandler(StateHandler):
     def handle(self, context: Dict[str, Any]) -> Optional[str]:
         components = context.get("shared", {}).get('toBeConfirmedComponents',[])
+        logger.warning('now we are processing the state of the first component')
         if all(comp.get("status") == ItemStatus.CONFIRMED.value for comp in components):
-            return "completed"
-        return "in_progress"
+            return State.COMPLETED
+        return State.INPPROGRESS
 
 class ComplianceHandler(CompositeStateHandler):
     """合规检查复合状态"""
@@ -109,17 +98,17 @@ class SpecialCheckHandler(StateHandler):
     def handle(self, context: Dict[str, Any]) -> Optional[ConfirmationStatus]:
         print("执行特殊检查...")
         if context.get("special_check_passed", True):
-            return ConfirmationStatus.OEM
+            return State.COMPLETED
         return None
 
 class OEMHandler(StateHandler):
     def handle(self,context: Dict[str, Any]) -> Optional[ConfirmationStatus]:
         print("执行OEM处理...")
         status = context.get('status')
-        if status == self.NEXT:
-            return ConfirmationStatus.CONTRACT
-        elif status == self.CONTINUE:
-            return ConfirmationStatus.OEM
+        if status == State.NEXT.value:
+            return State.COMPLETED
+        elif status == State.CONTINUE.value:
+            return State.INPPROGRESS
         else:
             raise RuntimeError('Model did not determine to go on or continue')
 
@@ -127,10 +116,10 @@ class ContractHandler(StateHandler):
     def handle(self, context: Dict[str, Any]) -> Optional[ConfirmationStatus]:
         print("执行合同检查...")
         status = context.get('status')
-        if status == self.NEXT:
-            return ConfirmationStatus.DEPENDENCY
-        elif status == self.CONTINUE:
-            return ConfirmationStatus.CONTRACT
+        if status == State.NEXT.value:
+            return State.COMPLETED
+        elif status == State.CONTINUE.value:
+            return State.INPPROGRESS
         else:
             raise RuntimeError('Model did not determine to go on or continue')
 
@@ -141,28 +130,28 @@ class WorkflowContext:
         # 状态转移表（核心改进）
         self.transition_table = {
             ConfirmationStatus.OEM: {
-                "completed": ConfirmationStatus.CONTRACT,
-                "in_progress": ConfirmationStatus.OEM
+                State.COMPLETED: ConfirmationStatus.CONTRACT,
+                State.INPPROGRESS: ConfirmationStatus.OEM
             },
             ConfirmationStatus.COMPLIANCE: {
-                "all_completed": ConfirmationStatus.CREDENTIAL,
-                "in_progress": ConfirmationStatus.COMPLIANCE
+                State.COMPLETED: ConfirmationStatus.CREDENTIAL,
+                State.INPPROGRESS: ConfirmationStatus.COMPLIANCE
             },
             ConfirmationStatus.CREDENTIAL: {
-                "all_completed": ConfirmationStatus.SPECIAL_CHECK,
-                "in_progress": ConfirmationStatus.CREDENTIAL
+                State.COMPLETED: ConfirmationStatus.SPECIAL_CHECK,
+                State.INPPROGRESS: ConfirmationStatus.CREDENTIAL
             },
             ConfirmationStatus.SPECIAL_CHECK: {
-                "all_completed": ConfirmationStatus.COMPLIANCE,
-                "in_progress": ConfirmationStatus.SPECIAL_CHECK
+                State.COMPLETED: ConfirmationStatus.COMPLIANCE,
+                State.INPPROGRESS: ConfirmationStatus.SPECIAL_CHECK
             },
             ConfirmationStatus.CONTRACT: {
-                "all_completed": ConfirmationStatus.DEPENDENCY,
-                "in_progress": ConfirmationStatus.CONTRACT
+                State.COMPLETED: ConfirmationStatus.DEPENDENCY,
+                State.INPPROGRESS: ConfirmationStatus.CONTRACT
             },
             ConfirmationStatus.DEPENDENCY: {
-                "all_completed": ConfirmationStatus.CREDENTIAL,
-                "in_progress": ConfirmationStatus.DEPENDENCY
+                State.COMPLETED: ConfirmationStatus.CREDENTIAL,
+                State.INPPROGRESS: ConfirmationStatus.DEPENDENCY
             },
         }
         
@@ -184,6 +173,7 @@ class WorkflowContext:
         if not handler:
             return None
         
+        logger.info(f'now we are processing state with this handler:{handler}')
         # 执行状态处理并获取事件
         event = handler.handle(context)
         
@@ -193,6 +183,8 @@ class WorkflowContext:
             if next_state:
                 self.current_state = next_state
         
+        logger.info('State changed in the flow. Now the new state is: %s ', self.current_state)
+
         return self.current_state
 
 
