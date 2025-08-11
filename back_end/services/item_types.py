@@ -11,6 +11,7 @@ class ItemStatus(Enum):
     PENDING = ""
     CONFIRMED = "confirmed"
     REJECTED = "rejected"
+    INPROGRESS = 'Inprogress'
 
 class ItemInfo(NamedTuple):
     """统一的项目信息结构"""

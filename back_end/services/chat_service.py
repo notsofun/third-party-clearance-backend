@@ -34,8 +34,8 @@ class ChatService:
         """
         处理用户输入，优先检查大状态变化，然后处理嵌套逻辑
         """
-        
-        response = get_strict_json(self.bot, user_input)
+        tags = [status]
+        response = get_strict_json(self.bot, user_input,tags=tags)
         result = response.get('result')
         reply = self._extract_reply(response)
         
@@ -43,11 +43,29 @@ class ChatService:
         shared['riskBot'] = self.bot
 
         # 1. 优先检查大状态变化
+        # 第一个说yes，要检查，会给到next，当前大状态在toDependency
         content = {'shared': shared, 'status': result}
+        # updated也是toDependency
         updated_status = self.chat_flow.process(content).value
         
         logger.info('Current status: %s, Updated status: %s', status, updated_status)
         
+        final_status, updated_shared, reply = self._status_check(shared, updated_status, status, result,reply, user_input)
+
+        return final_status, updated_shared, reply
+
+    def _status_check(self, shared, updated_status, status, result, reply, user_input):
+
+        '''
+        封装这里处理状态变化的逻辑，方便server在处理合同分析时调用
+        shared: 统一流转传递数据的字典,
+        updated_status: 根据result生成的流转后的状态,
+        status: 传入service时的状态,
+        result: 模型对于是否继续的判断,
+        reply: 模型生成的说明,
+        user_input: 用户输入,
+        '''
+
         # 2. 如果大状态发生变化，直接转换到新状态
         if updated_status != status:
             message = self.get_instructions(shared, updated_status)
@@ -57,7 +75,14 @@ class ChatService:
         # 3. 大状态没有变化，检查当前状态是否需要嵌套处理
         if self._has_nested_logic(status):
             # 处理嵌套逻辑（组件/许可证确认）
-            return self._handle_nested_logic(shared, user_input, status, result, reply)
+            logger.info('now we are handling nested logic...')
+            updated_status, updated_shared, message = self._handle_nested_logic(shared, user_input, status, result, reply)
+            # 检查特殊标记
+            if not message:
+                return updated_status, updated_shared, reply
+            else:
+                # 添加这一行，确保有返回值
+                return updated_status, updated_shared, message
         else:
             # 没有嵌套逻辑的状态，直接返回回复
             return status, shared, reply
@@ -85,7 +110,13 @@ class ChatService:
         updated_shared, message, all_completed = self.chat_manager.handle_item_action(
             shared, item_type, result, self.bot
         )
-        
+
+        logger.warning('we have found this messsage %s', message)
+
+        # 由于组件本身在inprogress，不新返回消息
+        if message == "__USE_ORIGINAL_REPLY__":
+            return status, updated_shared, reply
+                
         # 检查是否所有项目都已确认完成
         if all_completed:
             # 重新检查大状态转换

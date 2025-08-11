@@ -1,93 +1,134 @@
-# Third-Party-Clearance
+# 合规性风险评估系统（Compliance Risk Assessment System）
 
+本项目基于大型语言模型（LLM）与向量检索技术，结合人工确认环节，实现软件依赖包的合规性风险自动分析与智能评估。核心由LangChain框架驱动，调用Azure OpenAI完成文本分析，结合PocketFlow实现任务节点编排，最终生成结构化合规报告。
 
+---
 
-## Getting started
+## 项目背景与目标
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+随着软件依赖包的数量和复杂度激增，传统人工审核流程效率低、误判率高。本系统旨在：
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- 利用LLM自动理解依赖包文本内容及许可协议
+- 结合向量数据库实现历史案例快速检索
+- 通过多阶段状态机管理合规评估流程（OEM、依赖、合规等）
+- 结合人工确认节点保证结果准确可靠
+- 最终生成可供法律与开发团队参考的合规报告
 
-## Add your files
+---
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## 系统架构
 
+```mermaid
+flowchart TD
+    A[用户上传依赖包清单] --> B[LLM分析模块<br>（LangChain + Azure OpenAI）]
+    B --> C[向量数据库检索历史分析]
+    C -->|无匹配或需更新| D[风险评估节点<br>（LLM + Prompt模板）]
+    C -->|匹配命中| E[返回历史分析结果]
+    D --> F[人工确认环节]
+    E --> F
+    F --> G[报告生成节点]
+    G --> H[输出合规性报告]
+    
+    subgraph 流程编排引擎
+    B
+    C
+    D
+    F
+    G
+    end
+````
+
+* **LLM分析模块**：负责解析依赖包及许可文本，调用Azure OpenAI生成语义向量及初步分析。
+* **向量数据库**：存储历史分析结果，提升复用效率。
+* **风险评估节点**：对未命中或需更新的条目，重新调用LLM做合规风险评估。
+* **人工确认环节**：基于状态机（OEM、依赖、合规、合同等）引导人工逐步确认。
+* **报告生成节点**：整合所有确认结果，自动生成结构化合规报告。
+
+---
+
+## 核心模块设计
+
+### 状态机设计
+
+* 采用抽象基类`StateHandler`定义状态处理器接口
+* 定义具体状态处理器：`SpecialCheckHandler`, `OEMHandler`, `DependencyHandler`, `ComplianceHandler`
+* `WorkflowContext`负责状态管理和转移
+* 状态枚举由`ConfirmationStatus`定义，包含`SPECIAL_CHECK`, `OEM`, `DEPENDENCY`, `COMPLIANCE`, `CONTRACT`
+
+状态转换示意：
+
+```text
+SPECIAL_CHECK → OEM → DEPENDENCY → COMPLIANCE → CONTRACT → 结束
 ```
-cd existing_repo
-git remote add origin https://code.siemens.com/zhi-dian.huang.ext/third-party-clearance.git
-git branch -M main
-git push -uf origin main
+
+### 后端聊天服务
+
+* `ChatService`负责接收用户输入，调用对应状态处理器处理消息
+* 通过`WorkflowContext`维护会话状态和状态转移
+* 使用FastAPI实现接口，提供文件上传分析接口和聊天交互接口
+* 支持多组件依次确认，管理多轮对话上下文
+
+---
+
+## 快速开始
+
+### 环境依赖
+
+* Python 3.9+
+* FastAPI
+* uvicorn
+* LangChain
+* Azure OpenAI SDK
+* PocketFlow（流程编排）
+
+```bash
+pip install -r requirements.txt
 ```
 
-## Integrate with your tools
+### 启动服务
 
-- [ ] [Set up project integrations](https://code.siemens.com/zhi-dian.huang.ext/third-party-clearance/-/settings/integrations)
+```bash
+uvicorn back_end.server:app --reload --host 127.0.0.1 --port 8000
+```
 
-## Collaborate with your team
+### 使用流程
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+1. **上传依赖文件**
 
-## Test and Deploy
+```bash
+curl -X POST "http://127.0.0.1:8000/analyze" -F "file=@yourfile.html"
+```
 
-Use the built-in continuous integration in GitLab.
+返回 `session_id` 和初始确认组件信息。
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+2. **发起聊天确认**
 
-***
+```bash
+curl -X POST "http://127.0.0.1:8000/chat/{session_id}" -H "Content-Type: application/json" -d '{"message":"用户输入内容"}'
+```
 
-# Editing this README
+服务器返回当前确认状态和系统回复。
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+3. **查询会话状态**
 
-## Suggestions for a good README
+```bash
+curl -X GET "http://127.0.0.1:8000/sessions/{session_id}"
+```
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+---
 
-## Name
-Choose a self-explaining name for your project.
+## 开发指南
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+* 关键逻辑位于 `back_end/services/chat_service.py` 与 `back_end/services/chat_flow.py`
+* `WorkflowContext` 实现状态转移，易于扩展更多状态
+* FastAPI 服务器入口在 `back_end/server.py`
+* 日志采用标准 logging，级别可调节方便调试
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+---
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## 未来优化方向
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+* 增加更多智能异常检测与预警策略
+* 扩展多语言支持，覆盖更多许可协议语境
+* 深度集成知识图谱，提升推理能力
+* 接入更丰富的人机交互接口，实现多渠道合规审核

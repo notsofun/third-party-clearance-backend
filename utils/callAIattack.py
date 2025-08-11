@@ -107,7 +107,7 @@ class AzureOpenAIChatClient:
 
         return response.content
     
-    def _request(self, message):
+    def _request(self, message, tags = None):
         """
         message是一个字典格式，字段要求跟着实例化时获取的prompt要求走
         }

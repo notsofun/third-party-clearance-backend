@@ -61,7 +61,7 @@ async def analyze_file(file: UploadFile = File(...)):
         status = chat_service.chat_flow.current_state.value
         initial_message = chat_service.get_instructions(shared,status)
 
-        logger.info('now we initialized status as:', status)
+        logger.info('now we initialized status as: %s', status)
 
         session_id = str(uuid.uuid4())
         sessions[session_id] = {
@@ -80,7 +80,11 @@ async def analyze_file(file: UploadFile = File(...)):
         
     except Exception as e:
         logger.error(f"Error during file analysis: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        return create_error_response(
+            "Error during analysis",
+            error_message=str(e),
+            status_code=500
+        )
 
 @app.post('/analyze-contract/{session_id}')
 async def analyze_contract(session_id: str, file: UploadFile = File(...)):
@@ -109,6 +113,7 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
     curr_shared = session['shared']
     risk_bot = curr_shared['riskBot']
     chat_flow = session['chat_flow']
+    chat_service = session['chat_service']
     
     # 处理文件
     try:
@@ -122,21 +127,40 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
             buffer.write(content)
         logger.info(f'The file is stored at: {file_path}')
         analysis_result = risk_bot.contract_check(file_path)
+        # 这里会生成结果为next的回答
         logger.info(f"Contract analysis completed successfully for session {session_id}")
         sessions[session_id]['contract_analysis'] = analysis_result
+
+        status = chat_flow.current_state
 
         content = {
             'shared': curr_shared,
             'status': 'next',
         }
 
-        chat_flow.process(content)
+        # Status here should be transitted to toDependency
+        updated_status = chat_flow.process(content).value
 
-        sessions[session_id]['chat_flow'] = chat_flow
+        # Since the status has changed, here should return an instruction for dependency checking
+        updated_status, updated_shared, message = chat_service._status_check(
+            curr_shared,
+            updated_status,
+            status,
+            'next',
+            None,
+            None,
+        )
+
+        sessions[session_id].update({
+            'chat_flow': chat_flow,
+            'state': updated_status,
+            'shared': updated_shared,
+            'chat_service' : chat_service
+        })
 
         return create_success_response(
             data={"file_path": str(file_path)},
-            message="Contract analysis completed successfully"
+            message= message
         )
         
     except Exception as e:
@@ -163,7 +187,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
     chat_flow = session['chat_flow']
 
     status = chat_flow.current_state.value
-    logger.info('when processing input, we are in the status of:', status)
+    logger.info('when processing input, we are in the status of: %s', status)
 
     if status == "completed":
         return {
@@ -178,9 +202,6 @@ async def chat(session_id: str, chat_message: ChatMessage):
             chat_message.message,
             status
         )
-
-        # 更新会话状态
-        session["shared"] = updated_shared
         
         if status == True:
             session["state"] = "completed"
@@ -190,12 +211,19 @@ async def chat(session_id: str, chat_message: ChatMessage):
                 "message": reply,
             }
         
+        sessions[session_id].update({
+        'chat_flow': chat_flow,
+        'state': status,
+        'shared': updated_shared,
+        'chat_service' : chat_service
+        })
+
         return {
             "status": status,
             "message": reply,
             "current_component_idx": updated_shared.get("current_component_idx")
         }
-        
+
     except Exception as e:
         logger.error(f"Error during chat: {str(e)}", exc_info=True)
         return create_error_response(

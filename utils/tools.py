@@ -139,7 +139,7 @@ def json_strip(text:str) -> str:
         return None
 
 
-def get_strict_json(model:object, user_input, var=False):
+def get_strict_json(model:object, user_input, var=False, tags:list = None):
     """
     Try response up to 5 times until getting strictly valid JSON.
     No user perception of retries.
@@ -151,8 +151,8 @@ def get_strict_json(model:object, user_input, var=False):
         if var:
             response = model._fixed_request(user_input)
         else:
-            response = model._request(user_input)
-        # print('让我看看你这个结果是怎样:',response)
+            response = model._request(user_input, tags)
+
         result = json_strip(response)
         if result:
             return result

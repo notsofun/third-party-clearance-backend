@@ -3,7 +3,7 @@ from utils.callAIattack import AzureOpenAIChatClient
 import time
 from utils.tools import get_strict_json, get_strict_string, read_doc
 from langchain_openai import AzureChatOpenAI
-from langchain.memory import ConversationBufferMemory
+from langchain.memory import ConversationBufferMemory, ConversationSummaryBufferMemory
 from langchain.chains import LLMChain
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 import logging
@@ -275,12 +275,15 @@ class Chatbot(AzureOpenAIChatClient):
             api_version=self.api_version,
             azure_endpoint=self.endpoint,
             azure_ad_token=self.access_token,
-            azure_deployment=self.deployment
+            azure_deployment=self.deployment,
+            model=self.deployment
         )
 
         self.system_prompt = self.langfusePrompt.prompt
 
-        self.memory = ConversationBufferMemory(memory_key="history", return_messages=True)
+        self.memory = ConversationSummaryBufferMemory(llm=self.llm,
+                                                        return_messages=True,
+                                                        memory_key='history')
         self.prompt = ChatPromptTemplate.from_messages([
             ("system", self.system_prompt),
             MessagesPlaceholder(variable_name="history"),
@@ -293,7 +296,11 @@ class Chatbot(AzureOpenAIChatClient):
             verbose=True
         )
     
-    def _request(self, user_input):
+    def _request(self, user_input, tags:list = None):
+
+        '''
+        使用tags来记录每次请求时所处的状态，方便后续调试
+        '''
 
         if not isinstance(user_input, str):
             raise TypeError("Input 'user_input' must be a string.")
@@ -304,7 +311,8 @@ class Chatbot(AzureOpenAIChatClient):
             'callbacks' : [self.langfuse_handler],
             'metadata' : {
                 "langfuse_session_id": f"{self.session_id}",
-                "langfuse_user_id" : "NotSoFun"}
+                "langfuse_user_id" : "NotSoFun"},
+                "langfuse_tags": tags,
         })
         return response["text"]
     
@@ -320,7 +328,7 @@ class Chatbot(AzureOpenAIChatClient):
             'callbacks' : [self.langfuse_handler],
             'metadata' : {
                 "langfuse_session_id": f"{self.session_id}",
-                "langfuse_user_id" : "NotSoFun"}
+                "langfuse_user_id" : "NotSoFun"},
         })
 
         return response['text']
@@ -473,12 +481,12 @@ def trial1():
 
 # ------ 用法示例 ------
 if __name__ == "__main__":
-    # license1 = {
-    # "title": "GNU General Public License v2.0 only",
-    # "originalLevel": "high",
-    # "CheckedLevel": "high",
-    # "Justification": "GPL-2.0 is a strong copyleft license: any distribution of derivative works (including statically or dynamically linked binaries) must be licensed as a whole under GPL-2.0, source code must be made available, and sublicensing under more permissive terms is not allowed. These obligations create significant license-compatibility and release requirements for proprietary or mixed-license projects, leading to a high compliance and business risk profile. However, it does not include additional network-service copyleft (like AGPL) or patent retaliation clauses that might elevate it to a “very high” category. Therefore, a \"high\" risk rating is appropriate and is confirmed."
-    # }
+    license1 = {
+    "title": "GNU General Public License v2.0 only",
+    "originalLevel": "high",
+    "CheckedLevel": "high",
+    "Justification": "GPL-2.0 is a strong copyleft license: any distribution of derivative works (including statically or dynamically linked binaries) must be licensed as a whole under GPL-2.0, source code must be made available, and sublicensing under more permissive terms is not allowed. These obligations create significant license-compatibility and release requirements for proprietary or mixed-license projects, leading to a high compliance and business risk profile. However, it does not include additional network-service copyleft (like AGPL) or patent retaliation clauses that might elevate it to a “very high” category. Therefore, a \"high\" risk rating is appropriate and is confirmed."
+    }
     bot1 = RiskBot(session_id = 'ChatbotTrial')
     # bot1.toConfirm(license1)
     message = {
@@ -494,6 +502,7 @@ if __name__ == "__main__":
         "block_html": "<li class=\"release\" id=\"@ngrx/store_17.2.0\" title=\"@ngrx/store 17.2.0\">\n<div class=\"inset\">\n<h3 id=\"h3@ngrx/store_17.2.0\">@ngrx/store 17.2.0\n                            <a class=\"top\" href=\"#releaseHeader\">⇧</a>\n</h3>\n</div>\n\n\n                        Acknowledgements:<br>\n<pre class=\"acknowledgements\">\nDisclaimer of Warranties and Limitation of Liability.\n\na. Unless otherwise separately undertaken by the Licensor, to the extent possible, the Licensor offers the Licensed Material as-is and as-available, and makes no representations or warranties of any kind concerning the Licensed Material, whether express, implied, statutory, or other. This includes, without limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable. Where disclaimers of warranties are not allowed in full or in part, this disclaimer may not apply to You.\n\nb. To the extent possible, in no event will the Licensor be liable to You on any legal theory (including, without limitation, negligence) or otherwise for any direct, special, indirect, incidental, consequential, punitive, exemplary, or other losses, costs, expenses, or damages arising out of this Public License or use of the Licensed Material, even if the Licensor has been advised of the possibility of such losses, costs, expenses, or damages. Where a limitation of liability is not allowed in full or in part, this limitation may not apply to You.\n\nc. The disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.\n    </pre>\n\n                    Licenses:<br>\n<ul class=\"licenseEntries\" style=\"list-style-type:none\">\n<li class=\"licenseEntry\" id=\"licenseEntry1\" title=\"Apache-2.0\">\n<a href=\"#licenseTextItem1\">Apache-2.0 (1)</a>\n</li>\n<li class=\"licenseEntry\" id=\"licenseEntry2\" title=\"CC-BY-4.0\">\n<a href=\"#licenseTextItem2\">CC-BY-4.0 (2)</a>\n</li>\n<li class=\"licenseEntry\" id=\"licenseEntry3\" title=\"MIT\">\n<a href=\"#licenseTextItem3\">MIT (3)</a>\n</li>\n</ul>\n<pre class=\"copyrights\">\nCopyright (c) 2017-2020 Nicholas Jamieson and contributors\nCopyright (c) 2015-2018 NgRx.\nCopyright 2009 International Color Consortium\nCopyright (c) 1998 Hewlett-Packard Company\n© Zeno Rocha\nCopyright (c) 2015-2023 Brandon Roberts, Mike Ryan, Victor Savkin, Rob Wormald\nCopyright 2006-2016 Google Inc. All Rights Reserved.\nCopyright Google Inc. All Rights Reserved.\n(c) 2007 Steven Levithan &lt;stevenlevithan.com&gt;\n<h3><a class=\"top\" href=\"#releaseHeader\">⇧</a></h3>\n    </pre>\n</br></br></li>",
     }
     # result = bot1.OEMCheck('toOEM','ii')
-
-    result = bot1.contract_check(r"C:\Users\z0054unn\Documents\contract_template.docx")
+    result = bot1.toConfirm(license1, 'hello')
+    
+    # result = bot1.contract_check(r"C:\Users\z0054unn\Documents\contract_template.docx")
     print(result)
