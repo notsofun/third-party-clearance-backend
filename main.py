@@ -48,5 +48,5 @@ def run_conversation(shared, user_reply=None):
 
 if __name__ == '__main__':
     shared = run_analysis(r"C:\Users\z0054unn\Downloads\LicenseInfo-@automation-core_ac-engineering-ng-2.10.0-2025-07-30_05_57_51.html")
-    user_reply = "trial"
-    run_conversation(shared, user_reply)
+    # user_reply = "trial"
+    # run_conversation(shared, user_reply)

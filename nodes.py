@@ -8,6 +8,7 @@ from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot,
 from utils.vectorDB import VectorDatabase
 from utils.callAIattack import AzureOpenAIChatClient
 from utils.tools import (reverse_exec)
+from utils.itemFilter import filter_components_by_credential_requirement
 import logging
 import random
 
@@ -218,14 +219,19 @@ class LicenseReviewing(BatchNode):
         """
         遍历全部license文本后合并风险评级
         """
-        shared["riskAnalysis"] = {
-            lTitle : {
-                'risk' : risk,
+
+        shared["riskAnalysis"] = [
+            {
+                'licenseTitle': lTitle,
+                'risk': risk,
                 'credentialOrNot': credential,
                 'sourceCodeRequired': srcOrNot,
             }
-            for lTitle, risk, credential,srcOrNot in exec_res_list
-        }
+            for lTitle, risk, credential, srcOrNot in exec_res_list
+        ]
+
+        ### 这里为了测试！！！选了一个组件改credential为true！
+        shared["riskAnalysis"][0]["credentialOrNot"]["CredentialOrNot"] = True
 
         with open("analysisOfRisk.json","w", encoding="utf-8" ) as f1:
             json.dump(shared["riskAnalysis"],f1,ensure_ascii=False,indent=2)
@@ -299,7 +305,7 @@ class RiskCheckingRAG(BatchNode):
         random_int = random.getrandbits(64)
         licenseTexts = [(item['id'], item['title'], item['text'],random_int)
                 for item in parsedHtml['license_texts']]
-        originalRiskAnalysis = [ (k, v["risk"]['level'], v["risk"]['reason'],random_int) for k,v in shared["riskAnalysis"].items()]
+        originalRiskAnalysis = [ (k['licenseTitle'], k["risk"]['level'], k["risk"]['reason'],random_int) for k in shared["riskAnalysis"]]
         logger.info(f'We have {len(originalRiskAnalysis)} components to check')
 
         # 创建一个基于title的licenseTexts字典
@@ -342,8 +348,8 @@ class RiskCheckingRAG(BatchNode):
 
         shared["toBeConfirmedLicenses"] = toBeConfrimed_risk_license
 
-        with open("checkedRisk.json","w", encoding="utf-8" ) as f1:
-            json.dump(shared["checkedRisk"],f1,ensure_ascii=False,indent=2)
+        with open("toBeConfirmedLicenses.json","w", encoding="utf-8" ) as f1:
+            json.dump(shared["toBeConfirmedLicenses"],f1,ensure_ascii=False,indent=2)
 
         logger.info('finished checking, now we are checking the dependecies')
         return "default"
@@ -359,7 +365,9 @@ class DependecyCheckingRAG(BatchNode):
         random_int = random.getrandbits(64)
         components = [ (item['name'], item['block_html'],random_int )
                     for item in parsedHtml['releases']]
-
+        
+        with open("components.json","w", encoding="utf-8" ) as f1:
+            json.dump(components,f1,ensure_ascii=False,indent=2)
         return components
     
     def exec(self, comp):
@@ -375,11 +383,23 @@ class DependecyCheckingRAG(BatchNode):
         return dependency
     
     def post(self, shared, prep_res, exec_res):
-        
+
+        credential_required_components = filter_components_by_credential_requirement(
+            prep_res,
+            shared['parsedHtml'],
+            shared['riskAnalysis']
+        )
+        shared['credential_required_components'] = credential_required_components
+
+        dependency_required__components = [comp for comp in exec_res if comp.get("dependency") == True]
+        shared['dependency_required__components'] = dependency_required__components
         shared['toBeConfirmedComponents'] = exec_res
 
         with open("dependecies.json","w", encoding="utf-8" ) as f1:
-            json.dump(shared["toBeConfirmedComponents"],f1,ensure_ascii=False,indent=2)
+            json.dump(shared["dependency_required__components"],f1,ensure_ascii=False,indent=2)
+        
+        with open("credentialComps.json","w", encoding="utf-8" ) as f1:
+            json.dump(shared["credential_required_components"],f1,ensure_ascii=False,indent=2)
 
         logger.info('finished checking, now we are starting the chat...')
         shared['toInitialize'] = 'riskBot'

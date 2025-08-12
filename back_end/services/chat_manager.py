@@ -1,7 +1,7 @@
 import logging
-from typing import Dict, Any, Tuple, Optional, List, Callable
-from .item_types import ItemType, ItemStatus, ItemInfo, State
-from utils.tools import get_strict_json
+from typing import Dict, Any, Tuple, Optional, List
+from .item_types import ItemType, ItemStatus, ItemInfo, State, get_type_config
+from utils.tools import get_strict_json, create_error_response
 
 
 logger = logging.getLogger(__name__)
@@ -26,15 +26,11 @@ class ChatManager:
         Returns:
             ItemInfo对象，包含项目信息或错误信息
         """
-        # 根据类型选择对应的键
-        if item_type == ItemType.LICENSE:
-            current_key = "current_license_idx"
-            items_key = "toBeConfirmedLicenses"
-            error_msg = "错误：没有找到要确认的许可证"
-        else:  # ItemType.COMPONENT
-            current_key = "current_component_idx"
-            items_key = "toBeConfirmedComponents"
-            error_msg = "错误：没有找到要确认的组件"
+        # 根据类型获取对应配置
+        config = get_type_config(item_type)
+        current_key = config["current_key"]
+        items_key = config["items_key"]
+        error_msg = config["error_msg"]
         
         # 获取当前索引和项目列表
         current_idx = shared.get(current_key, 0)
@@ -85,15 +81,16 @@ class ChatManager:
     def _handle_continue_action(self, shared: Dict[str, Any], item_type: ItemType, current_idx: int,
                                 items: List[Dict], current_item: Dict, current_status: str, bot) -> Tuple[Dict[str, Any], str, bool]:
         """处理CONTINUE操作"""
+        # 获取配置
+        config = get_type_config(item_type)
+        items_key = config["items_key"]
+
         # 如果当前项目是待确认状态，返回指导语
         if current_status == ItemStatus.PENDING.value:
             instruction = self._get_item_instruction(item_type, current_item, bot)
             
             # 更新shared中的项目状态为INPROGRESS
-            if item_type == ItemType.LICENSE:
-                shared['toBeConfirmedLicenses'][current_idx]['status'] = ItemStatus.INPROGRESS.value
-            else:  # ItemType.COMPONENT
-                shared['toBeConfirmedComponents'][current_idx]['status'] = ItemStatus.INPROGRESS.value
+            shared[items_key][current_idx]['status'] = ItemStatus.INPROGRESS.value
                 
             return shared, instruction, False
         elif current_status == ItemStatus.INPROGRESS.value:
@@ -102,11 +99,15 @@ class ChatManager:
         else:
             # 已确认项目，直接返回通用消息
             item_name = self._get_item_name(item_type, current_item)
-            return shared, f"项目 {item_name} 已确认，您可以继续操作或进入下一项", False
+            return shared, f"{item_name} has been confirmed, you could continue processing or switch to the next", False
     
-    def _handle_next_action(self, shared: Dict[str, Any], item_type: ItemType, current_idx: int, 
+    def _handle_next_action(self, shared: Dict[str, Any], item_type: ItemType, current_idx: int,
                             items: List[Dict], current_item: Dict, current_status: str, bot) -> Tuple[Dict[str, Any], str, bool]:
         """处理NEXT操作"""
+        # 获取配置
+        config = get_type_config(item_type)
+        items_key = config["items_key"]
+
         # 如果当前项目是待确认状态，则回调continue函数
         if current_status == ItemStatus.PENDING.value:
             logger.info('now we return back to handling continue function')
@@ -119,13 +120,10 @@ class ChatManager:
             current_item['status'] = ItemStatus.CONFIRMED.value
             
             # 更新shared中的项目状态
-            if item_type == ItemType.LICENSE:
-                shared['toBeConfirmedLicenses'][current_idx] = current_item
-            else:  # ItemType.COMPONENT
-                shared['toBeConfirmedComponents'][current_idx] = current_item
+            shared[items_key][current_idx] = current_item
             
             item_name = self._get_item_name(item_type, current_item)
-            confirmation_message = f"{item_name} 已确认完成！"
+            confirmation_message = f"{item_name} has been confirmed completely!"
         
         # 查找下一个待确认项目
         next_idx = self._find_next_unconfirmed_item(items, current_idx)
@@ -137,10 +135,7 @@ class ChatManager:
             instruction = self._get_item_instruction(item_type, next_item, bot)
             
             # 确保更新shared中的项目状态
-            if item_type == ItemType.LICENSE:
-                shared['toBeConfirmedLicenses'][next_idx] = next_item
-            else:  # ItemType.COMPONENT
-                shared['toBeConfirmedComponents'][next_idx] = next_item
+            shared[items_key][next_idx] = next_item
                 
             # 如果是从已确认项目转到下一个，添加确认消息
             if current_status == ItemStatus.INPROGRESS.value:
@@ -148,6 +143,8 @@ class ChatManager:
             return shared, instruction, False
         else:
             # 没有找到待确认项目，检查是否需要切换项目类型
+            return shared, 'We have finished current checking!', True
+            # 不需要这部分逻辑，直接返回确认状态转移到下一个大节点即可
             if current_status == ItemStatus.INPROGRESS.value:
                 # 先显示当前项目已确认的消息
                 updated_shared, message, all_completed = self._check_switch_item_type(shared, item_type, bot)
@@ -158,10 +155,14 @@ class ChatManager:
     
     def _update_current_index(self, shared: Dict[str, Any], item_type: ItemType, new_idx: int) -> None:
         """更新当前索引"""
-        if item_type == ItemType.LICENSE:
-            shared['current_license_idx'] = new_idx
-        else:
-            shared['current_component_idx'] = new_idx
+        # 获取配置
+        config = get_type_config(item_type)
+        
+        # 使用配置中定义的当前索引键
+        current_key = config["current_key"]
+        
+        # 更新shared中的索引
+        shared[current_key] = new_idx
     
     def _check_switch_item_type(self, shared: Dict[str, Any], current_type: ItemType, bot) -> Tuple[Dict[str, Any], str, bool]:
         """检查是否需要切换项目类型"""
@@ -184,9 +185,9 @@ class ChatManager:
             shared["current_component_idx"] = first_pending
             shared["processing_type"] = "component"
             instruction = self._get_item_instruction(ItemType.COMPONENT, comps[first_pending], bot)
-            return shared, f"所有许可证已确认完毕，现在开始确认组件：\n{instruction}", False
+            return shared, f"all licenses have been confirmed, now we switch to checking components.\n{instruction}", False
         
-        return shared, "所有项目已确认完毕", True
+        return shared, "All items have been confirmed.", True
     
     def _try_switch_to_licenses(self, shared: Dict[str, Any], bot) -> Tuple[Dict[str, Any], str, bool]:
         """尝试切换到许可证确认"""
@@ -197,46 +198,55 @@ class ChatManager:
             shared["current_license_idx"] = first_pending
             shared["processing_type"] = "license"
             instruction = self._get_item_instruction(ItemType.LICENSE, licenses[first_pending], bot)
-            return shared, f"所有组件已确认完毕，现在开始确认许可证：\n{instruction}", False
+            return shared, f"All components have been confirmed, now we switch to confirming license. \n{instruction}", False
         
-        return shared, "所有项目已确认完毕", True
+        return shared, "All items have been confirmed.", True
     
     def _get_item_name(self, item_type: ItemType, item: Dict) -> str:
         """获取项目名称"""
-        if item_type == ItemType.LICENSE:
-            return item.get('title', '未命名许可证')
-        else:
-            return item.get('compName', '未命名组件')
+        # 获取配置
+        config = get_type_config(item_type)
+        
+        # 如果配置中没有name_field，则使用默认逻辑
+        if "name_field" not in config:
+            if item_type == ItemType.LICENSE:
+                return item.get('title', '未命名许可证')
+            else:
+                return item.get('compName', '未命名组件')
+        
+        # 使用配置中的名称字段和默认值
+        name_field = config["name_field"]
+        default_name = config.get("default_name", f"未命名{item_type.value}")
+        
+        return item.get(name_field, default_name)
     
     def _get_item_instruction(self, item_type: ItemType, current_item: Dict, bot) -> str:
-        """
-        生成项目的指导文字
+        """生成项目的指导文字"""
+        # 获取配置
+        config = get_type_config(item_type)
         
-        Args:
-            item_type: 项目类型（许可证或组件）
-            current_item: 当前项目数据
-            bot: 机器人实例
-            
-        Returns:
-            指导文字
-        """
-        if item_type == ItemType.LICENSE:
-            instruction_data = get_strict_json(
-                bot,
-                f"here is the licenseName: {current_item.get('title', '')}, "
-                f"CheckedLevel: {current_item.get('CheckedLevel', '')}, and "
-                f"Justification: {current_item.get('Justification', '')}"
+        # 使用配置中的模板和字段信息
+        instruction_template = config.get("instruction_template")
+        name_field = config.get("name_field")
+        default_name = config.get("default_name", f"unknown {item_type.value}")
+        
+        # 获取项目名称
+        item_name = current_item.get(name_field, default_name)
+        
+        # 构建提示文本
+        if instruction_template:
+            # 使用模板构建提示，替换占位符
+            prompt = instruction_template.format(
+                **{field: current_item.get(field, "") for field in config.get("instruction_fields", [])}
             )
-            item_name = current_item.get('title', 'unknown license')
-        else:  # ItemType.COMPONENT
-            instruction_data = get_strict_json(
-                bot,
-                f'''Here is the name of the component {current_item.get('compName', '')},
-                and it contains dependency of other components, please confirm with user whether add the dependent
-                component into the checklist'''
-            )
-            item_name = current_item.get('compName', 'unknown component')
-
+        else:
+            logger.error(f'Sorry, please check the item_types.py file to assure you have the correct config for the item_type: {item_type.value} you specified')
+            prompt = 'Please tell user that there is no prompt for the type he or she specified'
+        
+        # 调用bot获取指导文字
+        instruction_data = get_strict_json(bot, prompt)
+        
+        # 处理返回结果
         if isinstance(instruction_data, dict) and 'talking' in instruction_data:
             return instruction_data.get('talking', f"请确认{item_type.value}: {item_name}")
         return f"请确认{item_type.value}: {item_name}"
@@ -265,23 +275,7 @@ class ChatManager:
         return None  # 所有项目都已确认
     
     def initialize_session(self, shared: Dict[str, Any]) -> Tuple[Dict[str, Any], str]:
-        """
-        初始化会话，确定第一个待处理的项目
-        
-        Args:
-            shared: 共享数据字典
-            
-        Returns:
-            Tuple[更新后的共享数据, 初始消息]
-        """
-        # 输入验证
-        licenses = shared.get("toBeConfirmedLicenses", [])
-        components = shared.get("toBeConfirmedComponents", [])
-        components = [comp for comp in components if comp.get("dependency") == True]
-        
-        if not licenses and not components:
-            return shared, "没有找到需要确认的项目"
-        
+        """初始化会话，确定第一个待处理的项目"""
         # 辅助函数：查找第一个待处理项的索引
         def find_first_pending(items):
             for idx, item in enumerate(items):
@@ -289,21 +283,46 @@ class ChatManager:
                     return idx
             return None
         
-        # 查找待处理许可证和组件
-        license_idx = find_first_pending(licenses) if licenses else None
-        component_idx = find_first_pending(components) if components else None
+        # 处理所有项目类型
+        available_types = []
+        pending_types = []
+        
+        for item_type in ItemType:
+            # 获取配置
+            config = get_type_config(item_type)
+            items_key = config.get("items_key")
+            items_source_key = config.get("items_source_key", items_key)  # 允许不同的源键
+            
+            # 获取项目列表
+            items = shared.get(items_source_key, [])
+            if not items:
+                continue
+                
+            available_types.append(item_type)
+            
+            # 查找第一个待处理项
+            idx = find_first_pending(items)
+            if idx is not None:
+                pending_types.append((item_type, idx))
+        
+        # 检查是否有可用项目
+        if not available_types:
+            return shared, "没有找到需要确认的项目"
         
         # 检查是否有待确认项目
-        if license_idx is None and component_idx is None:
+        if not pending_types:
             shared["all_confirmed"] = True
             return shared, "所有项目已确认完毕"
         
-        # 确定开始处理的项目类型
-        if component_idx is not None:
-            shared["current_component_idx"] = component_idx
-            shared["processing_type"] = "component"
-        elif license_idx is not None:
-            shared["current_license_idx"] = license_idx
-            shared["processing_type"] = "license"
+        # 确定开始处理的项目类型（这里可以定义优先级）
+        selected_type, selected_idx = pending_types[1]  # 默认选第一个
+        
+        # 获取选中类型的配置
+        config = get_type_config(selected_type)
+        current_key = config["current_key"]
+        
+        # 更新shared
+        shared[current_key] = selected_idx
+        shared["processing_type"] = selected_type.value
         
         return shared, "检查已开始，请跟随提示完成确认流程"

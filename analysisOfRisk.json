@@ -1,35 +1,38 @@
-{
-  "1: Apache-2.0⇧": {
+[
+  {
+    "licenseTitle": "1: Apache-2.0⇧",
     "risk": {
       "level": "low",
       "reason": "Permissive license without copyleft obligations"
     },
     "credentialOrNot": {
       "LicenseName": "Apache-2.0",
-      "CredentialOrNot": false
+      "CredentialOrNot": true
     },
     "sourceCodeRequired": "false"
   },
-  "2: CC-BY-4.0⇧": {
+  {
+    "licenseTitle": "2: CC-BY-4.0⇧",
     "risk": {
       "level": "low",
-      "reason": "The license allows for broad use and modification without copyleft obligations."
+      "reason": "The license allows for sharing and adaptation without copyleft obligations."
     },
     "credentialOrNot": {
-      "LicenseName": "2: CC-BY-4.0⇧",
+      "LicenseName": "CC-BY-4.0",
       "CredentialOrNot": false
     },
     "sourceCodeRequired": "false"
   },
-  "3: MIT⇧": {
+  {
+    "licenseTitle": "3: MIT⇧",
     "risk": {
       "level": "low",
       "reason": "Permissive license without copyleft obligations"
     },
     "credentialOrNot": {
-      "LicenseName": "MIT",
+      "LicenseName": "3: MIT",
       "CredentialOrNot": false
     },
     "sourceCodeRequired": "false"
   }
-}
+]

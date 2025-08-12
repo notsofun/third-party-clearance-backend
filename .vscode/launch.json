@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "C:/Users/z0054unn/Documents/Siemens-GitLab/Third-party/third-party-clearance",  // 设置为项目根目录
+            "env": {
+                "PYTHONPATH": "C:/Users/z0054unn/Documents/Siemens-GitLab/Third-party/third-party-clearance"  // 添加项目根目录到Python路径
+            },
+            "console": "integratedTerminal"
+        }
+    ]
+}

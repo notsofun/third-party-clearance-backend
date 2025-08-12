@@ -1,10 +1,10 @@
-import logging
-from typing import Dict, Any, Tuple, Optional, Union, Callable
+import logging,json
+from typing import Dict, Any, Tuple
 from enum import Enum
 from .chat_manager import ChatManager
-from .item_types import ItemType, ItemStatus, State
-from back_end.services.chat_flow import WorkflowContext, ConfirmationStatus, StateHandler
-from utils.tools import get_strict_json, find_key_by_value, get_strict_string
+from .item_types import ItemType, get_item_type_from_value
+from back_end.services.chat_flow import WorkflowContext, ConfirmationStatus
+from utils.tools import get_strict_json
 
 logging.getLogger('langchain').setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
@@ -25,6 +25,7 @@ class ChatService:
             ConfirmationStatus.DEPENDENCY.value: self._handle_dependency,
             ConfirmationStatus.COMPLIANCE.value: self._handle_compliance,
             ConfirmationStatus.CONTRACT.value: self._handle_contract,
+            ConfirmationStatus.CREDENTIAL.value: self._handle_credential,
         }
         self.chat_flow = chat_flow
         self.chat_manager = ChatManager()
@@ -43,9 +44,7 @@ class ChatService:
         shared['riskBot'] = self.bot
 
         # 1. 优先检查大状态变化
-        # 第一个说yes，要检查，会给到next，当前大状态在toDependency
         content = {'shared': shared, 'status': result}
-        # updated也是toDependency
         updated_status = self.chat_flow.process(content).value
         
         logger.info('Current status: %s, Updated status: %s', status, updated_status)
@@ -92,7 +91,7 @@ class ChatService:
         nested_states = {
             ConfirmationStatus.DEPENDENCY.value,  # 有 components 需要确认
             ConfirmationStatus.COMPLIANCE.value,  # 有 licenses 需要确认
-            ConfirmationStatus.CREDENTIAL.value,  # 有 licenses 需要确认
+            ConfirmationStatus.CREDENTIAL.value,  # 有 components 需要确认
             # 根据需要添加其他有嵌套逻辑的状态
         }
         return status in nested_states
@@ -102,7 +101,7 @@ class ChatService:
         
         # 确定当前处理的类型
         processing_type = shared.get('processing_type', 'component')
-        item_type = ItemType.LICENSE if processing_type == 'license' else ItemType.COMPONENT
+        item_type = get_item_type_from_value(processing_type)
 
         logger.info('now we are handling license or component %s', item_type)
 
@@ -110,6 +109,9 @@ class ChatService:
         updated_shared, message, all_completed = self.chat_manager.handle_item_action(
             shared, item_type, result, self.bot
         )
+
+        with open("currentSharedCredential.json","w", encoding="utf-8" ) as f1:
+            json.dump(updated_shared["credential_required_components"],f1,ensure_ascii=False,indent=2)
 
         logger.warning('we have found this messsage %s', message)
 
@@ -119,8 +121,9 @@ class ChatService:
                 
         # 检查是否所有项目都已确认完成
         if all_completed:
+            logger.info('we have finished the checking for this state %s',self.chat_flow.current_state.value )
             # 重新检查大状态转换
-            content = {'shared': updated_shared, 'status': result}
+            content = {'shared': updated_shared, 'status': 'next'}
             final_status = self.chat_flow.process(content).value
             
             if final_status != status:
@@ -128,51 +131,6 @@ class ChatService:
                 return final_status, updated_shared, message
         
         return status, updated_shared, message
-
-    def _get_next_item_instruction(self, item_type: ItemType, items: list, current_idx: int, shared: Dict[str, Any]) -> str:
-        """
-        获取下一个项目的指导文字
-        
-        Args:
-            item_type: 项目类型
-            items: 项目列表
-            current_idx: 当前项目索引
-            shared: 共享数据
-            
-        Returns:
-            下一个项目的指导文字
-        """
-        next_idx = self.chat_manager._find_next_unconfirmed_item(items, current_idx)
-        if next_idx is None:
-            return "所有项目已确认完毕"
-            
-        next_item = items[next_idx]
-
-        instruction_data, _ = self._get_item_instuction(item_type, next_item)
-        return instruction_data.get('talking', '请确认此项目')
-
-    def _get_item_instuction(self, item_type: ItemType, next_item) -> dict:
-        '''
-        获取项目指导文字
-        '''
-        if item_type == ItemType.LICENSE:
-            instruction_data = get_strict_json(
-                self.bot,
-                f"here is the licenseName: {next_item.get('title', '')}, "
-                f"CheckedLevel: {next_item.get('CheckedLevel', '')}, and "
-                f"Justification: {next_item.get('Justification', '')}"
-            )
-            item_name = next_item.get('title', 'unknown license')
-        else:  # ItemType.COMPONENT
-            instruction_data = get_strict_json(
-                self.bot,
-                f"""Here is the name of the component {next_item.get('compName', '')},
-                and it contains dependency of other components, please confirm with user whether add the dependent
-                component into the checklist"""
-            )
-            item_name = next_item.get('compName', 'unknown component')
-
-        return instruction_data, item_name
 
     def get_instructions(self,shared:Dict[str,Any], status:str) -> Tuple[str,str]:
         """
@@ -204,6 +162,12 @@ class ChatService:
         response = get_strict_json(self.bot, prompt)
         return response.get('talking', '请确认OEM信息')
     
+    def _handle_credential(self, shared: Dict[str, Any]) -> str:
+        """处理授权许可证状态"""
+        prompt = self.bot.langfuse.get_prompt("bot/Credential").prompt
+        response = get_strict_json(self.bot, prompt)
+        return response.get('talking', '请确认授权信息')
+
     def _handle_dependency(self, shared: Dict[str, Any]) -> str:
         """处理依赖状态"""
         prompt = self.bot.langfuse.get_prompt("bot/Dependecy").prompt
@@ -212,8 +176,8 @@ class ChatService:
     
     def _handle_compliance(self, shared: Dict[str, Any]) -> str:
         """处理合规性状态"""
-        processing_type = shared.get("processing_type", "license")
-        item_type = ItemType.LICENSE if processing_type == "license" else ItemType.COMPONENT
+        processing_type = shared.get('processing_type', 'component')
+        item_type = get_item_type_from_value(processing_type)
         
         item_info = self.chat_manager.get_item(shared, item_type)
         if not item_info.valid:
