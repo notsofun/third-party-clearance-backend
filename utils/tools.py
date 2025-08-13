@@ -1,5 +1,7 @@
 import re
 from bs4 import BeautifulSoup
+from typing import Dict, Any
+from back_end.services.item_types import ItemType
 import json, logging
 from fastapi.responses import JSONResponse
 from docx import Document
@@ -12,6 +14,27 @@ logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("openai").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
+
+def get_processing_type_from_shared(shared: Dict[str, Any], logger=logger) -> str:
+    """
+    从shared字典中安全获取processing_type
+    
+    Args:
+        shared: 共享状态字典
+        logger: 可选的日志记录器
+    
+    Returns:
+        处理类型字符串
+    """
+    default_value = ItemType.COMPONENT.value
+    
+    if 'processing_type' not in shared:
+
+        logger.warning(f"未找到处理类型(processing_type)，使用默认值: {default_value}")
+
+        shared['processing_type'] = default_value
+        
+    return shared['processing_type']
 
 def find_key_by_value(d:dict, target_value:str) -> str:
     """

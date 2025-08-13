@@ -253,7 +253,11 @@ class SpecialLicenseCollecting(BatchNode):
         return licenseTexts
     
     def exec(self, licenseText):
-        lId, lTitle, lText = licenseText
+        # If licenseText is a tuple from prep, extract the title
+        if isinstance(licenseText, tuple):
+            _, lTitle, _ = licenseText  # Extract title from (id, title, text)
+        else:
+            lTitle = licenseText
         
         # 每个exec返回一个包含lTitle和它应该属于哪个类别的元组
         if "GPLv3" in lTitle or "LGPLv3" in lTitle:
@@ -270,27 +274,50 @@ class SpecialLicenseCollecting(BatchNode):
             category = None
         
         # 返回许可证标题和它所属的类别
-        return (lTitle, category) if category else None
+
+        if category:
+
+            result = {
+                'licName': lTitle,
+                'category': category
+            }
+
+            return result
+        
+        else:
+            return None
     
     def post(self, shared, prep_res, exec_res):
-        # 在post阶段创建并填充分类字典
-        categories = {
-            "GPLv3, LGPLv3": [],
-            "GPL with Exception": [],
-            "LPGPL": [],
-            "GPL, LGPL": [],
-            "GPL": []
-        }
+        # # 在post阶段创建并填充分类字典
+        # categories = {
+        #     "GPLv3, LGPLv3": [],
+        #     "GPL with Exception": [],
+        #     "LPGPL": [],
+        #     "GPL, LGPL": [],
+        #     "GPL": []
+        # }
         
-        # exec_res包含了所有exec方法的返回结果
-        for result in exec_res:
-            if result is not None:  # 过滤掉没有匹配的许可证
-                lTitle, category = result
-                categories[category].append(lTitle)
+        # # exec_res包含了所有exec方法的返回结果
+        # for result in exec_res:
+        #     if result is not None:  # 过滤掉没有匹配的许可证
+        #         lTitle, category = result
+        #         categories[category].append(lTitle)
         
-        # 将结果存入shared
-        shared['specialCollections'] = categories
+        # 将结果存入shared，保持和之前的一样是一个字典格式
+
+        # !!! 为了测试加入这个GPL的文件
+        test_item = {
+                'licName': 'GPL',
+                'category': 'GPL'
+            }
+        exec_res.append(test_item)
+        filtered_results = [result for result in exec_res if result is not None]
+        shared['specialCollections'] = filtered_results
+
+        with open("specialCollections.json","w", encoding="utf-8" ) as f1:
+            json.dump(shared["specialCollections"],f1,ensure_ascii=False,indent=2)
         return "default"
+    
     
 class RiskCheckingRAG(BatchNode):
 

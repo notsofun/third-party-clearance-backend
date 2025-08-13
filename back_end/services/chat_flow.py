@@ -133,16 +133,21 @@ class ContractHandler(SimpleStateHandler):
         else:
             raise RuntimeError('Model did not determine to go on or continue')
 
-class CredentialHandler(SimpleStateHandler):
-    def check_completion(self, context: Dict[str, Any]) -> bool:
-        """检查凭证状态是否完成"""
-        credentials = context.get("shared", {}).get("toBeConfirmedCredentials", [])
-        return all(cred.get("status") == ItemStatus.CONFIRMED.value for cred in credentials)
-
-class SpecialCheckHandler(SimpleStateHandler):
-    def check_completion(self, context: Dict[str, Any]) -> bool:
-        """检查特殊检查状态是否完成"""
-        return context.get("shared", {}).get("special_check_completed", False)
+class SpecialCheckHandler(SubTaskStateHandler):
+    def initialize_subtasks(self, context: Dict[str, Any]):
+        """初始化待确认许可证子任务"""
+        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.SPECIALCHECK]['items_key'], [])
+        # 以许可证ID作为子任务标识，这里lic是一个result = {'licName': lTitle,'category': category}字典
+        self.subtasks = [lic.get("licName", f"comp_{idx}") for idx, lic in enumerate(licenses)]
+        logger.info(f"chat_flow.SpeicalCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
+    
+    def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
+        """检查组件是否已确认"""
+        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.SPECIALCHECK]['items_key'], [])
+        for lic in licenses:
+            if lic.get("licName") == subtask_id:
+                return lic.get("status") == ItemStatus.CONFIRMED.value
+        return False
 
 # 子任务状态处理器示例
 class DependencyHandler(SubTaskStateHandler):
@@ -151,7 +156,7 @@ class DependencyHandler(SubTaskStateHandler):
         components = context.get("shared", {}).get(TYPE_CONFIG[ItemType.COMPONENT]['items_key'], [])
         # 以组件ID作为子任务标识
         self.subtasks = [comp.get("compName", f"comp_{idx}") for idx, comp in enumerate(components)]
-        logger.info(f"依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
+        logger.info(f"chat_flow.DependencyCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
     
     def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
         """检查组件是否已确认"""
@@ -167,7 +172,7 @@ class CredentialHandler(SubTaskStateHandler):
         components = context.get("shared", {}).get(TYPE_CONFIG[ItemType.CREDENTIAL]['items_key'], [])
         # 以组件ID作为子任务标识
         self.subtasks = [comp.get("compName", f"comp_{idx}") for idx, comp in enumerate(components)]
-        logger.info(f"依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
+        logger.info(f"chat_flow.CredentialCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
     
     def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
         """检查组件是否已确认"""
@@ -183,7 +188,7 @@ class LicenseHandler(SubTaskStateHandler):
         licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.LICENSE]['items_key'], [])
         # 以组件ID作为子任务标识
         self.subtasks = [comp.get("licenseName", f"comp_{idx}") for idx, comp in enumerate(licenses)]
-        logger.info(f"依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
+        logger.info(f"chat_flow.LicenseCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
     
     def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
         """检查组件是否已确认"""
@@ -270,7 +275,7 @@ class WorkflowContext:
             handler.initialize_subtasks(context)
             self.initialized_states.add(self.current_state)
         
-        logger.info(f'处理状态: {self.current_state}')
+        logger.info(f'chat_flow.process: 处理状态: {self.current_state}')
         
         # 执行状态处理并获取事件
         event = handler.handle(context)
@@ -280,7 +285,7 @@ class WorkflowContext:
         if event and old_state in self.transition_table:
             next_state = self.transition_table[old_state].get(event)
             if next_state and next_state != old_state:
-                logger.info(f'状态转移: {old_state} -> {next_state}')
+                logger.info(f'chat_flow.process: 状态转移: {old_state} -> {next_state}')
                 self.current_state = next_state
                 
                 # 如果转移到了新状态，重置其子任务（如果有）
@@ -305,7 +310,7 @@ class WorkflowContext:
 
 # 使用示例
 if __name__ == "__main__":
-    workflow = WorkflowContext(curren_state= ConfirmationStatus.DEPENDENCY)
+    workflow = WorkflowContext(curren_state= ConfirmationStatus.SPECIAL_CHECK)
     context = {
         'shared': {
             "dependency_required__components": [
@@ -322,12 +327,18 @@ if __name__ == "__main__":
                         "sessionId": 11712279331732835480,
                         "status": 'confirmed'
                     }
-                ]
+                ],
+            'specialCollections' : [
+                    {
+                        "licName": "GPL",
+                        "category": "GPL",
+                        'status': 'confirmed'
+                    }
+            ]
         },
         'status': 'next'
     }
     
-    # credential没到下一个license纯因为在“credential_required_components”里面没有更新status
     state = workflow.current_state
     i = 0
     while state:

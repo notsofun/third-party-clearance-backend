@@ -2,9 +2,9 @@ import logging,json
 from typing import Dict, Any, Tuple
 from enum import Enum
 from .chat_manager import ChatManager
-from .item_types import ItemType, get_item_type_from_value
+from .item_types import ItemType, get_item_type_from_value, get_processing_type_from_status
 from back_end.services.chat_flow import WorkflowContext, ConfirmationStatus
-from utils.tools import get_strict_json
+from utils.tools import get_strict_json, get_processing_type_from_shared
 
 logging.getLogger('langchain').setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
@@ -47,13 +47,13 @@ class ChatService:
         content = {'shared': shared, 'status': result}
         updated_status = self.chat_flow.process(content).value
         
-        logger.info('Current status: %s, Updated status: %s', status, updated_status)
+        logger.info('chat_service.process_user_input: Current status: %s, Updated status: %s', status, updated_status)
         
-        final_status, updated_shared, reply = self._status_check(shared, updated_status, status, result,reply, user_input)
+        final_status, updated_shared, reply = self._status_check(shared, updated_status, status, result,reply)
 
         return final_status, updated_shared, reply
 
-    def _status_check(self, shared, updated_status, status, result, reply, user_input):
+    def _status_check(self, shared, updated_status, status, result, reply):
 
         '''
         封装这里处理状态变化的逻辑，方便server在处理合同分析时调用
@@ -62,20 +62,22 @@ class ChatService:
         status: 传入service时的状态,
         result: 模型对于是否继续的判断,
         reply: 模型生成的说明,
-        user_input: 用户输入,
         '''
 
         # 2. 如果大状态发生变化，直接转换到新状态
         if updated_status != status:
-            message = self.get_instructions(shared, updated_status)
-            logger.info('State transition: %s -> %s', status, updated_status)
+            message = self.get_instructions(updated_status)
+            processing_type = get_processing_type_from_status(updated_status)
+            shared['processing_type'] = processing_type
+            logger.info('chat_service.status_check: State transition: %s -> %s', status, updated_status)
+            logger.info('chat_service.status_check: the new processing type is: %s',processing_type)
             return updated_status, shared, message
         
         # 3. 大状态没有变化，检查当前状态是否需要嵌套处理
         if self._has_nested_logic(status):
             # 处理嵌套逻辑（组件/许可证确认）
             logger.info('now we are handling nested logic...')
-            updated_status, updated_shared, message = self._handle_nested_logic(shared, user_input, status, result, reply)
+            updated_status, updated_shared, message = self._handle_nested_logic(shared, status, result, reply)
             # 检查特殊标记
             if not message:
                 return updated_status, updated_shared, reply
@@ -92,18 +94,23 @@ class ChatService:
             ConfirmationStatus.DEPENDENCY.value,  # 有 components 需要确认
             ConfirmationStatus.COMPLIANCE.value,  # 有 licenses 需要确认
             ConfirmationStatus.CREDENTIAL.value,  # 有 components 需要确认
+            ConfirmationStatus.SPECIAL_CHECK.value, # 有license 需要确认
             # 根据需要添加其他有嵌套逻辑的状态
         }
         return status in nested_states
 
-    def _handle_nested_logic(self, shared: Dict[str, Any], user_input: str, status: str, result: str, reply: str) -> Tuple[str, Dict[str, Any], str]:
-        """处理嵌套逻辑（组件/许可证确认）"""
+    def _handle_nested_logic(self, shared: Dict[str, Any], status: str, result: str, reply: str) -> Tuple[str, Dict[str, Any], str]:
+        """
+        处理嵌套逻辑（组件/许可证确认）
+        processing_typing只在嵌套逻辑中被读取
+        """
         
         # 确定当前处理的类型
-        processing_type = shared.get('processing_type', 'component')
+        processing_type = get_processing_type_from_shared(shared)
+        logger.info('chat_service.handle_nested: now the processing type in shared is: %s', processing_type)
         item_type = get_item_type_from_value(processing_type)
 
-        logger.info('now we are handling license or component %s', item_type)
+        logger.info('chat_service.handle_nested: now we are handling license or component %s', item_type)
 
         # 将处理逻辑委托给ChatManager
         updated_shared, message, all_completed = self.chat_manager.handle_item_action(
@@ -113,7 +120,7 @@ class ChatService:
         with open("currentSharedCredential.json","w", encoding="utf-8" ) as f1:
             json.dump(updated_shared["credential_required_components"],f1,ensure_ascii=False,indent=2)
 
-        logger.warning('we have found this messsage %s', message)
+        logger.warning('chat_service.handle_nested: we have found this messsage %s', message)
 
         # 由于组件本身在inprogress，不新返回消息
         if message == "__USE_ORIGINAL_REPLY__":
@@ -121,72 +128,65 @@ class ChatService:
                 
         # 检查是否所有项目都已确认完成
         if all_completed:
-            logger.info('we have finished the checking for this state %s',self.chat_flow.current_state.value )
+            logger.info('chat_service.handle_nested: we have finished the checking for this state %s',self.chat_flow.current_state.value )
             # 重新检查大状态转换
             content = {'shared': updated_shared, 'status': 'next'}
             final_status = self.chat_flow.process(content).value
             
             if final_status != status:
-                message = self.get_instructions(updated_shared, final_status)
+                message = self.get_instructions(final_status)
+                # 根据最新的状态确定当前处理的状态
+                processing_type = get_processing_type_from_status(final_status)
+                shared['processing_type'] = processing_type
+                logger.info('chat_service.handle_nested: the new processing type is: %s',processing_type)
                 return final_status, updated_shared, message
         
         return status, updated_shared, message
 
-    def get_instructions(self,shared:Dict[str,Any], status:str) -> Tuple[str,str]:
+    def get_instructions(self, status:str) -> Tuple[str,str]:
         """
         用于生成不依赖于用户输入，生成状态变化时的指导性语言
         """
 
-        logger.warning('Now we are in...%s',status)
         handler = self.status_handlers.get(status,self._handle_compliance)
-        logger.warning('now we trying to handle %s',handler.__name__)
-        message = handler(shared)
+        message = handler()
 
         return message
 
-    def _handle_contract(self, shared: Dict[str, Any]) -> str:
+    def _handle_contract(self) -> str:
         """处理合同状态"""
         prompt = self.bot.langfuse.get_prompt("bot/Contract").prompt
         response = get_strict_json(self.bot, prompt)
         return response.get('talking', '请提供合同信息')
     
-    def _handle_special_check(self, shared: Dict[str, Any]) -> str:
+    def _handle_special_check(self) -> str:
         """处理预检查状态"""
         prompt = self.bot.langfuse.get_prompt("bot/SpecialCheck").prompt
         response = get_strict_json(self.bot, prompt)
         return response.get('talking', '请进行特殊检查')
     
-    def _handle_oem(self, shared: Dict[str, Any]) -> str:
+    def _handle_oem(self) -> str:
         """处理OEM状态"""
         prompt = self.bot.langfuse.get_prompt("bot/OEM").prompt
         response = get_strict_json(self.bot, prompt)
         return response.get('talking', '请确认OEM信息')
     
-    def _handle_credential(self, shared: Dict[str, Any]) -> str:
+    def _handle_credential(self) -> str:
         """处理授权许可证状态"""
         prompt = self.bot.langfuse.get_prompt("bot/Credential").prompt
         response = get_strict_json(self.bot, prompt)
         return response.get('talking', '请确认授权信息')
 
-    def _handle_dependency(self, shared: Dict[str, Any]) -> str:
+    def _handle_dependency(self) -> str:
         """处理依赖状态"""
         prompt = self.bot.langfuse.get_prompt("bot/Dependecy").prompt
         response = get_strict_json(self.bot, prompt)
         return response.get('talking', '请确认依赖关系')
     
-    def _handle_compliance(self, shared: Dict[str, Any]) -> str:
+    def _handle_compliance(self) -> str:
         """处理合规性状态"""
-        processing_type = shared.get('processing_type', 'component')
-        item_type = get_item_type_from_value(processing_type)
-        
-        item_info = self.chat_manager.get_item(shared, item_type)
-        if not item_info.valid:
-            return item_info.error_message
-            
-        _, _, current_item = item_info.data
-        
         prompt = self.bot.langfuse.get_prompt("bot/Compliance").prompt
-        response = get_strict_json(self.bot, prompt + f" For {current_item.get('title', current_item.get('compName', '未命名项目'))}")
+        response = get_strict_json(self.bot, prompt)
         return response.get('talking', '请确认合规信息')
 
     def _extract_reply(self, result: Any) -> str:
@@ -220,6 +220,7 @@ class ChatService:
             raise ValueError("共享数据中未找到RiskBot")
         
         self.bot = risk_bot
+        logger.info('we have found risk bot when initializing the chat service!')
 
         # 这里只需要保证shared里面有一个current值就可以了，具体的在检查许可证和组件的时候再调用
         updated_shared, _ = self.chat_manager.initialize_session(shared)

@@ -1,8 +1,8 @@
 import logging
 from typing import Dict, Any, Tuple, Optional, List
 from .item_types import ItemType, ItemStatus, ItemInfo, State, get_type_config
-from utils.tools import get_strict_json, create_error_response
-
+from utils.tools import get_strict_json
+from utils.LLM_Analyzer import RiskBot
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +37,10 @@ class ChatManager:
         items = shared.get(items_key, [])
         
         # 安全检查：项目列表
-        if not items or current_idx >= len(items):
+        if not items:
+            logger.warning('当前类型中不存在数据%s',item_type.value)
+            return ItemInfo(False,None,f'Shared中不存在数据{item_type.value}')
+        elif current_idx >= len(items):
             logger.error(f"无效的{item_type.value}索引: {current_idx}, 总数量: {len(items)}")
             return ItemInfo(False, None, error_msg)
         
@@ -61,7 +64,8 @@ class ChatManager:
         # 获取当前项目信息
         item_info = self.get_item(shared, item_type)
         if not item_info.valid:
-            return shared, item_info.error_message, False
+            # 适配shared无数据的情况，直接到下一个节点
+            return shared, item_info.error_message, True
             
         current_idx, items, current_item = item_info.data
         current_status = current_item.get('status', ItemStatus.PENDING.value)
@@ -110,7 +114,7 @@ class ChatManager:
 
         # 如果当前项目是待确认状态，则回调continue函数
         if current_status == ItemStatus.PENDING.value:
-            logger.info('now we return back to handling continue function')
+            logger.info('chat_manager.handle_next: now we return back to handling continue function')
             return self._handle_continue_action(shared, item_type, current_idx, items, current_item,
                                                 current_status, bot)
         
@@ -122,6 +126,8 @@ class ChatManager:
             # 更新shared中的项目状态
             shared[items_key][current_idx] = current_item
             
+            logger.info('chat_manager.handle_next: we have updated the status of this item in the shared file')
+
             item_name = self._get_item_name(item_type, current_item)
             confirmation_message = f"{item_name} has been confirmed completely!"
         
@@ -144,14 +150,6 @@ class ChatManager:
         else:
             # 没有找到待确认项目，检查是否需要切换项目类型
             return shared, 'We have finished current checking!', True
-            # 不需要这部分逻辑，直接返回确认状态转移到下一个大节点即可
-            if current_status == ItemStatus.INPROGRESS.value:
-                # 先显示当前项目已确认的消息
-                updated_shared, message, all_completed = self._check_switch_item_type(shared, item_type, bot)
-                return updated_shared, f"{confirmation_message}\n\n{message}", all_completed
-            else:
-                updated_shared, message, all_completed = self._check_switch_item_type(shared, item_type, bot)
-                return updated_shared, message, all_completed
     
     def _update_current_index(self, shared: Dict[str, Any], item_type: ItemType, new_idx: int) -> None:
         """更新当前索引"""
@@ -163,45 +161,7 @@ class ChatManager:
         
         # 更新shared中的索引
         shared[current_key] = new_idx
-    
-    def _check_switch_item_type(self, shared: Dict[str, Any], current_type: ItemType, bot) -> Tuple[Dict[str, Any], str, bool]:
-        """检查是否需要切换项目类型"""
-        if current_type == ItemType.LICENSE and "toBeConfirmedComponents" in shared:
-            # 检查是否有待确认的组件
-            return self._try_switch_to_components(shared, bot)
-        elif current_type == ItemType.COMPONENT and "toBeConfirmedLicenses" in shared:
-            # 检查是否有待确认的许可证
-            return self._try_switch_to_licenses(shared, bot)
-        
-        # 所有项目都已确认
-        return shared, f"所有{current_type.value}已确认完成", True
-    
-    def _try_switch_to_components(self, shared: Dict[str, Any], bot) -> Tuple[Dict[str, Any], str, bool]:
-        """尝试切换到组件确认"""
-        comps = shared.get("toBeConfirmedComponents", [])
-        first_pending = next((i for i, c in enumerate(comps) if c.get("status", "") == ItemStatus.PENDING.value), None)
-        
-        if first_pending is not None:
-            shared["current_component_idx"] = first_pending
-            shared["processing_type"] = "component"
-            instruction = self._get_item_instruction(ItemType.COMPONENT, comps[first_pending], bot)
-            return shared, f"all licenses have been confirmed, now we switch to checking components.\n{instruction}", False
-        
-        return shared, "All items have been confirmed.", True
-    
-    def _try_switch_to_licenses(self, shared: Dict[str, Any], bot) -> Tuple[Dict[str, Any], str, bool]:
-        """尝试切换到许可证确认"""
-        licenses = shared.get("toBeConfirmedLicenses", [])
-        first_pending = next((i for i, l in enumerate(licenses) if l.get("status", "") == ItemStatus.PENDING.value), None)
-        
-        if first_pending is not None:
-            shared["current_license_idx"] = first_pending
-            shared["processing_type"] = "license"
-            instruction = self._get_item_instruction(ItemType.LICENSE, licenses[first_pending], bot)
-            return shared, f"All components have been confirmed, now we switch to confirming license. \n{instruction}", False
-        
-        return shared, "All items have been confirmed.", True
-    
+
     def _get_item_name(self, item_type: ItemType, item: Dict) -> str:
         """获取项目名称"""
         # 获取配置
@@ -262,6 +222,9 @@ class ChatManager:
         Returns:
             下一个未确认项目的索引，如果全部已确认则返回None
         """
+        if not items:
+            return None # 整个列表为空
+
         # 先检查当前索引之后的项目
         for idx in range(current_idx + 1, len(items)):
             if items[idx].get("status", "") == ItemStatus.PENDING.value:
@@ -278,9 +241,17 @@ class ChatManager:
         """初始化会话，确定第一个待处理的项目"""
         # 辅助函数：查找第一个待处理项的索引
         def find_first_pending(items):
+            # 首先检查items是否为None或空
+            if not items:  # 同时处理None和空列表/字典等情况
+                return None
+            
+            # 遍历查找待处理项
             for idx, item in enumerate(items):
-                if item.get("status", "") == ItemStatus.PENDING.value:
+                # 增加对item本身是否为None的检查
+                if item is not None and item.get("status", "") == ItemStatus.PENDING.value:
                     return idx
+            
+            # 未找到待处理项
             return None
         
         # 处理所有项目类型
@@ -288,13 +259,13 @@ class ChatManager:
         pending_types = []
         
         for item_type in ItemType:
+
             # 获取配置
             config = get_type_config(item_type)
             items_key = config.get("items_key")
-            items_source_key = config.get("items_source_key", items_key)  # 允许不同的源键
             
             # 获取项目列表
-            items = shared.get(items_source_key, [])
+            items = shared.get(items_key, [])
             if not items:
                 continue
                 
@@ -304,6 +275,8 @@ class ChatManager:
             idx = find_first_pending(items)
             if idx is not None:
                 pending_types.append((item_type, idx))
+            
+            # logger.warning('we are going throgh item_key when initializing the chat_manager %s', item_type)
         
         # 检查是否有可用项目
         if not available_types:
@@ -324,5 +297,26 @@ class ChatManager:
         # 更新shared
         shared[current_key] = selected_idx
         shared["processing_type"] = selected_type.value
+
+        logger.warning('now we start with checking: %s', selected_type.value)
         
         return shared, "检查已开始，请跟随提示完成确认流程"
+    
+if __name__ == "__main__":
+
+    item_type = ItemType.SPECIALCHECK
+
+    current_item = {
+        'licName': 'GPL',
+        'category': 'GPL'
+    }
+
+    manager = ChatManager()
+    bot1 = RiskBot('itemTrial')
+    response = manager._get_item_instruction(
+        item_type,
+        current_item,
+        bot1
+    )
+
+    print(response)

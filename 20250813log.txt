@@ -1,0 +1,861 @@
+s or no."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you want to include the dependencies of @ngrx/store 17.2.0 in your compliance clearance checklist. This will ensure that all relevant components are analyzed for compliance risks."
+}
+```
+Human: Objective: The chatbot is tasked with confirming whether the user has proper authorization for commercial components that require licensing, and identifying any additional commercial components that may need authorization.
+
+Instruction: "Please verify with the user whether they have valid licenses for the identified commercial components and check if there are any additional commercial components requiring authorization. Your result should be 'continue' if you need more information from the user, or 'next' if the user has provided complete authorization status. In the talking field, list the commercial components requiring authorization and ask the user to confirm their licensing status."
+
+Expected Output Example:
+
+  "result": "continue",
+  "talking": "I've identified the following commercial components that require valid licenses: [Component A, Component B, Component C]. Commercial software licenses are essential for legal compliance and avoiding potential legal risks. Please confirm: 1) Do you have valid licenses for all these components? 2) Are there any other commercial components in your project that might require licensing? Please provide the authorization status for each component."
+
+For code that is intended to be used in Siemens products or services, the code generation features of our AI Services may only be used after prior approval of your responsible organizational unit.
+Guidance for Implementation:
+
+Initial Listing: Clearly list all identified commercial components that require licensing, making it easy for the user to review.
+
+Authorization Check: Ask the user to confirm the licensing status for each component, encouraging specific responses about which components are licensed and which are not.
+
+Additional Components: Proactively ask if there are other commercial components not yet identified that might require licensing.
+
+Response Evaluation:
+
+If the user provides complete authorization status for all components and confirms no additional components, set result to "next"
+If the user's response is incomplete or unclear, set result to "continue" and ask for specific clarification
+Output Format: Always respond in the strict JSON format with only the two fields: result and talking.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "I've identified the following commercial components that require valid licenses: [@ngrx/store, along with its dependencies]. Commercial software licenses are essential for legal compliance and avoiding potential legal risks. Please confirm: 1) Do you have valid licenses for all these components? 2) Are there any other commercial components in your project that might require licensing? Please provide the authorization status for each component."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you have valid licenses for the identified commercial components. This ensures compliance with licensing requirements. If there are no additional commercial components that require licensing, we can proceed to the next steps in the compliance clearance process."
+}
+```
+Human: Here is the name of the component @ngrx/store 17.2.0
+                            ⇧, and it needs credential from other cooperation. Please confirm with users whether it is credentialized.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "The component @ngrx/store version 17.2.0 requires credentials from other cooperating entities for proper authorization and use. Please confirm whether you have the necessary credentials for this component. Additionally, if there are any other components that require similar credentials, please share that information as well."
+}
+```
+Human: yes, I have
+
+
+> Finished chain.
+2025-08-13 17:10:16 [INFO] chat_flow.process: 处理状态: ConfirmationStatus.CREDENTIAL
+2025-08-13 17:10:16 [INFO] chat_service.process_user_input: Current status: credential, Updated status: credential
+2025-08-13 17:10:16 [INFO] now we are handling nested logic...
+2025-08-13 17:10:16 [INFO] chat_service.handle_nested: now the processing type in shared is: credential
+2025-08-13 17:10:16 [INFO] chat_service.handle_nested: now we are handling license or component ItemType.CREDENTIAL
+2025-08-13 17:10:16 [INFO] chat_manager.handle_next: we have updated the status of this item in the shared file
+2025-08-13 17:10:16 [WARNING] chat_service.handle_nested: we have found this messsage We have finished current checking!
+2025-08-13 17:10:16 [INFO] chat_service.handle_nested: we have finished the checking for this state credential
+2025-08-13 17:10:16 [INFO] chat_flow.process: 处理状态: ConfirmationStatus.CREDENTIAL
+2025-08-13 17:10:16 [INFO] chat_flow.process: 状态转移: ConfirmationStatus.CREDENTIAL -> ConfirmationStatus.SPECIAL_CHECK
+2025-08-13 17:10:16 [INFO] chat_flow.SpeicalCheck: 依赖处理: 初始化了 1 个组件子任务
+
+
+> Entering new LLMChain chain...
+Prompt after formatting:
+System: You are a specialized Third-Party Component Compliance Clearance Assistant designed to help with software compliance auditing and risk assessment. Your expertise includes identifying, analyzing, and providing guidance on Open Source Software (OSS) and Proprietary Software (PSS) components within contracts, documentation, and software projects.
+
+**Core Responsibilities:**
+- Analyze documents for OSS and PSS compliance risks
+- Identify potential license violations and contractual issues
+- Provide recommendations for compliance remediation
+- Guide users through systematic compliance clearance processes
+
+**Operational Mode System:**
+You operate in different modes based on user instructions. The user will send mode-switching commands, and you must determine whether to:
+- **CONTINUE**: Stay in the current mode to gather more information
+- **NEXT**: Move to the next mode when sufficient information has been collected
+
+**Response Format:**
+You MUST respond in strict JSON format for every interaction:
+
+```json
+  "result": "continue" | "next",
+  "talking": "Your normal response content here"
+```
+
+Decision Criteria:
+
+Choose "continue" when you need more details, clarification, or additional information to complete the current mode's objectives
+Choose "next" when you have gathered sufficient information to proceed to the subsequent mode or task
+Key Areas of Expertise:
+
+OSS license compliance (GPL, MIT, Apache, BSD, etc.)
+Proprietary software licensing terms
+Contract risk assessment
+Software Bill of Materials (SBOM) analysis
+Compliance documentation requirements
+Risk mitigation strategies
+Always maintain your role as a compliance specialist while following the strict JSON response format and mode progression logic.
+System: The human instructs the AI chatbot to determine if a current project involves Original Equipment Manufacturer (OEM) integration and emphasizes the importance of contracts for compliance and risk management. The AI confirms that the project involves OEM integration and is tasked to assess the presence of a formal contract with a third-party vendor using a strict JSON format to ensure clarity. The AI provides a JSON structure asking for confirmation of the contract status. The human then directs the AI to analyze an attached document for potential risks associated with Open Source Software (OSS) and Proprietary Software Software (PSS) components, outlining specific assessments and legal compliance measures for both OSS and PSS, and shares a detailed contract outlining project scope, compliance measures, responsibilities, and indemnification related to software development.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "To provide a detailed compliance risk analysis for your contract, I need clarification about the specific OSS and PSS components referenced within the document. Please provide information about any specific software components used, along with their licenses and any additional relevant context."
+}
+```
+Human: ### Dependency Confirmation Instruction:
+
+- **Objective**: The chatbot is tasked with determining whether the user wants to include dependent components (components that the main third-party component relies on) in the compliance clearance list, as these dependencies may introduce additional compliance risks.
+
+- **Instruction**: "Please assess whether the user wants to include dependent components in the compliance clearance scope. Your `result` should be 'continue' if you need more information from the user, or 'next' if the user has provided a clear answer. In the `talking` field, briefly explain the importance of dependency analysis and ask the user if they want to include dependencies in the clearance."
+
+- **Expected Output Example**:
+
+
+  "result": "continue",
+  "talking": "Third-party components often have their own dependencies (libraries, frameworks, or modules they rely on), which can introduce additional compliance risks and licensing obligations. Including dependencies in the clearance ensures comprehensive risk assessment. Would you like to include the dependent components of this third-party component in your compliance clearance list? Please answer yes or no."
+
+Guidance for Implementation:
+Initial Explanation: Briefly explain why dependency analysis is crucial for comprehensive compliance clearance, mentioning that dependencies can have their own licensing requirements and risks.
+
+Simple Question: Directly ask the user whether they want to include dependencies in the clearance scope, encouraging a simple yes/no response.
+
+Response Evaluation:
+
+If the user provides a clear yes/no answer, set result to "next"
+If the user's response is unclear or requires further explanation, set result to "continue" and provide additional clarification
+Output Format: Always respond in the strict JSON format with only the two fields: result and talking.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "Third-party components often have their own dependencies (libraries, frameworks, or modules they rely on), which can introduce additional compliance risks and licensing obligations. Including dependencies in the clearance ensures comprehensive risk assessment. Would you like to include the dependent components of this third-party component in your compliance clearance list? Please answer yes or no."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you want to include dependent components in the compliance clearance list. This will help ensure that any potential compliance risks from these dependencies are identified and addressed."
+}
+```
+Human: Here is the name of the component @ngrx/store 17.2.0, and it contains dependency of other components, please confirm with user whether add the dependent component into the checklist
+AI: ```json
+{
+  "result": "continue",
+  "talking": "The component @ngrx/store version 17.2.0 has its own dependencies, which may also have licensing and compliance implications. To perform a thorough compliance assessment, it is essential to include these dependent components in the checklist. Would you like to add the dependencies of @ngrx/store 17.2.0 into your compliance clearance checklist? Please answer yes or no."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you want to include the dependencies of @ngrx/store 17.2.0 in your compliance clearance checklist. This will ensure that all relevant components are analyzed for compliance risks."
+}
+```
+Human: Objective: The chatbot is tasked with confirming whether the user has proper authorization for commercial components that require licensing, and identifying any additional commercial components that may need authorization.
+
+Instruction: "Please verify with the user whether they have valid licenses for the identified commercial components and check if there are any additional commercial components requiring authorization. Your result should be 'continue' if you need more information from the user, or 'next' if the user has provided complete authorization status. In the talking field, list the commercial components requiring authorization and ask the user to confirm their licensing status."
+
+Expected Output Example:
+
+  "result": "continue",
+  "talking": "I've identified the following commercial components that require valid licenses: [Component A, Component B, Component C]. Commercial software licenses are essential for legal compliance and avoiding potential legal risks. Please confirm: 1) Do you have valid licenses for all these components? 2) Are there any other commercial components in your project that might require licensing? Please provide the authorization status for each component."
+
+For code that is intended to be used in Siemens products or services, the code generation features of our AI Services may only be used after prior approval of your responsible organizational unit.
+Guidance for Implementation:
+
+Initial Listing: Clearly list all identified commercial components that require licensing, making it easy for the user to review.
+
+Authorization Check: Ask the user to confirm the licensing status for each component, encouraging specific responses about which components are licensed and which are not.
+
+Additional Components: Proactively ask if there are other commercial components not yet identified that might require licensing.
+
+Response Evaluation:
+
+If the user provides complete authorization status for all components and confirms no additional components, set result to "next"
+If the user's response is incomplete or unclear, set result to "continue" and ask for specific clarification
+Output Format: Always respond in the strict JSON format with only the two fields: result and talking.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "I've identified the following commercial components that require valid licenses: [@ngrx/store, along with its dependencies]. Commercial software licenses are essential for legal compliance and avoiding potential legal risks. Please confirm: 1) Do you have valid licenses for all these components? 2) Are there any other commercial components in your project that might require licensing? Please provide the authorization status for each component."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you have valid licenses for the identified commercial components. This ensures compliance with licensing requirements. If there are no additional commercial components that require licensing, we can proceed to the next steps in the compliance clearance process."
+}
+```
+Human: Here is the name of the component @ngrx/store 17.2.0
+                            ⇧, and it needs credential from other cooperation. Please confirm with users whether it is credentialized.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "The component @ngrx/store version 17.2.0 requires credentials from other cooperating entities for proper authorization and use. Please confirm whether you have the necessary credentials for this component. Additionally, if there are any other components that require similar credentials, please share that information as well."
+}
+```
+Human: yes, I have
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you have the necessary credentials for the component @ngrx/store 17.2.0. This is crucial for compliance and effective use of the component. If there are no further components needing credential verification, we can proceed to the next steps in the compliance clearance process."
+}
+```
+Human: # Special License Check Prompt
+
+## Objective
+The chatbot is tasked with conducting specialized license compliance checks based on the specific license category. These special checks involve verifying that users have implemented the appropriate technical measures and provided required documentation for compliance with various license types.
+
+## Instruction
+"Based on the license category '{category}' for component '{licName}', please conduct the appropriate specialized compliance check with the user. Your result should be 'continue' if you need additional information from the user, or 'next' if all necessary compliance information has been provided and verified. In the talking field, ask the user specific questions relevant to their license category."
+
+## Expected Output Example
+  "result": "continue",
+  "talking": "For your GPL-licensed component XYZ, I need to verify address space isolation compliance. What embedded system are you using with this component? Have you implemented address space isolation in your code? This verification is essential to ensure compliance with GPL licensing requirements."
+
+## Guidance for Implementation
+
+### Category-Specific Checks:
+- **GPL**: Ask about the embedded system being used, research documentation requirements, and verify address space isolation implementation.
+- **GPL, LGPL**: Check if GPL components are properly declared in product labels and mounting instructions.
+- **GPLv3, LGPLv3**: Verify if component upgrade documentation has been provided.
+- **LGPL**: Ask if dynamic linking or wrappers have been implemented.
+- **GPL with Exception**: Analyze what exceptions apply and confirm their implications.
+
+### Response Evaluation:
+- If the user provides complete information specific to their license category requirements, set result to "next"
+- If additional information or verification is needed, set result to "continue"
+- If compliance issues are identified, provide guidance on remediation steps
+
+## Output Format
+Always respond in strict JSON format with only the two fields: result and talking.
+
+> Finished chain.
+2025-08-13 17:10:22 [INFO] chat_service.handle_nested: the new processing type is: specialcheck
+INFO:     127.0.0.1:56624 - "POST /chat/509e46a3-f6c6-4027-b8ec-2f2c2961e1b6 HTTP/1.1" 200 OK
+2025-08-13 17:13:43 [INFO] server: before processing input, we are in the status of: special_check
+
+
+> Entering new LLMChain chain...
+Prompt after formatting:
+System: You are a specialized Third-Party Component Compliance Clearance Assistant designed to help with software compliance auditing and risk assessment. Your expertise includes identifying, analyzing, and providing guidance on Open Source Software (OSS) and Proprietary Software (PSS) components within contracts, documentation, and software projects.
+
+**Core Responsibilities:**
+- Analyze documents for OSS and PSS compliance risks
+- Identify potential license violations and contractual issues
+- Provide recommendations for compliance remediation
+- Guide users through systematic compliance clearance processes
+
+**Operational Mode System:**
+You operate in different modes based on user instructions. The user will send mode-switching commands, and you must determine whether to:
+- **CONTINUE**: Stay in the current mode to gather more information
+- **NEXT**: Move to the next mode when sufficient information has been collected
+
+**Response Format:**
+You MUST respond in strict JSON format for every interaction:
+
+```json
+  "result": "continue" | "next",
+  "talking": "Your normal response content here"
+```
+
+Decision Criteria:
+
+Choose "continue" when you need more details, clarification, or additional information to complete the current mode's objectives
+Choose "next" when you have gathered sufficient information to proceed to the subsequent mode or task
+Key Areas of Expertise:
+
+OSS license compliance (GPL, MIT, Apache, BSD, etc.)
+Proprietary software licensing terms
+Contract risk assessment
+Software Bill of Materials (SBOM) analysis
+Compliance documentation requirements
+Risk mitigation strategies
+Always maintain your role as a compliance specialist while following the strict JSON response format and mode progression logic.
+System: The human instructs the AI chatbot to determine if a current project involves Original Equipment Manufacturer (OEM) integration and emphasizes the importance of contracts for compliance and risk management. The AI confirms that the project involves OEM integration and is tasked to assess the presence of a formal contract with a third-party vendor using a strict JSON format to ensure clarity. The AI provides a JSON structure asking for confirmation of the contract status. The human then directs the AI to analyze an attached document for potential risks associated with Open Source Software (OSS) and Proprietary Software (PSS) components, outlining specific assessments and legal compliance measures for both OSS and PSS, and shares a detailed contract outlining project scope, compliance measures, responsibilities, and indemnification related to software development. The AI then requests clarification about the specific OSS and PSS components mentioned in the document to provide a detailed compliance risk analysis, asking for information on the software components used, their licenses, and any additional relevant context.
+Human: ### Dependency Confirmation Instruction:
+
+- **Objective**: The chatbot is tasked with determining whether the user wants to include dependent components (components that the main third-party component relies on) in the compliance clearance list, as these dependencies may introduce additional compliance risks.
+
+- **Instruction**: "Please assess whether the user wants to include dependent components in the compliance clearance scope. Your `result` should be 'continue' if you need more information from the user, or 'next' if the user has provided a clear answer. In the `talking` field, briefly explain the importance of dependency analysis and ask the user if they want to include dependencies in the clearance."
+
+- **Expected Output Example**:
+
+
+  "result": "continue",
+  "talking": "Third-party components often have their own dependencies (libraries, frameworks, or modules they rely on), which can introduce additional compliance risks and licensing obligations. Including dependencies in the clearance ensures comprehensive risk assessment. Would you like to include the dependent components of this third-party component in your compliance clearance list? Please answer yes or no."
+
+Guidance for Implementation:
+Initial Explanation: Briefly explain why dependency analysis is crucial for comprehensive compliance clearance, mentioning that dependencies can have their own licensing requirements and risks.
+
+Simple Question: Directly ask the user whether they want to include dependencies in the clearance scope, encouraging a simple yes/no response.
+
+Response Evaluation:
+
+If the user provides a clear yes/no answer, set result to "next"
+If the user's response is unclear or requires further explanation, set result to "continue" and provide additional clarification
+Output Format: Always respond in the strict JSON format with only the two fields: result and talking.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "Third-party components often have their own dependencies (libraries, frameworks, or modules they rely on), which can introduce additional compliance risks and licensing obligations. Including dependencies in the clearance ensures comprehensive risk assessment. Would you like to include the dependent components of this third-party component in your compliance clearance list? Please answer yes or no."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you want to include dependent components in the compliance clearance list. This will help ensure that any potential compliance risks from these dependencies are identified and addressed."
+}
+```
+Human: Here is the name of the component @ngrx/store 17.2.0, and it contains dependency of other components, please confirm with user whether add the dependent component into the checklist
+AI: ```json
+{
+  "result": "continue",
+  "talking": "The component @ngrx/store version 17.2.0 has its own dependencies, which may also have licensing and compliance implications. To perform a thorough compliance assessment, it is essential to include these dependent components in the checklist. Would you like to add the dependencies of @ngrx/store 17.2.0 into your compliance clearance checklist? Please answer yes or no."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you want to include the dependencies of @ngrx/store 17.2.0 in your compliance clearance checklist. This will ensure that all relevant components are analyzed for compliance risks."
+}
+```
+Human: Objective: The chatbot is tasked with confirming whether the user has proper authorization for commercial components that require licensing, and identifying any additional commercial components that may need authorization.
+
+Instruction: "Please verify with the user whether they have valid licenses for the identified commercial components and check if there are any additional commercial components requiring authorization. Your result should be 'continue' if you need more information from the user, or 'next' if the user has provided complete authorization status. In the talking field, list the commercial components requiring authorization and ask the user to confirm their licensing status."
+
+Expected Output Example:
+
+  "result": "continue",
+  "talking": "I've identified the following commercial components that require valid licenses: [Component A, Component B, Component C]. Commercial software licenses are essential for legal compliance and avoiding potential legal risks. Please confirm: 1) Do you have valid licenses for all these components? 2) Are there any other commercial components in your project that might require licensing? Please provide the authorization status for each component."
+
+For code that is intended to be used in Siemens products or services, the code generation features of our AI Services may only be used after prior approval of your responsible organizational unit.
+Guidance for Implementation:
+
+Initial Listing: Clearly list all identified commercial components that require licensing, making it easy for the user to review.
+
+Authorization Check: Ask the user to confirm the licensing status for each component, encouraging specific responses about which components are licensed and which are not.
+
+Additional Components: Proactively ask if there are other commercial components not yet identified that might require licensing.
+
+Response Evaluation:
+
+If the user provides complete authorization status for all components and confirms no additional components, set result to "next"
+If the user's response is incomplete or unclear, set result to "continue" and ask for specific clarification
+Output Format: Always respond in the strict JSON format with only the two fields: result and talking.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "I've identified the following commercial components that require valid licenses: [@ngrx/store, along with its dependencies]. Commercial software licenses are essential for legal compliance and avoiding potential legal risks. Please confirm: 1) Do you have valid licenses for all these components? 2) Are there any other commercial components in your project that might require licensing? Please provide the authorization status for each component."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you have valid licenses for the identified commercial components. This ensures compliance with licensing requirements. If there are no additional commercial components that require licensing, we can proceed to the next steps in the compliance clearance process."
+}
+```
+Human: Here is the name of the component @ngrx/store 17.2.0
+                            ⇧, and it needs credential from other cooperation. Please confirm with users whether it is credentialized.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "The component @ngrx/store version 17.2.0 requires credentials from other cooperating entities for proper authorization and use. Please confirm whether you have the necessary credentials for this component. Additionally, if there are any other components that require similar credentials, please share that information as well."
+}
+```
+Human: yes, I have
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you have the necessary credentials for the component @ngrx/store 17.2.0. This is crucial for compliance and effective use of the component. If there are no further components needing credential verification, we can proceed to the next steps in the compliance clearance process."
+}
+```
+Human: # Special License Check Prompt
+
+## Objective
+The chatbot is tasked with conducting specialized license compliance checks based on the specific license category. These special checks involve verifying that users have implemented the appropriate technical measures and provided required documentation for compliance with various license types.
+
+## Instruction
+"Based on the license category '{category}' for component '{licName}', please conduct the appropriate specialized compliance check with the user. Your result should be 'continue' if you need additional information from the user, or 'next' if all necessary compliance information has been provided and verified. In the talking field, ask the user specific questions relevant to their license category."
+
+## Expected Output Example
+  "result": "continue",
+  "talking": "For your GPL-licensed component XYZ, I need to verify address space isolation compliance. What embedded system are you using with this component? Have you implemented address space isolation in your code? This verification is essential to ensure compliance with GPL licensing requirements."
+
+## Guidance for Implementation
+
+### Category-Specific Checks:
+- **GPL**: Ask about the embedded system being used, research documentation requirements, and verify address space isolation implementation.
+- **GPL, LGPL**: Check if GPL components are properly declared in product labels and mounting instructions.
+- **GPLv3, LGPLv3**: Verify if component upgrade documentation has been provided.
+- **LGPL**: Ask if dynamic linking or wrappers have been implemented.
+- **GPL with Exception**: Analyze what exceptions apply and confirm their implications.
+
+### Response Evaluation:
+- If the user provides complete information specific to their license category requirements, set result to "next"
+- If additional information or verification is needed, set result to "continue"
+- If compliance issues are identified, provide guidance on remediation steps
+
+## Output Format
+Always respond in strict JSON format with only the two fields: result and talking.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "For your component @ngrx/store 17.2.0, please specify the license category associated with it. Based on the license type, I will need to verify compliance requirements. If it's GPL, for example, I would ask about the embedded system you're using. Please provide the license category and any relevant details so I can proceed with the necessary compliance checks."
+}
+```
+Human: yes it is GPL
+
+
+> Finished chain.
+2025-08-13 17:13:55 [INFO] chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CHECK
+2025-08-13 17:13:55 [INFO] chat_service.process_user_input: Current status: special_check, Updated status: special_check
+2025-08-13 17:13:55 [INFO] now we are handling nested logic...
+2025-08-13 17:13:55 [INFO] chat_service.handle_nested: now the processing type in shared is: specialcheck
+2025-08-13 17:13:55 [INFO] chat_service.handle_nested: now we are handling license or component ItemType.SPECIALCHECK
+
+
+> Entering new LLMChain chain...
+Prompt after formatting:
+System: You are a specialized Third-Party Component Compliance Clearance Assistant designed to help with software compliance auditing and risk assessment. Your expertise includes identifying, analyzing, and providing guidance on Open Source Software (OSS) and Proprietary Software (PSS) components within contracts, documentation, and software projects.
+
+**Core Responsibilities:**
+- Analyze documents for OSS and PSS compliance risks
+- Identify potential license violations and contractual issues
+- Provide recommendations for compliance remediation
+- Guide users through systematic compliance clearance processes
+
+**Operational Mode System:**
+You operate in different modes based on user instructions. The user will send mode-switching commands, and you must determine whether to:
+- **CONTINUE**: Stay in the current mode to gather more information
+- **NEXT**: Move to the next mode when sufficient information has been collected
+
+**Response Format:**
+You MUST respond in strict JSON format for every interaction:
+
+```json
+  "result": "continue" | "next",
+  "talking": "Your normal response content here"
+```
+
+Decision Criteria:
+
+Choose "continue" when you need more details, clarification, or additional information to complete the current mode's objectives
+Choose "next" when you have gathered sufficient information to proceed to the subsequent mode or task
+Key Areas of Expertise:
+
+OSS license compliance (GPL, MIT, Apache, BSD, etc.)
+Proprietary software licensing terms
+Contract risk assessment
+Software Bill of Materials (SBOM) analysis
+Compliance documentation requirements
+Risk mitigation strategies
+Always maintain your role as a compliance specialist while following the strict JSON response format and mode progression logic.
+System: The human instructs the AI chatbot to determine if a current project involves Original Equipment Manufacturer (OEM) integration and emphasizes the importance of contracts for compliance and risk management. The AI confirms that the project involves OEM integration and is tasked to assess the presence of a formal contract with a third-party vendor using a strict JSON format to ensure clarity. The AI provides a JSON structure asking for confirmation of the contract status. The human then directs the AI to analyze an attached document for potential risks associated with Open Source Software (OSS) and Proprietary Software (PSS) components, outlining specific assessments and legal compliance measures for both OSS and PSS, and shares a detailed contract outlining project scope, compliance measures, responsibilities, and indemnification related to software development. The AI requests clarification about the specific OSS and PSS components mentioned in the document to provide a detailed compliance risk analysis, asking for information on the software components used, their licenses, and any additional relevant context. The human then provides new instructions for the AI to determine if the user wants to include dependent components in the compliance clearance list, explaining the importance of analyzing dependencies and requesting a clear yes/no response regarding their inclusion in the clearance scope with a strict JSON output format. 
+
+
+AI: ```json
+{
+  "result": "continue",
+  "talking": "Third-party components often have their own dependencies (libraries, frameworks, or modules they rely on), which can introduce additional compliance risks and licensing obligations. Including dependencies in the clearance ensures comprehensive risk assessment. Would you like to include the dependent components of this third-party component in your compliance clearance list? Please answer yes or no."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you want to include dependent components in the compliance clearance list. This will help ensure that any potential compliance risks from these dependencies are identified and addressed."
+}
+```
+Human: Here is the name of the component @ngrx/store 17.2.0, and it contains dependency of other components, please confirm with user whether add the dependent component into the checklist
+AI: ```json
+{
+  "result": "continue",
+  "talking": "The component @ngrx/store version 17.2.0 has its own dependencies, which may also have licensing and compliance implications. To perform a thorough compliance assessment, it is essential to include these dependent components in the checklist. Would you like to add the dependencies of @ngrx/store 17.2.0 into your compliance clearance checklist? Please answer yes or no."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you want to include the dependencies of @ngrx/store 17.2.0 in your compliance clearance checklist. This will ensure that all relevant components are analyzed for compliance risks."
+}
+```
+Human: Objective: The chatbot is tasked with confirming whether the user has proper authorization for commercial components that require licensing, and identifying any additional commercial components that may need authorization.
+
+Instruction: "Please verify with the user whether they have valid licenses for the identified commercial components and check if there are any additional commercial components requiring authorization. Your result should be 'continue' if you need more information from the user, or 'next' if the user has provided complete authorization status. In the talking field, list the commercial components requiring authorization and ask the user to confirm their licensing status."
+
+Expected Output Example:
+
+  "result": "continue",
+  "talking": "I've identified the following commercial components that require valid licenses: [Component A, Component B, Component C]. Commercial software licenses are essential for legal compliance and avoiding potential legal risks. Please confirm: 1) Do you have valid licenses for all these components? 2) Are there any other commercial components in your project that might require licensing? Please provide the authorization status for each component."
+
+For code that is intended to be used in Siemens products or services, the code generation features of our AI Services may only be used after prior approval of your responsible organizational unit.
+Guidance for Implementation:
+
+Initial Listing: Clearly list all identified commercial components that require licensing, making it easy for the user to review.
+
+Authorization Check: Ask the user to confirm the licensing status for each component, encouraging specific responses about which components are licensed and which are not.
+
+Additional Components: Proactively ask if there are other commercial components not yet identified that might require licensing.
+
+Response Evaluation:
+
+If the user provides complete authorization status for all components and confirms no additional components, set result to "next"
+If the user's response is incomplete or unclear, set result to "continue" and ask for specific clarification
+Output Format: Always respond in the strict JSON format with only the two fields: result and talking.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "I've identified the following commercial components that require valid licenses: [@ngrx/store, along with its dependencies]. Commercial software licenses are essential for legal compliance and avoiding potential legal risks. Please confirm: 1) Do you have valid licenses for all these components? 2) Are there any other commercial components in your project that might require licensing? Please provide the authorization status for each component."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you have valid licenses for the identified commercial components. This ensures compliance with licensing requirements. If there are no additional commercial components that require licensing, we can proceed to the next steps in the compliance clearance process."
+}
+```
+Human: Here is the name of the component @ngrx/store 17.2.0
+                            ⇧, and it needs credential from other cooperation. Please confirm with users whether it is credentialized.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "The component @ngrx/store version 17.2.0 requires credentials from other cooperating entities for proper authorization and use. Please confirm whether you have the necessary credentials for this component. Additionally, if there are any other components that require similar credentials, please share that information as well."
+}
+```
+Human: yes, I have
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you have the necessary credentials for the component @ngrx/store 17.2.0. This is crucial for compliance and effective use of the component. If there are no further components needing credential verification, we can proceed to the next steps in the compliance clearance process."
+}
+```
+Human: # Special License Check Prompt
+
+## Objective
+The chatbot is tasked with conducting specialized license compliance checks based on the specific license category. These special checks involve verifying that users have implemented the appropriate technical measures and provided required documentation for compliance with various license types.
+
+## Instruction
+"Based on the license category '{category}' for component '{licName}', please conduct the appropriate specialized compliance check with the user. Your result should be 'continue' if you need additional information from the user, or 'next' if all necessary compliance information has been provided and verified. In the talking field, ask the user specific questions relevant to their license category."
+
+## Expected Output Example
+  "result": "continue",
+  "talking": "For your GPL-licensed component XYZ, I need to verify address space isolation compliance. What embedded system are you using with this component? Have you implemented address space isolation in your code? This verification is essential to ensure compliance with GPL licensing requirements."
+
+## Guidance for Implementation
+
+### Category-Specific Checks:
+- **GPL**: Ask about the embedded system being used, research documentation requirements, and verify address space isolation implementation.
+- **GPL, LGPL**: Check if GPL components are properly declared in product labels and mounting instructions.
+- **GPLv3, LGPLv3**: Verify if component upgrade documentation has been provided.
+- **LGPL**: Ask if dynamic linking or wrappers have been implemented.
+- **GPL with Exception**: Analyze what exceptions apply and confirm their implications.
+
+### Response Evaluation:
+- If the user provides complete information specific to their license category requirements, set result to "next"
+- If additional information or verification is needed, set result to "continue"
+- If compliance issues are identified, provide guidance on remediation steps
+
+## Output Format
+Always respond in strict JSON format with only the two fields: result and talking.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "For your component @ngrx/store 17.2.0, please specify the license category associated with it. Based on the license type, I will need to verify compliance requirements. If it's GPL, for example, I would ask about the embedded system you're using. Please provide the license category and any relevant details so I can proceed with the necessary compliance checks."
+}
+```
+Human: yes it is GPL
+
+AI: ```json
+{
+  "result": "continue",
+  "talking": "For your GPL-licensed component @ngrx/store 17.2.0, I need to verify address space isolation compliance. What embedded system are you using with this component? Have you implemented address space isolation in your code? This verification is essential to ensure compliance with GPL licensing requirements."
+}
+```
+Human: here is the license name GPL and it is GPL
+
+> Finished chain.
+2025-08-13 17:13:57 [WARNING] chat_service.handle_nested: we have found this messsage Thank you for confirming that @ngrx/store 17.2.0 is GPL licensed. To ensure compliance, please provide details about the embedded system you are using with this component. Additionally, have you implemented address space isolation in your code? This information is crucial for fulfilling GPL licensing requirements.
+INFO:     127.0.0.1:57028 - "POST /chat/509e46a3-f6c6-4027-b8ec-2f2c2961e1b6 HTTP/1.1" 200 OK
+2025-08-13 17:14:29 [INFO] server: before processing input, we are in the status of: special_check
+
+
+> Entering new LLMChain chain...
+Prompt after formatting:
+System: You are a specialized Third-Party Component Compliance Clearance Assistant designed to help with software compliance auditing and risk assessment. Your expertise includes identifying, analyzing, and providing guidance on Open Source Software (OSS) and Proprietary Software (PSS) components within contracts, documentation, and software projects.
+
+**Core Responsibilities:**
+- Analyze documents for OSS and PSS compliance risks
+- Identify potential license violations and contractual issues
+- Provide recommendations for compliance remediation
+- Guide users through systematic compliance clearance processes
+
+**Operational Mode System:**
+You operate in different modes based on user instructions. The user will send mode-switching commands, and you must determine whether to:
+- **CONTINUE**: Stay in the current mode to gather more information
+- **NEXT**: Move to the next mode when sufficient information has been collected
+
+**Response Format:**
+You MUST respond in strict JSON format for every interaction:
+
+```json
+  "result": "continue" | "next",
+  "talking": "Your normal response content here"
+```
+
+Decision Criteria:
+
+Choose "continue" when you need more details, clarification, or additional information to complete the current mode's objectives
+Choose "next" when you have gathered sufficient information to proceed to the subsequent mode or task
+Key Areas of Expertise:
+
+OSS license compliance (GPL, MIT, Apache, BSD, etc.)
+Proprietary software licensing terms
+Contract risk assessment
+Software Bill of Materials (SBOM) analysis
+Compliance documentation requirements
+Risk mitigation strategies
+Always maintain your role as a compliance specialist while following the strict JSON response format and mode progression logic.
+System: The human instructs the AI chatbot to determine if a current project involves Original Equipment Manufacturer (OEM) integration and emphasizes the importance of contracts for compliance and risk management. The AI confirms that the project involves OEM integration and is tasked to assess the presence of a formal contract with a third-party vendor using a strict JSON format to ensure clarity. The AI provides a JSON structure asking for confirmation of the contract status. The human then directs the AI to analyze an attached document for potential risks associated with Open Source Software (OSS) and Proprietary Software (PSS) components, outlining specific assessments and legal compliance measures for both OSS and PSS, and shares a detailed contract outlining project scope, compliance measures, responsibilities, and indemnification related to software development. The AI requests clarification about the specific OSS and PSS components mentioned in the document to provide a detailed compliance risk analysis, asking for information on the software components used, their licenses, and any additional relevant context. The human then provides new instructions for the AI to determine if the user wants to include dependent components in the compliance clearance list, explaining the importance of analyzing dependencies and requesting a clear yes/no response regarding their inclusion in the clearance scope with a strict JSON output format. 
+
+
+AI: ```json
+{
+  "result": "continue",
+  "talking": "Third-party components often have their own dependencies (libraries, frameworks, or modules they rely on), which can introduce additional compliance risks and licensing obligations. Including dependencies in the clearance ensures comprehensive risk assessment. Would you like to include the dependent components of this third-party component in your compliance clearance list? Please answer yes or no."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you want to include dependent components in the compliance clearance list. This will help ensure that any potential compliance risks from these dependencies are identified and addressed."
+}
+```
+Human: Here is the name of the component @ngrx/store 17.2.0, and it contains dependency of other components, please confirm with user whether add the dependent component into the checklist
+AI: ```json
+{
+  "result": "continue",
+  "talking": "The component @ngrx/store version 17.2.0 has its own dependencies, which may also have licensing and compliance implications. To perform a thorough compliance assessment, it is essential to include these dependent components in the checklist. Would you like to add the dependencies of @ngrx/store 17.2.0 into your compliance clearance checklist? Please answer yes or no."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you want to include the dependencies of @ngrx/store 17.2.0 in your compliance clearance checklist. This will ensure that all relevant components are analyzed for compliance risks."
+}
+```
+Human: Objective: The chatbot is tasked with confirming whether the user has proper authorization for commercial components that require licensing, and identifying any additional commercial components that may need authorization.
+
+Instruction: "Please verify with the user whether they have valid licenses for the identified commercial components and check if there are any additional commercial components requiring authorization. Your result should be 'continue' if you need more information from the user, or 'next' if the user has provided complete authorization status. In the talking field, list the commercial components requiring authorization and ask the user to confirm their licensing status."
+
+Expected Output Example:
+
+  "result": "continue",
+  "talking": "I've identified the following commercial components that require valid licenses: [Component A, Component B, Component C]. Commercial software licenses are essential for legal compliance and avoiding potential legal risks. Please confirm: 1) Do you have valid licenses for all these components? 2) Are there any other commercial components in your project that might require licensing? Please provide the authorization status for each component."
+
+For code that is intended to be used in Siemens products or services, the code generation features of our AI Services may only be used after prior approval of your responsible organizational unit.
+Guidance for Implementation:
+
+Initial Listing: Clearly list all identified commercial components that require licensing, making it easy for the user to review.
+
+Authorization Check: Ask the user to confirm the licensing status for each component, encouraging specific responses about which components are licensed and which are not.
+
+Additional Components: Proactively ask if there are other commercial components not yet identified that might require licensing.
+
+Response Evaluation:
+
+If the user provides complete authorization status for all components and confirms no additional components, set result to "next"
+If the user's response is incomplete or unclear, set result to "continue" and ask for specific clarification
+Output Format: Always respond in the strict JSON format with only the two fields: result and talking.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "I've identified the following commercial components that require valid licenses: [@ngrx/store, along with its dependencies]. Commercial software licenses are essential for legal compliance and avoiding potential legal risks. Please confirm: 1) Do you have valid licenses for all these components? 2) Are there any other commercial components in your project that might require licensing? Please provide the authorization status for each component."
+}
+```
+Human: yes
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you have valid licenses for the identified commercial components. This ensures compliance with licensing requirements. If there are no additional commercial components that require licensing, we can proceed to the next steps in the compliance clearance process."
+}
+```
+Human: Here is the name of the component @ngrx/store 17.2.0
+                            ⇧, and it needs credential from other cooperation. Please confirm with users whether it is credentialized.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "The component @ngrx/store version 17.2.0 requires credentials from other cooperating entities for proper authorization and use. Please confirm whether you have the necessary credentials for this component. Additionally, if there are any other components that require similar credentials, please share that information as well."
+}
+```
+Human: yes, I have
+
+AI: ```json
+{
+  "result": "next",
+  "talking": "Thank you for confirming that you have the necessary credentials for the component @ngrx/store 17.2.0. This is crucial for compliance and effective use of the component. If there are no further components needing credential verification, we can proceed to the next steps in the compliance clearance process."
+}
+```
+Human: # Special License Check Prompt
+
+## Objective
+The chatbot is tasked with conducting specialized license compliance checks based on the specific license category. These special checks involve verifying that users have implemented the appropriate technical measures and provided required documentation for compliance with various license types.
+
+## Instruction
+"Based on the license category '{category}' for component '{licName}', please conduct the appropriate specialized compliance check with the user. Your result should be 'continue' if you need additional information from the user, or 'next' if all necessary compliance information has been provided and verified. In the talking field, ask the user specific questions relevant to their license category."
+
+## Expected Output Example
+  "result": "continue",
+  "talking": "For your GPL-licensed component XYZ, I need to verify address space isolation compliance. What embedded system are you using with this component? Have you implemented address space isolation in your code? This verification is essential to ensure compliance with GPL licensing requirements."
+
+## Guidance for Implementation
+
+### Category-Specific Checks:
+- **GPL**: Ask about the embedded system being used, research documentation requirements, and verify address space isolation implementation.
+- **GPL, LGPL**: Check if GPL components are properly declared in product labels and mounting instructions.
+- **GPLv3, LGPLv3**: Verify if component upgrade documentation has been provided.
+- **LGPL**: Ask if dynamic linking or wrappers have been implemented.
+- **GPL with Exception**: Analyze what exceptions apply and confirm their implications.
+
+### Response Evaluation:
+- If the user provides complete information specific to their license category requirements, set result to "next"
+- If additional information or verification is needed, set result to "continue"
+- If compliance issues are identified, provide guidance on remediation steps
+
+## Output Format
+Always respond in strict JSON format with only the two fields: result and talking.
+AI: ```json
+{
+  "result": "continue",
+  "talking": "For your component @ngrx/store 17.2.0, please specify the license category associated with it. Based on the license type, I will need to verify compliance requirements. If it's GPL, for example, I would ask about the embedded system you're using. Please provide the license category and any relevant details so I can proceed with the necessary compliance checks."
+}
+```
+Human: yes it is GPL
+
+AI: ```json
+{
+  "result": "continue",
+  "talking": "For your GPL-licensed component @ngrx/store 17.2.0, I need to verify address space isolation compliance. What embedded system are you using with this component? Have you implemented address space isolation in your code? This verification is essential to ensure compliance with GPL licensing requirements."
+}
+```
+Human: here is the license name GPL and it is GPL
+AI: ```json
+{
+  "result": "continue",
+  "talking": "Thank you for confirming that @ngrx/store 17.2.0 is GPL licensed. To ensure compliance, please provide details about the embedded system you are using with this component. Additionally, have you implemented address space isolation in your code? This information is crucial for fulfilling GPL licensing requirements."
+}
+```
+Human: yes, I have cheked
+
+
+> Finished chain.
+2025-08-13 17:14:32 [INFO] chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CHECK
+2025-08-13 17:14:32 [INFO] chat_service.process_user_input: Current status: special_check, Updated status: special_check
+2025-08-13 17:14:32 [INFO] now we are handling nested logic...
+2025-08-13 17:14:32 [INFO] chat_service.handle_nested: now the processing type in shared is: specialcheck
+2025-08-13 17:14:32 [INFO] chat_service.handle_nested: now we are handling license or component ItemType.SPECIALCHECK
+2025-08-13 17:14:32 [INFO] chat_manager.handle_next: we have updated the status of this item in the shared file
+2025-08-13 17:14:32 [WARNING] chat_service.handle_nested: we have found this messsage We have finished current checking!
+2025-08-13 17:14:32 [INFO] chat_service.handle_nested: we have finished the checking for this state special_check
+2025-08-13 17:14:32 [INFO] chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CHECK
+2025-08-13 17:14:32 [INFO] chat_flow.process: 状态转移: ConfirmationStatus.SPECIAL_CHECK -> ConfirmationStatus.COMPLIANCE
+2025-08-13 17:14:33 [ERROR] Error while fetching prompt 'bot/Compliance-label:production': status_code: 404, body: {'message': "Prompt not found: 'bot/Compliance' with label 'production'", 'error': 'LangfuseNotFoundError'}
+2025-08-13 17:14:33 [ERROR] Error during chat: status_code: 404, body: {'message': "Prompt not found: 'bot/Compliance' with label 'production'", 'error': 'LangfuseNotFoundError'}
+Traceback (most recent call last):
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\server.py", line 198, in chat
+    status, updated_shared, reply = chat_service.process_user_input(
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        session["shared"],
+        ^^^^^^^^^^^^^^^^^^
+        chat_message.message,
+        ^^^^^^^^^^^^^^^^^^^^^
+        status
+        ^^^^^^
+    )
+    ^
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\services\chat_service.py", line 52, in process_user_input
+    final_status, updated_shared, reply = self._status_check(shared, updated_status, status, result,reply)
+                                          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\services\chat_service.py", line 80, in _status_check
+    updated_status, updated_shared, message = self._handle_nested_logic(shared, status, result, reply)
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\services\chat_service.py", line 137, in _handle_nested_logic
+    message = self.get_instructions(final_status)
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\services\chat_service.py", line 152, in get_instructions
+    message = handler()
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\services\chat_service.py", line 188, in _handle_compliance
+    prompt = self.bot.langfuse.get_prompt("bot/Compliance").prompt
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\z0054unn\AppData\Local\Programs\Python\Python313\Lib\site-packages\langfuse\_client\client.py", line 2062, in get_prompt
+    raise e
+  File "C:\Users\z0054unn\AppData\Local\Programs\Python\Python313\Lib\site-packages\langfuse\_client\client.py", line 2026, in get_prompt
+    return self._fetch_prompt_and_update_cache(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        name,
+        ^^^^^
+    ...<4 lines>...
+        fetch_timeout_seconds=fetch_timeout_seconds,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\z0054unn\AppData\Local\Programs\Python\Python313\Lib\site-packages\langfuse\_client\client.py", line 2146, in _fetch_prompt_and_update_cache
+    raise e
+  File "C:\Users\z0054unn\AppData\Local\Programs\Python\Python313\Lib\site-packages\langfuse\_client\client.py", line 2129, in _fetch_prompt_and_update_cache
+    prompt_response = fetch_prompts()
+  File "C:\Users\z0054unn\AppData\Local\Programs\Python\Python313\Lib\site-packages\backoff\_sync.py", line 105, in retry
+    ret = target(*args, **kwargs)
+  File "C:\Users\z0054unn\AppData\Local\Programs\Python\Python313\Lib\site-packages\langfuse\_client\client.py", line 2118, in fetch_prompts
+    return self.api.prompts.get(
+           ~~~~~~~~~~~~~~~~~~~~^
+        self._url_encode(name),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        else None,
+        ^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\z0054unn\AppData\Local\Programs\Python\Python313\Lib\site-packages\langfuse\api\resources\prompts\client.py", line 99, in get
+    raise NotFoundError(
+    ^^^^^^^^^^^^^^^^^^^^
+        pydantic_v1.parse_obj_as(typing.Any, _response.json())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )  # type: ignore
+    ^
+langfuse.api.resources.commons.errors.not_found_error.NotFoundError: status_code: 404, body: {'message': "Prompt not found: 'bot/Compliance' with label 'production'", 'error': 'LangfuseNotFoundError'}
+2025-08-13 17:14:33 [ERROR] Error CHAT_ERROR: Error during contract analysis: status_code: 404, body: {'message': "Prompt not found: 'bot/Compliance' with label 'production'", 'error': 'LangfuseNotFoundError'}
+INFO:     127.0.0.1:57134 - "POST /chat/509e46a3-f6c6-4027-b8ec-2f2c2961e1b6 HTTP/1.1" 500 Internal Server Error

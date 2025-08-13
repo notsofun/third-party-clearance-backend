@@ -59,7 +59,7 @@ async def analyze_file(file: UploadFile = File(...)):
         chat_service = ChatService(session_chat_flow)
         updated_shared = chat_service.initialize_chat(shared)
         status = chat_service.chat_flow.current_state.value
-        initial_message = chat_service.get_instructions(shared,status)
+        initial_message = chat_service.get_instructions(status)
 
         logger.info('now we initialized status as: %s', status)
 
@@ -79,7 +79,6 @@ async def analyze_file(file: UploadFile = File(...)):
         }
         
     except Exception as e:
-        logger.error(f"Error during file analysis: {str(e)}")
         return create_error_response(
             "Error during analysis",
             error_message=str(e),
@@ -147,8 +146,7 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
             updated_status,
             status,
             'next',
-            None,
-            None,
+            None
         )
 
         sessions[session_id].update({
@@ -187,7 +185,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
     chat_flow = session['chat_flow']
 
     status = chat_flow.current_state.value
-    logger.info('when processing input, we are in the status of: %s', status)
+    logger.info('server: before processing input, we are in the status of: %s', status)
 
     if status == "completed":
         return {

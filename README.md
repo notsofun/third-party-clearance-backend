@@ -36,7 +36,7 @@ flowchart TD
     F
     G
     end
-````
+```
 
 * **LLM分析模块**：负责解析依赖包及许可文本，调用Azure OpenAI生成语义向量及初步分析。
 * **向量数据库**：存储历史分析结果，提升复用效率。
@@ -50,23 +50,50 @@ flowchart TD
 
 ### 状态机设计
 
+
 * 采用抽象基类`StateHandler`定义状态处理器接口
 * 定义具体状态处理器：`SpecialCheckHandler`, `OEMHandler`, `DependencyHandler`, `ComplianceHandler`
 * `WorkflowContext`负责状态管理和转移
-* 状态枚举由`ConfirmationStatus`定义，包含`SPECIAL_CHECK`, `OEM`, `DEPENDENCY`, `COMPLIANCE`, `CONTRACT`
+* 状态枚举由`ConfirmationStatus`定义，包含`SPECIAL_CHECK`, `OEM`, `DEPENDENCY`, `COMPLIANCE`, `CONTRACT`。
+  
+状态机大致示意
 
-状态转换示意：
+```mermaid
 
-```text
-SPECIAL_CHECK → OEM → DEPENDENCY → COMPLIANCE → CONTRACT → 结束
+graph TD
+    A[OEM] --> B[CONTRACT]
+    B --> C[CONTRACT]
+    C --> D[Dependecy]
+    
+    subgraph 处理Dependecy嵌套状态
+    D --> D1[处理当前组件]
+    D1 --> D2{还有更多组件?}
+    D2 -->|是| D1
+    D2 -->|否| D3[组件处理完毕]
+    end
+    
+    D3 --> G[Credential]
+
+    subgraph 处理Credential嵌套状态
+    G --> G1[处理当前组件]
+    G1 --> G2{还有更多组件?}
+    G2 -->|是| G1
+    G2 -->|否| G3[组件处理完毕]
+    end
+    
+    G3 --> E
+
+    E[SpecialCheck] --> F[Report Generating]
+
 ```
+
 
 ### 后端聊天服务
 
-* `ChatService`负责接收用户输入，调用对应状态处理器处理消息
-* 通过`WorkflowContext`维护会话状态和状态转移
-* 使用FastAPI实现接口，提供文件上传分析接口和聊天交互接口
-* 支持多组件依次确认，管理多轮对话上下文
+* 类`ChatService`负责接收用户输入，调用对应状态处理器处理消息
+* 通过`WorkflowContext`维护会话状态和状态转移，该在`ChatFlow`框架下，通过`transition_table`维护节点走向
+* 使用`FastAPI`实现接口，提供文件上传分析接口和聊天交互接口
+* 开发`ChatManager`支持多组件、许可证依次确认，管理多轮对话上下文
 
 ---
 
@@ -95,9 +122,7 @@ uvicorn back_end.server:app --reload --host 127.0.0.1 --port 8000
 
 1. **上传依赖文件**
 
-```bash
-curl -X POST "http://127.0.0.1:8000/analyze" -F "file=@yourfile.html"
-```
+通过`npm run dev`在前端根目录运行交互页面，并上传文件。
 
 返回 `session_id` 和初始确认组件信息。
 
@@ -122,7 +147,57 @@ curl -X GET "http://127.0.0.1:8000/sessions/{session_id}"
 * 关键逻辑位于 `back_end/services/chat_service.py` 与 `back_end/services/chat_flow.py`
 * `WorkflowContext` 实现状态转移，易于扩展更多状态
 * FastAPI 服务器入口在 `back_end/server.py`
-* 日志采用标准 logging，级别可调节方便调试
+* 日志采用标准`logging`，级别可调节方便调试
+
+### 如何在ChatFlow中新增普通节点？
+1. 在`item_types.py`的`ConfirmationStatus`类中新增映射，如`OEM = "OEMing"`即为新增了对于特殊许可证进行确认的节点
+2. 在`chat_flow.py`中新增`OEMHandler`类，以`SimpleStateHandler`类为基类，示例代码如下。
+```python
+class OEMHandler(SimpleStateHandler):
+    def check_completion(self, context: Dict[str, Any]) -> bool:
+        print("执行OEM处理...")
+        status = context.get('status')
+        if status == State.NEXT.value:
+            return State.COMPLETED
+        elif status == State.CONTINUE.value:
+            return State.INPROGRESS
+        else:
+            raise RuntimeError('Model did not determine to go on or continue')
+```
+3. 在`WorkflowContext`中的`transition_table`和`handlers`两个属性中分别注册状态转移规则和对应处理器
+```python
+ transition_table = {
+        ConfirmationStatus.OEM: {
+            State.COMPLETED.value: ConfirmationStatus.CONTRACT, # 模型判断当前状态结束后的下一个状态
+            State.INPROGRESS.value: ConfirmationStatus.OEM # 模型判断继续时停留在当前节点
+        }
+    }
+
+handlers = {
+        ConfirmationStatus.OEM: OEMHandler(), # 注册后，Chatflow能够根据当前状态选择对应的处理器
+    }
+```
+4. 接下来，需要处理Chatbot普通节点状态转移时向用户展示指引的逻辑。此处在`chat_service.py`的`ChatService`类的`status_handlers`属性中注册对应方法
+```python
+status_handlers = {
+        ConfirmationStatus.OEM.value: self._handle_oem,
+    }
+```
+5. 同时，在`ChatService`类中实现该方法
+```python
+def _handle_oem(self) -> str:
+    """处理OEM状态"""
+    prompt = self.bot.langfuse.get_prompt("bot/OEM").prompt
+    response = get_strict_json(self.bot, prompt)
+    return response.get('talking', '请确认OEM信息')
+```
+6. 最后，在[Langfuse](http://140.231.236.162:8500/project/cmdh3nlkv0005pe07n90sru1k/prompts?pageIndex=0&pageSize=50&folder=bot)平台中创建对应的prompt，命名和代码中`get_prompt()`中的参数一致
+![图片](src\imgs\langfuse_creating_pics.png)
+
+
+### 如何在ChatFlow中新增嵌套节点？
+pending...
+1. 确保在`node.py`中已经提前处理
 
 ---
 

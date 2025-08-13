@@ -47,27 +47,17 @@ def filter_components_by_credential_requirement(components, parsed_html, risk_an
         # 检查release中的每个许可证
         for license_name in release.get('license_names', []):
             clean_license = license_name.strip()
-            logging.info(f"检查许可证: '{license_name}' (清理后: '{clean_license}')")
             
             if clean_license in license_map:
                 match_info = license_map[clean_license]
                 risk_data = match_info['data']
                 risk_key = match_info['risk_key']
                 
-                logging.info(f"✓ 找到匹配! '{clean_license}' 匹配到 '{risk_key}'")
-                
                 credential_required = risk_data['credentialOrNot'].get('CredentialOrNot', False)
-                logging.info(f"  CredentialOrNot值: {credential_required}")
                 
                 if credential_required:
-                    logging.info(f"  ✓ 需要凭证: 该组件将被保留")
                     return True
-                else:
-                    logging.info(f"  ✗ 不需要凭证: 继续检查其他许可证")
-            else:
-                logging.info(f"✗ 未匹配: '{clean_license}' 在风险分析中未找到")
         
-        logging.info(f"✗ 最终结果: 组件不需要凭证，将被过滤掉")
         return False
     
     # 设置日志级别和格式
@@ -129,13 +119,10 @@ def filter_components_by_criteria(components, parsed_html, risk_analysis, criter
                     comp_name = comp[0].strip() if isinstance(comp[0], str) else str(comp[0])
                 elif isinstance(comp, dict) and 'name' in comp:
                     comp_name = comp['name'].strip()
-                else:
-                    logging.warning(f"无法从组件中提取名称: {comp}")
                     return False
                 
                 rel_name = rel['name'].strip() if isinstance(rel['name'], str) else str(rel['name'])
                 
-                logging.info(f"比较组件名称: '{comp_name}' 与 '{rel_name}'")
                 return comp_name == rel_name
             except Exception as e:
                 logging.error(f"匹配过程出错: {str(e)}")
@@ -153,15 +140,9 @@ def filter_components_by_criteria(components, parsed_html, risk_analysis, criter
             release = next((rel for rel in parsed_html['releases'] if match_func(component, rel)), None)
             
             if release:
-                logging.info(f"✓ 找到匹配的release: {release.get('name', '未知')}")
                 
                 if criteria_func(release, risk_analysis):
-                    logging.info(f"✓ 组件满足条件，添加到结果")
                     filtered_components.append(component)
-                else:
-                    logging.info(f"✗ 组件不满足条件，被过滤")
-            else:
-                logging.warning(f"✗ 未找到匹配的release")
         except Exception as e:
             logging.error(f"处理组件时出错: {str(e)}")
     

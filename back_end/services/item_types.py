@@ -1,20 +1,14 @@
 from enum import Enum
 from typing import NamedTuple, Optional, Tuple, List, Dict, Any
+import logging
 
+logger = logging.getLogger(__name__)
 class ItemType(Enum):
     """项目类型枚举"""
     LICENSE = "license"
     COMPONENT = "component"
     CREDENTIAL = 'credential'
-
-from enum import Enum
-
-class ItemType(Enum):
-    """项目类型枚举 - 保持不变"""
-    LICENSE = "license"
-    COMPONENT = "component"
-    CREDENTIAL = 'credential'
-    # 未来可添加更多类型...
+    SPECIALCHECK = 'specialcheck'
 
 # 单独添加配置映射
 TYPE_CONFIG = {
@@ -44,7 +38,18 @@ TYPE_CONFIG = {
         "default_name": "未命名凭证",
         "instruction_template": "Here is the name of the component {compName}, and it needs credential from other cooperation. Please confirm with users whether it is credentialized.",
         "instruction_fields": ["compName"]
+    },
+    ItemType.SPECIALCHECK : {
+        "current_key": "current_speicalLic_idx",
+        "items_key": "specialCollections",
+        "error_msg": "错误：没有找到要确认的特殊许可证",
+        "name_field": "licName",
+        "default_name": "未命名许可证",
+        "instruction_template": "here is the license name {licName} and it is {category}",
+        "instruction_fields": ["licName", "category"]
     }
+
+    
 }
 
 # 辅助函数
@@ -73,7 +78,7 @@ class ItemStatus(Enum):
 class ItemInfo(NamedTuple):
     """统一的项目信息结构"""
     valid: bool
-    data: Optional[Tuple[int, List, Dict]]
+    data: Optional[Tuple[int, List, Dict, Tuple]]
     error_message: str = ""
 
 class State(Enum):
@@ -92,3 +97,31 @@ class ConfirmationStatus(Enum):
     CONTRACT = 'toContract'
     CREDENTIAL = 'credential'
 
+# 确认状态到处理类型的映射
+CONFIRMATION_STATUS_TO_TYPE_MAP = {
+    ConfirmationStatus.SPECIAL_CHECK.value: ItemType.SPECIALCHECK.value,  # 特殊检查对应许可证处理
+    ConfirmationStatus.DEPENDENCY.value: ItemType.COMPONENT.value,  # 依赖关系对应组件处理
+    ConfirmationStatus.COMPLIANCE.value: ItemType.LICENSE.value,    # 合规性对应许可证处理
+    ConfirmationStatus.CREDENTIAL.value: ItemType.CREDENTIAL.value  # 凭证处理
+}
+
+# 默认处理类型
+DEFAULT_PROCESSING_TYPE = ItemType.COMPONENT.value
+
+def get_processing_type_from_status(status: ConfirmationStatus) -> str:
+    """
+    根据确认状态获取对应的处理类型值
+    
+    Args:
+        status: 当前确认状态 (ConfirmationStatus枚举)
+    
+    Returns:
+        处理类型的值（对应 ItemType 的 value）
+    """
+    # 从映射中获取处理类型
+    if status in CONFIRMATION_STATUS_TO_TYPE_MAP:
+        return CONFIRMATION_STATUS_TO_TYPE_MAP[status]
+    
+    logger.warning(f"最新状态为{status}，未找到处理类型(processing_type)，使用默认值: {DEFAULT_PROCESSING_TYPE}")
+    # 如果没有映射，返回默认值
+    return DEFAULT_PROCESSING_TYPE
