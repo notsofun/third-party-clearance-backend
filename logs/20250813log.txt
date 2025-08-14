@@ -1,4 +1,4 @@
-s or no."
+{s or no
 }
 ```
 Human: yes
@@ -58,8 +58,8 @@ Human: yes, I have
 
 
 > Finished chain.
-2025-08-13 17:10:16 [INFO] chat_flow.process: 处理状态: ConfirmationStatus.CREDENTIAL
-2025-08-13 17:10:16 [INFO] chat_service.process_user_input: Current status: credential, Updated status: credential
+2025-08-13 17:10:16 [INFO] chat_flow.process: 处理状态: ConfirmationStatus.CREDENTIAL # 为什么一开始没有变成功呢？因为没有handle nested去改它的状态
+2025-08-13 17:10:16 [INFO] chat_service.process_user_input: Current status: credential, Updated status: credential # 因为此时，
 2025-08-13 17:10:16 [INFO] now we are handling nested logic...
 2025-08-13 17:10:16 [INFO] chat_service.handle_nested: now the processing type in shared is: credential
 2025-08-13 17:10:16 [INFO] chat_service.handle_nested: now we are handling license or component ItemType.CREDENTIAL
@@ -251,6 +251,7 @@ Always respond in strict JSON format with only the two fields: result and talkin
 2025-08-13 17:10:22 [INFO] chat_service.handle_nested: the new processing type is: specialcheck
 INFO:     127.0.0.1:56624 - "POST /chat/509e46a3-f6c6-4027-b8ec-2f2c2961e1b6 HTTP/1.1" 200 OK
 2025-08-13 17:13:43 [INFO] server: before processing input, we are in the status of: special_check
+# 这一步符合预期，需要一个specialCheck的指导语言。
 
 
 > Entering new LLMChain chain...

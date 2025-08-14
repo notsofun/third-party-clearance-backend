@@ -1,8 +1,8 @@
 from enum import Enum
 from typing import NamedTuple, Optional, Tuple, List, Dict, Any
-import logging
+from log_config import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)  # 每个模块用自己的名称
 class ItemType(Enum):
     """项目类型枚举"""
     LICENSE = "license"
@@ -14,7 +14,7 @@ class ItemType(Enum):
 TYPE_CONFIG = {
     ItemType.LICENSE: {
         "current_key": "current_license_idx",
-        "items_key": "toBeConfirmedLicenses",
+        "items_key": "checkedRisk",
         "error_msg": "错误：没有找到要确认的许可证",
         "name_field": "title",
         "default_name": "未命名许可证",
@@ -96,6 +96,7 @@ class ConfirmationStatus(Enum):
     COMPLIANCE = "toCompliance"
     CONTRACT = 'toContract'
     CREDENTIAL = 'credential'
+    COMPLETED = 'completed'
 
 # 确认状态到处理类型的映射
 CONFIRMATION_STATUS_TO_TYPE_MAP = {
@@ -108,7 +109,7 @@ CONFIRMATION_STATUS_TO_TYPE_MAP = {
 # 默认处理类型
 DEFAULT_PROCESSING_TYPE = ItemType.COMPONENT.value
 
-def get_processing_type_from_status(status: ConfirmationStatus) -> str:
+def get_processing_type_from_status(status: str) -> str:
     """
     根据确认状态获取对应的处理类型值
     

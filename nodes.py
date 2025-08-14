@@ -9,18 +9,10 @@ from utils.vectorDB import VectorDatabase
 from utils.callAIattack import AzureOpenAIChatClient
 from utils.tools import (reverse_exec)
 from utils.itemFilter import filter_components_by_credential_requirement
-import logging
 import random
+from log_config import get_logger
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
-logging.getLogger("azure").setLevel(logging.WARNING)
-logging.getLogger("msal").setLevel(logging.WARNING)
-logging.getLogger("httpx").setLevel(logging.WARNING)
-logging.getLogger("requests").setLevel(logging.WARNING)
-logging.getLogger("openai").setLevel(logging.WARNING)
-
-logger = logging.getLogger(__name__)
-
+logger = get_logger(__name__)  # 每个模块用自己的名称
 class ParsingOriginalHtml(Node):
     """处理原始OSS-Readme文件，生成Json文件方便后续调用
     prep：拿数据
@@ -377,6 +369,9 @@ class RiskCheckingRAG(BatchNode):
 
         with open("toBeConfirmedLicenses.json","w", encoding="utf-8" ) as f1:
             json.dump(shared["toBeConfirmedLicenses"],f1,ensure_ascii=False,indent=2)
+
+        with open("checkedRisk.json","w", encoding="utf-8" ) as f1:
+            json.dump(shared["checkedRisk"],f1,ensure_ascii=False,indent=2)
 
         logger.info('finished checking, now we are checking the dependecies')
         return "default"

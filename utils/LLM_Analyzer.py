@@ -6,16 +6,9 @@ from langchain_openai import AzureChatOpenAI
 from langchain.memory import ConversationBufferMemory, ConversationSummaryBufferMemory
 from langchain.chains import LLMChain
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-import logging
+from log_config import get_logger
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
-logging.getLogger("azure").setLevel(logging.WARNING)
-logging.getLogger("msal").setLevel(logging.WARNING)
-logging.getLogger("httpx").setLevel(logging.WARNING)
-logging.getLogger("requests").setLevel(logging.WARNING)
-logging.getLogger("openai").setLevel(logging.WARNING)
-logging.getLogger("langchain").setLevel(logging.WARNING)
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)  # 每个模块用自己的名称
 
 class RiskReviewer(AzureOpenAIChatClient):
     """

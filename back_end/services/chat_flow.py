@@ -1,7 +1,6 @@
 from enum import Enum
 from typing import Dict, Optional, Any, List, Type
 from abc import ABC, abstractmethod
-import logging
 import os
 import sys
 
@@ -19,8 +18,10 @@ if project_root not in sys.path:
 # 然后使用绝对导入
 from back_end.services.item_types import ItemStatus, State, ConfirmationStatus, TYPE_CONFIG, ItemType
 
+from log_config import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)  # 每个模块用自己的名称
+
 class StateHandler(ABC):
     """状态处理器抽象基类"""
     @abstractmethod
@@ -118,9 +119,23 @@ class OEMHandler(SimpleStateHandler):
         else:
             raise RuntimeError('Model did not determine to go on or continue')
 
-class ComplianceHandler(SimpleStateHandler):
-    def check_completion(self, context: Dict[str, Any]) -> bool:
-        pass
+class ComplianceHandler(SubTaskStateHandler):
+    def initialize_subtasks(self, context: Dict[str, Any]):
+        """初始化待确认组件子任务"""
+        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.LICENSE]['items_key'], [])
+        # 以组件ID作为子任务标识
+        self.subtasks = [lic.get("title", f"lic_{idx}") for idx, lic in enumerate(licenses)]
+        logger.info(f"chat_flow.LicenseCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
+    
+    def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
+        """检查组件是否已确认"""
+        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.LICENSE]['items_key'], [])
+        for lic in licenses:
+            if lic.get("title") == subtask_id:
+                return lic.get("status") == ItemStatus.CONFIRMED.value
+        return False
+
+
 
 class ContractHandler(SimpleStateHandler):
     def check_completion(self, context: Dict[str, Any]) -> bool:
@@ -182,22 +197,6 @@ class CredentialHandler(SubTaskStateHandler):
                 return comp.get("status") == ItemStatus.CONFIRMED.value
         return False
     
-class LicenseHandler(SubTaskStateHandler):
-    def initialize_subtasks(self, context: Dict[str, Any]):
-        """初始化待确认组件子任务"""
-        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.LICENSE]['items_key'], [])
-        # 以组件ID作为子任务标识
-        self.subtasks = [comp.get("licenseName", f"comp_{idx}") for idx, comp in enumerate(licenses)]
-        logger.info(f"chat_flow.LicenseCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
-    
-    def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
-        """检查组件是否已确认"""
-        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.LICENSE]['items_key'], [])
-        for lic in licenses:
-            if lic.get("licenseName") == subtask_id:
-                return lic.get("status") == ItemStatus.CONFIRMED.value
-        return False
-
 class WorkflowContext:
     """工作流上下文，管理状态和转换"""
     def __init__(self, curren_state=ConfirmationStatus.OEM):
@@ -208,7 +207,7 @@ class WorkflowContext:
                 State.INPROGRESS.value: ConfirmationStatus.OEM
             },
             ConfirmationStatus.COMPLIANCE: {
-                State.COMPLETED.value: ConfirmationStatus.CREDENTIAL,
+                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
                 State.INPROGRESS.value: ConfirmationStatus.COMPLIANCE
             },
             ConfirmationStatus.CREDENTIAL: {

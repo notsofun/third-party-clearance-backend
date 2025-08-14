@@ -1,13 +1,13 @@
-import logging,json
+import json
 from typing import Dict, Any, Tuple
 from enum import Enum
 from .chat_manager import ChatManager
 from .item_types import ItemType, get_item_type_from_value, get_processing_type_from_status
 from back_end.services.chat_flow import WorkflowContext, ConfirmationStatus
 from utils.tools import get_strict_json, get_processing_type_from_shared
+from log_config import get_logger
 
-logging.getLogger('langchain').setLevel(logging.WARNING)
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)  # 每个模块用自己的名称
 
 class ChatService:
     def __init__(self, chat_flow: WorkflowContext):
@@ -54,39 +54,61 @@ class ChatService:
         return final_status, updated_shared, reply
 
     def _status_check(self, shared, updated_status, status, result, reply):
-
-        '''
-        封装这里处理状态变化的逻辑，方便server在处理合同分析时调用
-        shared: 统一流转传递数据的字典,
-        updated_status: 根据result生成的流转后的状态,
-        status: 传入service时的状态,
-        result: 模型对于是否继续的判断,
-        reply: 模型生成的说明,
-        '''
-
-        # 2. 如果大状态发生变化，直接转换到新状态
-        if updated_status != status:
-            message = self.get_instructions(updated_status)
-            processing_type = get_processing_type_from_status(updated_status)
-            shared['processing_type'] = processing_type
-            logger.info('chat_service.status_check: State transition: %s -> %s', status, updated_status)
-            logger.info('chat_service.status_check: the new processing type is: %s',processing_type)
-            return updated_status, shared, message
+        """
+        处理状态变化的逻辑
+        返回: (最终状态, 更新后的shared, 消息列表)
+        """
+        # 统一日志记录
+        self._log_status_info(shared, status, updated_status)
         
-        # 3. 大状态没有变化，检查当前状态是否需要嵌套处理
+        # 状态发生变化
+        if updated_status != status:
+            return self._process_status_change(shared, status, updated_status)
+        
+        # 状态未变化，检查是否需要嵌套处理
         if self._has_nested_logic(status):
-            # 处理嵌套逻辑（组件/许可证确认）
-            logger.info('now we are handling nested logic...')
-            updated_status, updated_shared, message = self._handle_nested_logic(shared, status, result, reply)
-            # 检查特殊标记
-            if not message:
-                return updated_status, updated_shared, reply
-            else:
-                # 添加这一行，确保有返回值
-                return updated_status, updated_shared, message
-        else:
-            # 没有嵌套逻辑的状态，直接返回回复
-            return status, shared, reply
+            return self._handle_nested_logic(shared, status, result, reply)
+        
+        # 默认情况：返回原始回复
+        return status, shared, self._ensure_list(reply)
+
+    def _log_status_info(self, shared, current_status, new_status):
+        """统一的日志记录"""
+        processing_type = get_processing_type_from_shared(shared)
+        item_type = get_item_type_from_value(processing_type)
+        logger.info(
+            'Status check - Processing type: %s, Item type: %s, Status: %s -> %s',
+            processing_type, item_type, current_status, new_status
+        )
+
+    def _process_status_change(self, shared, old_status, new_status):
+        """处理状态变化"""
+        # 更新shared中的processing_type
+        processing_type = get_processing_type_from_status(new_status)
+        shared['processing_type'] = processing_type
+        
+        # 获取基础指导语
+        messages = [self.get_instructions(new_status)]
+        
+        # 检查是否需要添加嵌套项的指导语
+        if self._needs_first_item_instruction(new_status):
+            logger.info('process_status_change: we need to get the instruction for the first item: %s', new_status)
+            item_type = get_item_type_from_value(processing_type)
+            updated_shared, instruction, _ = self.chat_manager.handle_item_action(
+                shared, item_type, 'next', self.bot
+            )
+            messages.append(instruction)
+            return new_status, updated_shared, messages
+        
+        return new_status, shared, messages
+
+    def _needs_first_item_instruction(self, status):
+        """判断是否需要返回第一个item的指导语"""
+        return self._has_nested_logic(status) and self._has_compulsory_logic(status)
+
+    def _ensure_list(self, message):
+        """确保返回值是列表格式"""
+        return message if isinstance(message, list) else [message]
 
     def _has_nested_logic(self, status: str) -> bool:
         """判断当前状态是否有嵌套逻辑"""
@@ -98,6 +120,14 @@ class ChatService:
             # 根据需要添加其他有嵌套逻辑的状态
         }
         return status in nested_states
+    
+    def _has_compulsory_logic(self, status: str) -> bool:
+        '''处理用户必须经过的节点的逻辑'''
+        compulsory_states = {
+            ConfirmationStatus.SPECIAL_CHECK.value, # 有license 需要确认
+            ConfirmationStatus.COMPLIANCE.value,
+        }
+        return status in compulsory_states
 
     def _handle_nested_logic(self, shared: Dict[str, Any], status: str, result: str, reply: str) -> Tuple[str, Dict[str, Any], str]:
         """
@@ -133,13 +163,14 @@ class ChatService:
             content = {'shared': updated_shared, 'status': 'next'}
             final_status = self.chat_flow.process(content).value
             
-            if final_status != status:
-                message = self.get_instructions(final_status)
-                # 根据最新的状态确定当前处理的状态
-                processing_type = get_processing_type_from_status(final_status)
-                shared['processing_type'] = processing_type
-                logger.info('chat_service.handle_nested: the new processing type is: %s',processing_type)
-                return final_status, updated_shared, message
+            final_status, updated_shared, message = self._status_check(
+                updated_shared,
+                final_status,
+                status,
+                result,
+                reply
+            )
+            return final_status, updated_shared, message
         
         return status, updated_shared, message
 

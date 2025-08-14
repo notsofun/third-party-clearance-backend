@@ -150,8 +150,8 @@ curl -X GET "http://127.0.0.1:8000/sessions/{session_id}"
 * 日志采用标准`logging`，级别可调节方便调试
 
 ### 如何在ChatFlow中新增普通节点？
-1. 在`item_types.py`的`ConfirmationStatus`类中新增映射，如`OEM = "OEMing"`即为新增了对于特殊许可证进行确认的节点
-2. 在`chat_flow.py`中新增`OEMHandler`类，以`SimpleStateHandler`类为基类，示例代码如下。
+1. 在`item_types.py`的`ConfirmationStatus`类中新增映射，如`OEM = "OEMing"`即为新增了对于项目类型进行确认的节点
+2. 在`chat_flow.py`中新增对应类，比如`OEMHandler`类，以`SimpleStateHandler`类为基类，示例代码如下。
 ```python
 class OEMHandler(SimpleStateHandler):
     def check_completion(self, context: Dict[str, Any]) -> bool:
@@ -196,8 +196,64 @@ def _handle_oem(self) -> str:
 
 
 ### 如何在ChatFlow中新增嵌套节点？
-pending...
-1. 确保在`node.py`中已经提前处理
+* 基本依靠配置关键文件的方法就能实现更新
+1. 确保在`node.py`中已经提前处理了待处理的数据在`shared`中，目前的嵌套节点仅支持`List[dict]`的形式。
+```python
+
+# 示例数据
+exec_res = [
+  {
+    "title": "Apache-2.0",
+    "originalLevel": "low",
+    "CheckedLevel": "low",
+    "Justification": "..."
+  },
+  # 其他待确认
+]
+
+shared['toBeConfirmedLicense'] = exec_res
+
+```
+2. 在`item_types.py`的`ConfirmationStatus`类中新增映射，如`LICENSE = "license"`即为新增了对于许可证进行确认的节点
+3. 在`item_types.py`中的`TYOE_CONFIG`字典中配置映射
+```python
+# 示例配置
+
+ItemType.LICENSE: {
+    "current_key": "current_license_idx", #用于在shared中维护目前确认的item索引
+    "items_key": "checkedRisk", # 方便chat_manager去获取item列表，需与在shared中定义的键一致
+    "error_msg": "错误：没有找到要确认的许可证",
+    "name_field": "title", #在shared的字典中，用来表示待确认的item的名称的键
+    "default_name": "未命名许可证",
+    "instruction_template": "here is the licenseName: {title}, CheckedLevel: {CheckedLevel}, and Justification: {Justification}", # 用于在大状态中引导模型发送指导用户挨个确认item的指导文
+    "instruction_fields": ["title", "CheckedLevel", "Justification"] # 方便chat_manager去找对应信息的placeholder，需与shared中的字典键一致，也需要与上面template的placeholder一致
+}
+
+
+```
+4. 在`chat_flow.py`中新增对应类，比如`ComlianceHandler`类，以`SubTaskStateHandler`类为基类，示例代码如下。
+   - 需要注意的是在`lic.get()`的部分，需要确保这里的参数应该是在`shared`中item对应的title键
+```python
+class ComplianceHandler(SubTaskStateHandler):
+    def initialize_subtasks(self, context: Dict[str, Any]):
+        """初始化待确认组件子任务"""
+        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.LICENSE]['items_key'], [])
+        # 以组件ID作为子任务标识
+        self.subtasks = [lic.get("title", f"lic_{idx}") for idx, lic in enumerate(licenses)]
+        logger.info(f"chat_flow.LicenseCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
+    
+    def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
+        """检查组件是否已确认"""
+        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.LICENSE]['items_key'], [])
+        for lic in licenses:
+            if lic.get("title") == subtask_id:
+                return lic.get("status") == ItemStatus.CONFIRMED.value
+        return False
+
+```
+5. 在`WorkflowContext`中的`transition_table`和`handlers`两个属性中分别注册状态转移规则和对应处理器（方法与普通节点一致）
+6. 此后步骤和普通节点一致，需要实现大状态指导语的prompt
+
 
 ---
 

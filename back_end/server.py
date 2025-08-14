@@ -8,19 +8,29 @@ import os
 from pathlib import Path
 from main import run_analysis, run_chat, run_report
 import uuid
-import logging
+from log_config import configure_logging, get_logger
 from back_end.services.chat_service import ChatService, ConfirmationStatus, WorkflowContext
+from contextlib import asynccontextmanager
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
-logging.getLogger("azure").setLevel(logging.WARNING)
-logging.getLogger("msal").setLevel(logging.WARNING)
-logging.getLogger("httpx").setLevel(logging.WARNING)
-logging.getLogger("requests").setLevel(logging.WARNING)
-logging.getLogger("openai").setLevel(logging.WARNING)
+configure_logging()
+logger = get_logger(__name__)
 
-logger = logging.getLogger(__name__)
+def startup_event():
+    """应用启动时执行，确保日志系统已初始化"""
+    logger.info("FastAPI应用启动")
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 应用启动时再次确保日志配置正确
+    # 这对热重载很重要
+    logger.info("FastAPI应用启动")
+    yield
+    logger.info("FastAPI应用关闭")
+    # 确保日志刷新
+    for handler in logger.root.handlers:
+        handler.flush()
+
+app = FastAPI(lifespan=lifespan)
 
 # 配置CORS
 app.add_middleware(
@@ -38,7 +48,6 @@ class ChatMessage(BaseModel):
 # 确保上传目录存在
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-
 
 @app.post("/analyze")
 async def analyze_file(file: UploadFile = File(...)):
@@ -255,10 +264,9 @@ async def get_session_status(session_id: str):
 # 在项目根路径下通过uvicorn back_end.server:app --reload --host 127.0.0.1 --port 8000激活服务器
 if __name__ == "__main__":
     import uvicorn
-    import importlib
     import os
     import sys
     
     # 将当前目录加入到Python路径
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    uvicorn.run("back_end.server:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("back_end.server:app", host="127.0.0.1", port=8000, reload=True, log_config=None)

@@ -2,18 +2,12 @@ import re
 from bs4 import BeautifulSoup
 from typing import Dict, Any
 from back_end.services.item_types import ItemType
-import json, logging
+import json
 from fastapi.responses import JSONResponse
 from docx import Document
+from log_config import get_logger
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
-logging.getLogger("azure").setLevel(logging.WARNING)
-logging.getLogger("msal").setLevel(logging.WARNING)
-logging.getLogger("httpx").setLevel(logging.WARNING)
-logging.getLogger("requests").setLevel(logging.WARNING)
-logging.getLogger("openai").setLevel(logging.WARNING)
-
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)  # 每个模块用自己的名称
 
 def get_processing_type_from_shared(shared: Dict[str, Any], logger=logger) -> str:
     """

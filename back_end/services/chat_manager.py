@@ -1,10 +1,11 @@
-import logging
 from typing import Dict, Any, Tuple, Optional, List
 from .item_types import ItemType, ItemStatus, ItemInfo, State, get_type_config
 from utils.tools import get_strict_json
 from utils.LLM_Analyzer import RiskBot
 
-logger = logging.getLogger(__name__)
+from log_config import get_logger
+
+logger = get_logger(__name__)  # 每个模块用自己的名称
 
 class ChatManager:
     """
@@ -148,7 +149,7 @@ class ChatManager:
                 return shared, f"{confirmation_message}\n\n{instruction}", False
             return shared, instruction, False
         else:
-            # 没有找到待确认项目，检查是否需要切换项目类型
+            # 没有找到待确认项目，结束当前嵌套状态
             return shared, 'We have finished current checking!', True
     
     def _update_current_index(self, shared: Dict[str, Any], item_type: ItemType, new_idx: int) -> None:

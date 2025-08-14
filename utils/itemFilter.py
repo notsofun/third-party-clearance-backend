@@ -1,22 +1,14 @@
-import logging
 import json
+from log_config import get_logger
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
-logging.getLogger("azure").setLevel(logging.WARNING)
-logging.getLogger("msal").setLevel(logging.WARNING)
-logging.getLogger("httpx").setLevel(logging.WARNING)
-logging.getLogger("requests").setLevel(logging.WARNING)
-logging.getLogger("openai").setLevel(logging.WARNING)
-
-logger = logging.getLogger(__name__)
-
+logger = get_logger(__name__)  # 每个模块用自己的名称
 def filter_components_by_credential_requirement(components, parsed_html, risk_analysis):
     """
     筛选需要凭证(CredentialOrNot为true)的组件，并记录详细匹配日志
     """
     def criteria_func(release, risk_analysis):
-        logging.info(f"正在检查组件: {release.get('name', '未知组件')}")
-        logging.info(f"组件许可证列表: {json.dumps(release.get('license_names', []), ensure_ascii=False)}")
+        logger.info(f"正在检查组件: {release.get('name', '未知组件')}")
+        logger.info(f"组件许可证列表: {json.dumps(release.get('license_names', []), ensure_ascii=False)}")
         
         # 创建许可证映射，处理空格问题
         license_map = {}
@@ -42,7 +34,7 @@ def filter_components_by_credential_requirement(components, parsed_html, risk_an
                         'alt_name': True
                     }
         
-        logging.info(f"风险分析中的许可证: {json.dumps(list(license_map.keys()), ensure_ascii=False)}")
+        logger.info(f"风险分析中的许可证: {json.dumps(list(license_map.keys()), ensure_ascii=False)}")
         
         # 检查release中的每个许可证
         for license_name in release.get('license_names', []):
@@ -60,17 +52,9 @@ def filter_components_by_credential_requirement(components, parsed_html, risk_an
         
         return False
     
-    # 设置日志级别和格式
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s [%(levelname)s] %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S',
-        force=True
-    )
-    
-    logging.info(f"开始筛选组件，共 {len(components)} 个组件待处理")
+    logger.info(f"开始筛选组件，共 {len(components)} 个组件待处理")
     result = filter_components_by_criteria(components, parsed_html, risk_analysis, criteria_func)
-    logging.info(f"筛选完成，保留了 {len(result)} 个需要凭证的组件")
+    logger.info(f"筛选完成，保留了 {len(result)} 个需要凭证的组件")
 
     result = convert_list_to_dict_list(result)
     
@@ -125,7 +109,7 @@ def filter_components_by_criteria(components, parsed_html, risk_analysis, criter
                 
                 return comp_name == rel_name
             except Exception as e:
-                logging.error(f"匹配过程出错: {str(e)}")
+                logger.error(f"匹配过程出错: {str(e)}")
                 return False
                 
         match_func = default_match_func
@@ -133,7 +117,7 @@ def filter_components_by_criteria(components, parsed_html, risk_analysis, criter
     filtered_components = []
     
     for idx, component in enumerate(components):
-        logging.info(f"处理组件 {idx+1}/{len(components)}")
+        logger.info(f"处理组件 {idx+1}/{len(components)}")
         
         # 在parsed_html中找到对应的release
         try:
@@ -144,7 +128,7 @@ def filter_components_by_criteria(components, parsed_html, risk_analysis, criter
                 if criteria_func(release, risk_analysis):
                     filtered_components.append(component)
         except Exception as e:
-            logging.error(f"处理组件时出错: {str(e)}")
+            logger.error(f"处理组件时出错: {str(e)}")
     
     return filtered_components
 
