@@ -1,11 +1,12 @@
 import json
 from typing import Dict, Any, Tuple
-from enum import Enum
 from .chat_manager import ChatManager
-from .item_types import ItemType, get_item_type_from_value, get_processing_type_from_status
+from .item_types import get_item_type_from_value, get_processing_type_from_status
 from back_end.services.chat_flow import WorkflowContext, ConfirmationStatus
 from utils.tools import get_strict_json, get_processing_type_from_shared
+from utils.LLM_Analyzer import RiskBot
 from log_config import get_logger
+from back_end.services.state_handlers.handler_factory import StateHandlerFactory
 
 logger = get_logger(__name__)  # 每个模块用自己的名称
 
@@ -18,15 +19,7 @@ class ChatService:
         相当于这里的handle方法，都封装到chat_flow里去了
         然后instructions的方法说是只是instruction，其实可以理解为某种mode，来切换到不同的判断状态
         """
-        # 状态处理器映射表
-        self.status_handlers = {
-            ConfirmationStatus.SPECIAL_CHECK.value: self._handle_special_check,
-            ConfirmationStatus.OEM.value: self._handle_oem,
-            ConfirmationStatus.DEPENDENCY.value: self._handle_dependency,
-            ConfirmationStatus.COMPLIANCE.value: self._handle_compliance,
-            ConfirmationStatus.CONTRACT.value: self._handle_contract,
-            ConfirmationStatus.CREDENTIAL.value: self._handle_credential,
-        }
+        self.handler_factory = StateHandlerFactory()
         self.chat_flow = chat_flow
         self.chat_manager = ChatManager()
         self.bot = None
@@ -39,11 +32,16 @@ class ChatService:
         response = get_strict_json(self.bot, user_input,tags=tags)
         result = response.get('result')
         reply = self._extract_reply(response)
-        
+        logger.info("user_input: %s", user_input)
         # 更新 shared 中的 bot
         shared['riskBot'] = self.bot
 
-        # 1. 优先检查大状态变化
+        # 处理状态特定的逻辑
+        handler = self.handler_factory.get_handler(status, self.bot)
+        if handler:
+            shared = handler.process_special_logic(shared, result)
+
+        # 检查大状态变化
         content = {'shared': shared, 'status': result}
         updated_status = self.chat_flow.process(content).value
         
@@ -95,7 +93,7 @@ class ChatService:
             logger.info('process_status_change: we need to get the instruction for the first item: %s', new_status)
             item_type = get_item_type_from_value(processing_type)
             updated_shared, instruction, _ = self.chat_manager.handle_item_action(
-                shared, item_type, 'next', self.bot
+                shared, item_type, 'continue', self.bot
             )
             messages.append(instruction)
             return new_status, updated_shared, messages
@@ -178,47 +176,9 @@ class ChatService:
         """
         用于生成不依赖于用户输入，生成状态变化时的指导性语言
         """
-
-        handler = self.status_handlers.get(status,self._handle_compliance)
-        message = handler()
-
-        return message
-
-    def _handle_contract(self) -> str:
-        """处理合同状态"""
-        prompt = self.bot.langfuse.get_prompt("bot/Contract").prompt
-        response = get_strict_json(self.bot, prompt)
-        return response.get('talking', '请提供合同信息')
-    
-    def _handle_special_check(self) -> str:
-        """处理预检查状态"""
-        prompt = self.bot.langfuse.get_prompt("bot/SpecialCheck").prompt
-        response = get_strict_json(self.bot, prompt)
-        return response.get('talking', '请进行特殊检查')
-    
-    def _handle_oem(self) -> str:
-        """处理OEM状态"""
-        prompt = self.bot.langfuse.get_prompt("bot/OEM").prompt
-        response = get_strict_json(self.bot, prompt)
-        return response.get('talking', '请确认OEM信息')
-    
-    def _handle_credential(self) -> str:
-        """处理授权许可证状态"""
-        prompt = self.bot.langfuse.get_prompt("bot/Credential").prompt
-        response = get_strict_json(self.bot, prompt)
-        return response.get('talking', '请确认授权信息')
-
-    def _handle_dependency(self) -> str:
-        """处理依赖状态"""
-        prompt = self.bot.langfuse.get_prompt("bot/Dependecy").prompt
-        response = get_strict_json(self.bot, prompt)
-        return response.get('talking', '请确认依赖关系')
-    
-    def _handle_compliance(self) -> str:
-        """处理合规性状态"""
-        prompt = self.bot.langfuse.get_prompt("bot/Compliance").prompt
-        response = get_strict_json(self.bot, prompt)
-        return response.get('talking', '请确认合规信息')
+        handler = self.handler_factory.get_handler(status, self.bot)
+        if handler:
+            return handler.get_instructions()
 
     def _extract_reply(self, result: Any) -> str:
         """从处理结果中提取回复消息"""
@@ -257,3 +217,39 @@ class ChatService:
         updated_shared, _ = self.chat_manager.initialize_session(shared)
         
         return updated_shared
+    
+if __name__ == '__main__':
+
+    shared = {}
+
+    chat_flow = WorkflowContext()
+
+    state_factory = StateHandlerFactory()
+
+    chat_service = ChatService(chat_flow)
+
+    bot1 = RiskBot(session_id='trial')
+
+    handler = state_factory.get_handler(ConfirmationStatus.COMPLIANCE.value, bot1)
+
+    shared['riskBot'] = bot1
+
+    chat_service.initialize_chat(shared)
+    
+    response = handler.get_instructions()
+
+    print(response)
+    license1 = {
+    "title": "GNU General Public License v2.0 only",
+    "originalLevel": "high",
+    "CheckedLevel": "high",
+    "Justification": "GPL-2.0 is a strong copyleft license: any distribution of derivative works (including statically or dynamically linked binaries) must be licensed as a whole under GPL-2.0, source code must be made available, and sublicensing under more permissive terms is not allowed. These obligations create significant license-compatibility and release requirements for proprietary or mixed-license projects, leading to a high compliance and business risk profile. However, it does not include additional network-service copyleft (like AGPL) or patent retaliation clauses that might elevate it to a “very high” category. Therefore, a \"high\" risk rating is appropriate and is confirmed."
+    }
+    chatting = True
+
+    while chatting:
+        user_input = input()
+        currResult = bot1.toConfirm(license1, user_input)
+        if currResult is False:
+            chatting = False
+            break

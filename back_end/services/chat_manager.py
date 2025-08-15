@@ -76,8 +76,8 @@ class ChatManager:
             return self._handle_continue_action(shared, item_type, current_idx, items, current_item, current_status, bot)
         
         # 处理NEXT操作
-        elif action == State.NEXT.value:
-            return self._handle_next_action(shared, item_type, current_idx, items, current_item, current_status, bot)
+        elif action == State.NEXT.value or State.DISCARDED.value:
+            return self._handle_next_action(shared, item_type, current_idx, items, current_item, current_status, bot, action)
         
         # 处理未识别的操作
         else:
@@ -106,8 +106,7 @@ class ChatManager:
             item_name = self._get_item_name(item_type, current_item)
             return shared, f"{item_name} has been confirmed, you could continue processing or switch to the next", False
     
-    def _handle_next_action(self, shared: Dict[str, Any], item_type: ItemType, current_idx: int,
-                            items: List[Dict], current_item: Dict, current_status: str, bot) -> Tuple[Dict[str, Any], str, bool]:
+    def _handle_next_action(self, shared: Dict[str, Any], item_type: ItemType, current_idx: int,items: List[Dict], current_item: Dict, current_status: str, bot, action) -> Tuple[Dict[str, Any], str, bool]:
         """处理NEXT操作"""
         # 获取配置
         config = get_type_config(item_type)
@@ -121,6 +120,9 @@ class ChatManager:
         
         # 如果当前项目是确认中状态，则将其更新为已确认状态
         elif current_status == ItemStatus.INPROGRESS.value:
+
+            if action == State.DISCARDED.value:
+                current_item['status'] = ItemStatus.DISCARDED.value
             # 更新当前项目状态为已确认
             current_item['status'] = ItemStatus.CONFIRMED.value
             
@@ -140,6 +142,8 @@ class ChatManager:
             self._update_current_index(shared, item_type, next_idx)
             next_item = items[next_idx]
             instruction = self._get_item_instruction(item_type, next_item, bot)
+            # 找到下个待确认项目后要把对应的状态改为进行中
+            next_item['status'] = ItemStatus.INPROGRESS.value
             
             # 确保更新shared中的项目状态
             shared[items_key][next_idx] = next_item

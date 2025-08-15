@@ -3,18 +3,18 @@
     "title": "Apache-2.0",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "The Apache License 2.0 is categorized as a permissive license with no strong copyleft obligations. The risk associated with this license is minimal since it allows for broad use, reproduction, and distribution, including modifications. While there are obligations to maintain notices and a risk of patent license termination if patent litigation is initiated, these do not significantly elevate the overall risk when compared to other licenses. The previous assessment of 'low' risk is consistent with the characteristics of the license."
+    "Justification": "The Apache-2.0 license is a permissive license that allows for software use, reproduction, modification, and distribution with minimal obligations. It primarily requires that the license text and copyright notices be retained, and it does not include copyleft provisions that could impose additional restrictions on users. The considerations regarding patent rights are reasonable and common in such licenses. Thus, the low risk assessment is appropriate given its permissive nature."
   },
   {
-    "title": "2: CC-BY-4.0⇧",
+    "title": "CC-BY-4.0",
     "originalLevel": "low",
     "CheckedLevel": "medium",
-    "Justification": "While the CC-BY-4.0 license does promote sharing and adaptation of works with attribution, the absence of copyleft conditions does not inherently lower the risk. Given the context that indicates higher risk levels for licenses with similar characteristics (notably CC-BY-NC-SA variations), it's essential to recognize that permissions under CC-BY-4.0 could result in extensive derivative works that may evolve beyond the original intent of the licensor, particularly in mixed environments where various licenses are at play. Therefore, the risk is higher than initially assessed."
+    "Justification": "While the CC-BY-4.0 license does allow for sharing and adaptation with attribution and imposes no copyleft obligations, it does require proper attribution and can lead to misunderstandings about the original creator's rights. The context provided shows that other similar licenses have been rated as very high risk due to their copyleft characteristics. The absence of copyleft in CC-BY-4.0 generally lowers its risk but does warrant being rated at medium due to the need for careful attribution and potential implications of mixing different licenses."
   },
   {
-    "title": "3: MIT⇧",
+    "title": "MIT",
     "originalLevel": "low",
     "CheckedLevel": "low",
-    "Justification": "The MIT License is a well-known permissive open-source license that imposes very few restrictions on the use, modification, and redistribution of software. The requirement to include the original copyright notice and the license itself is considered standard practice in permissive licenses. Since it does not impose copyleft obligations and holds the authors harmless from potential liabilities, the risk level remains low as assessed by the previous reviewer."
+    "Justification": "The MIT License is a permissive open-source license that allows users to use, copy, modify, and distribute the software with minimal restriction. It does not impose any copyleft obligations, meaning that derivative works can be licensed under different terms. This characteristic of the license significantly lowers the risk of legal complications compared to licenses containing copyleft provisions. The previous review correctly assessed the risk level as low based on its permissive nature and lack of onerous obligations."
   }
 ]

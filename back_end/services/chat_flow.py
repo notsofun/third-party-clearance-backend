@@ -119,6 +119,12 @@ class OEMHandler(SimpleStateHandler):
         else:
             raise RuntimeError('Model did not determine to go on or continue')
 
+class CompletedHandler(SimpleStateHandler):
+
+    def check_completion(self, context):
+
+        return State.COMPLETED
+
 class ComplianceHandler(SubTaskStateHandler):
     def initialize_subtasks(self, context: Dict[str, Any]):
         """初始化待确认组件子任务"""
@@ -201,13 +207,24 @@ class WorkflowContext:
     """工作流上下文，管理状态和转换"""
     def __init__(self, curren_state=ConfirmationStatus.OEM):
         # 状态转移表
-        self.transition_table = {
+        self.transition_rules = {
             ConfirmationStatus.OEM: {
                 State.COMPLETED.value: ConfirmationStatus.CONTRACT,
                 State.INPROGRESS.value: ConfirmationStatus.OEM
             },
             ConfirmationStatus.COMPLIANCE: {
-                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
+                State.COMPLETED.value: [
+                    # 第一个条件：如果需要新增OEM再确认节点。暂时没有处理新节点
+                    {
+                        "condition": lambda ctx: ctx["shared"].get("is_oem_approved", False),
+                        "target": ConfirmationStatus.FINALLIST
+                    },
+                    # 默认条件：原来的转移目标
+                    {
+                        "condition": lambda ctx: True,
+                        "target": ConfirmationStatus.FINALLIST
+                    }
+                ],
                 State.INPROGRESS.value: ConfirmationStatus.COMPLIANCE
             },
             ConfirmationStatus.CREDENTIAL: {
@@ -226,6 +243,15 @@ class WorkflowContext:
                 State.COMPLETED.value: ConfirmationStatus.CREDENTIAL,
                 State.INPROGRESS.value: ConfirmationStatus.DEPENDENCY
             },
+            ConfirmationStatus.FINALLIST: {
+                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
+                State.INPROGRESS.value: ConfirmationStatus.FINALLIST,
+            },
+            ConfirmationStatus.COMPLETED: {
+                # 完成状态下一直停留在完成
+                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
+                State.INPROGRESS.value: ConfirmationStatus.COMPLETED
+            },
         }
         
         # 注册状态处理器
@@ -236,6 +262,7 @@ class WorkflowContext:
             ConfirmationStatus.CONTRACT: ContractHandler(),
             ConfirmationStatus.CREDENTIAL: CredentialHandler(),
             ConfirmationStatus.SPECIAL_CHECK: SpecialCheckHandler(),
+            ConfirmationStatus.COMPLETED: CompletedHandler(),
         }
         
         self.current_state = curren_state
@@ -264,9 +291,10 @@ class WorkflowContext:
         """处理当前状态并可能转移到下一个状态"""
         handler = self.handlers.get(self.current_state)
         if not handler:
+            logger.error(f"We have not found the corresponding state: {self.current_state}")
             return {
                 "success": False,
-                "error": f"未找到状态处理器: {self.current_state}"
+                "error": f"We have not found the corresponding state: {self.current_state}"
             }
             
         # 如果是子任务处理器，确保已初始化
@@ -281,8 +309,9 @@ class WorkflowContext:
         old_state = self.current_state
         
         # 根据事件和转移表更新状态
-        if event and old_state in self.transition_table:
-            next_state = self.transition_table[old_state].get(event)
+        if event and old_state in self.transition_rules:
+            context['status'] = event
+            next_state = self.transition_rules[old_state].get(event)
             if next_state and next_state != old_state:
                 logger.info(f'chat_flow.process: 状态转移: {old_state} -> {next_state}')
                 self.current_state = next_state

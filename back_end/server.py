@@ -6,11 +6,12 @@ import uvicorn
 from utils.tools import create_error_response, create_success_response
 import os
 from pathlib import Path
-from main import run_analysis, run_chat, run_report
+from main import run_analysis
 import uuid
 from log_config import configure_logging, get_logger
-from back_end.services.chat_service import ChatService, ConfirmationStatus, WorkflowContext
+from back_end.services.chat_service import ChatService, WorkflowContext
 from contextlib import asynccontextmanager
+from back_end.services.item_types import ConfirmationStatus
 
 configure_logging()
 logger = get_logger(__name__)
@@ -73,6 +74,7 @@ async def analyze_file(file: UploadFile = File(...)):
         logger.info('now we initialized status as: %s', status)
 
         session_id = str(uuid.uuid4())
+
         sessions[session_id] = {
             "shared": shared,
             "state": status if not updated_shared.get("all_confirmed") else "completed",
@@ -197,9 +199,11 @@ async def chat(session_id: str, chat_message: ChatMessage):
     logger.info('server: before processing input, we are in the status of: %s', status)
 
     if status == "completed":
+        session["state"] = "completed"
+        logger.info("We have finished all checking in current session, please reupload a new license info file to start a new session. ")
         return {
             "status": "completed",
-            "message": "该会话已完成所有组件确认，请上传新html文件"
+            "message": "We have finished all checking in current session, please reupload a new license info file to start a new session."
         }
     
     try:
@@ -209,15 +213,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
             chat_message.message,
             status
         )
-        
-        if status == True:
-            session["state"] = "completed"
-            
-            return {
-                "status": "completed",
-                "message": reply,
-            }
-        
+
         sessions[session_id].update({
         'chat_flow': chat_flow,
         'state': status,

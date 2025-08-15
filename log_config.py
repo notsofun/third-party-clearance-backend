@@ -1,23 +1,24 @@
 import logging
-import logging.config
-import json
-import os
+import datetime
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
-# 获取项目根目录 - 确保使用绝对路径
-PROJECT_ROOT = Path(__file__).resolve().parent
 
 def configure_logging():
     """配置全局日志系统"""
     
+    # 直接在函数内计算项目根目录
+    project_root = Path(__file__).resolve().parent
+    
     # 确保日志目录存在 - 使用绝对路径确保位置正确
-    log_dir = PROJECT_ROOT / "logs"
+    log_dir = project_root / "logs"
     log_dir.mkdir(parents=True, exist_ok=True)
     
-    # 日志文件路径
-    log_file = log_dir / "app.log"
-    error_log_file = log_dir / "error.log"
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%Hh%Mm%Ss")
+
+    # 服务器实例日志文件路径
+    server_log_file = log_dir / f"server_{timestamp}.log"
+    server_error_log_file = log_dir / f"server_error_{timestamp}.log"
     
     # 获取根logger
     root_logger = logging.getLogger()
@@ -38,7 +39,7 @@ def configure_logging():
     
     # 主日志文件处理器
     file_handler = RotatingFileHandler(
-        filename=str(log_file),
+        filename=str(server_log_file),
         maxBytes=10*1024*1024,  # 10MB
         backupCount=5,
         encoding='utf8'
@@ -48,7 +49,7 @@ def configure_logging():
     
     # 错误日志文件处理器
     error_file_handler = RotatingFileHandler(
-        filename=str(error_log_file),
+        filename=str(server_error_log_file),
         maxBytes=10*1024*1024,
         backupCount=5,
         encoding='utf8'
@@ -77,7 +78,7 @@ def configure_logging():
     logging.getLogger("openai").setLevel(logging.WARNING)
     
     # 记录一条启动日志
-    root_logger.info("日志系统初始化完成")
+    root_logger.info(f"服务器日志系统初始化完成，日志文件: {server_log_file}")
     
     return root_logger
 

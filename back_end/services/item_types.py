@@ -72,7 +72,7 @@ class ItemStatus(Enum):
     """项目状态枚举"""
     PENDING = ""
     CONFIRMED = "confirmed"
-    REJECTED = "rejected"
+    DISCARDED = "discarded"
     INPROGRESS = 'Inprogress'
 
 class ItemInfo(NamedTuple):
@@ -87,6 +87,7 @@ class State(Enum):
     INPROGRESS = 'in_progress'
     CONTINUE = 'continue'
     NEXT = 'next'
+    DISCARDED = "discarded"
 
 class ConfirmationStatus(Enum):
     """确认状态的枚举类型"""
@@ -96,6 +97,7 @@ class ConfirmationStatus(Enum):
     COMPLIANCE = "toCompliance"
     CONTRACT = 'toContract'
     CREDENTIAL = 'credential'
+    FINALLIST = 'finallist'
     COMPLETED = 'completed'
 
 # 确认状态到处理类型的映射
