@@ -6,11 +6,12 @@ from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot,
                                 credentialChecker, sourceCodeChecker,
                                 DependecyChecker)
 from utils.vectorDB import VectorDatabase
-from utils.callAIattack import AzureOpenAIChatClient
+from back_end.items_utils.item_types import TYPE_CONFIG, ItemType
 from utils.tools import (reverse_exec)
-from utils.itemFilter import filter_components_by_credential_requirement
+from utils.itemFilter import filter_components_by_credential_requirement, filter_html_content
 import random
 from log_config import get_logger
+from back_end.items_utils.item_utils import process_items_and_generate_finals
 
 logger = get_logger(__name__)  # 每个模块用自己的名称
 class ParsingOriginalHtml(Node):
@@ -304,10 +305,10 @@ class SpecialLicenseCollecting(BatchNode):
             }
         exec_res.append(test_item)
         filtered_results = [result for result in exec_res if result is not None]
-        shared['specialCollections'] = filtered_results
+        shared[TYPE_CONFIG[ItemType.SPECIALCHECK]['items_key']] = filtered_results
 
         with open("specialCollections.json","w", encoding="utf-8" ) as f1:
-            json.dump(shared["specialCollections"],f1,ensure_ascii=False,indent=2)
+            json.dump(shared[TYPE_CONFIG[ItemType.SPECIALCHECK]['items_key']],f1,ensure_ascii=False,indent=2)
         return "default"
     
     
@@ -358,7 +359,7 @@ class RiskCheckingRAG(BatchNode):
     
     def post(self, shared, prep_res, exec_res):
 
-        shared["checkedRisk"] = exec_res
+        shared[TYPE_CONFIG[ItemType.LICENSE]['items_key']] = exec_res
 
         toBeConfrimed_risk_license = [
             info for info in exec_res
@@ -371,7 +372,7 @@ class RiskCheckingRAG(BatchNode):
             json.dump(shared["toBeConfirmedLicenses"],f1,ensure_ascii=False,indent=2)
 
         with open("checkedRisk.json","w", encoding="utf-8" ) as f1:
-            json.dump(shared["checkedRisk"],f1,ensure_ascii=False,indent=2)
+            json.dump(shared[TYPE_CONFIG[ItemType.LICENSE]['items_key']],f1,ensure_ascii=False,indent=2)
 
         logger.info('finished checking, now we are checking the dependecies')
         return "default"
@@ -411,17 +412,17 @@ class DependecyCheckingRAG(BatchNode):
             shared['parsedHtml'],
             shared['riskAnalysis']
         )
-        shared['credential_required_components'] = credential_required_components
+        shared[TYPE_CONFIG[ItemType.CREDENTIAL]['items_key']] = credential_required_components
 
         dependency_required__components = [comp for comp in exec_res if comp.get("dependency") == True]
-        shared['dependency_required__components'] = dependency_required__components
+        shared[TYPE_CONFIG[ItemType.COMPONENT]['items_key']] = dependency_required__components
         shared['toBeConfirmedComponents'] = exec_res
 
         with open("dependecies.json","w", encoding="utf-8" ) as f1:
-            json.dump(shared["dependency_required__components"],f1,ensure_ascii=False,indent=2)
+            json.dump(shared[TYPE_CONFIG[ItemType.COMPONENT]['items_key']],f1,ensure_ascii=False,indent=2)
         
         with open("credentialComps.json","w", encoding="utf-8" ) as f1:
-            json.dump(shared["credential_required_components"],f1,ensure_ascii=False,indent=2)
+            json.dump(shared[TYPE_CONFIG[ItemType.CREDENTIAL]['items_key']],f1,ensure_ascii=False,indent=2)
 
         logger.info('finished checking, now we are starting the chat...')
         shared['toInitialize'] = 'riskBot'
@@ -455,62 +456,42 @@ class initializeSession(Node):
         
         return 'default'
 
-class GetUserConfirming(Node):
-    # 还需要保留什么数据呢？
+class itemFiltering(Node):
+
     def __init__(self, max_retries=1, wait=0):
         super().__init__(max_retries, wait)
-        # 是不是得在flow里面去写，这个判定的流程
-        # 通过post的返回为“continue”还是“exit”来确定是否推进
 
     def prep(self, shared):
-        logger.info('Preparing the explanation')
-        comps = shared.get("toBeConfirmedLicenses", [])
-        riskbot = shared['riskBot']
-        for idx, comp in enumerate(comps):
-            if comp.get("status",'') == "":
-                print(f"Now we are confirming {comp['title']}")
-                return (comp, idx, riskbot)
-        print("All risky components have been confirmed!")
-        return None
+        logger.info('now we are filtering items...')
+        # filted_items = process_items_and_generate_finals(shared)
+
+        return shared
     
-    def exec(self, prep_res, user_input):
-        if prep_res is None:
-            return None
-        comp, idx, riskbot = prep_res
+    def exec(self, prep_res):
+        '''
+        许可证和组件都是选择用户确认过的部分
+        '''
 
-        # 返回沟通结果，discarded或passed，判断是否继续的条件要和输入解耦，这样才能处理前后端异步交互的问题
-        chatting = True
+        shared = prep_res
+        # filtered_components = filted_items[f'final_{ItemType.CREDENTIAL.value}s']
+        filtered_components = shared['filtered_components']
+        # filtered_licenses = filted_items[f'final_{ItemType.LICENSE.value}s']
+        filtered_licenses = shared['filtered_licenses']
+        logger.info('Now we are generating filtered html...')
+        final_html = filter_html_content(shared['parsedHtml'], filtered_components, filtered_licenses)
 
-        while chatting:
-            currResult = riskbot.toConfirm(comp,user_input)
-            if currResult is False:
-                chatting = False
-                break
-
-        return currResult, idx
-        
+        return final_html
+    
     def post(self, shared, prep_res, exec_res):
-        if prep_res is None:
-            return "over"
-        # exec_res: (结果, 索引)
-        result, idx = exec_res if isinstance(exec_res, tuple) else (exec_res, None)
-        if idx is not None:
-            shared['toBeConfirmedLicenses'][idx]["status"] = result
-        # 检查是否所有组件都已确认
-        comps = shared.get('toBeConfirmedLicenses', [])
-        if all(comp.get('status', '') != '' for comp in comps):
-            return "over"
-        return "continue"
+
+        shared["final_licenses"] = exec_res['license_texts']
+
+        shared["final_releases"] = exec_res['releases']
+
+        shared["final_overview"] = exec_res['release_overview']
+
+        return 'default'
     
-class ossGenerating(Node):
-
-    def __init__(self, max_retries=1, wait=0):
-        super().__init__(max_retries, wait)
-
-    def prep(self, shared):
-        with open("toBeConfirmedLicenses.json","w", encoding="utf-8" ) as f1:
-            json.dump(shared["toBeConfirmedLicenses"],f1,ensure_ascii=False,indent=2)
-        return super().prep(shared)
 
 class getFinalOSS(Node):
     """这个节点的作用应该是传入最终的组件清单，
@@ -542,8 +523,11 @@ class getFinalOSS(Node):
     
     def exec(self, prep_res):
         reconstructedHtml = reverse_exec(prep_res)
+        logger.info("We got the reconstructed html successfully!")
         return reconstructedHtml
     
     def post(self, shared, prep_res, exec_res):
         shared["reconstructedHtml"] = exec_res
+        with open('reconstructedHtml.html', "w", encoding="utf-8") as f:
+            json.dump(shared["reconstructedHtml"], f, ensure_ascii=False, indent=2)
         return super().post(shared, prep_res, exec_res)

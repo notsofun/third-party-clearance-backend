@@ -1,0 +1,214 @@
+2025-08-18 16:25:19 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250818_16h25m19s.log
+2025-08-18 16:25:19 - uvicorn.error - INFO - Started server process [2356]
+2025-08-18 16:25:19 - uvicorn.error - INFO - Waiting for application startup.
+2025-08-18 16:25:19 - back_end.server - INFO - FastAPI应用启动
+2025-08-18 16:25:19 - uvicorn.error - INFO - Application startup complete.
+2025-08-18 16:25:35 - back_end.server - INFO - the html file is stored at: uploads\LicenseInfo-@automation-core_ac-engineering-ng-2.10.0-2025-07-30_05_57_51.html
+2025-08-18 16:25:35 - nodes - INFO - Now we are parsing the original HTML File
+2025-08-18 16:25:35 - nodes - INFO - Successfully parsed!
+2025-08-18 16:25:35 - nodes - INFO - Now we are reviewing the components list
+2025-08-18 16:25:35 - nodes - INFO - We have 3 to review
+2025-08-18 16:25:50 - nodes - INFO - We have reviewed one component
+2025-08-18 16:26:05 - nodes - INFO - We have reviewed one component
+2025-08-18 16:26:17 - nodes - INFO - We have reviewed one component
+2025-08-18 16:26:17 - nodes - INFO - Completely Reviewed.
+2025-08-18 16:26:17 - nodes - INFO - Now we are collecing special licenses such as GPL
+2025-08-18 16:26:17 - nodes - INFO - Now checking the reviewed risks
+2025-08-18 16:26:17 - nodes - INFO - We have 3 components to check
+2025-08-18 16:26:17 - nodes - INFO - Successfully combined 3 license and risk records
+2025-08-18 16:26:27 - nodes - INFO - We have checked one component
+2025-08-18 16:26:36 - nodes - INFO - We have checked one component
+2025-08-18 16:26:46 - nodes - INFO - We have checked one component
+2025-08-18 16:26:46 - nodes - INFO - finished checking, now we are checking the dependecies
+2025-08-18 16:26:46 - nodes - INFO - now we start analyzing depencies between components
+2025-08-18 16:26:54 - nodes - INFO - Now we have checked dependency of one component
+2025-08-18 16:26:54 - utils.itemFilter - INFO - 开始筛选组件，共 1 个组件待处理
+2025-08-18 16:26:54 - utils.itemFilter - INFO - 处理组件 1/1
+2025-08-18 16:26:54 - utils.itemFilter - INFO - 正在检查组件: @ngrx/store 17.2.0
+                            ⇧
+2025-08-18 16:26:54 - utils.itemFilter - INFO - 组件许可证列表: ["Apache-2.0", "CC-BY-4.0", "MIT"]
+2025-08-18 16:26:54 - utils.itemFilter - INFO - 风险分析中的许可证: ["Apache-2.0", "CC-BY-4.0", "MIT", "3: MIT⇧"]
+2025-08-18 16:26:54 - utils.itemFilter - INFO - 筛选完成，保留了 1 个需要凭证的组件
+2025-08-18 16:26:54 - nodes - INFO - finished checking, now we are starting the chat...
+2025-08-18 16:26:57 - nodes - INFO - Initialized session successfully, waiting for the bot to start conversation
+2025-08-18 16:26:57 - nodes - INFO - Starting Chatting...
+2025-08-18 16:26:57 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-08-18 16:26:57 - back_end.services.chat_manager - WARNING - now we start with checking: component
+2025-08-18 16:27:00 - back_end.server - INFO - now we initialized status as: OEMing
+2025-08-18 16:27:18 - back_end.server - INFO - server: before processing input, we are in the status of: OEMing
+2025-08-18 16:27:21 - back_end.services.chat_service - INFO - user_input: yes
+
+2025-08-18 16:27:21 - back_end.services.state_handlers.object_handler - WARNING - OEM handler received invalid result type: <class 'str'>
+2025-08-18 16:27:21 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OEM
+2025-08-18 16:27:21 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.OEM -> ConfirmationStatus.CONTRACT
+2025-08-18 16:27:21 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: OEMing, Updated status: toContract
+2025-08-18 16:27:21 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: OEMing -> toContract
+2025-08-18 16:27:21 - back_end.items_utils.item_types - WARNING - 最新状态为toContract，未找到处理类型(processing_type)，使用默认值: component
+2025-08-18 16:27:32 - back_end.server - INFO - server: before processing input, we are in the status of: toContract
+2025-08-18 16:27:34 - back_end.services.chat_service - INFO - user_input: yes
+
+2025-08-18 16:27:34 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.CONTRACT
+2025-08-18 16:27:34 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.CONTRACT -> ConfirmationStatus.DEPENDENCY
+2025-08-18 16:27:34 - back_end.services.chat_flow - INFO - chat_flow.DependencyCheck: 依赖处理: 初始化了 1 个组件子任务
+2025-08-18 16:27:34 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: toContract, Updated status: toDependency
+2025-08-18 16:27:34 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: toContract -> toDependency
+2025-08-18 16:27:38 - back_end.server - INFO - server: before processing input, we are in the status of: toDependency
+2025-08-18 16:27:40 - back_end.services.chat_service - INFO - user_input: yes
+
+2025-08-18 16:27:40 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.DEPENDENCY
+2025-08-18 16:27:40 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: toDependency, Updated status: toDependency
+2025-08-18 16:27:40 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: toDependency -> toDependency
+2025-08-18 16:27:40 - back_end.services.chat_service - INFO - chat_service.handle_nested: now the processing type in shared is: component
+2025-08-18 16:27:40 - back_end.services.chat_service - INFO - chat_service.handle_nested: now we are handling license or component ItemType.COMPONENT
+2025-08-18 16:27:40 - back_end.services.chat_manager - INFO - chat_manager.handle_next: now we return back to handling continue function
+2025-08-18 16:27:42 - back_end.services.chat_service - WARNING - chat_service.handle_nested: we have found this messsage The component '@ngrx/store 17.2.0' contains dependencies that may have their own compliance and licensing implications. Would you like to add these dependent components into your compliance clearance checklist? Please answer yes or no.
+2025-08-18 16:27:46 - back_end.server - INFO - server: before processing input, we are in the status of: toDependency
+2025-08-18 16:27:48 - back_end.services.chat_service - INFO - user_input: yes
+
+2025-08-18 16:27:48 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.DEPENDENCY
+2025-08-18 16:27:48 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: toDependency, Updated status: toDependency
+2025-08-18 16:27:48 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: toDependency -> toDependency
+2025-08-18 16:27:48 - back_end.services.chat_service - INFO - chat_service.handle_nested: now the processing type in shared is: component
+2025-08-18 16:27:48 - back_end.services.chat_service - INFO - chat_service.handle_nested: now we are handling license or component ItemType.COMPONENT
+2025-08-18 16:27:48 - back_end.services.chat_manager - INFO - chat_manager: updated item status to confirmed
+2025-08-18 16:27:48 - back_end.services.chat_service - WARNING - chat_service.handle_nested: we have found this messsage @ngrx/store 17.2.0 has been confirmed!
+
+We have finished current checking!
+2025-08-18 16:27:48 - back_end.services.chat_service - INFO - chat_service.handle_nested: we have finished the checking for this state toDependency
+2025-08-18 16:27:48 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.DEPENDENCY
+2025-08-18 16:27:48 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.DEPENDENCY -> ConfirmationStatus.CREDENTIAL
+2025-08-18 16:27:48 - back_end.services.chat_flow - INFO - chat_flow.CredentialCheck: 依赖处理: 初始化了 1 个组件子任务
+2025-08-18 16:27:48 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: toDependency -> credential
+2025-08-18 16:28:05 - back_end.server - INFO - server: before processing input, we are in the status of: credential
+2025-08-18 16:28:08 - back_end.services.chat_service - INFO - user_input: yes
+
+2025-08-18 16:28:08 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.CREDENTIAL
+2025-08-18 16:28:08 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: credential, Updated status: credential
+2025-08-18 16:28:08 - back_end.services.chat_service - INFO - Status check - Processing type: credential, Item type: ItemType.CREDENTIAL, Status: credential -> credential
+2025-08-18 16:28:08 - back_end.services.chat_service - INFO - chat_service.handle_nested: now the processing type in shared is: credential
+2025-08-18 16:28:08 - back_end.services.chat_service - INFO - chat_service.handle_nested: now we are handling license or component ItemType.CREDENTIAL
+2025-08-18 16:28:09 - back_end.services.chat_service - WARNING - chat_service.handle_nested: we have found this messsage The component '@ngrx/store 17.2.0' requires credentials from another cooperation for authorization. Please confirm whether this component is credentialized. Provide the authorization status for this component.
+2025-08-18 16:28:12 - back_end.server - INFO - server: before processing input, we are in the status of: credential
+2025-08-18 16:28:14 - back_end.services.chat_service - INFO - user_input: yes
+
+2025-08-18 16:28:14 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.CREDENTIAL
+2025-08-18 16:28:14 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: credential, Updated status: credential
+2025-08-18 16:28:14 - back_end.services.chat_service - INFO - Status check - Processing type: credential, Item type: ItemType.CREDENTIAL, Status: credential -> credential
+2025-08-18 16:28:14 - back_end.services.chat_service - INFO - chat_service.handle_nested: now the processing type in shared is: credential
+2025-08-18 16:28:14 - back_end.services.chat_service - INFO - chat_service.handle_nested: now we are handling license or component ItemType.CREDENTIAL
+2025-08-18 16:28:14 - back_end.services.chat_manager - INFO - chat_manager: updated item status to confirmed
+2025-08-18 16:28:14 - back_end.services.chat_service - WARNING - chat_service.handle_nested: we have found this messsage 未命名凭证 has been confirmed!
+
+We have finished current checking!
+2025-08-18 16:28:14 - back_end.services.chat_service - INFO - chat_service.handle_nested: we have finished the checking for this state credential
+2025-08-18 16:28:14 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.CREDENTIAL
+2025-08-18 16:28:14 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.CREDENTIAL -> ConfirmationStatus.SPECIAL_CHECK
+2025-08-18 16:28:14 - back_end.services.chat_flow - INFO - chat_flow.SpeicalCheck: 依赖处理: 初始化了 1 个组件子任务
+2025-08-18 16:28:14 - back_end.services.chat_service - INFO - Status check - Processing type: credential, Item type: ItemType.CREDENTIAL, Status: credential -> special_check
+2025-08-18 16:28:18 - back_end.services.chat_service - INFO - process_status_change: we need to get the instruction for the first item: special_check
+2025-08-18 16:28:25 - back_end.server - INFO - server: before processing input, we are in the status of: special_check
+2025-08-18 16:28:33 - back_end.services.chat_service - INFO - user_input: yes
+
+2025-08-18 16:28:33 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CHECK
+2025-08-18 16:28:33 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_check, Updated status: special_check
+2025-08-18 16:28:33 - back_end.services.chat_service - INFO - Status check - Processing type: specialcheck, Item type: ItemType.SPECIALCHECK, Status: special_check -> special_check
+2025-08-18 16:28:33 - back_end.services.chat_service - INFO - chat_service.handle_nested: now the processing type in shared is: specialcheck
+2025-08-18 16:28:33 - back_end.services.chat_service - INFO - chat_service.handle_nested: now we are handling license or component ItemType.SPECIALCHECK
+2025-08-18 16:28:33 - back_end.services.chat_manager - INFO - chat_manager: updated item status to confirmed
+2025-08-18 16:28:33 - back_end.services.chat_service - WARNING - chat_service.handle_nested: we have found this messsage GPL has been confirmed!
+
+We have finished current checking!
+2025-08-18 16:28:33 - back_end.services.chat_service - INFO - chat_service.handle_nested: we have finished the checking for this state special_check
+2025-08-18 16:28:33 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CHECK
+2025-08-18 16:28:33 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.SPECIAL_CHECK -> ConfirmationStatus.COMPLIANCE
+2025-08-18 16:28:33 - back_end.services.chat_flow - INFO - chat_flow.LicenseCheck: 依赖处理: 初始化了 3 个组件子任务
+2025-08-18 16:28:33 - back_end.services.chat_service - INFO - Status check - Processing type: specialcheck, Item type: ItemType.SPECIALCHECK, Status: special_check -> toCompliance
+2025-08-18 16:28:37 - back_end.services.chat_service - INFO - process_status_change: we need to get the instruction for the first item: toCompliance
+2025-08-18 16:28:53 - back_end.server - INFO - server: before processing input, we are in the status of: toCompliance
+2025-08-18 16:28:58 - back_end.services.chat_service - INFO - user_input: yes
+
+2025-08-18 16:28:58 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLIANCE
+2025-08-18 16:28:58 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: toCompliance, Updated status: toCompliance
+2025-08-18 16:28:58 - back_end.services.chat_service - INFO - Status check - Processing type: license, Item type: ItemType.LICENSE, Status: toCompliance -> toCompliance
+2025-08-18 16:28:58 - back_end.services.chat_service - INFO - chat_service.handle_nested: now the processing type in shared is: license
+2025-08-18 16:28:58 - back_end.services.chat_service - INFO - chat_service.handle_nested: now we are handling license or component ItemType.LICENSE
+2025-08-18 16:28:58 - back_end.services.chat_manager - INFO - chat_manager: updated item status to confirmed
+2025-08-18 16:29:10 - back_end.services.chat_service - WARNING - chat_service.handle_nested: we have found this messsage Apache-2.0 has been confirmed!
+
+For the CC-BY-4.0 license, classified as medium-risk, the compliance measures will include ensuring proper attribution and being aware of any implications regarding moral rights. Given the justification about its obligations and the risks associated with irrevocability, please confirm the implementation of these compliance measures or provide further justification if you choose to retain this license.
+2025-08-18 16:29:12 - back_end.server - INFO - server: before processing input, we are in the status of: toCompliance
+2025-08-18 16:29:14 - back_end.services.chat_service - INFO - user_input: yes
+
+2025-08-18 16:29:14 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLIANCE
+2025-08-18 16:29:14 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: toCompliance, Updated status: toCompliance
+2025-08-18 16:29:14 - back_end.services.chat_service - INFO - Status check - Processing type: license, Item type: ItemType.LICENSE, Status: toCompliance -> toCompliance
+2025-08-18 16:29:14 - back_end.services.chat_service - INFO - chat_service.handle_nested: now the processing type in shared is: license
+2025-08-18 16:29:14 - back_end.services.chat_service - INFO - chat_service.handle_nested: now we are handling license or component ItemType.LICENSE
+2025-08-18 16:29:14 - back_end.services.chat_manager - INFO - chat_manager: updated item status to confirmed
+2025-08-18 16:29:15 - back_end.services.chat_service - WARNING - chat_service.handle_nested: we have found this messsage 2: CC-BY-4.0⇧ has been confirmed!
+
+For the MIT license, classified as low-risk, the compliance measures involve including the copyright notice and permission notice in all distributions. Thank you for confirming the justification regarding its permissive nature and the minimal risks associated with it. We can now proceed with implementing the necessary compliance measures.
+2025-08-18 16:29:20 - back_end.server - INFO - server: before processing input, we are in the status of: toCompliance
+2025-08-18 16:29:24 - back_end.services.chat_service - INFO - user_input: yes
+
+2025-08-18 16:29:24 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLIANCE
+2025-08-18 16:29:24 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: toCompliance, Updated status: toCompliance
+2025-08-18 16:29:24 - back_end.services.chat_service - INFO - Status check - Processing type: license, Item type: ItemType.LICENSE, Status: toCompliance -> toCompliance
+2025-08-18 16:29:24 - back_end.services.chat_service - INFO - chat_service.handle_nested: now the processing type in shared is: license
+2025-08-18 16:29:24 - back_end.services.chat_service - INFO - chat_service.handle_nested: now we are handling license or component ItemType.LICENSE
+2025-08-18 16:29:24 - back_end.services.chat_manager - INFO - chat_manager: updated item status to confirmed
+2025-08-18 16:29:24 - back_end.services.chat_service - WARNING - chat_service.handle_nested: we have found this messsage 3: MIT⇧ has been confirmed!
+
+We have finished current checking!
+2025-08-18 16:29:24 - back_end.services.chat_service - INFO - chat_service.handle_nested: we have finished the checking for this state toCompliance
+2025-08-18 16:29:24 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLIANCE
+2025-08-18 16:29:24 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.COMPLIANCE -> ConfirmationStatus.FINALLIST
+2025-08-18 16:29:24 - back_end.services.chat_service - INFO - Status check - Processing type: license, Item type: ItemType.LICENSE, Status: toCompliance -> finallist
+2025-08-18 16:29:24 - back_end.items_utils.item_types - WARNING - 最新状态为finallist，未找到处理类型(processing_type)，使用默认值: component
+2025-08-18 16:29:31 - back_end.server - INFO - server: before processing input, we are in the status of: finallist
+2025-08-18 16:29:38 - back_end.services.chat_service - INFO - user_input: next
+
+2025-08-18 16:29:38 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.FINALLIST
+2025-08-18 16:29:38 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.FINALLIST -> ConfirmationStatus.COMPLETED
+2025-08-18 16:29:38 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: finallist, Updated status: completed
+2025-08-18 16:29:38 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: finallist -> completed
+2025-08-18 16:29:38 - back_end.items_utils.item_types - WARNING - 最新状态为completed，未找到处理类型(processing_type)，使用默认值: component
+2025-08-18 16:29:38 - back_end.server - INFO - All checking finished. Now we are generating the report...
+2025-08-18 16:29:38 - nodes - INFO - now we are filtering items...
+2025-08-18 16:29:38 - nodes - INFO - Now we are generating filtered html...
+2025-08-18 16:29:38 - utils.itemFilter - INFO - Filtered component names: {'@ngrx/store'}
+2025-08-18 16:29:38 - utils.itemFilter - INFO - Filtered license names: {'Apache-2.0', '3: MIT', '2:'}
+2025-08-18 16:29:38 - utils.itemFilter - INFO - Keeping component in release_overview: @ngrx/store
+2025-08-18 16:29:38 - utils.itemFilter - INFO - Keeping component in releases: @ngrx/store
+2025-08-18 16:29:38 - utils.itemFilter - INFO - Keeping license Apache-2.0 for component @ngrx/store
+2025-08-18 16:29:38 - utils.itemFilter - INFO - Removing license CC-BY-4.0 for component @ngrx/store
+2025-08-18 16:29:38 - utils.itemFilter - INFO - Removing license MIT for component @ngrx/store
+2025-08-18 16:29:38 - utils.itemFilter - INFO - Keeping license in license_texts: Apache-2.0
+2025-08-18 16:29:38 - utils.itemFilter - INFO - Removing license from license_texts: CC-BY-4.0
+2025-08-18 16:29:38 - utils.itemFilter - INFO - Removing license from license_texts: MIT
+2025-08-18 16:29:38 - back_end.server - ERROR - Error during chat: unhashable type: 'dict'
+Traceback (most recent call last):
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\server.py", line 220, in chat
+    run_report(updated_shared)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\main.py", line 13, in run_report
+    flow.run(shared)
+    ~~~~~~~~^^^^^^^^
+  File "C:\Users\z0054unn\AppData\Local\Programs\Python\Python313\Lib\site-packages\pocketflow\__init__.py", line 16, in run
+    return self._run(shared)
+           ~~~~~~~~~^^^^^^^^
+  File "C:\Users\z0054unn\AppData\Local\Programs\Python\Python313\Lib\site-packages\pocketflow\__init__.py", line 50, in _run
+    def _run(self,shared): p=self.prep(shared); o=self._orch(shared); return self.post(shared,p,o)
+                                                  ~~~~~~~~~~^^^^^^^^
+  File "C:\Users\z0054unn\AppData\Local\Programs\Python\Python313\Lib\site-packages\pocketflow\__init__.py", line 48, in _orch
+    while curr: curr.set_params(p); last_action=curr._run(shared); curr=copy.copy(self.get_next_node(curr,last_action))
+                                                                                  ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\z0054unn\AppData\Local\Programs\Python\Python313\Lib\site-packages\pocketflow\__init__.py", line 43, in get_next_node
+    nxt=curr.successors.get(action or "default")
+TypeError: unhashable type: 'dict'
+2025-08-18 16:29:38 - utils.tools - ERROR - Error CHAT_ERROR: Error during contract analysis: unhashable type: 'dict'
+2025-08-18 16:38:16 - uvicorn.error - INFO - Shutting down
+2025-08-18 16:38:16 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-08-18 16:38:16 - back_end.server - INFO - FastAPI应用关闭
+2025-08-18 16:38:16 - uvicorn.error - INFO - Application shutdown complete.
+2025-08-18 16:38:16 - uvicorn.error - INFO - Finished server process [2356]

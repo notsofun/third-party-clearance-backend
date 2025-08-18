@@ -1,7 +1,7 @@
-import re
+import re, os
 from bs4 import BeautifulSoup
 from typing import Dict, Any
-from back_end.services.item_types import ItemType
+from back_end.items_utils.item_types import ItemType
 import json
 from fastapi.responses import JSONResponse
 from docx import Document
@@ -155,6 +155,52 @@ def json_strip(text:str) -> str:
     except Exception: # 捕获其他可能的异常
         return None
 
+
+def load_json_files_as_variables(directory='filtered_results'):
+    """
+    批量读取指定目录下的所有JSON文件，并使用文件名作为变量名
+    
+    参数:
+    directory - JSON文件所在的目录
+    
+    返回:
+    包含所有加载的JSON数据的字典，键为文件名(不含扩展名)
+    """
+    # 存储结果的字典
+    result_dict = {}
+    
+    try:
+        # 确保目录存在
+        if not os.path.exists(directory):
+            print(f"错误：目录 '{directory}' 不存在")
+            return {}
+        
+        # 遍历目录中的所有文件
+        for filename in os.listdir(directory):
+            if filename.endswith('.json'):
+                # 构建完整的文件路径
+                file_path = os.path.join(directory, filename)
+                
+                # 提取不含扩展名的文件名作为变量名
+                var_name = os.path.splitext(filename)[0]
+                
+                try:
+                    # 读取JSON文件
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                    
+                    # 将数据存储在结果字典中
+                    result_dict[var_name] = data
+                    print(f"成功加载: {filename} -> 变量 '{var_name}'")
+                    
+                except Exception as e:
+                    print(f"读取文件 '{filename}' 时出错: {str(e)}")
+        
+        return result_dict
+        
+    except Exception as e:
+        print(f"处理目录时出错: {str(e)}")
+        return {}
 
 def get_strict_json(model:object, user_input, var=False, tags:list = None):
     """

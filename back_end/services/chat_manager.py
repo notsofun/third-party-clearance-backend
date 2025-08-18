@@ -1,7 +1,9 @@
 from typing import Dict, Any, Tuple, Optional, List
-from .item_types import ItemType, ItemStatus, ItemInfo, State, get_type_config
+from ..items_utils.item_types import ItemType, ItemStatus, ItemInfo, State, TYPE_CONFIG
 from utils.tools import get_strict_json
 from utils.LLM_Analyzer import RiskBot
+from back_end.items_utils.item_utils import is_item_completed, update_item_status
+from back_end.items_utils.item_utils import get_type_config
 
 from log_config import get_logger
 
@@ -76,15 +78,14 @@ class ChatManager:
             return self._handle_continue_action(shared, item_type, current_idx, items, current_item, current_status, bot)
         
         # 处理NEXT操作
-        elif action == State.NEXT.value or State.DISCARDED.value:
-            return self._handle_next_action(shared, item_type, current_idx, items, current_item, current_status, bot, action)
+        elif action in [State.NEXT.value, State.DISCARDED.value]:
+            return self._handle_action_with_transitions(shared, item_type, current_idx, items, current_item, current_status, bot, action)
         
         # 处理未识别的操作
         else:
             return shared, "请明确您的选择：继续确认或进入下一项", False
     
-    def _handle_continue_action(self, shared: Dict[str, Any], item_type: ItemType, current_idx: int,
-                                items: List[Dict], current_item: Dict, current_status: str, bot) -> Tuple[Dict[str, Any], str, bool]:
+    def _handle_continue_action(self, shared: Dict[str, Any], item_type: ItemType, current_idx: int, items: List[Dict], current_item: Dict, current_status: str, bot) -> Tuple[Dict[str, Any], str, bool]:
         """处理CONTINUE操作"""
         # 获取配置
         config = get_type_config(item_type)
@@ -106,11 +107,10 @@ class ChatManager:
             item_name = self._get_item_name(item_type, current_item)
             return shared, f"{item_name} has been confirmed, you could continue processing or switch to the next", False
     
-    def _handle_next_action(self, shared: Dict[str, Any], item_type: ItemType, current_idx: int,items: List[Dict], current_item: Dict, current_status: str, bot, action) -> Tuple[Dict[str, Any], str, bool]:
+    def _handle_action_with_transitions(self, shared: Dict[str, Any], item_type: ItemType, current_idx: int,items: List[Dict], current_item: Dict, current_status: str, bot: object, action: str) -> Tuple[Dict[str, Any], str, bool]:
         """处理NEXT操作"""
         # 获取配置
-        config = get_type_config(item_type)
-        items_key = config["items_key"]
+        confirmation_message = ""
 
         # 如果当前项目是待确认状态，则回调continue函数
         if current_status == ItemStatus.PENDING.value:
@@ -119,20 +119,23 @@ class ChatManager:
                                                 current_status, bot)
         
         # 如果当前项目是确认中状态，则将其更新为已确认状态
+        # 处理进行中状态：根据操作更新状态
         elif current_status == ItemStatus.INPROGRESS.value:
-
-            if action == State.DISCARDED.value:
-                current_item['status'] = ItemStatus.DISCARDED.value
-            # 更新当前项目状态为已确认
-            current_item['status'] = ItemStatus.CONFIRMED.value
-            
-            # 更新shared中的项目状态
-            shared[items_key][current_idx] = current_item
-            
-            logger.info('chat_manager.handle_next: we have updated the status of this item in the shared file')
-
+            # 根据action获取对应的终止状态
+            new_status = ItemStatus.get_status_from_action(action)
+            if new_status:
+                shared = update_item_status(shared, item_type, current_idx, new_status)
+                status_display = "confirmed" if new_status == ItemStatus.CONFIRMED.value else "discarded"
+                
+                item_name = self._get_item_name(item_type, current_item)
+                confirmation_message = f"{item_name} has been {status_display}!"
+                
+                logger.info(f'chat_manager: updated item status to {new_status}')
+        
+        # 已经是终止状态的项目
+        elif is_item_completed(current_item):
             item_name = self._get_item_name(item_type, current_item)
-            confirmation_message = f"{item_name} has been confirmed completely!"
+            confirmation_message = f"{item_name} was already processed. Moving to next item."
         
         # 查找下一个待确认项目
         next_idx = self._find_next_unconfirmed_item(items, current_idx)
@@ -142,19 +145,19 @@ class ChatManager:
             self._update_current_index(shared, item_type, next_idx)
             next_item = items[next_idx]
             instruction = self._get_item_instruction(item_type, next_item, bot)
-            # 找到下个待确认项目后要把对应的状态改为进行中
-            next_item['status'] = ItemStatus.INPROGRESS.value
-            
+
             # 确保更新shared中的项目状态
-            shared[items_key][next_idx] = next_item
+            shared = update_item_status(shared, item_type, next_idx, ItemStatus.INPROGRESS.value)
                 
-            # 如果是从已确认项目转到下一个，添加确认消息
-            if current_status == ItemStatus.INPROGRESS.value:
+            # 添加确认消息（如果有）
+            if confirmation_message:
                 return shared, f"{confirmation_message}\n\n{instruction}", False
             return shared, instruction, False
         else:
-            # 没有找到待确认项目，结束当前嵌套状态
-            return shared, 'We have finished current checking!', True
+            # 没有未处理项目，完成当前流程
+            if confirmation_message:
+                return shared, f"{confirmation_message}\n\nWe have finished current checking!", True
+            return shared, "We have finished current checking!", True
     
     def _update_current_index(self, shared: Dict[str, Any], item_type: ItemType, new_idx: int) -> None:
         """更新当前索引"""
@@ -215,6 +218,16 @@ class ChatManager:
         if isinstance(instruction_data, dict) and 'talking' in instruction_data:
             return instruction_data.get('talking', f"请确认{item_type.value}: {item_name}")
         return f"请确认{item_type.value}: {item_name}"
+
+    def _update_item_status(shared: Dict[str, Any], item_type: ItemType, idx: int, new_status: str) -> Dict[str, Any]:
+        """更新项目状态"""
+        config = TYPE_CONFIG.get(item_type, {})
+        items_key = config.get("items_key", "")
+        
+        if items_key in shared and 0 <= idx < len(shared[items_key]):
+            shared[items_key][idx]['status'] = new_status
+        
+        return shared
 
     def _find_next_unconfirmed_item(self, items: List[Dict], current_idx: int) -> Optional[int]:
         """

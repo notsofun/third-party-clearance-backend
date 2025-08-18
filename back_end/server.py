@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -6,12 +6,12 @@ import uvicorn
 from utils.tools import create_error_response, create_success_response
 import os
 from pathlib import Path
-from main import run_analysis
+from main import run_analysis, run_report
 import uuid
 from log_config import configure_logging, get_logger
 from back_end.services.chat_service import ChatService, WorkflowContext
 from contextlib import asynccontextmanager
-from back_end.services.item_types import ConfirmationStatus
+from back_end.items_utils.item_types import ConfirmationStatus
 
 configure_logging()
 logger = get_logger(__name__)
@@ -198,8 +198,9 @@ async def chat(session_id: str, chat_message: ChatMessage):
     status = chat_flow.current_state.value
     logger.info('server: before processing input, we are in the status of: %s', status)
 
-    if status == "completed":
-        session["state"] = "completed"
+    # 用于对话结束后减少无用请求
+    if status == ConfirmationStatus.COMPLETED.value:
+        session["state"] = ConfirmationStatus.COMPLETED.value
         logger.info("We have finished all checking in current session, please reupload a new license info file to start a new session. ")
         return {
             "status": "completed",
@@ -214,11 +215,16 @@ async def chat(session_id: str, chat_message: ChatMessage):
             status
         )
 
+        if status == ConfirmationStatus.COMPLETED.value and session.get('ReportNotGenerated', True) == True:
+            logger.info('All checking finished. Now we are generating the report...')
+            run_report(updated_shared)
+            sessions[session_id]['ReportGenerated'] = False
+
         sessions[session_id].update({
         'chat_flow': chat_flow,
         'state': status,
         'shared': updated_shared,
-        'chat_service' : chat_service
+        'chat_service' : chat_service,
         })
 
         return {

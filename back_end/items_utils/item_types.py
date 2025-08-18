@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import NamedTuple, Optional, Tuple, List, Dict, Any
+from typing import NamedTuple, Optional, Tuple, List, Dict, Set
 from log_config import get_logger
 
 logger = get_logger(__name__)  # 每个模块用自己的名称
@@ -33,13 +33,14 @@ TYPE_CONFIG = {
     ItemType.CREDENTIAL: {
         "current_key": "current_credential_idx",
         "items_key": "credential_required_components",
-        "error_msg": "错误：没有找到要确认的凭证",
+        "error_msg": "错误：没有找到要确认的商业凭证",
         "name_field": "credentialName",
         "default_name": "未命名凭证",
         "instruction_template": "Here is the name of the component {compName}, and it needs credential from other cooperation. Please confirm with users whether it is credentialized.",
         "instruction_fields": ["compName"]
     },
     ItemType.SPECIALCHECK : {
+        # 不涉及丢弃或保留的处理
         "current_key": "current_speicalLic_idx",
         "items_key": "specialCollections",
         "error_msg": "错误：没有找到要确认的特殊许可证",
@@ -52,28 +53,32 @@ TYPE_CONFIG = {
     
 }
 
-# 辅助函数
-def get_type_config(item_type):
-    """获取类型对应的配置"""
-    config = TYPE_CONFIG.get(item_type)
-    if not config:
-        raise ValueError(f"不支持的项目类型: {item_type}")
-    return config
-
-def get_item_type_from_value(value: str) -> ItemType:
-    """根据字符串值获取对应的枚举类型"""
-    for item_type in ItemType:
-        if item_type.value == value:
-            return item_type
-    # 如果没找到匹配的类型，可以设置默认值或抛出异常
-    return ItemType.COMPONENT  # 默认返回组件类型
-
 class ItemStatus(Enum):
     """项目状态枚举"""
     PENDING = ""
     CONFIRMED = "confirmed"
     DISCARDED = "discarded"
     INPROGRESS = 'Inprogress'
+
+    @classmethod
+    def get_terminal_statuses(cls) -> Set[str]:
+        '''返回所有终止状态'''
+        return {cls.CONFIRMED.value, cls.DISCARDED.value}
+
+    @classmethod
+    def is_terminal_status(cls, status:str) -> bool:
+        '''判断状态是否为终止状态'''
+        return status in cls.get_terminal_statuses()
+    
+    @classmethod
+    def get_status_from_action(cls, action:str) -> Optional[str]:
+        '''根据动作类型返回对应的状态'''
+        action_to_status = {
+            'next': cls.CONFIRMED.value,
+            'discarded': cls.DISCARDED.value,
+        }
+
+        return action_to_status.get(action)
 
 class ItemInfo(NamedTuple):
     """统一的项目信息结构"""

@@ -1,5 +1,4 @@
-from enum import Enum
-from typing import Dict, Optional, Any, List, Type
+from typing import Dict, Any
 from abc import ABC, abstractmethod
 import os
 import sys
@@ -16,7 +15,8 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 # 然后使用绝对导入
-from back_end.services.item_types import ItemStatus, State, ConfirmationStatus, TYPE_CONFIG, ItemType
+from back_end.items_utils.item_types import State, ConfirmationStatus, TYPE_CONFIG, ItemType
+from back_end.items_utils.item_utils import is_item_completed, get_items_from_context
 
 from log_config import get_logger
 
@@ -121,27 +121,25 @@ class OEMHandler(SimpleStateHandler):
 
 class CompletedHandler(SimpleStateHandler):
 
-    def check_completion(self, context):
-
+    def check_completion(self, context: Dict[str, Any]):
+        '''进入完成状态后，只返回完成状态'''
         return State.COMPLETED
 
 class ComplianceHandler(SubTaskStateHandler):
     def initialize_subtasks(self, context: Dict[str, Any]):
         """初始化待确认组件子任务"""
-        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.LICENSE]['items_key'], [])
+        licenses = get_items_from_context(context, ItemType.LICENSE)
         # 以组件ID作为子任务标识
         self.subtasks = [lic.get("title", f"lic_{idx}") for idx, lic in enumerate(licenses)]
         logger.info(f"chat_flow.LicenseCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
     
     def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
         """检查组件是否已确认"""
-        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.LICENSE]['items_key'], [])
+        licenses = get_items_from_context(context, ItemType.LICENSE)
         for lic in licenses:
             if lic.get("title") == subtask_id:
-                return lic.get("status") == ItemStatus.CONFIRMED.value
+                return is_item_completed(lic)
         return False
-
-
 
 class ContractHandler(SimpleStateHandler):
     def check_completion(self, context: Dict[str, Any]) -> bool:
@@ -154,53 +152,64 @@ class ContractHandler(SimpleStateHandler):
         else:
             raise RuntimeError('Model did not determine to go on or continue')
 
+class FinalListHandler(SimpleStateHandler):
+    def check_completion(self, context: Dict[str, Any]) -> bool:
+        print("执行最后列表检查...")
+        status = context.get('status')
+        if status == State.NEXT.value:
+            return State.COMPLETED
+        elif status == State.CONTINUE.value:
+            return State.INPROGRESS
+        else:
+            raise RuntimeError('Model did not determine to go on or continue')
+
 class SpecialCheckHandler(SubTaskStateHandler):
     def initialize_subtasks(self, context: Dict[str, Any]):
         """初始化待确认许可证子任务"""
-        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.SPECIALCHECK]['items_key'], [])
+        licenses = get_items_from_context(context,ItemType.SPECIALCHECK)
         # 以许可证ID作为子任务标识，这里lic是一个result = {'licName': lTitle,'category': category}字典
         self.subtasks = [lic.get("licName", f"comp_{idx}") for idx, lic in enumerate(licenses)]
         logger.info(f"chat_flow.SpeicalCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
     
     def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
         """检查组件是否已确认"""
-        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.SPECIALCHECK]['items_key'], [])
+        licenses = get_items_from_context(context,ItemType.SPECIALCHECK)
         for lic in licenses:
             if lic.get("licName") == subtask_id:
-                return lic.get("status") == ItemStatus.CONFIRMED.value
+                return is_item_completed(lic)
         return False
 
 # 子任务状态处理器示例
 class DependencyHandler(SubTaskStateHandler):
     def initialize_subtasks(self, context: Dict[str, Any]):
         """初始化待确认组件子任务"""
-        components = context.get("shared", {}).get(TYPE_CONFIG[ItemType.COMPONENT]['items_key'], [])
+        components = get_items_from_context(context, ItemType.COMPONENT)
         # 以组件ID作为子任务标识
         self.subtasks = [comp.get("compName", f"comp_{idx}") for idx, comp in enumerate(components)]
         logger.info(f"chat_flow.DependencyCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
     
     def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
         """检查组件是否已确认"""
-        components = context.get("shared", {}).get(TYPE_CONFIG[ItemType.COMPONENT]['items_key'], [])
+        components = get_items_from_context(context, ItemType.COMPONENT)
         for comp in components:
             if comp.get("compName") == subtask_id:
-                return comp.get("status") == ItemStatus.CONFIRMED.value
+                return is_item_completed(comp)
         return False
 
 class CredentialHandler(SubTaskStateHandler):
     def initialize_subtasks(self, context: Dict[str, Any]):
         """初始化待确认组件子任务"""
-        components = context.get("shared", {}).get(TYPE_CONFIG[ItemType.CREDENTIAL]['items_key'], [])
+        components = get_items_from_context(context, ItemType.CREDENTIAL)
         # 以组件ID作为子任务标识
         self.subtasks = [comp.get("compName", f"comp_{idx}") for idx, comp in enumerate(components)]
         logger.info(f"chat_flow.CredentialCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
     
     def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
         """检查组件是否已确认"""
-        components = context.get("shared", {}).get(TYPE_CONFIG[ItemType.CREDENTIAL]['items_key'], [])
+        components = get_items_from_context(context, ItemType.CREDENTIAL)
         for comp in components:
             if comp.get("compName") == subtask_id:
-                return comp.get("status") == ItemStatus.CONFIRMED.value
+                return is_item_completed(comp)
         return False
     
 class WorkflowContext:
@@ -263,11 +272,44 @@ class WorkflowContext:
             ConfirmationStatus.CREDENTIAL: CredentialHandler(),
             ConfirmationStatus.SPECIAL_CHECK: SpecialCheckHandler(),
             ConfirmationStatus.COMPLETED: CompletedHandler(),
+            ConfirmationStatus.FINALLIST: FinalListHandler(),
         }
         
         self.current_state = curren_state
         self.initialized_states = set()  # 记录已初始化的状态
     
+    def get_next_state(self, old_state, event, context):
+        """
+        根据当前状态和事件确定下一个状态
+        
+        参数:
+        old_state - 当前状态
+        event - 触发事件
+        context - 条件判断所需的上下文信息
+        
+        返回:
+        next_state - 下一个状态
+        """
+        # 获取转换规则
+        transition = self.transition_rules.get(old_state, {}).get(event)
+
+        # 如果没有找到转换规则，返回None或保持原状态
+        if transition is None:
+            return None  # 或者 return old_state
+
+        # 检查转换规则是否是条件列表
+        if isinstance(transition, list):
+            # 遍历条件列表，找到第一个满足的条件
+            for rule in transition:
+                condition_func = rule.get("condition")
+                if condition_func and condition_func(context):
+                    return rule.get("target")
+            # 如果没有满足的条件，返回None或保持原状态
+            return None  # 或者 return old_state
+
+        # 如果转换规则是直接的状态值，则直接返回
+        return transition
+
     def get_current_subtask_info(self, context: Dict[str, Any]) -> Dict:
         """获取当前子任务信息（如果有）"""
         handler = self.handlers.get(self.current_state)
@@ -311,7 +353,7 @@ class WorkflowContext:
         # 根据事件和转移表更新状态
         if event and old_state in self.transition_rules:
             context['status'] = event
-            next_state = self.transition_rules[old_state].get(event)
+            next_state = self.get_next_state(old_state, event, context)
             if next_state and next_state != old_state:
                 logger.info(f'chat_flow.process: 状态转移: {old_state} -> {next_state}')
                 self.current_state = next_state
@@ -338,7 +380,7 @@ class WorkflowContext:
 
 # 使用示例
 if __name__ == "__main__":
-    workflow = WorkflowContext(curren_state= ConfirmationStatus.SPECIAL_CHECK)
+    workflow = WorkflowContext(curren_state= ConfirmationStatus.COMPLIANCE)
     context = {
         'shared': {
             "dependency_required__components": [
@@ -362,7 +404,30 @@ if __name__ == "__main__":
                         "category": "GPL",
                         'status': 'confirmed'
                     }
-            ]
+            ],
+            'checkedRisk' : [
+                {
+                    "title": "Apache-2.0",
+                    "originalLevel": "low",
+                    "CheckedLevel": "low",
+                    "Justification": "The Apache License 2.0 is widely regarded as a permissive license that allows for modification, distribution, and use of the source code without strong copyleft obligations. While it does include a termination clause for patent licenses in the event of litigation, this does not significantly increase the overall risk associated with using the license, as the obligations are still manageable and do not impose severe restrictions. The previous assessment of 'low' risk is appropriate given the nature of this license.",
+                    'status': 'confirmed',
+                },
+                {
+                    "title": "CC-BY-4.0",
+                    "originalLevel": "low",
+                    "CheckedLevel": "medium",
+                    "Justification": "While CC-BY-4.0 indeed allows wide usage and sharing with only attribution required, the risk associated with potential legal actions arising from insufficient attribution claims or failure to comply with the licensing terms is higher than indicated as low. Additionally, it is important to consider the nuances of derivative works and the responsibilities tied to attribution. Therefore, a medium risk level is more appropriate.",
+                    'status': 'confirmed',
+                },
+                {
+                    "title": "3: MIT⇧",
+                    "originalLevel": "low",
+                    "CheckedLevel": "low",
+                    "Justification": "The MIT License is widely recognized as a permissive license that imposes minimal conditions on users. The requirement to include copyright and permission notices is standard for permissive licenses. Additionally, the lack of copyleft obligations reduces potential legal complications. Given its acceptance and clarity in usage, the risk level remains low.",
+                    'status': 'confirmed',
+                },
+                ]
         },
         'status': 'next'
     }

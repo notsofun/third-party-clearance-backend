@@ -1,6 +1,6 @@
 from pocketflow import Flow
 from nodes import (ParsingOriginalHtml, LicenseReviewing, RiskCheckingRAG,
-                    ossGenerating, initializeSession, GetUserConfirming,
+                    initializeSession, itemFiltering, getFinalOSS,
                     SpecialLicenseCollecting, DependecyCheckingRAG)
 
 def pre_chat_flow():
@@ -15,14 +15,10 @@ def pre_chat_flow():
     parsingNode >> riskAnalysisNode >> collectionNode >> riskCheckingNode >> dependecyCheckingNode >> sessionNode
     return Flow(start=parsingNode)
 
-def chat_flow():
-    """交互确认流程"""
-    confirmingNode = GetUserConfirming()
-    confirmingNode - 'continue' >> confirmingNode
-
-    return Flow(start=confirmingNode)
-
 def post_chat_flow():
     """报告生成流程"""
-    ossGenNode = ossGenerating()
-    return Flow(start=ossGenNode)
+    item_filtering = itemFiltering()
+    get_html = getFinalOSS()
+
+    item_filtering >> get_html
+    return Flow(start=item_filtering)

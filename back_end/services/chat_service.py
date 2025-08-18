@@ -1,8 +1,9 @@
 import json
 from typing import Dict, Any, Tuple
 from .chat_manager import ChatManager
-from .item_types import get_item_type_from_value, get_processing_type_from_status
+from back_end.items_utils.item_types import get_processing_type_from_status
 from back_end.services.chat_flow import WorkflowContext, ConfirmationStatus
+from back_end.items_utils.item_utils import get_item_type_from_value
 from utils.tools import get_strict_json, get_processing_type_from_shared
 from utils.LLM_Analyzer import RiskBot
 from log_config import get_logger
@@ -230,7 +231,7 @@ if __name__ == '__main__':
 
     bot1 = RiskBot(session_id='trial')
 
-    handler = state_factory.get_handler(ConfirmationStatus.COMPLIANCE.value, bot1)
+    handler = state_factory.get_handler(ConfirmationStatus.CREDENTIAL.value, bot1)
 
     shared['riskBot'] = bot1
 
@@ -245,11 +246,16 @@ if __name__ == '__main__':
     "CheckedLevel": "high",
     "Justification": "GPL-2.0 is a strong copyleft license: any distribution of derivative works (including statically or dynamically linked binaries) must be licensed as a whole under GPL-2.0, source code must be made available, and sublicensing under more permissive terms is not allowed. These obligations create significant license-compatibility and release requirements for proprietary or mixed-license projects, leading to a high compliance and business risk profile. However, it does not include additional network-service copyleft (like AGPL) or patent retaliation clauses that might elevate it to a “very high” category. Therefore, a \"high\" risk rating is appropriate and is confirmed."
     }
+
+    com1= "Here is the name of the component @ngrx/store 17.2.0\n                            ⇧, and it needs credential from other cooperation. Please confirm with users whether it is credentialized."
+
     chatting = True
+
+    response1 = bot1._request(com1)
 
     while chatting:
         user_input = input()
-        currResult = bot1.toConfirm(license1, user_input)
+        currResult = bot1._request(user_input)
         if currResult is False:
             chatting = False
             break
