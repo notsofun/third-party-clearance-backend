@@ -1,0 +1,2 @@
+2025-08-19 16:39:51 - utils.tools - ERROR - Error SESSION_NOT_FOUND: Session c58af74b-08fc-49f5-842a-400d4935d469 not found
+2025-08-19 16:52:06 - utils.tools - ERROR - Error Error during analysis: Model did not give valid JSON after retries.

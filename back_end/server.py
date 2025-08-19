@@ -1,10 +1,10 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from pydantic import BaseModel
 import uvicorn
 from utils.tools import create_error_response, create_success_response
-import os
+import os,re
 from pathlib import Path
 from main import run_analysis, run_report
 import uuid
@@ -215,10 +215,22 @@ async def chat(session_id: str, chat_message: ChatMessage):
             status
         )
 
+        download_info = None
+
         if status == ConfirmationStatus.COMPLETED.value and session.get('ReportNotGenerated', True) == True:
             logger.info('All checking finished. Now we are generating the report...')
+            updated_shared['session_id'] = session_id
             run_report(updated_shared)
             sessions[session_id]['ReportGenerated'] = False
+            # 添加文件下载URL到响应
+            file_name = 'Final_OSS_Readme.docx'
+            download_url = f"download/{session_id}"
+            # 设置下载信息
+            download_info = {
+                "available": True,
+                "url": download_url,
+                "filename": file_name
+            }
 
         sessions[session_id].update({
         'chat_flow': chat_flow,
@@ -227,11 +239,18 @@ async def chat(session_id: str, chat_message: ChatMessage):
         'chat_service' : chat_service,
         })
 
-        return {
+        # 构建基本响应
+        response = {
             "status": status,
             "message": reply,
             "current_component_idx": updated_shared.get("current_component_idx")
         }
+        
+        # 如果有下载信息，添加到响应中
+        if download_info:
+            response["download"] = download_info
+
+        return response
 
     except Exception as e:
         logger.error(f"Error during chat: {str(e)}", exc_info=True)
@@ -262,6 +281,26 @@ async def get_session_status(session_id: str):
         "current_component_idx": current_idx if current_idx is not None else -1
     }
 
+#http://127.0.0.1:8000/download/c58af74b-08fc-49f5-842a-400d4935d469
+@app.get("/download/{session_id}")
+async def download_oss(session_id: str, file_name: str = "Final_OSS_Readme.docx"):
+    
+    file_path = f"downloads/{session_id}/Final_OSS_Readme.docx"
+    
+    # 检查文件是否存在
+    if not os.path.exists(file_path):
+        return create_error_response(
+            "FILE NOT FOUND",
+            'Sorry, we have not found the file you wanted',
+            404
+        )
+    
+    # 返回文件作为响应
+    return FileResponse(
+        path=file_path,
+        filename=file_name,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
 
 # 在项目根路径下通过uvicorn back_end.server:app --reload --host 127.0.0.1 --port 8000激活服务器
 if __name__ == "__main__":

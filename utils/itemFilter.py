@@ -133,150 +133,243 @@ def filter_components_by_criteria(components, parsed_html, risk_analysis, criter
     
     return filtered_components
 
-def normalize_name(name):
-    """
-    Normalize a name by removing whitespace, newlines, and special characters.
-    
-    Parameters:
-    - name: The name to normalize
-    
-    Returns:
-    - Normalized name
-    """
-    if not isinstance(name, str):
-        return str(name)
-    
-    # Remove newlines and leading/trailing whitespace
-    name = name.strip()
-    
-    # Remove trailing ⇧ character if present
-    name = name.rstrip('⇧').strip()
-    
-    # Extract the name part before any newlines
-    name = name.split('\n')[0].strip()
-    
-    # For component names, we need to extract just the package name without version
-    # This handles cases like "@ngrx/store 17.2.0"
-    parts = name.split(' ')
-    if len(parts) > 1 and any(c.isdigit() for c in parts[-1]):
-        # If the last part looks like a version number, use just the package name
-        package_name = ' '.join(parts[:-1])
-        return package_name.strip()
-    
-    return name
+class ContentNormalizer:
+    @staticmethod
+    def normalize_name(name):
+        """
+        Normalize a name by removing whitespace, newlines, and special characters.
+        
+        Parameters:
+        - name: The name to normalize
+        
+        Returns:
+        - Normalized name
+        """
+        if not isinstance(name, str):
+            return str(name)
+        
+        # Remove newlines and leading/trailing whitespace
+        name = name.strip()
+        
+        # Remove trailing ⇧ character if present
+        name = name.rstrip('⇧').strip()
+        
+        # Extract the name part before any newlines
+        name = name.split('\n')[0].strip()
+        
+        # Handle license titles with format like "2: CC-BY-4.0⇧"
+        if ":" in name:
+            name = name.split(":", 1)[1].strip()  # Get the part after the first colon
+        
+        # For component names, we need to extract just the package name without version
+        # This handles cases like "@ngrx/store 17.2.0"
+        parts = name.split(' ')
+        if len(parts) > 1 and any(c.isdigit() for c in parts[-1]):
+            # If the last part looks like a version number, use just the package name
+            package_name = ' '.join(parts[:-1])
+            return package_name.strip()
+        
+        return name
 
-def filter_html_content(html_data, filtered_components, filtered_licenses):
-    """
-    Filter HTML content based on filtered components and licenses.
+
+class HtmlContentFilter:
+    def __init__(self, logger):
+        self.logger = logger
+        self.normalizer = ContentNormalizer()
     
-    Parameters:
-    - html_data: The original HTML JSON data
-    - filtered_components: List of component names/objects that should remain
-    - filtered_licenses: List of license names/objects that should remain
-    
-    Returns:
-    - Filtered HTML data
-    """
-    
-    result = {
-        "release_overview": [],
-        "releases": [],
-        "license_texts": []
-    }
-    
-    # Extract component names for easier matching
-    component_names = set()
-    if isinstance(filtered_components, list):
+    def extract_component_names(self, filtered_components):
+        """
+        Extract normalized component names from different input formats.
+        
+        Parameters:
+        - filtered_components: List of component names/objects
+        
+        Returns:
+        - Set of normalized component names
+        """
+        component_names = set()
+        if not isinstance(filtered_components, list):
+            return component_names
+            
         for comp in filtered_components:
             try:
                 if isinstance(comp, (list, tuple)) and len(comp) > 0:
-                    component_names.add(normalize_name(comp[0]))
+                    component_names.add(self.normalizer.normalize_name(comp[0]))
                 elif isinstance(comp, dict) and 'compName' in comp:
-                    component_names.add(normalize_name(comp['compName']))
+                    component_names.add(self.normalizer.normalize_name(comp['compName']))
                 elif isinstance(comp, dict) and 'name' in comp:
-                    component_names.add(normalize_name(comp['name']))
+                    component_names.add(self.normalizer.normalize_name(comp['name']))
+                elif isinstance(comp, str):
+                    component_names.add(self.normalizer.normalize_name(comp))
             except Exception as e:
-                logger.warning(f"Error processing component: {e}")
+                self.logger.warning(f"Error processing component: {e}")
+                
+        return component_names
     
-    # Extract license names for easier matching
-    license_names = set()
-    if isinstance(filtered_licenses, list):
+    def extract_license_names(self, filtered_licenses):
+        """
+        Extract normalized license names from different input formats.
+        
+        Parameters:
+        - filtered_licenses: List of license names/objects
+        
+        Returns:
+        - Set of normalized license names
+        """
+        license_names = set()
+        if not isinstance(filtered_licenses, list):
+            return license_names
+            
         for lic in filtered_licenses:
             try:
                 if isinstance(lic, dict) and 'title' in lic:
-                    license_names.add(normalize_name(lic['title']))
+                    license_names.add(self.normalizer.normalize_name(lic['title']))
                 elif isinstance(lic, str):
-                    license_names.add(normalize_name(lic))
+                    license_names.add(self.normalizer.normalize_name(lic))
             except Exception as e:
-                logger.warning(f"Error processing license: {e}")
+                self.logger.warning(f"Error processing license: {e}")
+                
+        return license_names
     
-    logger.info(f"Filtered component names: {component_names}")
-    logger.info(f"Filtered license names: {license_names}")
-    
-    # Filter release_overview
-    for item in html_data.get("release_overview", []):
-        item_name = normalize_name(item.get("name", ""))
-        if item_name in component_names:
-            result["release_overview"].append(item)
-            logger.info(f"Keeping component in release_overview: {item_name}")
-        else:
-            logger.info(f"Removing component from release_overview: {item_name}")
-    
-    # Filter releases
-    for release in html_data.get("releases", []):
-        release_name = normalize_name(release.get("name", ""))
+    def filter_release_overview(self, html_data, component_names):
+        """
+        Filter the release_overview section based on component names.
         
-        # Check if this release's name matches any component name
-        matched = False
-        for comp_name in component_names:
-            if release_name.startswith(comp_name):
-                matched = True
-                break
+        Parameters:
+        - html_data: The original HTML JSON data
+        - component_names: Set of normalized component names to keep
         
-        if matched:
-            # This component should be kept, but we need to filter its licenses
-            filtered_release = release.copy()
-            logger.info(f"Keeping component in releases: {release_name}")
+        Returns:
+        - Filtered release_overview list
+        """
+        filtered_overview = []
+        
+        for item in html_data.get("release_overview", []):
+            item_name = self.normalizer.normalize_name(item.get("name", ""))
+            if item_name in component_names:
+                filtered_overview.append(item)
+                self.logger.info(f"Keeping component in release_overview: {item_name}")
+            else:
+                self.logger.info(f"Removing component from release_overview: {item_name}")
+                
+        return filtered_overview
+    
+    def filter_releases(self, html_data, component_names, license_names):
+        """
+        Filter the releases section based on component and license names.
+        
+        Parameters:
+        - html_data: The original HTML JSON data
+        - component_names: Set of normalized component names to keep
+        - license_names: Set of normalized license names to keep
+        
+        Returns:
+        - Filtered releases list
+        """
+        filtered_releases = []
+        
+        for release in html_data.get("releases", []):
+            release_name = self.normalizer.normalize_name(release.get("name", ""))
             
-            # Filter licenses within this release
-            filtered_license_names = []
-            filtered_license_texts = []
+            # Check if this release's name matches any component name
+            matched = False
+            for comp_name in component_names:
+                if release_name.startswith(comp_name):
+                    matched = True
+                    break
             
-            for i, license_name in enumerate(release.get("license_names", [])):
-                clean_license_name = normalize_name(license_name)
-                if clean_license_name in license_names:
-                    filtered_license_names.append(license_name)
-                    logger.info(f"Keeping license {clean_license_name} for component {release_name}")
-                    # Also keep the corresponding license text if available
-                    if i < len(release.get("license_texts", [])):
-                        filtered_license_texts.append(release["license_texts"][i])
-                else:
-                    logger.info(f"Removing license {clean_license_name} for component {release_name}")
+            if matched:
+                # This component should be kept, but we need to filter its licenses
+                filtered_release = release.copy()
+                self.logger.info(f"Keeping component in releases: {release_name}")
+                
+                # Filter licenses within this release
+                filtered_license_names = []
+                filtered_license_texts = []
+                
+                for i, license_name in enumerate(release.get("license_names", [])):
+                    clean_license_name = self.normalizer.normalize_name(license_name)
+                    if clean_license_name in license_names:
+                        filtered_license_names.append(license_name)
+                        self.logger.info(f"Keeping license {clean_license_name} for component {release_name}")
+                        # Also keep the corresponding license text if available
+                        if i < len(release.get("license_texts", [])):
+                            filtered_license_texts.append(release["license_texts"][i])
+                    else:
+                        self.logger.info(f"Removing license {clean_license_name} for component {release_name}")
+                
+                filtered_release["license_names"] = filtered_license_names
+                filtered_release["license_texts"] = filtered_license_texts
+                filtered_releases.append(filtered_release)
+            else:
+                self.logger.info(f"Removing component from releases: {release_name}")
+                
+        return filtered_releases
+    
+    def filter_license_texts(self, html_data, license_names):
+        """
+        Filter the license_texts section based on license names.
+        
+        Parameters:
+        - html_data: The original HTML JSON data
+        - license_names: Set of normalized license names to keep
+        
+        Returns:
+        - Filtered license_texts list
+        """
+        filtered_license_texts = []
+        
+        for license_text in html_data.get("license_texts", []):
+            title = license_text.get("title", "")
+            license_name = self.normalizer.normalize_name(title)
             
-            filtered_release["license_names"] = filtered_license_names
-            filtered_release["license_texts"] = filtered_license_texts
-            result["releases"].append(filtered_release)
-        else:
-            logger.info(f"Removing component from releases: {release_name}")
+            if license_name in license_names:
+                filtered_license_texts.append(license_text)
+                self.logger.info(f"Keeping license in license_texts: {license_name}")
+            else:
+                self.logger.info(f"Removing license from license_texts: {license_name}")
+                
+        return filtered_license_texts
     
-    # Filter license_texts
-    for license_text in html_data.get("license_texts", []):
-        # Extract the license name from the title
-        title = license_text.get("title", "")
-        if ":" in title:
-            license_name = title.split(":", 1)[1]  # Get the part after the first colon
-        else:
-            license_name = title
+    def filter_html_content(self, html_data, filtered_components, filtered_licenses):
+        """
+        Filter HTML content based on filtered components and licenses.
         
-        license_name = normalize_name(license_name)
+        Parameters:
+        - html_data: The original HTML JSON data
+        - filtered_components: List of component names/objects that should remain
+        - filtered_licenses: List of license names/objects that should remain
         
-        if license_name in license_names:
-            result["license_texts"].append(license_text)
-            logger.info(f"Keeping license in license_texts: {license_name}")
-        else:
-            logger.info(f"Removing license from license_texts: {license_name}")
+        Returns:
+        - Filtered HTML data
+        """
+        # Extract normalized names
+        component_names = self.extract_component_names(filtered_components)
+        license_names = self.extract_license_names(filtered_licenses)
+        
+        self.logger.info(f"Filtered component names: {component_names}")
+        self.logger.info(f"Filtered license names: {license_names}")
+        
+        # Create the result structure
+        result = {
+            "release_overview": self.filter_release_overview(html_data, component_names),
+            "releases": self.filter_releases(html_data, component_names, license_names),
+            "license_texts": self.filter_license_texts(html_data, license_names)
+        }
+        
+        return result
+
+
+# Example usage:
+def filter_html_content(html_data, filtered_components, filtered_licenses):
+    """
+    Wrapper function to maintain backward compatibility
+    """
+    import logging
+    logger = logging.getLogger(__name__)
     
-    return result
+    filter_handler = HtmlContentFilter(logger)
+    return filter_handler.filter_html_content(html_data, filtered_components, filtered_licenses)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,7 @@
+2025-08-19 15:37:18 - back_end.server - ERROR - Error during chat: cannot access local variable 'download_url' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\server.py", line 240, in chat
+    "url": download_url,
+           ^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'download_url' where it is not associated with a value
+2025-08-19 15:37:18 - utils.tools - ERROR - Error CHAT_ERROR: Error during contract analysis: cannot access local variable 'download_url' where it is not associated with a value

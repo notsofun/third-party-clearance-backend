@@ -1,23 +1,10 @@
-from abc import ABC, abstractmethod
+from utils.tools import format_oss_text_to_html
 
-class StateHandler(ABC):
-
-    def __init__(self):
-        super().__init__()
-
-        self.CONTINUE = 'continue'
-        self.NEXT = 'next'
-
-    def check(self, status):
-        if status == self.CONTINUE:
-            print('ok')
-        elif status == self.NEXT:
-            print('not ok')
-
-s = StateHandler()
-
-resi = s.check('continue')
-print(resi)
+with open('src\doc\intro.txt', 'r', encoding='utf-8') as f1:
+    intro = f1.read()
+    print(intro)
+    html = format_oss_text_to_html(intro)
+    print(html)
 
         # if not updated_shared.get('all_confirmed', False):
 

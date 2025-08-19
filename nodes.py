@@ -1,5 +1,7 @@
 from pocketflow import Node, BatchNode
 import re, os
+from spire.doc import *
+from spire.doc.common import *
 from bs4 import BeautifulSoup
 import json
 from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot,
@@ -7,7 +9,7 @@ from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot,
                                 DependecyChecker)
 from utils.vectorDB import VectorDatabase
 from back_end.items_utils.item_types import TYPE_CONFIG, ItemType
-from utils.tools import (reverse_exec)
+from utils.tools import (reverse_exec, format_oss_text_to_html, extract_h1_content)
 from utils.itemFilter import filter_components_by_credential_requirement, filter_html_content
 import random
 from log_config import get_logger
@@ -463,20 +465,20 @@ class itemFiltering(Node):
 
     def prep(self, shared):
         logger.info('now we are filtering items...')
-        # filted_items = process_items_and_generate_finals(shared)
+        filted_items = process_items_and_generate_finals(shared)
 
-        return shared
+        return shared, filted_items
     
     def exec(self, prep_res):
         '''
         许可证和组件都是选择用户确认过的部分
         '''
 
-        shared = prep_res
-        # filtered_components = filted_items[f'final_{ItemType.CREDENTIAL.value}s']
-        filtered_components = shared['filtered_components']
-        # filtered_licenses = filted_items[f'final_{ItemType.LICENSE.value}s']
-        filtered_licenses = shared['filtered_licenses']
+        shared, filtered_itmes = prep_res
+        filtered_components = filtered_itmes[f'final_{ItemType.CREDENTIAL.value}s']
+        # filtered_components = shared['filtered_components']
+        filtered_licenses = filtered_itmes[f'final_{ItemType.LICENSE.value}s']
+        # filtered_licenses = shared['filtered_licenses']
         logger.info('Now we are generating filtered html...')
         final_html = filter_html_content(shared['parsedHtml'], filtered_components, filtered_licenses)
 
@@ -509,15 +511,19 @@ class getFinalOSS(Node):
 
         parsedHtml = shared["parsedHtml"]
 
+        project_title = extract_h1_content(parsedHtml['intro_html'])
 
-    # 高风险组件需要让人去确认，不应该删除，加一个chat的环节，也有无论如何都要用的
+        with open('src/doc/intro.txt', 'r', encoding='utf-8') as f1:
+            intro = f1.read()
+            intro_html = format_oss_text_to_html(intro)
 
         return {
             "meta" : parsedHtml["meta"],
-            "intro_html" : parsedHtml["intro_html"],
+            'project_title': project_title,
+            "intro_html" : intro_html,
             "release_overview" : final_overview,
-            "releases":final_releases,
-            "license_texts":final_licenses,
+            "releases": final_releases,
+            "license_texts": final_licenses,
             "extra_html":parsedHtml["extra_html"]
         }
     
@@ -528,6 +534,14 @@ class getFinalOSS(Node):
     
     def post(self, shared, prep_res, exec_res):
         shared["reconstructedHtml"] = exec_res
+        session_id = shared.get('session_id', '')
+
         with open('reconstructedHtml.html', "w", encoding="utf-8") as f:
-            json.dump(shared["reconstructedHtml"], f, ensure_ascii=False, indent=2)
+            f.write(shared["reconstructedHtml"])
+
+        document = Document()
+        document.LoadFromFile('reconstructedHtml.html',FileFormat.Html, XHTMLValidationType.none)
+        document.SaveToFile(f'downloads/{session_id}/Final_OSS_Readme.docx', FileFormat.Docx2019)
+        document.Close()
+        logger.info("We have generated the oss readme file successfully!")
         return super().post(shared, prep_res, exec_res)
