@@ -103,6 +103,8 @@ class ConfirmationStatus(Enum):
     CONTRACT = 'toContract'
     CREDENTIAL = 'credential'
     FINALLIST = 'finallist'
+    OSSGENERATION = 'ossGeneration'
+    PRODUCTOVERVIEW = 'product_overview'
     COMPLETED = 'completed'
 
 # 确认状态到处理类型的映射

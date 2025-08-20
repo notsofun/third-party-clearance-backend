@@ -1,10 +1,10 @@
 # state_handlers/handler_factory.py
 from typing import Dict
 from .base_handler import StateHandler
-from .object_handler import OEMStateHandler, CompletedHandler, ComplianceHandler, ContractHandler, CredentialHandler, SpecialCheckHandler,DependencyHandler
+from .object_handler import OEMStateHandler, CompletedHandler, ComplianceHandler, ContractHandler, CredentialHandler, SpecialCheckHandler,DependencyHandler, FinalListHandler, ProductOverviewHandler, OSSGeneratingHandler
 
 class StateHandlerFactory:
-    """状态处理器工厂，负责创建和缓存各状态的处理器"""
+    """状态处理器工厂，负责在chat_service、chat_flow中根据状态创建和缓存各状态的处理器"""
     
     def __init__(self):
         self._handlers: Dict[str, StateHandler] = {}
@@ -21,8 +21,11 @@ class StateHandlerFactory:
             ConfirmationStatus.DEPENDENCY.value: DependencyHandler(),
             ConfirmationStatus.COMPLIANCE.value: ComplianceHandler(),
             ConfirmationStatus.CONTRACT.value: ContractHandler(),
+            ConfirmationStatus.FINALLIST.value: FinalListHandler(),
             ConfirmationStatus.CREDENTIAL.value: CredentialHandler(),
             ConfirmationStatus.COMPLETED.value: CompletedHandler(),
+            ConfirmationStatus.OSSGENERATION.value: OSSGeneratingHandler(),
+            ConfirmationStatus.PRODUCTOVERVIEW.value: ProductOverviewHandler(),
         }
     
     def get_handler(self, status: str, bot=None) -> StateHandler:

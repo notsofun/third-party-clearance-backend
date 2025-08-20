@@ -1,5 +1,5 @@
 import json
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Optional
 from .chat_manager import ChatManager
 from back_end.items_utils.item_types import get_processing_type_from_status
 from back_end.services.chat_flow import WorkflowContext, ConfirmationStatus
@@ -8,7 +8,7 @@ from utils.tools import get_strict_json, get_processing_type_from_shared
 from utils.LLM_Analyzer import RiskBot
 from log_config import get_logger
 from back_end.services.state_handlers.handler_factory import StateHandlerFactory
-
+from back_end.services.state_handlers.base_handler import SubTaskStateHandler,ContentGenerationHandler
 logger = get_logger(__name__)  # 每个模块用自己的名称
 
 class ChatService:
@@ -48,11 +48,11 @@ class ChatService:
         
         logger.info('chat_service.process_user_input: Current status: %s, Updated status: %s', status, updated_status)
         
-        final_status, updated_shared, reply = self._status_check(shared, updated_status, status, result,reply)
+        final_status, updated_shared, reply = self._status_check(shared, updated_status, status, result,reply, handler)
 
         return final_status, updated_shared, reply
 
-    def _status_check(self, shared, updated_status, status, result, reply):
+    def _status_check(self, shared, updated_status, status, result, reply, handler):
         """
         处理状态变化的逻辑
         返回: (最终状态, 更新后的shared, 消息列表)
@@ -65,8 +65,13 @@ class ChatService:
             return self._process_status_change(shared, status, updated_status)
         
         # 状态未变化，检查是否需要嵌套处理
-        if self._has_nested_logic(status):
+        if isinstance(handler, SubTaskStateHandler):
             return self._handle_nested_logic(shared, status, result, reply)
+        
+        if isinstance(handler, ContentGenerationHandler):
+            content_gen_result = self._handle_content_generation(handler, shared, status, result, reply)
+            if content_gen_result:
+                return content_gen_result
         
         # 默认情况：返回原始回复
         return status, shared, self._ensure_list(reply)
@@ -101,6 +106,36 @@ class ChatService:
         
         return new_status, shared, messages
 
+    def _handle_content_generation(self, handler: ContentGenerationHandler, shared: Dict[str, Any],status: str, result: str, reply: str) -> Optional[Tuple[str, Dict[str, Any], str]]:
+        """
+        处理内容生成逻辑
+        
+        参数:
+        handler - 内容生成处理器
+        shared - 共享上下文
+        status - 当前状态
+        result - 模型返回的结果
+        reply - 当前回复
+        
+        返回:
+        如果需要生成内容，返回(状态, 更新后的shared, 新回复)
+        否则返回None，表示继续正常流程
+        """
+        context = {
+            'shared': shared,
+            'user_input': shared.get('user_input', ''),
+            'status': result
+        }
+        event = handler.handle(context)
+        
+        if event == "GENERATE_CONTENT":
+            generated_content = handler._generate_content()
+            shared = handler.process_special_logic(content=generated_content)
+            confirmation_message = f"Based on the information you proived, I have generated the following content: \n\n{generated_content}\n\n Would you mind telling me if it meets your requirements?"
+            
+            return status, shared, self._ensure_list(confirmation_message)
+        return None
+
     def _needs_first_item_instruction(self, status):
         """判断是否需要返回第一个item的指导语"""
         return self._has_nested_logic(status) and self._has_compulsory_logic(status)
@@ -108,17 +143,6 @@ class ChatService:
     def _ensure_list(self, message):
         """确保返回值是列表格式"""
         return message if isinstance(message, list) else [message]
-
-    def _has_nested_logic(self, status: str) -> bool:
-        """判断当前状态是否有嵌套逻辑"""
-        nested_states = {
-            ConfirmationStatus.DEPENDENCY.value,  # 有 components 需要确认
-            ConfirmationStatus.COMPLIANCE.value,  # 有 licenses 需要确认
-            ConfirmationStatus.CREDENTIAL.value,  # 有 components 需要确认
-            ConfirmationStatus.SPECIAL_CHECK.value, # 有license 需要确认
-            # 根据需要添加其他有嵌套逻辑的状态
-        }
-        return status in nested_states
     
     def _has_compulsory_logic(self, status: str) -> bool:
         '''处理用户必须经过的节点的逻辑'''

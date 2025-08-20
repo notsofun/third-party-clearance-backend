@@ -1,217 +1,11 @@
 from typing import Dict, Any
-from abc import ABC, abstractmethod
-import os
-import sys
-
-# 获取当前文件所在目录
-current_dir = os.path.dirname(os.path.abspath(__file__))
-# 获取父目录（services的父目录）
-parent_dir = os.path.dirname(current_dir)
-# 获取项目根目录（假设是back_end的父目录）
-project_root = os.path.dirname(parent_dir)
-
-# 将项目根目录添加到Python路径
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
-
-# 然后使用绝对导入
-from back_end.items_utils.item_types import State, ConfirmationStatus, TYPE_CONFIG, ItemType
-from back_end.items_utils.item_utils import is_item_completed, get_items_from_context
+from back_end.items_utils.item_types import State, ConfirmationStatus
+from back_end.services.state_handlers.handler_factory import StateHandlerFactory
 
 from log_config import get_logger
 
 logger = get_logger(__name__)  # 每个模块用自己的名称
 
-class StateHandler(ABC):
-    """状态处理器抽象基类"""
-    @abstractmethod
-    def handle(self, context: Dict[str, Any]) -> str:
-        """处理当前状态并返回事件标识"""
-        pass
-    
-    def has_subtasks(self) -> bool:
-        """是否包含子任务，默认为False"""
-        return False
-
-class SimpleStateHandler(StateHandler):
-    """简单状态处理器基类 - 没有子任务"""
-    def handle(self, context: Dict[str, Any]) -> str:
-        """
-        处理简单状态 - 根据条件直接判断是否完成
-        子类应重写check_completion方法来定义完成条件
-        """
-        if self.check_completion(context):
-            return State.COMPLETED.value
-        return State.INPROGRESS.value
-    
-    @abstractmethod
-    def check_completion(self, context: Dict[str, Any]) -> bool:
-        """检查状态是否完成"""
-        pass
-
-class SubTaskStateHandler(StateHandler):
-    """包含子任务的状态处理器基类"""
-    def __init__(self):
-        self.subtasks = []  # 子任务ID列表
-        self.current_subtask_index = 0
-    
-    def has_subtasks(self) -> bool:
-        return True
-    
-    def initialize_subtasks(self, context: Dict[str, Any]):
-        """根据上下文初始化子任务列表"""
-        self.subtasks = []
-        self.current_subtask_index = 0
-        # 子类应重写此方法
-    
-    def handle(self, context: Dict[str, Any]) -> str:
-        """处理包含子任务的状态"""
-        # 如果子任务为空，先初始化
-        if not self.subtasks:
-            self.initialize_subtasks(context)
-            
-        # 如果没有子任务，直接完成
-        if not self.subtasks:
-            return State.COMPLETED.value
-            
-        # 检查所有子任务是否完成
-        if self.check_all_subtasks_completed(context):
-            return State.COMPLETED.value
-            
-        # 获取当前子任务状态
-        current_subtask = self.get_current_subtask_id()
-        if not current_subtask:
-            return State.COMPLETED.value
-            
-        # 检查当前子任务是否完成
-        if self.is_subtask_completed(context, current_subtask):
-            # 移动到下一个子任务
-            self.current_subtask_index += 1
-            if self.current_subtask_index >= len(self.subtasks):
-                return State.COMPLETED.value
-            
-        return State.INPROGRESS.value
-    
-    def get_current_subtask_id(self):
-        """获取当前子任务ID"""
-        if not self.subtasks or self.current_subtask_index >= len(self.subtasks):
-            return None
-        return self.subtasks[self.current_subtask_index]
-    
-    def check_all_subtasks_completed(self, context: Dict[str, Any]) -> bool:
-        """检查所有子任务是否已完成"""
-        return all(self.is_subtask_completed(context, task_id) for task_id in self.subtasks)
-    
-    @abstractmethod
-    def is_subtask_completed(self, context: Dict[str, Any], subtask_id: Any) -> bool:
-        """检查指定子任务是否已完成"""
-        pass
-
-# 简单状态处理器示例
-class OEMHandler(SimpleStateHandler):
-    def check_completion(self, context: Dict[str, Any]) -> bool:
-        print("执行OEM处理...")
-        status = context.get('status')
-        if status == State.NEXT.value:
-            return State.COMPLETED
-        elif status == State.CONTINUE.value:
-            return State.INPROGRESS
-        else:
-            raise RuntimeError('Model did not determine to go on or continue')
-
-class CompletedHandler(SimpleStateHandler):
-
-    def check_completion(self, context: Dict[str, Any]):
-        '''进入完成状态后，只返回完成状态'''
-        return State.COMPLETED
-
-class ComplianceHandler(SubTaskStateHandler):
-    def initialize_subtasks(self, context: Dict[str, Any]):
-        """初始化待确认组件子任务"""
-        licenses = get_items_from_context(context, ItemType.LICENSE)
-        # 以组件ID作为子任务标识
-        self.subtasks = [lic.get("title", f"lic_{idx}") for idx, lic in enumerate(licenses)]
-        logger.info(f"chat_flow.LicenseCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
-    
-    def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
-        """检查组件是否已确认"""
-        licenses = get_items_from_context(context, ItemType.LICENSE)
-        for lic in licenses:
-            if lic.get("title") == subtask_id:
-                return is_item_completed(lic)
-        return False
-
-class ContractHandler(SimpleStateHandler):
-    def check_completion(self, context: Dict[str, Any]) -> bool:
-        print("执行合同检查...")
-        status = context.get('status')
-        if status == State.NEXT.value:
-            return State.COMPLETED
-        elif status == State.CONTINUE.value:
-            return State.INPROGRESS
-        else:
-            raise RuntimeError('Model did not determine to go on or continue')
-
-class FinalListHandler(SimpleStateHandler):
-    def check_completion(self, context: Dict[str, Any]) -> bool:
-        print("执行最后列表检查...")
-        status = context.get('status')
-        if status == State.NEXT.value:
-            return State.COMPLETED
-        elif status == State.CONTINUE.value:
-            return State.INPROGRESS
-        else:
-            raise RuntimeError('Model did not determine to go on or continue')
-
-class SpecialCheckHandler(SubTaskStateHandler):
-    def initialize_subtasks(self, context: Dict[str, Any]):
-        """初始化待确认许可证子任务"""
-        licenses = get_items_from_context(context,ItemType.SPECIALCHECK)
-        # 以许可证ID作为子任务标识，这里lic是一个result = {'licName': lTitle,'category': category}字典
-        self.subtasks = [lic.get("licName", f"comp_{idx}") for idx, lic in enumerate(licenses)]
-        logger.info(f"chat_flow.SpeicalCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
-    
-    def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
-        """检查组件是否已确认"""
-        licenses = get_items_from_context(context,ItemType.SPECIALCHECK)
-        for lic in licenses:
-            if lic.get("licName") == subtask_id:
-                return is_item_completed(lic)
-        return False
-
-# 子任务状态处理器示例
-class DependencyHandler(SubTaskStateHandler):
-    def initialize_subtasks(self, context: Dict[str, Any]):
-        """初始化待确认组件子任务"""
-        components = get_items_from_context(context, ItemType.COMPONENT)
-        # 以组件ID作为子任务标识
-        self.subtasks = [comp.get("compName", f"comp_{idx}") for idx, comp in enumerate(components)]
-        logger.info(f"chat_flow.DependencyCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
-    
-    def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
-        """检查组件是否已确认"""
-        components = get_items_from_context(context, ItemType.COMPONENT)
-        for comp in components:
-            if comp.get("compName") == subtask_id:
-                return is_item_completed(comp)
-        return False
-
-class CredentialHandler(SubTaskStateHandler):
-    def initialize_subtasks(self, context: Dict[str, Any]):
-        """初始化待确认组件子任务"""
-        components = get_items_from_context(context, ItemType.CREDENTIAL)
-        # 以组件ID作为子任务标识
-        self.subtasks = [comp.get("compName", f"comp_{idx}") for idx, comp in enumerate(components)]
-        logger.info(f"chat_flow.CredentialCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
-    
-    def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
-        """检查组件是否已确认"""
-        components = get_items_from_context(context, ItemType.CREDENTIAL)
-        for comp in components:
-            if comp.get("compName") == subtask_id:
-                return is_item_completed(comp)
-        return False
-    
 class WorkflowContext:
     """工作流上下文，管理状态和转换"""
     def __init__(self, curren_state=ConfirmationStatus.OEM):
@@ -253,8 +47,16 @@ class WorkflowContext:
                 State.INPROGRESS.value: ConfirmationStatus.DEPENDENCY
             },
             ConfirmationStatus.FINALLIST: {
-                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
+                State.COMPLETED.value: ConfirmationStatus.OSSGENERATION,
                 State.INPROGRESS.value: ConfirmationStatus.FINALLIST,
+            },
+            ConfirmationStatus.OSSGENERATION: {
+                State.COMPLETED.value: ConfirmationStatus.PRODUCTOVERVIEW,
+                State.INPROGRESS.value: ConfirmationStatus.OSSGENERATION,
+            },
+            ConfirmationStatus.PRODUCTOVERVIEW: {
+                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
+                State.INPROGRESS.value: ConfirmationStatus.PRODUCTOVERVIEW,
             },
             ConfirmationStatus.COMPLETED: {
                 # 完成状态下一直停留在完成
@@ -264,16 +66,7 @@ class WorkflowContext:
         }
         
         # 注册状态处理器
-        self.handlers = {
-            ConfirmationStatus.OEM: OEMHandler(),
-            ConfirmationStatus.COMPLIANCE: ComplianceHandler(),
-            ConfirmationStatus.DEPENDENCY: DependencyHandler(),
-            ConfirmationStatus.CONTRACT: ContractHandler(),
-            ConfirmationStatus.CREDENTIAL: CredentialHandler(),
-            ConfirmationStatus.SPECIAL_CHECK: SpecialCheckHandler(),
-            ConfirmationStatus.COMPLETED: CompletedHandler(),
-            ConfirmationStatus.FINALLIST: FinalListHandler(),
-        }
+        self.handlers = StateHandlerFactory()
         
         self.current_state = curren_state
         self.initialized_states = set()  # 记录已初始化的状态
@@ -331,7 +124,7 @@ class WorkflowContext:
     
     def process(self, context: Dict[str, Any]) -> Dict:
         """处理当前状态并可能转移到下一个状态"""
-        handler = self.handlers.get(self.current_state)
+        handler = self.handlers.get_handler(self.current_state, self.bot)
         if not handler:
             logger.error(f"We have not found the corresponding state: {self.current_state}")
             return {

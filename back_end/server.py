@@ -217,14 +217,13 @@ async def chat(session_id: str, chat_message: ChatMessage):
 
         download_info = None
 
-        if status == ConfirmationStatus.COMPLETED.value and session.get('ReportNotGenerated', True) == True:
+        if status == ConfirmationStatus.OSSGENERATION.value and session.get('ReportNotGenerated', True) == True:
             logger.info('All checking finished. Now we are generating the report...')
             updated_shared['session_id'] = session_id
             run_report(updated_shared)
             sessions[session_id]['ReportGenerated'] = False
             # 添加文件下载URL到响应
-            file_name = 'Final_OSS_Readme.docx'
-            download_url = f"download/{session_id}"
+            file_name, download_url = 'Final_OSS_Readme.docx', f"download/{session_id}"
             # 设置下载信息
             download_info = {
                 "available": True,
