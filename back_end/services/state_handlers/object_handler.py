@@ -155,8 +155,8 @@ class OSSGeneratingHandler(SimpleStateHandler):
 class ProductOverviewHandler(ContentGenerationHandler):
 
     def process_special_logic(self, shared, content, result=None):
-        if hasattr(self, 'generated_product_overview'):
-            shared['generated_product_overview'] = content
+
+        shared['generated_product_overview'] = content
         return shared
 
     def _generate_content(self):

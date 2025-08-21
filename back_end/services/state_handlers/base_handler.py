@@ -80,9 +80,11 @@ class ContentGenerationHandler(StateHandler):
         
         # 如果已生成内容，检查用户是否确认，相当于两个next来实现这个跳过
         if self.content_generated:
+            self.logger.info("we have generated content...")
             if self.check_completion(context):
                 # 用户已确认，重置状态并完成
                 self.reset_nested_state()
+                self.logger.info('we have reset the status of completion')
                 return State.COMPLETED.value
             else:
                 # 用户未确认，继续等待

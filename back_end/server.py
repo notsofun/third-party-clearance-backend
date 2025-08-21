@@ -64,8 +64,7 @@ async def analyze_file(file: UploadFile = File(...)):
 
         # 运行分析流程
         shared = run_analysis(str(file_path.absolute()))
-        
-        session_chat_flow = WorkflowContext()
+        session_chat_flow = WorkflowContext(shared.get('riskBot', None))
         chat_service = ChatService(session_chat_flow)
         updated_shared = chat_service.initialize_chat(shared)
         status = chat_service.chat_flow.current_state.value

@@ -23,7 +23,7 @@ class ChatService:
         self.handler_factory = StateHandlerFactory()
         self.chat_flow = chat_flow
         self.chat_manager = ChatManager()
-        self.bot = None
+        self.bot = chat_flow.bot
     
     def process_user_input(self, shared: Dict[str, Any], user_input: str, status: str) -> Tuple[bool, Dict[str, Any], str]:
         """
@@ -62,7 +62,7 @@ class ChatService:
         
         # 状态发生变化
         if updated_status != status:
-            return self._process_status_change(shared, status, updated_status)
+            return self._process_status_change(shared, status, updated_status, handler)
         
         # 状态未变化，检查是否需要嵌套处理
         if isinstance(handler, SubTaskStateHandler):
@@ -85,7 +85,7 @@ class ChatService:
             processing_type, item_type, current_status, new_status
         )
 
-    def _process_status_change(self, shared, old_status, new_status):
+    def _process_status_change(self, shared, old_status, new_status, handler):
         """处理状态变化"""
         # 更新shared中的processing_type
         processing_type = get_processing_type_from_status(new_status)
@@ -95,7 +95,7 @@ class ChatService:
         messages = [self.get_instructions(new_status)]
         
         # 检查是否需要添加嵌套项的指导语
-        if self._needs_first_item_instruction(new_status):
+        if self._needs_first_item_instruction(new_status, handler):
             logger.info('process_status_change: we need to get the instruction for the first item: %s', new_status)
             item_type = get_item_type_from_value(processing_type)
             updated_shared, instruction, _ = self.chat_manager.handle_item_action(
@@ -130,15 +130,15 @@ class ChatService:
         
         if event == "GENERATE_CONTENT":
             generated_content = handler._generate_content()
-            shared = handler.process_special_logic(content=generated_content)
+            shared = handler.process_special_logic(shared,content=generated_content)
             confirmation_message = f"Based on the information you proived, I have generated the following content: \n\n{generated_content}\n\n Would you mind telling me if it meets your requirements?"
             
             return status, shared, self._ensure_list(confirmation_message)
         return None
 
-    def _needs_first_item_instruction(self, status):
+    def _needs_first_item_instruction(self, status, handler):
         """判断是否需要返回第一个item的指导语"""
-        return self._has_nested_logic(status) and self._has_compulsory_logic(status)
+        return  isinstance(handler, SubTaskStateHandler)and self._has_compulsory_logic(status)
 
     def _ensure_list(self, message):
         """确保返回值是列表格式"""
@@ -231,7 +231,7 @@ class ChatService:
         """
 
         # 确保风险评估机器人存在
-        risk_bot = shared.get("riskBot")
+        risk_bot = self.chat_flow.bot
         if not risk_bot:
             raise ValueError("共享数据中未找到RiskBot")
         
