@@ -5,6 +5,7 @@ from log_config import get_logger
 from back_end.items_utils.item_types import State, ItemType
 from typing import Dict, Any
 from back_end.items_utils.item_utils import is_item_completed, get_items_from_context
+from utils.string_to_markdown import MarkdownDocumentBuilder
 
 logger = get_logger(__name__)
 

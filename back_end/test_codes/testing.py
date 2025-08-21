@@ -6,7 +6,7 @@ from back_end.services.chat_flow import WorkflowContext
 from back_end.services.chat_manager import ChatManager
 from utils.tools import get_strict_json
 from back_end.services.chat_service import ChatService
-from back_end.services.state_handlers.object_handler import ProductOverviewHandler, ContentGenerationHandler
+from back_end.services.state_handlers.handler_factory import StateHandlerFactory
 from utils.LLM_Analyzer import RiskBot
 import random
 
@@ -38,7 +38,8 @@ def class_context(request):
     chat_service = ChatService(workflow_context)
 
     chat_service.initialize_chat(shared=shared)
-    handler = ProductOverviewHandler(chat_service.bot)
+    handler_factory = StateHandlerFactory()
+    handler = handler_factory.get_handler(workflow_context.current_state.value)
     
     context_type = getattr(request, "param", "base")
 
@@ -88,6 +89,7 @@ It is based on a customized Linux.
         'chat_service': chat_service,
         'bot': chat_service.bot,
         'handler': handler,
+        'handler_factory': handler_factory,
         'shared': shared,
         'updated_shared': None,  # 用于存储更新后的共享数据
         'current_status': ConfirmationStatus.PRODUCTOVERVIEW.value  # 跟踪当前状态
@@ -126,6 +128,7 @@ class TestCustomProjectOverviewIntegration:
         logger.info("开始执行测试: test_initial_content_generation")
         chat_service = self.context_data['chat_service']
         shared = self.context_data['shared']
+        handler_factory = self.context_data['handler_factory']
         
         # 1. 处理用户输入
         status, updated_shared, reply = chat_service.process_user_input(
@@ -156,11 +159,14 @@ class TestCustomProjectOverviewIntegration:
         content = updated_shared['generated_product_overview']
         assert content
         
+        handler_factory.add_section(status, content)
+        
         print(f"生成的内容(在{attempts}次额外输入后): {content}")
         
         # 更新类级别共享的上下文和状态
         self.context_data['updated_shared'] = updated_shared
         self.context_data['current_status'] = status
+        self.context_data['handler_factory'] = handler_factory
         
         # 验证确认消息格式
         assert isinstance(reply, list)
@@ -173,6 +179,7 @@ class TestCustomProjectOverviewIntegration:
         chat_service = self.context_data['chat_service']
         updated_shared = self.context_data['updated_shared']
         current_status = self.context_data['current_status']
+        handler_factory = self.context_data['handler_factory']
         
         print("\n=== 测试用户满意路径 ===")
         print(f"当前状态: {current_status}")
@@ -194,6 +201,8 @@ class TestCustomProjectOverviewIntegration:
         # 验证是否保留了生成的内容
         assert 'generated_product_overview' in updated_shared
         
+        handler_factory.md.save_document(f'./downloads/test/product_clearance/report.md')
+
         # 更新类级别共享的上下文和状态
         self.context_data['updated_shared'] = updated_shared
         self.context_data['current_status'] = status

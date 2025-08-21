@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Dict, Any, Tuple
 from back_end.items_utils.item_types import State
 from log_config import get_logger
+from utils.string_to_markdown import MarkdownDocumentBuilder
 
 class StateHandler(ABC):
     """状态处理器基类"""
@@ -22,6 +23,9 @@ class StateHandler(ABC):
         """处理特殊逻辑，默认不做任何处理"""
         return shared
     
+    def _save_to_markdown(self, md:MarkdownDocumentBuilder, content:str) -> None:
+        return None
+
     @abstractmethod
     def handle(self, context: Dict[str, Any]) -> str:
         """处理当前状态并返回事件标识"""
@@ -101,6 +105,9 @@ class ContentGenerationHandler(StateHandler):
     @abstractmethod
     def _generate_content(self):
         pass
+
+    def _save_to_markdown(self, md:MarkdownDocumentBuilder, content:str) -> None:
+        md.add_section(content=content)
 
 class SubTaskStateHandler(StateHandler):
     

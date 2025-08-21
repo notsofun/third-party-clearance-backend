@@ -71,6 +71,7 @@ class ChatService:
         if isinstance(handler, ContentGenerationHandler):
             content_gen_result = self._handle_content_generation(handler, shared, status, result, reply)
             if content_gen_result:
+                self.handler_factory.add_section(status, content_gen_result)
                 return content_gen_result
         
         # 默认情况：返回原始回复

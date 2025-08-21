@@ -2,6 +2,7 @@
 from typing import Dict
 from .base_handler import StateHandler
 from .object_handler import OEMStateHandler, CompletedHandler, ComplianceHandler, ContractHandler, CredentialHandler, SpecialCheckHandler,DependencyHandler, FinalListHandler, ProductOverviewHandler, OSSGeneratingHandler
+from utils.string_to_markdown import MarkdownDocumentBuilder
 
 class StateHandlerFactory:
     """状态处理器工厂，负责在chat_service、chat_flow中根据状态创建和缓存各状态的处理器"""
@@ -9,6 +10,7 @@ class StateHandlerFactory:
     def __init__(self):
         self._handlers: Dict[str, StateHandler] = {}
         self._register_handlers()
+        self.md = MarkdownDocumentBuilder()
     
     def _register_handlers(self):
         """注册所有状态处理器"""
@@ -34,3 +36,9 @@ class StateHandlerFactory:
         if handler:
             handler.set_bot(bot)
         return handler
+    
+    def add_section(self,status, content) -> None:
+
+        handler = self.get_handler(status)
+
+        handler._save_to_markdown(self.md,content)

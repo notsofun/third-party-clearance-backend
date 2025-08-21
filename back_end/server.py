@@ -205,7 +205,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
             "status": "completed",
             "message": "We have finished all checking in current session, please reupload a new license info file to start a new session."
         }
-    
+
     try:
         # 处理用户输入
         status, updated_shared, reply = chat_service.process_user_input(
@@ -229,6 +229,10 @@ async def chat(session_id: str, chat_message: ChatMessage):
                 "url": download_url,
                 "filename": file_name
             }
+
+        # 加上一个
+        if status == ConfirmationStatus.PRODUCTOVERVIEW.value and session.get('ReportNotGenerated', True) == True:
+            chat_service.handler_factory.md.save_document(f'downloads/{session_id}/product_clearance/report.md')
 
         sessions[session_id].update({
         'chat_flow': chat_flow,
