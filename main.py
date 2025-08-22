@@ -1,5 +1,5 @@
 from flow import pre_chat_flow, post_chat_flow
-import json
+from log_config import configure_logging, get_logger
 from utils.tools import load_json_files_as_variables
 
 def run_analysis(html_path):
@@ -19,15 +19,17 @@ def run_report(shared):
 # print(confirmed_licenses)  # 如果有 confirmed_licenses.json 文件
 
 if __name__ == '__main__':
-    shared = {}
+    # shared = {}
+    configure_logging()
+    logger = get_logger
+    run_analysis(r"C:\Users\z0054unn\Downloads\LicenseInfo-@automation-core_ac-engineering-ng-2.10.0-2025-07-30_05_57_51.html")
 
+    # # 调用函数加载所有JSON文件
+    # json_data = load_json_files_as_variables()
+    # shared['filtered_components'] = json_data['confirmed_components']
+    # shared['filtered_licenses'] = json_data['confirmed_licenses']
 
-    # 调用函数加载所有JSON文件
-    json_data = load_json_files_as_variables()
-    shared['filtered_components'] = json_data['confirmed_components']
-    shared['filtered_licenses'] = json_data['confirmed_licenses']
+    # with open(r'parsed_original_oss.json', 'r', encoding='utf-8') as f:
+    #     shared['parsedHtml'] = json.load(f)
 
-    with open(r'parsed_original_oss.json', 'r', encoding='utf-8') as f:
-        shared['parsedHtml'] = json.load(f)
-
-    shared = run_report(shared)
+    # shared = run_report(shared)

@@ -90,6 +90,9 @@ class ChatManager:
         # 获取配置
         config = get_type_config(item_type)
         items_key = config["items_key"]
+        current_key = config['current_key']
+        if shared.get(current_key, 0) == 0:
+            shared[current_key] = current_idx
 
         # 如果当前项目是待确认状态，返回指导语
         if current_status == ItemStatus.PENDING.value:
@@ -294,7 +297,7 @@ class ChatManager:
             if idx is not None:
                 pending_types.append((item_type, idx))
             
-            # logger.warning('we are going throgh item_key when initializing the chat_manager %s', item_type)
+            # logger.warning('we are going through item_key when initializing the chat_manager %s', item_type)
         
         # 检查是否有可用项目
         if not available_types:

@@ -1,0 +1,21 @@
+2025-08-22 15:50:43 - utils.tools - ERROR - Attempt 1 to get valid JSON response
+2025-08-22 15:51:52 - back_end.server - ERROR - Error during chat: list indices must be integers or slices, not str
+Traceback (most recent call last):
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\server.py", line 212, in chat
+    status, updated_shared, reply = chat_service.process_user_input(
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        session["shared"],
+        ^^^^^^^^^^^^^^^^^^
+        chat_message.message,
+        ^^^^^^^^^^^^^^^^^^^^^
+        status
+        ^^^^^^
+    )
+    ^
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\services\chat_service.py", line 43, in process_user_input
+    shared = handler.process_special_logic(shared, result)
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\services\state_handlers\object_handler.py", line 91, in process_special_logic
+    shared[config['items_key']][config['current_key']][current_type.value] = content
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: list indices must be integers or slices, not str
+2025-08-22 15:51:52 - utils.tools - ERROR - Error CHAT_ERROR: Error during contract analysis: list indices must be integers or slices, not str

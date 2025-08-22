@@ -1,6 +1,6 @@
 import re, os
 from bs4 import BeautifulSoup
-from typing import Dict, Any
+from typing import Dict, Any, List, Tuple
 from back_end.items_utils.item_types import ItemType
 import json
 from fastapi.responses import JSONResponse
@@ -559,9 +559,67 @@ def get_strict_json(model:object, user_input, var=False, tags:list = None):
             response = model._request(user_input, tags)
 
         result = json_strip(response)
+        logger.info('we should have result like %s', result)
         if result:
             return result
-    raise RuntimeError("Model did not give valid JSON after retries.")
+    return logger.error("Model did not give valid JSON after retries.")
+
+def is_valid_response(response):
+    """
+    Check if the response contains 'talking' and 'result' keys.
+    
+    Args:
+        response: The response object to check (dict or string)
+        
+    Returns:
+        bool: True if response has required keys, False otherwise
+    """
+    
+    try:
+        # 如果响应是字符串，尝试解析JSON
+        if isinstance(response, str):
+            try:
+                response = json.loads(response)
+            except json.JSONDecodeError as e:
+                logger.error(f"JSON decode error: {e}")
+                return False
+        
+        # 检查是否为字典
+        if not isinstance(response, dict):
+            logger.error(f"Response is not a dictionary: {type(response)}")
+            return False
+        
+        # 检查是否包含必要的键
+        has_required_keys = "talking" in response and "result" in response
+        if not has_required_keys:
+            logger.error(f"Missing required keys. Keys present: {list(response.keys())}")
+            return False
+        
+        # 检查talking和result的类型是否符合预期
+        if not isinstance(response["result"], str):
+            logger.error(f"'result' is not a string: {type(response['result'])}")
+            return False
+            
+        # talking允许字典或字符串类型
+        if not (isinstance(response["talking"], str) or isinstance(response["talking"], dict)):
+            logger.error(f"'talking' is not a string or dict: {type(response['talking'])}")
+            return False
+            
+        return True
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")
+        return False
+
+def get_strict_talking(model:object, promptName, variable):
+    for i in range(5):
+        logger.error(f"Attempt {i+1} to get valid JSON response")
+        response = model._req_variable(promptName, variable)
+        if is_valid_response(response):
+
+            return response
+        logger.error("Response validation failed, retrying...")
+    
+    return logger.error("Model did not give valid response after 5 retries.")
 
 def get_strict_string(model:object, user_input):
 
@@ -611,11 +669,28 @@ def read_doc(file_path: str):
 
     return full_content
 
+def split_tuples(tuple_list: List[Tuple]) -> Tuple:
+
+    if not tuple_list:
+        return [], []
+    
+    list1 , list2 = zip(*tuple_list)
+
+    return list(list1), list(list2)
+
+
 if __name__ == "__main__":
-    with open(r"C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\parsed_original_oss.json","r",encoding="utf-8") as f:
-        final_result = json.load(f)
-        for key,value in final_result.items():
-            print(final_result)
-        html_output = reverse_exec(final_result)
-        with open(r"C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\restored_document.html", "w", encoding="utf-8") as file:
-            file.write(html_output)
+    # with open(r"C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\parsed_original_oss.json","r",encoding="utf-8") as f:
+    #     final_result = json.load(f)
+    #     for key,value in final_result.items():
+    #         print(final_result)
+    #     html_output = reverse_exec(final_result)
+    #     with open(r"C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\restored_document.html", "w", encoding="utf-8") as file:
+    #         file.write(html_output)
+
+    tuple_list = [(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd')]
+    list1, list2 = split_tuples(tuple_list)
+
+    print("Original list of tuples:", tuple_list)
+    print("First list:", list1)
+    print("Second list:", list2)

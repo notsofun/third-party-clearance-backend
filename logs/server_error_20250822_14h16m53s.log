@@ -1,0 +1,1 @@
+2025-08-22 14:18:55 - utils.tools - ERROR - Error Error during analysis: Can't instantiate abstract class MainLicenseHandler without an implementation for abstract method 'is_subtask_completed'

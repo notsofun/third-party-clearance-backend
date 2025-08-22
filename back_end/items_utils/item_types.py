@@ -9,6 +9,7 @@ class ItemType(Enum):
     COMPONENT = "component"
     CREDENTIAL = 'credential'
     SPECIALCHECK = 'specialcheck'
+    MAINLICENSE = 'main_license'
 
 # 单独添加配置映射
 TYPE_CONFIG = {
@@ -48,9 +49,16 @@ TYPE_CONFIG = {
         "default_name": "未命名许可证",
         "instruction_template": "here is the license name {licName} and it is {category}",
         "instruction_fields": ["licName", "category"]
+    },
+    ItemType.MAINLICENSE : {
+        'current_key': "current_mainLic_idx",
+        'items_key': 'mainLicenseRequiringComponents',
+        'error_msg': 'sorry, We have found the component needing to be confirmed concerning the main license',
+        'name_field': 'compName',
+        'default_name': 'Unknown component',
+        'instruction_template': 'here is the component name {compName} and it is the license it contains {licenseList}',
+        'instruction_fields': ['compName', 'licenseList'],
     }
-
-    
 }
 
 class ItemStatus(Enum):
@@ -100,6 +108,7 @@ class ConfirmationStatus(Enum):
     OEM = "OEMing"
     DEPENDENCY = "toDependency"
     COMPLIANCE = "toCompliance"
+    MAINLICENSE = 'main_license'
     CONTRACT = 'toContract'
     CREDENTIAL = 'credential'
     FINALLIST = 'finallist'
@@ -112,7 +121,8 @@ CONFIRMATION_STATUS_TO_TYPE_MAP = {
     ConfirmationStatus.SPECIAL_CHECK.value: ItemType.SPECIALCHECK.value,  # 特殊检查对应许可证处理
     ConfirmationStatus.DEPENDENCY.value: ItemType.COMPONENT.value,  # 依赖关系对应组件处理
     ConfirmationStatus.COMPLIANCE.value: ItemType.LICENSE.value,    # 合规性对应许可证处理
-    ConfirmationStatus.CREDENTIAL.value: ItemType.CREDENTIAL.value  # 凭证处理
+    ConfirmationStatus.CREDENTIAL.value: ItemType.CREDENTIAL.value,  # 凭证处理
+    ConfirmationStatus.MAINLICENSE.value: ItemType.MAINLICENSE.value # 确认组件的主许可证
 }
 
 # 默认处理类型

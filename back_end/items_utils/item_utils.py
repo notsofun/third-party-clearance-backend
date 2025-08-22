@@ -1,6 +1,9 @@
 from typing import Dict, Any, List
 from .item_types import ItemStatus, ItemType, TYPE_CONFIG
 import os, json
+from log_config import get_logger
+
+logger = get_logger(__name__)
 
 def is_item_completed(item: Dict[str, Any]) -> bool:
     '''检查项目是否已完成处理（包括确认或丢弃）'''
@@ -40,6 +43,7 @@ def get_item_type_from_value(value: str) -> ItemType:
     return ItemType.COMPONENT  # 默认返回组件类型
 
 def process_items_and_generate_finals(shared):
+
     """
     处理shared中的数据，根据TYPE_CONFIG中定义的配置，生成最终的结果列表
     
@@ -89,3 +93,28 @@ def process_items_and_generate_finals(shared):
         
     
     return result
+
+def get_item_type_from_string(type_str: str) -> ItemType:
+    """
+    Returns the corresponding ItemType enum based on the given string.
+    Raises an exception if no match is found.
+    
+    Args:
+        type_str: A string that should match one of the ItemType enum values
+        
+    Returns:
+        The corresponding ItemType enum value
+        
+    Raises:
+        ValueError: If no ItemType matches the given string
+    """
+    for item_type in ItemType:
+        if item_type.value == type_str:
+            if item_type is None:
+                logger.error(f"Invalid item type: {type_str}. Valid types are: {[t.value for t in ItemType]}")
+            return item_type
+        
+if __name__ == '__main__':
+
+    result = get_item_type_from_string('main_license')
+    print(result)

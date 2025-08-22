@@ -66,7 +66,7 @@ class ChatService:
         
         # 状态未变化，检查是否需要嵌套处理
         if isinstance(handler, SubTaskStateHandler):
-            return self._handle_nested_logic(shared, status, result, reply)
+            return self._handle_nested_logic(shared, status, result, reply, handler)
         
         if isinstance(handler, ContentGenerationHandler):
             content_gen_result = self._handle_content_generation(handler, shared, status, result, reply)
@@ -79,6 +79,7 @@ class ChatService:
 
     def _log_status_info(self, shared, current_status, new_status):
         """统一的日志记录"""
+        # 什么时候初始化的processing_type?
         processing_type = get_processing_type_from_shared(shared)
         item_type = get_item_type_from_value(processing_type)
         logger.info(
@@ -150,10 +151,11 @@ class ChatService:
         compulsory_states = {
             ConfirmationStatus.SPECIAL_CHECK.value, # 有license 需要确认
             ConfirmationStatus.COMPLIANCE.value,
+            ConfirmationStatus.MAINLICENSE.value,
         }
         return status in compulsory_states
 
-    def _handle_nested_logic(self, shared: Dict[str, Any], status: str, result: str, reply: str) -> Tuple[str, Dict[str, Any], str]:
+    def _handle_nested_logic(self, shared: Dict[str, Any], status: str, result: str, reply: str, handler:SubTaskStateHandler) -> Tuple[str, Dict[str, Any], str]:
         """
         处理嵌套逻辑（组件/许可证确认）
         processing_typing只在嵌套逻辑中被读取
@@ -179,7 +181,11 @@ class ChatService:
         # 由于组件本身在inprogress，不新返回消息
         if message == "__USE_ORIGINAL_REPLY__":
             return status, updated_shared, reply
-                
+        
+        # 每次更新item的时候调用特殊逻辑
+        if handler:
+            handler.process_special_logic(updated_shared,content=reply)
+
         # 检查是否所有项目都已确认完成
         if all_completed:
             logger.info('chat_service.handle_nested: we have finished the checking for this state %s',self.chat_flow.current_state.value )
@@ -192,7 +198,8 @@ class ChatService:
                 final_status,
                 status,
                 result,
-                reply
+                reply,
+                handler
             )
             return final_status, updated_shared, message
         

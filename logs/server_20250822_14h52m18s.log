@@ -1,0 +1,63 @@
+2025-08-22 14:52:18 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250822_14h52m18s.log
+2025-08-22 14:52:18 - uvicorn.error - INFO - Started server process [29956]
+2025-08-22 14:52:18 - uvicorn.error - INFO - Waiting for application startup.
+2025-08-22 14:52:18 - back_end.server - INFO - FastAPI应用启动
+2025-08-22 14:52:18 - uvicorn.error - INFO - Application startup complete.
+2025-08-22 14:52:26 - back_end.server - INFO - the html file is stored at: uploads\LicenseInfo-@automation-core_ac-engineering-ng-2.10.0-2025-07-30_05_57_51.html
+2025-08-22 14:52:26 - nodes - INFO - Now we are parsing the original HTML File
+2025-08-22 14:52:26 - nodes - INFO - Successfully parsed!
+2025-08-22 14:52:26 - nodes - INFO - Now we are reviewing the components list
+2025-08-22 14:52:26 - nodes - INFO - We have 3 to review
+2025-08-22 14:52:42 - nodes - INFO - We have reviewed one component
+2025-08-22 14:52:56 - nodes - INFO - We have reviewed one component
+2025-08-22 14:53:08 - nodes - INFO - We have reviewed one component
+2025-08-22 14:53:08 - nodes - INFO - Completely Reviewed.
+2025-08-22 14:53:08 - nodes - INFO - Now we are collecing special licenses such as GPL
+2025-08-22 14:53:08 - nodes - INFO - Now checking the reviewed risks
+2025-08-22 14:53:08 - nodes - INFO - We have 3 licenses to check
+2025-08-22 14:53:08 - nodes - INFO - Successfully combined 3 license and risk records
+2025-08-22 14:53:18 - nodes - INFO - We have checked one component
+2025-08-22 14:53:30 - nodes - INFO - We have checked one component
+2025-08-22 14:53:39 - nodes - INFO - We have checked one component
+2025-08-22 14:53:39 - nodes - INFO - finished checking, now we are checking the dependecies
+2025-08-22 14:53:39 - nodes - INFO - now we start analyzing depencies between components
+2025-08-22 14:53:48 - nodes - INFO - Now we have checked dependency of one component
+2025-08-22 14:53:48 - utils.itemFilter - INFO - 开始筛选组件，共 1 个组件待处理
+2025-08-22 14:53:48 - utils.itemFilter - INFO - 处理组件 1/1
+2025-08-22 14:53:48 - utils.itemFilter - INFO - 正在检查组件: @ngrx/store 17.2.0
+                            ⇧
+2025-08-22 14:53:48 - utils.itemFilter - INFO - 组件许可证列表: ["Apache-2.0", "CC-BY-4.0", "MIT"]
+2025-08-22 14:53:48 - utils.itemFilter - INFO - 风险分析中的许可证: ["Apache-2.0", "CC-BY-4.0", "MIT"]
+2025-08-22 14:53:48 - utils.itemFilter - INFO - 筛选完成，保留了 1 个需要凭证的组件
+2025-08-22 14:53:48 - nodes - INFO - finished checking, now we are starting the chat...
+2025-08-22 14:53:51 - nodes - INFO - Initialized session successfully, waiting for the bot to start conversation
+2025-08-22 14:53:51 - nodes - INFO - Starting Chatting...
+2025-08-22 14:53:51 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-08-22 14:53:51 - back_end.services.chat_manager - WARNING - now we start with checking: component
+2025-08-22 14:53:54 - back_end.server - INFO - now we initialized status as: OEMing
+2025-08-22 14:54:08 - back_end.server - INFO - server: before processing input, we are in the status of: OEMing
+2025-08-22 14:54:10 - back_end.services.chat_service - INFO - user_input: yes
+
+2025-08-22 14:54:10 - back_end.services.state_handlers.object_handler - WARNING - OEM handler received invalid result type: <class 'str'>
+2025-08-22 14:54:10 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OEM
+2025-08-22 14:54:10 - OEMStateHandler - INFO - Now we are checking...
+2025-08-22 14:54:10 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.OEM -> ConfirmationStatus.CONTRACT
+2025-08-22 14:54:10 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: OEMing, Updated status: toContract
+2025-08-22 14:54:10 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: OEMing -> toContract
+2025-08-22 14:54:10 - back_end.items_utils.item_types - WARNING - 最新状态为toContract，未找到处理类型(processing_type)，使用默认值: component
+2025-08-22 14:54:21 - back_end.server - INFO - The file is stored at: uploads\contract_template.docx
+2025-08-22 14:54:21 - back_end.server - ERROR - Chat error: 'RiskBot' object has no attribute '_req_variable'
+Traceback (most recent call last):
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\server.py", line 138, in analyze_contract
+    analysis_result = risk_bot.contract_check(file_path)
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\utils\LLM_Analyzer.py", line 398, in contract_check
+    response = get_strict_talking(self,"bot/AnalyzeContract",message)
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\utils\tools.py", line 593, in get_strict_talking
+    response = model._req_variable(promptName, variable)
+               ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RiskBot' object has no attribute '_req_variable'. Did you mean: '_req_varibale'?
+2025-08-22 14:54:53 - uvicorn.error - INFO - Shutting down
+2025-08-22 14:54:53 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-08-22 14:54:53 - back_end.server - INFO - FastAPI应用关闭
+2025-08-22 14:54:53 - uvicorn.error - INFO - Application shutdown complete.
+2025-08-22 14:54:53 - uvicorn.error - INFO - Finished server process [29956]

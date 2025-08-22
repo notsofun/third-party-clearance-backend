@@ -9,7 +9,8 @@ from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot,
                                 DependecyChecker)
 from utils.vectorDB import VectorDatabase
 from back_end.items_utils.item_types import TYPE_CONFIG, ItemType
-from utils.tools import (reverse_exec, format_oss_text_to_html, extract_h1_content)
+from utils.tools import (reverse_exec, format_oss_text_to_html, extract_h1_content, split_tuples)
+from utils.htmlParsing import parse_html
 from utils.itemFilter import filter_components_by_credential_requirement, filter_html_content
 import random
 from log_config import get_logger
@@ -47,129 +48,15 @@ class ParsingOriginalHtml(Node):
             logger.error(f"Error parsing HTML: {str(e)}")
             raise
     
-    
     def exec(self, data):
 
-        if data is None:
-            return None
-        
-        meta = {
-            "doctype" : "html",
-            "head" : str(data.head),
-            "title" : data.title.text if data.title else ""
-        }
+        final_Result = parse_html(data)
 
-        body = data.body
-        all_body_html = str(body)
-        overview = data.find("ul", id="releaseOverview")
-        if overview:
-            intro_html = all_body_html.split(str(overview))[0]
-            intro_html = intro_html.replace("<body>", "").strip()
-        else:
-            intro_html = all_body_html
-
-        # release overview目录
-        release_overview = []
-        if overview:
-            for li in overview.find_all("li"):
-                t = li.text.strip()
-                id_match = re.search(r'h3(.+)_([\d\.]+)', li.a['href']) if li.find('a') else None
-                if id_match:
-                    name = id_match.group(1).replace("_", " ").replace("-", " ").strip()
-                    version = id_match.group(2)
-                    href_id = li.a['href'].strip("#")
-                else:
-                    # fallback
-                    match = re.match(r'(.*)\s+([\d\.]+)$', t)
-                    name, version = (match.group(1), match.group(2)) if match else (t, "")
-                    href_id = li.a['href'].strip("#") if li.find('a') else ""
-                release_overview.append({
-                    "name": name,
-                    "version": version,
-                    "href_id": href_id,
-                    "text": t
-                })
-
-        # release详情分块
-        releases = []
-        for li in data.find_all("li", class_="release"):
-            block = {}
-
-            # 组件名与版本
-            h3 = li.find("h3")
-            if h3:
-                name_ver = h3.text.strip().replace("↩", "").strip()
-                name_match = re.match(r'(.*?)\s+([0-9][\d\.]+)$', name_ver)
-                if name_match:
-                    name = name_match.group(1)
-                    version = name_match.group(2)
-                else:
-                    name, version = name_ver, ""
-                block["name"] = name
-                block["version"] = version
-                block["block_html"] = str(li)  # 原始HTML备份
-
-            # license名
-            licenses = []
-            for l in li.select('.licenseEntry'):
-                licenses.append(l['title'])
-            block["license_names"] = licenses
-
-            # license原文
-            license_texts = []
-            for license_link in li.select('.licenseEntry a'):
-                href = license_link.attrs.get('href', '')
-                if href.startswith("#licenseTextItem"):
-                    lic_text_block = data.select_one(href)
-                    if lic_text_block and lic_text_block.pre:
-                        ltxt = lic_text_block.pre.text.strip()
-                        license_texts.append(ltxt)
-            block["license_texts"] = license_texts
-
-            # Copyright/Ack
-            cp_pre = li.find("pre", class_="copyrights")
-            block['copyright'] = cp_pre.text.strip() if cp_pre else ""
-            ack_pre = li.find("pre", class_="acknowledgements")
-            block['acknowledgement'] = ack_pre.text.strip() if ack_pre else ""
-
-            releases.append(block)
-
-        # license 全文区块
-        license_texts = []
-        ul = data.find("ul", id="licenseTexts")
-        if ul:
-            for lic in ul.find_all("li"):
-                lic_id = lic.get("id", "")
-                h3 = lic.find("h3")
-                title = h3.text if h3 else ""
-                pre = lic.find("pre", class_="licenseText")
-                text = pre.text.strip() if pre else ""
-                license_texts.append({
-                    "id": lic_id,
-                    "title": title,
-                    "text": text
-                })
-
-        # body后面（可能还有div、尾注等）
-        # extra_html = "" # 如有尾注等自定义提取
-        tail_marker = '</ul>' if ul else '</body>'
-        extra_html = all_body_html.split(tail_marker)[-1]
-
-        final_Result = {
-            "meta": meta,
-            "intro_html": intro_html,
-            "release_overview": release_overview,
-            "releases": releases,
-            "license_texts": license_texts,
-            "extra_html": extra_html
-        }
-        # 后面传组件名用text字段，license的列表在licensesNames，licenseTexts里面找实际用到的license，然后给模型title和text
-        # 聚合全部
         return final_Result
     
     def post(self, shared, prep_res, exec_res):
         shared["parsedHtml"] =  exec_res
-        with open("parsed_original_oss.json","w",encoding="utf-8") as f:
+        with open("resultsInProgress/parsed_original_oss.json","w",encoding="utf-8") as f:
             json.dump(exec_res,f,ensure_ascii=False,indent=2)
         logger.info("Successfully parsed!")
         return "default"
@@ -228,7 +115,7 @@ class LicenseReviewing(BatchNode):
         ### 这里为了测试！！！选了一个组件改credential为true！
         shared["riskAnalysis"][0]["credentialOrNot"]["CredentialOrNot"] = True
 
-        with open("analysisOfRisk.json","w", encoding="utf-8" ) as f1:
+        with open("resultsInProgress/analysisOfRisk.json","w", encoding="utf-8" ) as f1:
             json.dump(shared["riskAnalysis"],f1,ensure_ascii=False,indent=2)
 
         logger.info('Completely Reviewed.')
@@ -284,21 +171,6 @@ class SpecialLicenseCollecting(BatchNode):
     
     def post(self, shared, prep_res, exec_res):
         # # 在post阶段创建并填充分类字典
-        # categories = {
-        #     "GPLv3, LGPLv3": [],
-        #     "GPL with Exception": [],
-        #     "LPGPL": [],
-        #     "GPL, LGPL": [],
-        #     "GPL": []
-        # }
-        
-        # # exec_res包含了所有exec方法的返回结果
-        # for result in exec_res:
-        #     if result is not None:  # 过滤掉没有匹配的许可证
-        #         lTitle, category = result
-        #         categories[category].append(lTitle)
-        
-        # 将结果存入shared，保持和之前的一样是一个字典格式
 
         # !!! 为了测试加入这个GPL的文件
         test_item = {
@@ -309,7 +181,7 @@ class SpecialLicenseCollecting(BatchNode):
         filtered_results = [result for result in exec_res if result is not None]
         shared[TYPE_CONFIG[ItemType.SPECIALCHECK]['items_key']] = filtered_results
 
-        with open("specialCollections.json","w", encoding="utf-8" ) as f1:
+        with open("resultsInProgress/specialCollections.json","w", encoding="utf-8" ) as f1:
             json.dump(shared[TYPE_CONFIG[ItemType.SPECIALCHECK]['items_key']],f1,ensure_ascii=False,indent=2)
         return "default"
     
@@ -328,7 +200,7 @@ class RiskCheckingRAG(BatchNode):
         licenseTexts = [(item['id'], item['title'], item['text'],random_int)
                 for item in parsedHtml['license_texts']]
         originalRiskAnalysis = [ (k['licenseTitle'], k["risk"]['level'], k["risk"]['reason'],random_int) for k in shared["riskAnalysis"]]
-        logger.info(f'We have {len(originalRiskAnalysis)} components to check')
+        logger.info(f'We have {len(originalRiskAnalysis)} licenses to check')
 
         # 创建一个基于title的licenseTexts字典
         license_dict = {}
@@ -370,10 +242,10 @@ class RiskCheckingRAG(BatchNode):
 
         shared["toBeConfirmedLicenses"] = toBeConfrimed_risk_license
 
-        with open("toBeConfirmedLicenses.json","w", encoding="utf-8" ) as f1:
+        with open("resultsInProgress/toBeConfirmedLicenses.json","w", encoding="utf-8" ) as f1:
             json.dump(shared["toBeConfirmedLicenses"],f1,ensure_ascii=False,indent=2)
 
-        with open("checkedRisk.json","w", encoding="utf-8" ) as f1:
+        with open("resultsInProgress/checkedRisk.json","w", encoding="utf-8" ) as f1:
             json.dump(shared[TYPE_CONFIG[ItemType.LICENSE]['items_key']],f1,ensure_ascii=False,indent=2)
 
         logger.info('finished checking, now we are checking the dependecies')
@@ -388,26 +260,33 @@ class DependecyCheckingRAG(BatchNode):
         logger.info("now we start analyzing depencies between components")
         parsedHtml = shared['parsedHtml']
         random_int = random.getrandbits(64)
-        components = [ (item['name'], item['block_html'],random_int )
+        components = [ (item['name'], item['block_html'],item['license_names'],random_int)
                     for item in parsedHtml['releases']]
         
-        with open("components.json","w", encoding="utf-8" ) as f1:
+        with open("resultsInProgress/components.json","w", encoding="utf-8" ) as f1:
             json.dump(components,f1,ensure_ascii=False,indent=2)
         return components
     
     def exec(self, comp):
-        compName, compHtml, randInt = comp
+        compName, compHtml, license_list, randInt = comp
         db = VectorDatabase()
         db.load('component_licenses_db')
         context = db.search(compName)
         dependecyChecker = DependecyChecker(
             session_id=f'check{randInt:016x}')
         dependency = dependecyChecker.check(compName,compHtml,context)
+        compDict = {
+            'compName': compName,
+            'compHtml': compHtml,
+            'licenseList': license_list,
+        }
         logger.info("Now we have checked dependency of one component")
 
-        return dependency
+        return dependency, compDict
     
     def post(self, shared, prep_res, exec_res):
+
+        dependencies, components = split_tuples(exec_res)
 
         credential_required_components = filter_components_by_credential_requirement(
             prep_res,
@@ -416,14 +295,17 @@ class DependecyCheckingRAG(BatchNode):
         )
         shared[TYPE_CONFIG[ItemType.CREDENTIAL]['items_key']] = credential_required_components
 
-        dependency_required__components = [comp for comp in exec_res if comp.get("dependency") == True]
+        dependency_required__components = [comp for comp in dependencies if comp.get("dependency") == True]
         shared[TYPE_CONFIG[ItemType.COMPONENT]['items_key']] = dependency_required__components
-        shared['toBeConfirmedComponents'] = exec_res
+        shared[TYPE_CONFIG[ItemType.MAINLICENSE]['items_key']] = components
 
-        with open("dependecies.json","w", encoding="utf-8" ) as f1:
+        with open("resultsInProgress/mainLicenseRequiringComponents.json","w", encoding="utf-8" ) as f1:
+            json.dump(shared[TYPE_CONFIG[ItemType.MAINLICENSE]['items_key']],f1,ensure_ascii=False,indent=2)
+
+        with open("resultsInProgress/dependecies.json","w", encoding="utf-8" ) as f1:
             json.dump(shared[TYPE_CONFIG[ItemType.COMPONENT]['items_key']],f1,ensure_ascii=False,indent=2)
         
-        with open("credentialComps.json","w", encoding="utf-8" ) as f1:
+        with open("resultsInProgress/credentialComps.json","w", encoding="utf-8" ) as f1:
             json.dump(shared[TYPE_CONFIG[ItemType.CREDENTIAL]['items_key']],f1,ensure_ascii=False,indent=2)
 
         logger.info('finished checking, now we are starting the chat...')
@@ -536,11 +418,11 @@ class getFinalOSS(Node):
         shared["reconstructedHtml"] = exec_res
         session_id = shared.get('session_id', '')
 
-        with open('reconstructedHtml.html', "w", encoding="utf-8") as f:
+        with open('resultsInProgress/reconstructedHtml.html', "w", encoding="utf-8") as f:
             f.write(shared["reconstructedHtml"])
 
         document = Document()
-        document.LoadFromFile('reconstructedHtml.html',FileFormat.Html, XHTMLValidationType.none)
+        document.LoadFromFile('resultsInProgress/reconstructedHtml.html',FileFormat.Html, XHTMLValidationType.none)
         document.SaveToFile(f'downloads/{session_id}/Final_OSS_Readme.docx', FileFormat.Docx2019)
         document.Close()
         logger.info("We have generated the oss readme file successfully!")

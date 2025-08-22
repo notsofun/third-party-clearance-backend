@@ -3,6 +3,7 @@ from .base_handler import ContentGenerationHandler, SimpleStateHandler, SubTaskS
 from utils.tools import get_strict_json
 from log_config import get_logger
 from back_end.items_utils.item_types import State, ItemType
+from back_end.items_utils.item_utils import get_item_type_from_string, get_type_config
 from typing import Dict, Any
 from back_end.items_utils.item_utils import is_item_completed, get_items_from_context
 from utils.string_to_markdown import MarkdownDocumentBuilder
@@ -73,6 +74,36 @@ class SpecialCheckHandler(SubTaskStateHandler):
         for lic in licenses:
             if lic.get("licName") == subtask_id:
                 return is_item_completed(lic)
+        return False
+
+class MainLicenseHandler(SubTaskStateHandler):
+
+    def get_instructions(self):
+        '''处理选择主许可证'''
+        prompt = self.bot.langfuse.get_prompt("bot/MainLicense").prompt
+        response = get_strict_json(self.bot, prompt)
+        return response.get('talking', 'Please select one main license among them.')
+    
+    def process_special_logic(self, shared, result = None, content = None):
+        processing_type = shared['processing_type']
+        current_type = get_item_type_from_string(processing_type)
+        config = get_type_config(current_type)
+        shared[config['items_key']][shared[config['current_key']]][current_type.value] = content
+        return shared
+
+    def initialize_subtasks(self, context: Dict[str, Any]):
+        """初始化待确认组件子任务"""
+        components = get_items_from_context(context, ItemType.MAINLICENSE)
+        # 以组件ID作为子任务标识
+        self.subtasks = [comp.get("compName", f"comp_{idx}") for idx, comp in enumerate(components)]
+        logger.info(f"chat_flow.CredentialCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
+    
+    def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
+        """检查组件是否已确认"""
+        components = get_items_from_context(context, ItemType.MAINLICENSE)
+        for comp in components:
+            if comp.get("compName") == subtask_id:
+                return is_item_completed(comp)
         return False
 
 class CredentialHandler(SubTaskStateHandler):
@@ -156,7 +187,6 @@ class OSSGeneratingHandler(SimpleStateHandler):
 class ProductOverviewHandler(ContentGenerationHandler):
 
     def process_special_logic(self, shared, content, result=None):
-
         shared['generated_product_overview'] = content
         return shared
 
@@ -170,6 +200,18 @@ class ProductOverviewHandler(ContentGenerationHandler):
         response = get_strict_json(self.bot, prompt)
         return response.get('talking', 'Please check the result for product overview')
         
+class ComponenetOverviewHandler(ContentGenerationHandler):
+
+    def process_special_logic(self, shared, result = None, content = None):
+        shared['generated_componenet_overview'] = content
+        return shared
+    
+    def _generate_content(self):
+        return super()._generate_content()
+    
+    def get_instructions(self):
+        return super().get_instructions()
+
 class CompletedHandler(SimpleStateHandler):
 
     def get_instructions(self) -> str:

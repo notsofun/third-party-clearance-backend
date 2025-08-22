@@ -1,0 +1,31 @@
+2025-08-22 14:29:01 - back_end.server - ERROR - Error during chat: ChatService._status_check() missing 1 required positional argument: 'handler'
+Traceback (most recent call last):
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\server.py", line 213, in chat
+    status, updated_shared, reply = chat_service.process_user_input(
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        session["shared"],
+        ^^^^^^^^^^^^^^^^^^
+        chat_message.message,
+        ^^^^^^^^^^^^^^^^^^^^^
+        status
+        ^^^^^^
+    )
+    ^
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\services\chat_service.py", line 51, in process_user_input
+    final_status, updated_shared, reply = self._status_check(shared, updated_status, status, result,reply, handler)
+                                          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\services\chat_service.py", line 69, in _status_check
+    return self._handle_nested_logic(shared, status, result, reply, handler)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\services\chat_service.py", line 195, in _handle_nested_logic
+    final_status, updated_shared, message = self._status_check(
+                                            ~~~~~~~~~~~~~~~~~~^
+        updated_shared,
+        ^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        reply
+        ^^^^^
+    )
+    ^
+TypeError: ChatService._status_check() missing 1 required positional argument: 'handler'
+2025-08-22 14:29:01 - utils.tools - ERROR - Error CHAT_ERROR: Error during contract analysis: ChatService._status_check() missing 1 required positional argument: 'handler'

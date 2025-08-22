@@ -120,7 +120,6 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
         )
     
     curr_shared = session['shared']
-    risk_bot = curr_shared['riskBot']
     chat_flow = session['chat_flow']
     chat_service = session['chat_service']
     
@@ -135,12 +134,12 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
             content = await file.read()
             buffer.write(content)
         logger.info(f'The file is stored at: {file_path}')
-        analysis_result = risk_bot.contract_check(file_path)
+        analysis_result = chat_service.bot.contract_check(file_path)
         # 这里会生成结果为next的回答
         logger.info(f"Contract analysis completed successfully for session {session_id}")
         sessions[session_id]['contract_analysis'] = analysis_result
 
-        status = chat_flow.current_state
+        status = chat_flow.current_state.value
 
         content = {
             'shared': curr_shared,
@@ -149,6 +148,7 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
 
         # Status here should be transitted to toDependency
         updated_status = chat_flow.process(content).value
+        handler = chat_service.handler_factory.get_handler(updated_status)
 
         # Since the status has changed, here should return an instruction for dependency checking
         updated_status, updated_shared, message = chat_service._status_check(
@@ -156,7 +156,8 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
             updated_status,
             status,
             'next',
-            None
+            None,
+            handler
         )
 
         sessions[session_id].update({

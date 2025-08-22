@@ -1,0 +1,4 @@
+2025-08-22 14:50:43 - utils.tools - ERROR - Model did not give valid JSON after retries.
+2025-08-22 14:51:01 - utils.tools - ERROR - Model did not give valid JSON after retries.
+2025-08-22 14:51:23 - utils.tools - ERROR - Model did not give valid JSON after retries.
+2025-08-22 14:51:25 - utils.tools - ERROR - Error Error during analysis: 'NoneType' object does not support item assignment
