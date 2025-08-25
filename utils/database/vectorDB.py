@@ -3,28 +3,28 @@ import numpy as np
 import faiss
 import pickle
 import os
-import xml.etree.ElementTree as ET
+from utils.database.baseDB import BaseDatabase
 
-class VectorDatabase:
+class VectorDatabase(BaseDatabase):
     """
     实例化使用时需要用load()去加载数据库，否则无法查询
     支持根据不同类型数据去处理向量并实现增量积累
     
     """
-    TYPE_LICENSE = 'license'
-    TYPE_XML = 'xml'
 
-    def __init__(self,dimension=3072):
+    def __init__(self, dimension = 3072):
         self.dimension = dimension
         self.client = AzureOpenAIChatClient(embedding_deployment="text-embedding-3-large")
         self.index = None
         self.texts = []
         self.embedding = []
     
-    def build_index(self, data_dict, data_type = TYPE_LICENSE):
+    def build_index(self, data_dict, data_type=None):
         """最终的构建索引函数（数据平展化）
         目前支持
         xml和license文本"""
+        if data_type is None:
+            data_type = self.default_type
         processor_method = getattr(self, f"_process_{data_type}_data", None)
         if not processor_method:
             raise ValueError(f"This type has not been supported yet: {data_type}")
@@ -56,174 +56,6 @@ class VectorDatabase:
                 self.index.add(new_embeddings_array)
 
         print(f"✅ 索引构建完成，共 {len(self.texts)} 个license条目被索引。")
-
-    def _process_license_data(self, data_dict):
-        """处理license类型的数据字典"""
-        items = []
-        # 把数据从嵌套展开到平铺
-        for color_category, details in data_dict.items():
-            licenses = details.get("licenses", [])
-            for license_name in licenses:
-                item = {
-                    'license': license_name,
-                    'color_category': color_category,
-                    'risk_level': details.get('risk_level', ''),
-                    'risk_reason': details.get('risk_reason', ''),
-                    'obligations': details.get('obligations', '')
-                }
-                items.append(item)
-        return items
-
-    def _process_xml_data(self, xml_content):
-        """处理XML格式的组件许可证信息"""
-        items = []
-        
-        try:
-            # 解析XML内容
-            root = ET.fromstring(xml_content)
-            
-            # 提取基本信息
-            component_name = ""
-            component_version = ""
-            general_info = root.find("GeneralInformation")
-            if general_info is not None:
-                name_elem = general_info.find("ComponentName")
-                if name_elem is not None and name_elem.text:
-                    component_name = name_elem.text.strip()
-                    
-                version_elem = general_info.find("ComponentVersion")
-                if version_elem is not None and version_elem.text:
-                    component_version = version_elem.text.strip()
-            
-            # 提取评估摘要
-            assessment_text = ""
-            assessment = root.find("AssessmentSummary/GeneralAssessment")
-            if assessment is not None and assessment.text:
-                assessment_text = assessment.text.strip()
-            
-            # 处理许可证信息
-            for license_elem in root.findall("License"):
-                license_name = license_elem.get("name", "")
-                license_type = license_elem.get("type", "")
-                spdx_id = license_elem.get("spdxidentifier", "")
-                
-                # 提取许可证内容摘要
-                content = ""
-                content_elem = license_elem.find("Content")
-                if content_elem is not None and content_elem.text:
-                    # 只取前200个字符作为摘要
-                    content = content_elem.text[:200] + "..."
-                
-                # 提取关联文件数量
-                files_count = 0
-                files_elem = license_elem.find("Files")
-                if files_elem is not None and files_elem.text:
-                    files_count = len(files_elem.text.strip().split("\n"))
-                
-                item = {
-                    'component_name': component_name,
-                    'component_version': component_version,
-                    'license_name': license_name,
-                    'license_spdx': spdx_id,
-                    'license_type': license_type,
-                    'content_summary': content,
-                    'files_count': files_count,
-                    'assessment': assessment_text
-                }
-                items.append(item)
-            
-            # 处理义务信息
-            for obligation in root.findall("Obligation"):
-                topic = ""
-                topic_elem = obligation.find("Topic")
-                if topic_elem is not None and topic_elem.text:
-                    topic = topic_elem.text.strip()
-                
-                text = ""
-                text_elem = obligation.find("Text")
-                if text_elem is not None and text_elem.text:
-                    text = text_elem.text.strip()
-                
-                # 获取相关许可证
-                licenses_elem = obligation.find("Licenses")
-                if licenses_elem is not None:
-                    for lic in licenses_elem.findall("License"):
-                        if lic.text:
-                            item = {
-                                'component_name': component_name,
-                                'component_version': component_version,
-                                'obligation_topic': topic,
-                                'obligation_text': text,
-                                'license_name': lic.text.strip(),
-                                'assessment': assessment_text
-                            }
-                            items.append(item)
-        
-        except Exception as e:
-            print(f"Something wrong with processing xml data: {e}")
-        
-        return items
-
-    def _serialize_item(self, item):
-        """基于数据类型选择合适的序列化方法"""
-        data_type = item.get('_data_type', self.TYPE_LICENSE)
-        if data_type == self.TYPE_LICENSE:
-            return self._serialize_license_item(item)
-        elif data_type == self.TYPE_XML:
-            return self._serialize_xml_item(item)
-        else:
-            # 默认序列化方法
-            return "; ".join(f"{k}: {v}" for k, v in item.items() if k != '_data_type')
-
-    def _serialize_license_item(self, item):
-        """将license类型的条目序列化为文本"""
-        obligations = item.get('obligations', '')
-        if isinstance(obligations, list):
-            obligations = "；".join(obligations)
-
-        return (
-            f"License Name: {item.get('license', '')}; "
-            f"Color Category: {item.get('color_category', '')}; "
-            f"Risk Level: {item.get('risk_level', '')}; "
-            f"Risk Reason: {item.get('risk_reason', '')}; "
-            f"Obligations: {obligations}."
-        )
-    
-    def _serialize_xml_item(self, item):
-        """将XML类型的条目序列化为文本"""
-        fields = []
-        
-        # 组件信息
-        if 'component_name' in item:
-            fields.append(f"Component: {item['component_name']}")
-        if 'component_version' in item:
-            fields.append(f"Version: {item['component_version']}")
-            
-        # 许可证信息
-        if 'license_name' in item:
-            fields.append(f"License: {item['license_name']}")
-        if 'license_spdx' in item:
-            fields.append(f"SPDX: {item['license_spdx']}")
-        if 'license_type' in item:
-            fields.append(f"Type: {item['license_type']}")
-            
-        # 义务信息
-        if 'obligation_topic' in item:
-            fields.append(f"Obligation: {item['obligation_topic']}")
-        if 'obligation_text' in item:
-            # 限制义务文本长度
-            text = item['obligation_text']
-            if len(text) > 300:
-                text = text[:300] + "..."
-            fields.append(f"Details: {text}")
-            
-        # 其他信息
-        if 'assessment' in item:
-            fields.append(f"Assessment: {item['assessment']}")
-        if 'files_count' in item:
-            fields.append(f"Files: {item['files_count']}")
-            
-        return "; ".join(fields)
 
     def search(self,query, k=5):
         """搜索最相近的文本"""

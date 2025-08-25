@@ -7,7 +7,7 @@ import json
 from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot,
                                 credentialChecker, sourceCodeChecker,
                                 DependecyChecker)
-from utils.vectorDB import VectorDatabase
+from utils.database.vectorDB import VectorDatabase
 from back_end.items_utils.item_types import TYPE_CONFIG, ItemType
 from utils.tools import (reverse_exec, format_oss_text_to_html, extract_h1_content, split_tuples)
 from utils.htmlParsing import parse_html

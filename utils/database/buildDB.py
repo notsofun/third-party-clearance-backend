@@ -1,7 +1,8 @@
 import os
 import json
 import glob
-from utils.vectorDB import VectorDatabase
+from utils.database.vectorDB import VectorDatabase
+from utils.database.baseDB import TYPE
 
 def main():
     # 初始化向量数据库
@@ -229,10 +230,10 @@ def main():
             text = result['text']
             data_type = text.get('_data_type')
             
-            if data_type == VectorDatabase.TYPE_LICENSE:
+            if data_type == TYPE.TYPE_LICENSE.value:
                 print(f"- 许可证: {text.get('license', 'N/A')}")
                 print(f"- 风险等级: {text.get('risk_level', 'N/A')}")
-            elif data_type == VectorDatabase.TYPE_XML:
+            elif data_type == TYPE.TYPE_XML.value:
                 if 'license_name' in text:
                     print(f"- 组件: {text.get('component_name', 'N/A')}")
                     print(f"- 许可证: {text['license_name']}")
