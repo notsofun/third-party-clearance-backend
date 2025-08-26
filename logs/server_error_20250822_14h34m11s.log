@@ -1,8 +1,0 @@
-2025-08-22 14:37:49 - back_end.server - ERROR - Chat error: 'talking'
-Traceback (most recent call last):
-  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\back_end\server.py", line 138, in analyze_contract
-    analysis_result = risk_bot.contract_check(file_path)
-  File "C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\utils\LLM_Analyzer.py", line 400, in contract_check
-    return response['talking']
-           ~~~~~~~~^^^^^^^^^^^
-KeyError: 'talking'

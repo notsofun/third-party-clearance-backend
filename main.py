@@ -1,4 +1,4 @@
-from flow import pre_chat_flow, post_chat_flow
+from flow import pre_chat_flow, post_chat_flow, test_flow
 from log_config import configure_logging, get_logger
 from utils.tools import load_json_files_as_variables
 
@@ -12,6 +12,12 @@ def run_analysis(html_path):
 def run_report(shared):
     """运行报告生成流程"""
     flow = post_chat_flow()
+    flow.run(shared)
+    return shared
+
+def run_test(html_path):
+    shared = {"html_path": html_path}
+    flow = test_flow()
     flow.run(shared)
     return shared
 

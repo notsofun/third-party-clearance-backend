@@ -60,8 +60,12 @@ class WorkflowContext:
                 State.INPROGRESS.value: ConfirmationStatus.OSSGENERATION,
             },
             ConfirmationStatus.PRODUCTOVERVIEW: {
-                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
+                State.COMPLETED.value: ConfirmationStatus.COMPONENTOVERVIEW,
                 State.INPROGRESS.value: ConfirmationStatus.PRODUCTOVERVIEW,
+            },
+            ConfirmationStatus.COMPONENTOVERVIEW: {
+                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
+                State.INPROGRESS.value: ConfirmationStatus.COMPONENTOVERVIEW
             },
             ConfirmationStatus.COMPLETED: {
                 # 完成状态下一直停留在完成

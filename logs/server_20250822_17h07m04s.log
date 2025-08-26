@@ -1,5 +1,0 @@
-2025-08-22 17:07:04 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250822_17h07m04s.log
-2025-08-22 17:07:04 - uvicorn.error - INFO - Started server process [31388]
-2025-08-22 17:07:04 - uvicorn.error - INFO - Waiting for application startup.
-2025-08-22 17:07:04 - back_end.server - INFO - FastAPI应用启动
-2025-08-22 17:07:04 - uvicorn.error - INFO - Application startup complete.

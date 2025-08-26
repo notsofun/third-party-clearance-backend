@@ -1,2 +1,0 @@
-2025-08-22 15:34:00 - utils.tools - ERROR - Model did not give valid JSON after retries.
-2025-08-22 15:34:00 - utils.tools - ERROR - Error Error during analysis: 'NoneType' object has no attribute 'get'

@@ -115,6 +115,7 @@ class ConfirmationStatus(Enum):
     OSSGENERATION = 'ossGeneration'
     PRODUCTOVERVIEW = 'product_overview'
     COMPLETED = 'completed'
+    COMPONENTOVERVIEW = 'component_overview'
 
 # 确认状态到处理类型的映射
 CONFIRMATION_STATUS_TO_TYPE_MAP = {

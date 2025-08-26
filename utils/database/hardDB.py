@@ -1,15 +1,20 @@
+
+# 如果导入路径有问题，您可以添加以下代码
+import sys
+sys.path.append(r'C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance')
 from utils.database.baseDB import TYPE, BaseDatabase
+from utils.LLM_Analyzer import RelevanceChecker
 
 import json
 import os
 from pathlib import Path
-
 class HardDB(BaseDatabase):
 
     def __init__(self, default_type=TYPE.TYPE_LICENSE.value, db_path="./database/hardDB/hard_database.json"):
         super().__init__(default_type)
         self.db_path = db_path
         self.data = []  # 存储所有数据项
+        self.rel = RelevanceChecker(session_id='relevancyChecker')
 
     def build_index(self, data_dict, data_type=None):
         """构建索引并存储为JSON文件
@@ -125,12 +130,30 @@ class HardDB(BaseDatabase):
             符合条件的数据项列表
         """
         return [item for item in self.data if query_func(item)]
-    
+
     def find_by_component_name(self, comp_name):
-        """根据组件名称查找项目"""
+        """根据组件名称模糊查找项目
+        
+        实现模糊匹配，处理以下情况：
+        1. 组件名称包含搜索词
+        2. 搜索词包含组件名称
+        
+        Args:
+            comp_name: 要查找的组件名称或关键词
+        
+        Returns:
+            符合模糊匹配条件的数据项列表
+        """
         def query(item):
             if item.get('_data_type') == TYPE.TYPE_XML.value:
-                return item.get('component_name') == comp_name
+                item_comp_name = item.get('component_name', '').lower()
+                search_term = comp_name.lower()
+                result = self.rel.check(search_term,item_comp_name)
+                # 模糊匹配：任一包含另一个
+                if  result == 'true':
+                    return True
+                else:
+                    return False
             return False
         
         return self._base_query(query)
@@ -306,15 +329,15 @@ if __name__ == '__main__':
     db = HardDB(default_type=TYPE.TYPE_XML.value)
 
     # 批量处理XML文件
-    xml_folder_path = "../third-party-clearance/data"
-    db.batch_process_xml_files(xml_folder_path, save_interval=5)
+    # xml_folder_path = "../third-party-clearance/data"
+    # db.batch_process_xml_files(xml_folder_path, save_interval=5)
 
     # 加载已有的数据库
     db.load()
 
     # 查询特定组件的全局许可证
-    global_licenses = db.find_license_by_component("CMSIS_5", "global")
-    print(f"组件 CMSIS_5 的全局许可证: {global_licenses}")
+    global_licenses = db.find_license_by_component("Mbed TLS", "global")
+    print(f"查询组件的全局许可证: {global_licenses}")
 
     is_STM = db.is_COTS('STM32Cube G0xx HAL Driver')
     print(f'是否为商业组件？{is_STM}')

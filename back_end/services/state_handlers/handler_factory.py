@@ -1,7 +1,7 @@
 # state_handlers/handler_factory.py
 from typing import Dict
 from .base_handler import StateHandler
-from .object_handler import OEMStateHandler, CompletedHandler, ComplianceHandler, ContractHandler, CredentialHandler, SpecialCheckHandler,DependencyHandler, FinalListHandler, ProductOverviewHandler, OSSGeneratingHandler, MainLicenseHandler
+from .object_handler import OEMStateHandler, CompletedHandler, ComplianceHandler, ContractHandler, CredentialHandler, SpecialCheckHandler,DependencyHandler, FinalListHandler, ProductOverviewHandler, OSSGeneratingHandler, MainLicenseHandler, ComponenetOverviewHandler
 from utils.string_to_markdown import MarkdownDocumentBuilder
 
 class StateHandlerFactory:
@@ -28,7 +28,8 @@ class StateHandlerFactory:
             ConfirmationStatus.COMPLETED.value: CompletedHandler(),
             ConfirmationStatus.OSSGENERATION.value: OSSGeneratingHandler(),
             ConfirmationStatus.PRODUCTOVERVIEW.value: ProductOverviewHandler(),
-            ConfirmationStatus.MAINLICENSE.value: MainLicenseHandler()
+            ConfirmationStatus.MAINLICENSE.value: MainLicenseHandler(),
+            ConfirmationStatus.COMPONENTOVERVIEW.value: ComponenetOverviewHandler(),
         }
     
     def get_handler(self, status: str, bot=None) -> StateHandler:

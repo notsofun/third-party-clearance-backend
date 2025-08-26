@@ -133,42 +133,60 @@ def filter_components_by_criteria(components, parsed_html, risk_analysis, criter
     
     return filtered_components
 
+import re
+
 class ContentNormalizer:
     @staticmethod
     def normalize_name(name):
         """
-        Normalize a name by removing whitespace, newlines, and special characters.
+        规范化名称，保留正式名称部分，去除版本号和特殊字符
         
-        Parameters:
-        - name: The name to normalize
+        参数:
+        - name: 要规范化的名称
         
-        Returns:
-        - Normalized name
+        返回:
+        - 规范化后的名称
         """
         if not isinstance(name, str):
             return str(name)
         
-        # Remove newlines and leading/trailing whitespace
+        # 移除换行符和首尾空格
         name = name.strip()
         
-        # Remove trailing ⇧ character if present
+        # 移除尾部的 ⇧ 字符
         name = name.rstrip('⇧').strip()
         
-        # Extract the name part before any newlines
+        # 提取第一行内容
         name = name.split('\n')[0].strip()
         
-        # Handle license titles with format like "2: CC-BY-4.0⇧"
+        # 处理带有冒号的许可证标题
         if ":" in name:
-            name = name.split(":", 1)[1].strip()  # Get the part after the first colon
+            name = name.split(":", 1)[1].strip()
+            
+        # 将名称中的下划线替换为空格
+        name = name.replace('_', ' ')
         
-        # For component names, we need to extract just the package name without version
-        # This handles cases like "@ngrx/store 17.2.0"
-        parts = name.split(' ')
+        # 按照空格分割名称
+        parts = name.split()
+        
+        # 识别版本号模式的规则：
+        # 1. 如果最后一部分包含数字，可能是版本号
+        # 2. 如果倒数第二部分包含数字且最后一部分是类似'rel1'的字符串，可能是版本号
+        
         if len(parts) > 1 and any(c.isdigit() for c in parts[-1]):
-            # If the last part looks like a version number, use just the package name
-            package_name = ' '.join(parts[:-1])
-            return package_name.strip()
-        
+            # 看看倒数第二个部分是否也是版本号的一部分
+            if len(parts) > 2 and parts[-1].startswith('rel') and any(c.isdigit() for c in parts[-2]):
+                name = ' '.join(parts[:-2])
+                # 只替换两边都是空格的连字符
+                name = re.sub(r' - ', '   ', name)
+                return name
+            else:
+                name = ' '.join(parts[:-1])
+                # 只替换两边都是空格的连字符
+                name = re.sub(r' - ', '   ', name)
+                return name
+            
+        name = re.sub(r' - ', '   ', name)
         return name
 
 

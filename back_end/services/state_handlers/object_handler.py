@@ -191,7 +191,7 @@ class ProductOverviewHandler(ContentGenerationHandler):
         shared['generated_product_overview'] = content
         return shared
 
-    def _generate_content(self):
+    def _generate_content(self, shared):
         prompt = self.bot.langfuse.get_prompt("bot/WriteProductOverview").prompt
         response = get_strict_json(self.bot, prompt)
         return response.get('talking', 'Please check the result for product overview')
@@ -204,11 +204,12 @@ class ProductOverviewHandler(ContentGenerationHandler):
 class ComponenetOverviewHandler(ContentGenerationHandler):
 
     def process_special_logic(self, shared, result = None, content = None):
-        shared['generated_componenet_overview'] = content
+        shared['generated_component_overview'] = content
         return shared
     
     def _generate_content(self, shared):
         db = HardDB()
+        db.load()
         result = generate_components_markdown_table(shared,db)
         return result
     

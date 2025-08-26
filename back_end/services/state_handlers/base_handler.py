@@ -78,7 +78,7 @@ class ContentGenerationHandler(StateHandler):
 
     def handle(self, context):
         
-        if self.check_completion(context) and not self.content_generated:
+        if not self.content_generated:
             self.content_generated = True
             return "GENERATE_CONTENT"
         
@@ -103,7 +103,7 @@ class ContentGenerationHandler(StateHandler):
         self.content_confirmed = False
 
     @abstractmethod
-    def _generate_content(self):
+    def _generate_content(self, shared):
         pass
 
     def _save_to_markdown(self, md:MarkdownDocumentBuilder, content:str) -> None:

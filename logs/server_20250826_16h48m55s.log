@@ -1,0 +1,111 @@
+2025-08-26 16:48:55 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250826_16h48m55s.log
+2025-08-26 16:48:55 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250826_16h48m55s.log
+2025-08-26 16:48:55 - nodes - INFO - Now we are parsing the original HTML File
+2025-08-26 16:48:55 - nodes - INFO - Successfully parsed!
+2025-08-26 16:48:59 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-08-26 16:48:59 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-08-26 16:48:59 - testing - INFO - 开始执行测试: test_initial_content_generation
+2025-08-26 16:49:02 - utils.tools - INFO - we should have result like {'result': 'next', 'talking': 'It seems you may have intended to discuss software compliance or a related topic. Please provide more context or details regarding your compliance audit needs, and I would be happy to assist you.'}
+2025-08-26 16:49:02 - back_end.services.chat_service - INFO - user_input: 
+            Just generate the markdown
+
+    
+2025-08-26 16:49:02 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPONENTOVERVIEW
+2025-08-26 16:49:02 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: component_overview, Updated status: component_overview
+2025-08-26 16:49:02 - utils.tools - WARNING - 未找到处理类型(processing_type)，使用默认值: component
+2025-08-26 16:49:02 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: component_overview -> component_overview
+2025-08-26 16:49:02 - back_end.services.chat_service - INFO - now we started generating content with this handler ComponenetOverviewHandler
+2025-08-26 16:49:19 - utils.PRC_Generation.component_overview - INFO - we have found the global_licenses for Amazon FreeRTOS-Kernel, which are []
+2025-08-26 16:49:19 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-08-26 16:49:19 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:49:19 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:49:19 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Dual license MIT and BSD-3-Clause
+2025-08-26 16:49:19 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license GPL-2.0-with-FreeRTOS exception
+2025-08-26 16:49:19 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license MIT
+2025-08-26 16:49:32 - utils.PRC_Generation.component_overview - INFO - we have found the global_licenses for CMSIS 5, which are ['Apache-2.0']
+2025-08-26 16:49:32 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-08-26 16:49:32 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:49:32 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:49:32 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:49:32 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Preserve Copyright Notice_Author
+2025-08-26 16:49:47 - utils.PRC_Generation.component_overview - INFO - we have found the global_licenses for FlashDB, which are ['Apache-2.0']
+2025-08-26 16:49:47 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - we have found the global_licenses for GNU GNU Arm Embedded Toolchain Runtime Library   Partial for EmbeddedV, which are ['GPL-3.0+ with GCC-exception-3.1']
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0 WITH LLVM-exception
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSL-1.0
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Dual-license
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Dual-license
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license GPL-3.0+ with GCC-exception-3.1
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license ISC
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license LGPL-2.0-or-later
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license LGPL-2.1+ with GCC-exception
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license LGPL-2.1-or-later
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license MIT
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license NCSA
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice 
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice 
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Public-Domain
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Public-Domain
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Spencer-94
+2025-08-26 16:50:00 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license SunPro
+2025-08-26 16:50:17 - utils.PRC_Generation.component_overview - INFO - we have found the global_licenses for Mbed TLS, which are ['Apache-2.0']
+2025-08-26 16:50:17 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-08-26 16:50:31 - utils.PRC_Generation.component_overview - INFO - we have found the global_licenses for OpenThread, which are ['BSD-3-Clause', 'BSD-3-Clause', 'BSD-3-Clause', 'BSD-3-Clause']
+2025-08-26 16:50:31 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-08-26 16:50:31 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0 OR GPL-2.0-or-later
+2025-08-26 16:50:31 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-08-26 16:50:31 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:31 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:31 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:31 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:31 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-08-26 16:50:45 - utils.PRC_Generation.component_overview - INFO - we have found the global_licenses for ST STM32CubeWB, which are []
+2025-08-26 16:50:45 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-08-26 16:50:45 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-1-Clause
+2025-08-26 16:50:45 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:45 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:45 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:45 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-08-26 16:50:45 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-4-Clause-UC
+2025-08-26 16:50:45 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license MIT
+2025-08-26 16:51:02 - utils.PRC_Generation.component_overview - INFO - we have found the global_licenses for tinycbor, which are []
+2025-08-26 16:51:02 - utils.PRC_Generation.component_overview - INFO - Now We are reviewing this component_license MIT

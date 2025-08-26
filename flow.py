@@ -22,3 +22,11 @@ def post_chat_flow():
 
     item_filtering >> get_html
     return Flow(start=item_filtering)
+
+def test_flow():
+    '''为了测试节点而设置的工作流'''
+    parsingNode = ParsingOriginalHtml()
+
+    parsingNode
+
+    return Flow(start=parsingNode)

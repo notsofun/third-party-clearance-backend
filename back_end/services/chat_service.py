@@ -131,7 +131,8 @@ class ChatService:
         event = handler.handle(context)
         
         if event == "GENERATE_CONTENT":
-            generated_content = handler._generate_content()
+            logger.info(f"now we started generating content with this handler {handler.__class__.__name__}")
+            generated_content = handler._generate_content(shared)
             shared = handler.process_special_logic(shared,content=generated_content)
             confirmation_message = f"Based on the information you proived, I have generated the following content: \n\n{generated_content}\n\n Would you mind telling me if it meets your requirements?"
             
