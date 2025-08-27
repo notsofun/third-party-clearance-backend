@@ -29,14 +29,6 @@ def generate_components_markdown_table(shared_data, harddb:HardDB):
     markdown = "| Component Name | Component Version | Type | Licenses |\n"
     markdown += "|---------------|------------------|------|----------|\n"
     
-    # 定义一个辅助函数进行严格的字符串规范化
-    def strict_normalize(text):
-        if not isinstance(text, str):
-            return ""
-        # 移除所有空白字符，并转为小写
-        import re
-        return re.sub(r'\s+', '', text.lower())
-    
     # 添加每个组件的行
     for component in components:
         name = component.get('name', 'Unknown')
@@ -50,28 +42,27 @@ def generate_components_markdown_table(shared_data, harddb:HardDB):
         for release in releases:
             release_name = release.get('name', '')
             normalized_release_name = ContentNormalizer.normalize_name(release_name)
+            logger.info(f'We have normalized names {normalized_release_name} and original release names {release_name}')
             if normalized_release_name == name:  # 找到匹配项
                 if 'license_names' in release and isinstance(release['license_names'], list):
                     component_licenses = release['license_names']
                     break  # 找到匹配组件后退出循环
         
-        # 获取全局许可证以便加粗显示
-        global_licenses = harddb.find_license_by_component(name, "global")
+        unique_list = list(dict.fromkeys(component_licenses))
+        global_licenses = []
+        for _ in range(3):  # 最多尝试3次
+            global_licenses = harddb.find_license_by_component(name, "global")
+            if global_licenses:  # 如果列表非空
+                break
+
         logger.info(f'we have found the global_licenses for {name}, which are {global_licenses}')
-        
-        # 规范化全局许可证
-        normalized_global_licenses = [strict_normalize(lic) for lic in global_licenses]
-        logger.info(f'Normalized global licenses: {normalized_global_licenses}')
-        
+                
         # 格式化许可证，全局许可证加粗
         formatted_licenses = []
-        for lic in component_licenses:
+        for lic in unique_list:
             logger.info(f'Now We are reviewing this component_license {lic}')
-            normalized_lic = strict_normalize(lic)
             
-            # 详细记录比较过程
-            logger.info(f'Normalized "{lic}" to "{normalized_lic}"')
-            is_global = normalized_lic in normalized_global_licenses
+            is_global = lic in global_licenses
             logger.info(f'Is in global licenses: {is_global}')
             if is_global:
                 logger.info(f'MATCH FOUND - Adding as bold: **{lic}**')

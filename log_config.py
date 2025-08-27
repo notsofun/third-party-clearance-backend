@@ -48,14 +48,14 @@ def configure_logging():
     file_handler.setLevel(logging.INFO)
     
     # 错误日志文件处理器
-    error_file_handler = RotatingFileHandler(
-        filename=str(server_error_log_file),
-        maxBytes=10*1024*1024,
-        backupCount=5,
-        encoding='utf8'
-    )
-    error_file_handler.setFormatter(formatter)
-    error_file_handler.setLevel(logging.ERROR)
+    # error_file_handler = RotatingFileHandler(
+    #     filename=str(server_error_log_file),
+    #     maxBytes=10*1024*1024,
+    #     backupCount=5,
+    #     encoding='utf8'
+    # )
+    # error_file_handler.setFormatter(formatter)
+    # error_file_handler.setLevel(logging.ERROR)
     
     # 控制台处理器
     console_handler = logging.StreamHandler()
@@ -64,7 +64,7 @@ def configure_logging():
     
     # 添加处理器
     root_logger.addHandler(file_handler)
-    root_logger.addHandler(error_file_handler)
+    # root_logger.addHandler(error_file_handler)
     root_logger.addHandler(console_handler)
     
     # 设置第三方库的日志级别

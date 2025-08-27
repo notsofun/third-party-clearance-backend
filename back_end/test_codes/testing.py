@@ -1,3 +1,5 @@
+import sys
+sys.path.append(r'C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance')
 import pytest
 import datetime
 from log_config import configure_logging, get_logger
@@ -34,7 +36,7 @@ def class_context(request):
     shared = run_test(r"C:\Users\z0054unn\Downloads\LicenseInfo-Wireless Room Sensor-2.0-2025-08-22_01_44_49.html")
     shared['riskBot'] = get_singleton_risk_bot()
     
-    workflow_context = WorkflowContext(curren_state=ConfirmationStatus.COMPONENTOVERVIEW, bot=shared.get('riskBot'))
+    workflow_context = WorkflowContext(curren_state=ConfirmationStatus.COMMONRULES, bot=shared.get('riskBot'))
     chat_manager = ChatManager()
     chat_service = ChatService(workflow_context)
 
@@ -133,13 +135,13 @@ class TestCustomProjectOverviewIntegration:
             )
         
         # 验证最终结果
-        assert status == 'component_overview'
+        assert status == 'common_rules'
         # for k in updated_shared.keys():
         #     logger.info('we have those keys in this shared %s', k)
 
-        assert 'generated_component_overview' in updated_shared
+        assert 'generated_common_rules' in updated_shared
         
-        content = updated_shared['generated_component_overview']
+        content = updated_shared['generated_common_rules']
         assert content
         
         handler_factory.add_section(status, content)
@@ -150,6 +152,8 @@ class TestCustomProjectOverviewIntegration:
         self.context_data['updated_shared'] = updated_shared
         self.context_data['current_status'] = status
         self.context_data['handler_factory'] = handler_factory
+        self.context_data['chat_service'] = chat_service
+        self.context_data['shared'] = updated_shared
         
         # 验证确认消息格式
         assert isinstance(reply, list)
@@ -182,80 +186,80 @@ class TestCustomProjectOverviewIntegration:
         print(f"系统回复: {reply}")
         
         # 验证是否保留了生成的内容
-        assert 'generated_component_overview' in updated_shared
+        assert 'generated_common_rules' in updated_shared
         
         handler_factory.md.save_document(f'./downloads/test/product_clearance/report.md')
 
         # 更新类级别共享的上下文和状态
-        self.context_data['updated_shared'] = updated_shared
+        self.context_data['shared'] = updated_shared
         self.context_data['current_status'] = status
         
-    # @pytest.mark.order(4)
-    # def test_user_unsatisfied_flow(self):
-    #     """测试用户不满意后重新生成内容的路径"""
-    #     logger.info("开始执行测试: test_user_unsatisfied_flow")
+    @pytest.mark.order(4)
+    def test_user_unsatisfied_flow(self):
+        """测试用户不满意后重新生成内容的路径"""
+        logger.info("开始执行测试: test_user_unsatisfied_flow")
         
-    #     # 重置状态回到产品概述（模拟新的测试场景）
-    #     self.context_data['current_status'] = ConfirmationStatus.COMPONENTOVERVIEW.value
-    #     chat_service = self.context_data['chat_service']
-    #     chat_service.chat_flow.current_state = ConfirmationStatus.COMPONENTOVERVIEW
+        # 重置状态回到产品概述（模拟新的测试场景）
+        self.context_data['current_status'] = ConfirmationStatus.COMMONRULES.value
+        chat_service = self.context_data['chat_service']
+        chat_service.chat_flow.current_state = ConfirmationStatus.COMMONRULES
         
-    #     # 重新生成内容（复用初始生成流程）
-    #     self.test_initial_content_generation()
+        # 重新生成内容（复用初始生成流程）
+        self.test_initial_content_generation()
         
-    #     # 获取更新后的上下文
-    #     updated_shared = self.context_data['updated_shared']
-    #     current_status = self.context_data['current_status']
+        # 获取更新后的上下文
+        updated_shared = self.context_data['updated_shared']
+        current_status = self.context_data['current_status']
         
-    #     print("\n=== 测试用户不满意路径 ===")
-    #     print(f"当前状态: {current_status}")
+        print("\n=== 测试用户不满意路径 ===")
+        print(f"当前状态: {current_status}")
         
-    #     # 保存原始生成的内容用于比较
-    #     original_content = updated_shared.get('generated_component_overview', '')
+        # 保存原始生成的内容用于比较
+        original_content = updated_shared.get('generated_common_rules', '')
         
-    #     # 模拟用户不满意并提供反馈
-    #     user_rejection = "I am not satisfied with it, please generate it again."
-    #     status, updated_shared, reply = chat_service.process_user_input(
-    #         shared=updated_shared,
-    #         user_input=user_rejection,
-    #         status=current_status
-    #     )
+        # 模拟用户不满意并提供反馈
+        user_rejection = "I am not satisfied with it, please generate it again."
+        status, updated_shared, reply = chat_service.process_user_input(
+            shared=updated_shared,
+            user_input=user_rejection,
+            status=current_status
+        )
         
-    #     # 验证是否仍然处于同一状态（重新生成内容）
-    #     assert status == 'component_overview', "应该保持在当前状态以重新生成内容"
+        # 验证是否仍然处于同一状态（重新生成内容）
+        assert status == 'common_rules', "应该保持在当前状态以重新生成内容"
         
-    #     # 处理可能的"continue"响应
-    #     max_attempts = 3
-    #     attempts = 0
+        # 处理可能的"continue"响应
+        max_attempts = 3
+        attempts = 0
         
-    #     while status == 'continue' and attempts < max_attempts:
-    #         attempts += 1
-    #         print(f"重新生成时收到'continue'响应(第{attempts}次)，提供额外信息...")
+        while status == 'continue' and attempts < max_attempts:
+            attempts += 1
+            print(f"重新生成时收到'continue'响应(第{attempts}次)，提供额外信息...")
             
-    #         additional_input = f"重新生成时的额外信息: [第{attempts}次尝试的详情]"
-    #         status, updated_shared, reply = chat_service.process_user_input(
-    #             shared=updated_shared,
-    #             user_input=additional_input,
-    #             status=current_status
-    #         )
+            additional_input = f"重新生成时的额外信息: [第{attempts}次尝试的详情]"
+            status, updated_shared, reply = chat_service.process_user_input(
+                shared=updated_shared,
+                user_input=additional_input,
+                status=current_status
+            )
         
-    #     # 验证是否重新生成了内容
-    #     assert 'generated_component_overview' in updated_shared
-    #     new_content = updated_shared['generated_component_overview']
+        # 验证是否重新生成了内容
+        assert 'generated_common_rules' in updated_shared
+        new_content = updated_shared['generated_common_rules']
         
-    #     # 打印新旧内容进行比较
-    #     logger.info(f"原始内容: {original_content[:100]}...")
-    #     logger.info(f"重新生成的内容: {new_content[:100]}...")
+        # 打印新旧内容进行比较
+        logger.info(f"原始内容: {original_content[:100]}...")
+        logger.info(f"重新生成的内容: {new_content[:100]}...")
         
-    #     # 验证内容确实有变化（这可能不是100%准确，因为重新生成的内容可能相似）
-    #     assert len(new_content) != 0, "应该生成新的内容"
+        # 验证内容确实有变化（这可能不是100%准确，因为重新生成的内容可能相似）
+        assert len(new_content) != 0, "应该生成新的内容"
         
-    #     # 确认系统是否询问用户对新内容的满意度
-    #     assert isinstance(reply, list) and len(reply) > 0
+        # 确认系统是否询问用户对新内容的满意度
+        assert isinstance(reply, list) and len(reply) > 0
         
-    #     # 更新类级别共享的上下文和状态
-    #     self.context_data['updated_shared'] = updated_shared
-    #     self.context_data['current_status'] = status
+        # 更新类级别共享的上下文和状态
+        self.context_data['updated_shared'] = updated_shared
+        self.context_data['current_status'] = status
 
 if __name__ == '__main__':
     # 使用pytest运行指定的测试类

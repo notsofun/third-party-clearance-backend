@@ -4,6 +4,10 @@ import sys
 sys.path.append(r'C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance')
 from utils.database.baseDB import TYPE, BaseDatabase
 from utils.LLM_Analyzer import RelevanceChecker
+from log_config import configure_logging, get_logger
+
+configure_logging()
+logger = get_logger(__name__)
 
 import json
 import os
@@ -146,7 +150,8 @@ class HardDB(BaseDatabase):
         """
         def query(item):
             if item.get('_data_type') == TYPE.TYPE_XML.value:
-                item_comp_name = item.get('component_name', '').lower()
+                item_comp_name = item.get('component_name',
+                                            item.get('component', '')).lower()
                 search_term = comp_name.lower()
                 result = self.rel.check(search_term,item_comp_name)
                 # 模糊匹配：任一包含另一个
@@ -168,16 +173,47 @@ class HardDB(BaseDatabase):
         Returns:
             符合条件的许可证名称列表
         """
-        license_names = []
         components = self.find_by_component_name(comp_name)
         
+        unique_licenses = self.get_unique_licenses(comp_name)
+        
+        filtered_licenses = self.filter_licenses_by_type(unique_licenses, license_type)
+        
+        return [lic.get('name') for lic in filtered_licenses if lic.get('name')]
+
+    def get_unique_licenses(self, comp_name:str):
+        """提取组件列表中的所有许可证并按照name和content去重
+        Args:
+            components: 组件名称
+        Returns:
+            去重后的许可证列表
+        """
+        licenses = []
+        unique_pairs = set()
+        components = self.find_by_component_name(comp_name)
+        logger.info('this is the found components')
+
         for comp in components:
             if 'licenses' in comp and isinstance(comp['licenses'], list):
                 for lic in comp['licenses']:
-                    if lic.get('type') == license_type:
-                        license_names.append(lic.get('name'))
+                    name = lic.get('name')
+                    # content = lic.get('content')
+                    
+                    if (name) not in unique_pairs:
+                        unique_pairs.add((name))
+                        licenses.append(lic)
         
-        return license_names
+        return licenses
+
+    def filter_licenses_by_type(self, licenses, license_type):
+        """从许可证列表中筛选特定类型的许可证
+        Args:
+            licenses: 许可证列表
+            license_type: 许可证类型
+        Returns:
+            符合条件的许可证列表
+        """
+        return [lic for lic in licenses if lic.get('type') == license_type]
     
     def is_COTS(self, comp_name):
         """查找指定组件的特定类型的许可证
@@ -336,11 +372,15 @@ if __name__ == '__main__':
     db.load()
 
     # 查询特定组件的全局许可证
-    global_licenses = db.find_license_by_component("Mbed TLS", "global")
+    # uniqueList = db.get_unique_licenses('GNU GNU Arm Embedded Toolchain Runtime Library   Partial for EmbeddedV')
+    # # print(f'complete list is {uniqueList}')
+    # true_list = [lic['name'] for lic in uniqueList]
+    # print(f'查询到的单一许可证列表是{true_list}')
+    global_licenses = db.find_license_by_component("Amazon FreeRTOS-Kernel", "global")
     print(f"查询组件的全局许可证: {global_licenses}")
 
-    is_STM = db.is_COTS('STM32Cube G0xx HAL Driver')
-    print(f'是否为商业组件？{is_STM}')
+    # is_STM = db.is_COTS('STM32Cube G0xx HAL Driver')
+    # print(f'是否为商业组件？{is_STM}')
 
     # # 查找使用特定许可证的所有组件
     # components = db.find_components_by_license("Apache-2.0")

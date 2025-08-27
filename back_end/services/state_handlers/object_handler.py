@@ -187,9 +187,12 @@ class OSSGeneratingHandler(SimpleStateHandler):
     
 class ProductOverviewHandler(ContentGenerationHandler):
 
-    def process_special_logic(self, shared, content, result=None):
-        shared['generated_product_overview'] = content
-        return shared
+    def process_special_logic(self, shared, content = None, result=None):
+        if content == None:
+            return shared
+        else:
+            shared['generated_product_overview'] = content
+            return shared
 
     def _generate_content(self, shared):
         prompt = self.bot.langfuse.get_prompt("bot/WriteProductOverview").prompt
@@ -204,8 +207,11 @@ class ProductOverviewHandler(ContentGenerationHandler):
 class ComponenetOverviewHandler(ContentGenerationHandler):
 
     def process_special_logic(self, shared, result = None, content = None):
-        shared['generated_component_overview'] = content
-        return shared
+        if content == None:
+            return shared
+        else:
+            shared['generated_component_overview'] = content
+            return shared
     
     def _generate_content(self, shared):
         db = HardDB()
@@ -215,6 +221,23 @@ class ComponenetOverviewHandler(ContentGenerationHandler):
     
     def get_instructions(self):
         return 'Now we are generating component overview'
+
+class CommonRulesHandler(ContentGenerationHandler):
+    def process_special_logic(self, shared, result = None, content = None):
+        if content == None:
+            return shared
+        else:
+            shared['generated_common_rules'] = content
+            return shared
+    
+    
+    def _generate_content(self, shared):
+        with open('src/doc/common_rules.md','r',encoding='utf-8') as f:
+            result = f.read()
+        return result
+    
+    def get_instructions(self):
+        return 'Now we are importing common rules.'
 
 class CompletedHandler(SimpleStateHandler):
 

@@ -1,0 +1,39 @@
+2025-08-27 16:35:11 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250827_16h35m11s.log
+2025-08-27 16:35:11 - nodes - INFO - Now we are parsing the original HTML File
+2025-08-27 16:35:15 - nodes - INFO - Successfully parsed!
+2025-08-27 16:35:20 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-08-27 16:35:20 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-08-27 16:35:20 - testing - INFO - 开始执行测试: test_initial_content_generation
+2025-08-27 16:35:22 - utils.tools - INFO - we should have result like {'result': 'continue', 'talking': 'Please specify the type of document or compliance information you need assistance with so I can help you accordingly.'}
+2025-08-27 16:35:22 - back_end.services.chat_service - INFO - user_input: 
+            Just generate the markdown
+
+    
+2025-08-27 16:35:22 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMMONRULES
+2025-08-27 16:35:22 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: common_rules, Updated status: common_rules
+2025-08-27 16:35:22 - utils.tools - WARNING - 未找到处理类型(processing_type)，使用默认值: component
+2025-08-27 16:35:22 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: common_rules -> common_rules
+2025-08-27 16:35:22 - back_end.services.chat_service - INFO - now we started generating content with this handler CommonRulesHandler
+2025-08-27 16:35:22 - testing - INFO - 开始执行测试: test_user_satisfied_flow
+2025-08-27 16:35:23 - utils.tools - INFO - we should have result like {'result': 'next', 'talking': 'Great! Please provide details about the software project or specific components you would like to assess for OSS and PSS compliance.'}
+2025-08-27 16:35:23 - back_end.services.chat_service - INFO - user_input: Yes, I am satisfied with the current content.
+2025-08-27 16:35:23 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMMONRULES
+2025-08-27 16:35:23 - CommonRulesHandler - INFO - we have generated content...
+2025-08-27 16:35:23 - CommonRulesHandler - INFO - Now we are checking...
+2025-08-27 16:35:23 - CommonRulesHandler - INFO - we have reset the status of completion
+2025-08-27 16:35:23 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.COMMONRULES -> ConfirmationStatus.COMPLETED
+2025-08-27 16:35:23 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: common_rules, Updated status: completed
+2025-08-27 16:35:23 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: common_rules -> completed
+2025-08-27 16:35:23 - back_end.items_utils.item_types - WARNING - 最新状态为completed，未找到处理类型(processing_type)，使用默认值: component
+2025-08-27 16:35:23 - testing - INFO - 开始执行测试: test_user_unsatisfied_flow
+2025-08-27 16:35:23 - testing - INFO - 开始执行测试: test_initial_content_generation
+2025-08-27 16:35:34 - utils.tools - INFO - we should have result like {'result': 'continue', 'talking': 'I need more clarity on what specific markdown content you are looking for. Please provide details or specify the context of the markdown required.'}
+2025-08-27 16:35:35 - back_end.services.chat_service - INFO - user_input: 
+            Just generate the markdown
+
+    
+2025-08-27 16:35:35 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMMONRULES
+2025-08-27 16:35:35 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: common_rules, Updated status: common_rules
+2025-08-27 16:35:35 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: common_rules -> common_rules
+2025-08-27 16:35:35 - CommonRulesHandler - INFO - we have generated content...
+2025-08-27 16:35:35 - CommonRulesHandler - INFO - Now we are checking...

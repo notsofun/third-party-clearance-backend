@@ -1,0 +1,57 @@
+2025-08-27 16:45:25 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250827_16h45m25s.log
+2025-08-27 16:45:25 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250827_16h45m25s.log
+2025-08-27 16:45:25 - nodes - INFO - Now we are parsing the original HTML File
+2025-08-27 16:45:26 - nodes - INFO - Successfully parsed!
+2025-08-27 16:45:30 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-08-27 16:45:30 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-08-27 16:45:30 - testing - INFO - 开始执行测试: test_initial_content_generation
+2025-08-27 16:45:32 - utils.tools - INFO - we should have result like {'result': 'continue', 'talking': 'Please specify the context or content you would like to generate in markdown so I can assist you effectively.'}
+2025-08-27 16:45:32 - back_end.services.chat_service - INFO - user_input: 
+            Just generate the markdown
+
+    
+2025-08-27 16:45:32 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMMONRULES
+2025-08-27 16:45:32 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: common_rules, Updated status: common_rules
+2025-08-27 16:45:32 - utils.tools - WARNING - 未找到处理类型(processing_type)，使用默认值: component
+2025-08-27 16:45:32 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: common_rules -> common_rules
+2025-08-27 16:45:32 - back_end.services.chat_service - INFO - now we started generating content with this handler CommonRulesHandler
+2025-08-27 16:45:33 - testing - INFO - 开始执行测试: test_user_satisfied_flow
+2025-08-27 16:45:34 - utils.tools - INFO - we should have result like {'result': 'next', 'talking': "Great! If you're ready to move on, please let me know what specific topic or task you'd like to address next in the compliance auditing process."}
+2025-08-27 16:45:34 - back_end.services.chat_service - INFO - user_input: Yes, I am satisfied with the current content.
+2025-08-27 16:45:34 - testing - INFO - 开始执行测试: test_user_unsatisfied_flow
+2025-08-27 16:45:34 - testing - INFO - 开始执行测试: test_initial_content_generation
+2025-08-27 16:45:35 - utils.tools - INFO - we should have result like {'result': 'continue', 'talking': 'I need clarification on what specific content you would like in markdown format. Please provide details or context.'}
+2025-08-27 16:45:35 - back_end.services.chat_service - INFO - user_input: 
+            Just generate the markdown
+
+    
+2025-08-27 16:45:35 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMMONRULES
+2025-08-27 16:45:35 - CommonRulesHandler - INFO - we have generated content...
+2025-08-27 16:45:35 - CommonRulesHandler - INFO - Now we are checking...
+2025-08-27 16:45:35 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: common_rules, Updated status: common_rules
+2025-08-27 16:45:35 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: common_rules -> common_rules
+2025-08-27 16:45:35 - CommonRulesHandler - INFO - we have generated content...
+2025-08-27 16:45:35 - CommonRulesHandler - INFO - Now we are checking...
+2025-08-27 16:45:36 - utils.tools - INFO - we should have result like {'result': 'continue', 'talking': 'Can you please provide the specific information or content you would like me to generate in markdown format? This will help me assist you better.'}
+2025-08-27 16:45:36 - back_end.services.chat_service - INFO - user_input: I am not satisfied with it, please generate it again.
+2025-08-27 16:45:36 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMMONRULES
+2025-08-27 16:45:36 - CommonRulesHandler - INFO - we have generated content...
+2025-08-27 16:45:36 - CommonRulesHandler - INFO - Now we are checking...
+2025-08-27 16:45:36 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: common_rules, Updated status: common_rules
+2025-08-27 16:45:36 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: common_rules -> common_rules
+2025-08-27 16:45:36 - CommonRulesHandler - INFO - we have generated content...
+2025-08-27 16:45:36 - CommonRulesHandler - INFO - Now we are checking...
+2025-08-27 16:45:36 - testing - INFO - 原始内容: # Common Rules
+
+## Common Rules - Open-Source Software
+
+### Documentation
+
+Documentation of license ...
+2025-08-27 16:45:36 - testing - INFO - 重新生成的内容: # Common Rules
+
+## Common Rules - Open-Source Software
+
+### Documentation
+
+Documentation of license ...
