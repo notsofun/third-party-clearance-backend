@@ -153,7 +153,7 @@ class TestCustomProjectOverviewIntegration:
         self.context_data['current_status'] = status
         self.context_data['handler_factory'] = handler_factory
         self.context_data['chat_service'] = chat_service
-        self.context_data['shared'] = updated_shared
+        self.context_data['shared'] = shared
         
         # 验证确认消息格式
         assert isinstance(reply, list)

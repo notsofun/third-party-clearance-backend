@@ -6,7 +6,7 @@ from back_end.items_utils.item_types import State, ItemType
 from back_end.items_utils.item_utils import get_item_type_from_string, get_type_config
 from typing import Dict, Any
 from back_end.items_utils.item_utils import is_item_completed, get_items_from_context
-from utils.PRC_Generation.component_overview import generate_components_markdown_table
+from utils.PCR_Generation.component_overview import generate_components_markdown_table
 from utils.database.hardDB import HardDB
 
 logger = get_logger(__name__)
