@@ -87,6 +87,103 @@ graph TD
 
 ```
 
+#### `chat_service`状态流转详细流程图
+
+```mermaid
+flowchart TD
+    A[用户输入] --> B[Chat_Service.process_user_input]
+    B --> C[get_strict_json解析用户意图]
+    C --> D[获取当前状态Handler]
+    D --> E{状态是否变化?}
+    
+    E -->|是| F[_process_status_change]
+    E -->|否| G{Handler类型判断}
+    
+    F --> F1[更新processing_type]
+    F --> F2[获取新状态指导语]
+    F --> F3{需要嵌套项指导语?}
+    F3 -->|是| F4[ChatManager.handle_item_action]
+    F3 -->|否| F5[返回基础指导语]
+    
+    G -->|ChapterGeneration| H[_handle_chapter_generation]
+    G -->|SubTaskStateHandler| I[_handle_nested_logic]
+    G -->|ContentGenerationHandler| J[_handle_content_generation]
+    G -->|其他| K[返回原始回复]
+    
+    H --> H1[构建Context上下文]
+    H1 --> H2[ChapterGeneration.handle]
+    H2 --> H3[初始化嵌套字典结构]
+    H3 --> H4{是否已初始化?}
+    H4 -->|否| H5[initialize_subtasks]
+    H4 -->|是| H6[执行状态流转]
+    
+    H5 --> H5a[遍历item_list获取项目]
+    H5a --> H5b[为每个项目创建子标题处理器列表]
+    H5b --> H5c[nested_handlers字典初始化完成]
+    H5c --> H6
+    
+    H6 --> H7[_state_transition]
+    H7 --> H8{当前项目索引检查}
+    H8 -->|超出范围| H9[返回COMPLETED]
+    H8 -->|在范围内| H10[获取当前项目的子标题列表]
+    
+    H10 --> H11{查找未确认的子标题}
+    H11 -->|找到| H12[标记content_confirmed=true]
+    H11 -->|未找到| H13[检查当前项目是否全部完成]
+    
+    H12 --> H13
+    H13 --> H14{所有子标题都已确认?}
+    H14 -->|是| H15[current_item_index++]
+    H14 -->|否| H16[返回IN_PROGRESS]
+    
+    H15 --> H17{所有项目都已完成?}
+    H17 -->|是| H18[返回COMPLETED]
+    H17 -->|否| H16
+    
+    H18 --> H19[_aggregate_content内容聚合]
+    H19 --> H20[MarkdownDocumentBuilder构建]
+    H20 --> H21[遍历所有项目和子标题]
+    H21 --> H22[组合markdown格式内容]
+    H22 --> H23[存储到shared字典]
+    H23 --> H24[返回最终状态]
+    
+    H16 --> H25[_content_generation内容生成]
+    H25 --> H26[获取当前项目信息]
+    H26 --> H27[查找当前需要处理的子标题]
+    H27 --> H28{找到未处理的子标题?}
+    H28 -->|是| H29[调用子标题内容生成器]
+    H28 -->|否| H30[当前项目所有子标题已完成]
+    
+    H29 --> H31[生成具体内容]
+    H31 --> H32[存储到shared字典]
+    H32 --> H33[返回生成的内容]
+    
+    H33 --> H34{ChapterGeneration结果检查}
+    H34 -->|COMPLETED| H35[重新检查大状态转换]
+    H34 -->|IN_PROGRESS| H36[获取当前指导语]
+    
+    H35 --> H37{状态是否变化?}
+    H37 -->|是| H38[处理状态变化]
+    H37 -->|否| H39[返回完成消息]
+    
+    H36 --> H40{是否有新生成内容?}
+    H40 -->|是| H41[显示生成内容+指导语]
+    H40 -->|否| H42{用户输入是继续指令?}
+    H42 -->|是| H43[显示进度信息+指导语]
+    H42 -->|否| H44[返回当前指导语]
+    
+    style A fill:#e1f5fe
+    style H fill:#fff3e0
+    style H2 fill:#fff3e0
+    style H5 fill:#fff3e0
+    style H7 fill:#fff3e0
+    style H19 fill:#fff3e0
+    style H25 fill:#fff3e0
+    style I fill:#f3e5f5
+    style J fill:#e8f5e8
+
+```
+
 
 ### 后端聊天服务
 

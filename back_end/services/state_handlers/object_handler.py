@@ -1,5 +1,5 @@
 # state_handlers/oem_handler.py
-from .base_handler import ContentGenerationHandler, SimpleStateHandler, SubTaskStateHandler
+from .base_handler import ContentGenerationHandler, SimpleStateHandler, SubTaskStateHandler, ChapterGeneration
 from utils.tools import get_strict_json
 from log_config import get_logger
 from back_end.items_utils.item_types import State, ItemType
@@ -244,3 +244,68 @@ class CompletedHandler(SimpleStateHandler):
     def get_instructions(self) -> str:
 
         return 'We have finished all checking in current session, please reupload a new license info file to start a new session.'
+    
+class ObiligationsHandler(ChapterGeneration):
+
+    def __init__(self, bot=None):
+        super().__init__(bot)
+
+    def get_instructions(self) -> str:
+        return 'Now we shall start generating obligations resulting from using 3rd party components'
+
+    def _create_content_handlers(self):
+        return [
+            LicenseHandler(),
+            SubObligationsHandler(),
+            SubRisksHandler(),
+            CommonRulesHandler(),
+            AdditionalHandler(),
+            ImplementationHandler(),
+            ObligationCombiningHandler(),
+        ]
+    
+class LicenseHandler(ContentGenerationHandler):
+
+    def process_special_logic(self, shared, result = None, content = None):
+        if content == None:
+            return shared
+        else:
+            shared['generated_common_rules'] = content
+            return shared
+    
+    
+    def _generate_content(self, shared):
+        with open('src/doc/common_rules.md','r',encoding='utf-8') as f:
+            result = f.read()
+        return result
+    
+    def get_instructions(self):
+        return 'Now we are importing common rules.'
+
+    
+
+class SubObligationsHandler(ContentGenerationHandler):
+    
+    def __init__(self, bot=None):
+        super().__init__(bot)
+
+class SubRisksHandler(ContentGenerationHandler):
+
+    def __init__(self, bot=None):
+        super().__init__(bot)
+
+class CommonRulesHandler(ContentGenerationHandler):
+    def __init__(self, bot=None):
+        super().__init__(bot)
+
+class AdditionalHandler(ContentGenerationHandler):
+    def __init__(self, bot=None):
+        super().__init__(bot)
+
+class ImplementationHandler(ContentGenerationHandler):
+    def __init__(self, bot=None):
+        super().__init__(bot)
+
+class ObligationCombiningHandler(ContentGenerationHandler):
+    def __init__(self, bot=None):
+        super().__init__(bot)
