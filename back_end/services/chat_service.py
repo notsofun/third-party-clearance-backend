@@ -9,6 +9,7 @@ from utils.tools import get_strict_json, get_processing_type_from_shared
 from utils.LLM_Analyzer import RiskBot
 from log_config import get_logger
 from back_end.services.state_handlers.handler_factory import StateHandlerFactory
+from back_end.services.chat_gen.generator import ChatGenerator
 from back_end.services.state_handlers.base_handler import SubTaskStateHandler,ContentGenerationHandler, ChapterGeneration
 logger = get_logger(__name__)  # 每个模块用自己的名称
 
@@ -46,7 +47,8 @@ class ChatService:
 
         # 检查大状态变化
         content = {'shared': shared, 'status': result}
-        updated_status = self.chat_flow.process(content).value
+        result_in_flow = chat_flow.process(content)
+        updated_status = result_in_flow['current_state'].value
         
         logger.info('chat_service.process_user_input: Current status: %s, Updated status: %s', status, updated_status)
         
@@ -102,6 +104,7 @@ class ChatService:
         
         # 检查是否是从ChapterGeneration状态转出，需要聚合内容
         if isinstance(handler, ChapterGeneration) and old_status != new_status:
+            self.gen = ChatGenerator(handler=handler)
             logger.info('_process_status_change: ChapterGeneration completed, aggregating content')
             
             # 构建context
@@ -112,7 +115,7 @@ class ChatService:
             
             # 调用ChapterGeneration的内容聚合方法
             try:
-                aggregated_content = handler.get_aggregated_content(context)
+                aggregated_content = self.gen._aggregate_content(context)
                 
                 if aggregated_content:
                     # 使用add_section方法添加聚合后的内容
@@ -154,14 +157,15 @@ class ChatService:
         如果需要生成内容，返回(状态, 更新后的shared, 新回复)
         否则返回None，表示继续正常流程
         """
-        context = {
+        content = {
             'shared': shared,
             'user_input': shared.get('user_input', ''),
             'status': result
         }
-        event = handler.handle(context)
+        result_in_flow = chat_flow.process(content)
+        event = result_in_flow.get('event')
         
-        if event == "GENERATE_CONTENT":
+        if event == State.GENERATION.value:
             logger.info(f"now we started generating content with this handler {handler.__class__.__name__}")
             generated_content = handler._generate_content(shared)
             shared = handler.process_special_logic(shared,content=generated_content)
@@ -193,39 +197,37 @@ class ChatService:
         Chat_service 进入此大状态后分为两部分：内容生成和状态流转
         """
         logger.info('chat_service._handle_chapter_generation: Processing ChapterGeneration with result: %s', result)
-        
+        self.gen = ChatGenerator(handler=handler)
         # 设置用户输入到shared中，供ChapterGeneration使用
         shared['user_input'] = shared.get('current_user_input', '')
         
         # 构建context
-        context = {
+        content = {
             'shared': shared,
             'user_input': shared.get('user_input', ''),
             'status': result
         }
         
-        # 调用ChapterGeneration的handle方法
-        # 这会同时处理内容生成和状态流转
-        chapter_result = handler.handle(context)
-        
-        logger.info('chat_service._handle_chapter_generation: ChapterGeneration returned: %s', chapter_result)
-        
-        # 如果章节生成完成
-        if chapter_result == State.COMPLETED.value:
+        # 只处理内容生成，仅返回子标题内容
+        gen_content, all_completed = self.gen.generate_content(content)
+
+        # 如果章节生成完成，状态流转往下走，
+        if all_completed:
             logger.info('chat_service._handle_chapter_generation: Chapter generation completed')
             
             # 重新检查大状态转换
             content = {'shared': shared, 'status': 'next'}
-            final_status = self.chat_flow.process(content).value
+            result_in_flow = chat_flow.process(content)
+            final_status = result_in_flow['current_state'].value
             
             # 如果状态发生变化，处理状态变化
             if final_status != status:
                 return self._process_status_change(shared, status, final_status, handler)
             
             # 状态未变化，返回完成消息
-            completion_message = "章节内容生成已完成。"
+            completion_message = "Content for current chapter has been generated"
             if shared.get(handler.chapter_content_key):
-                completion_message += f"\n\n生成的章节内容已保存。"
+                completion_message += f"\n\nGenerated chapter has been saved."
             
             return status, shared, self._ensure_list(completion_message)
         
@@ -233,19 +235,9 @@ class ChatService:
         else:
             # 获取当前的指导语
             instruction = handler.get_instructions()
+            messages = [instruction, gen_content]
             
-            # # 检查是否有新生成的内容
-            # if hasattr(handler, '_last_generated_content') and handler._last_generated_content:
-            #     content_message = f"已生成内容：\n\n{handler._last_generated_content}\n\n{instruction}"
-            #     handler._last_generated_content = None  # 清除已显示的内容
-            #     return status, shared, self._ensure_list(content_message)
-            
-            # # 如果用户输入是"next"或类似的继续指令，显示进度信息
-            # if result in ['next', 'continue', '继续', '下一个']:
-            #     progress_info = self._get_chapter_progress_info(handler, shared)
-            #     return status, shared, self._ensure_list(f"{progress_info}\n\n{instruction}")
-            
-            return status, shared, self._ensure_list(instruction)
+            return status, shared, self._ensure_list(messages)
 
     def _handle_nested_logic(self, shared: Dict[str, Any], status: str, result: str, reply: str, handler:SubTaskStateHandler) -> Tuple[str, Dict[str, Any], str]:
         """
@@ -283,7 +275,8 @@ class ChatService:
             logger.info('chat_service.handle_nested: we have finished the checking for this state %s',self.chat_flow.current_state.value )
             # 重新检查大状态转换
             content = {'shared': updated_shared, 'status': 'next'}
-            final_status = self.chat_flow.process(content).value
+            result_in_flow = chat_flow.process(content)
+            final_status = result_in_flow['current_state'].value
             
             final_status, updated_shared, message = self._status_check(
                 updated_shared,

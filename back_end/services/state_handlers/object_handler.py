@@ -2,12 +2,13 @@
 from .base_handler import ContentGenerationHandler, SimpleStateHandler, SubTaskStateHandler, ChapterGeneration
 from utils.tools import get_strict_json
 from log_config import get_logger
-from back_end.items_utils.item_types import State, ItemType
+from back_end.items_utils.item_types import State, ItemType, TYPE_CONFIG
 from back_end.items_utils.item_utils import get_item_type_from_string, get_type_config
 from typing import Dict, Any
 from back_end.items_utils.item_utils import is_item_completed, get_items_from_context
 from utils.PCR_Generation.component_overview import generate_components_markdown_table
 from utils.database.hardDB import HardDB
+from utils.PCR_Generation.obligations import get_license_descriptions
 
 logger = get_logger(__name__)
 
@@ -247,12 +248,14 @@ class CompletedHandler(SimpleStateHandler):
     
 class ObiligationsHandler(ChapterGeneration):
 
-    def __init__(self, bot=None):
-        super().__init__(bot)
-
+    def __init__(self, bot=None, item_list_key = TYPE_CONFIG[ItemType.COMPONENT]['items_key'],
+                chapter_title_key = 'Obligations resulting from the use of 3rd party components',
+                chapter_content_key = 'Generated Obligations resulting from the use of 3rd party components'):
+        super().__init__(bot, item_list_key, chapter_title_key, chapter_content_key)
+        
     def get_instructions(self) -> str:
         return 'Now we shall start generating obligations resulting from using 3rd party components'
-
+    
     def _create_content_handlers(self):
         return [
             LicenseHandler(),
@@ -266,29 +269,53 @@ class ObiligationsHandler(ChapterGeneration):
     
 class LicenseHandler(ContentGenerationHandler):
 
+    def __init__(self, bot=None):
+        super().__init__(bot)
+        self.db = HardDB()
+        self.db.load()
+
     def process_special_logic(self, shared, result = None, content = None):
         if content == None:
             return shared
         else:
-            shared['generated_common_rules'] = content
+            shared['Licenses_identified'] = content
             return shared
     
     
-    def _generate_content(self, shared):
-        with open('src/doc/common_rules.md','r',encoding='utf-8') as f:
-            result = f.read()
-        return result
+    def _generate_content(self, shared: Dict):
+        current_item_idx = shared.get('current_item_idx', 0)
+        components = shared.get('shared',{}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        global_licenses = self.db.find_license_by_component(components[current_item_idx]['compName'], 'global')
+        other_licenses = self.db.find_license_by_component(components[current_item_idx]['compName'], 'other')
+        global_str = "*Global Licenses:*" + ', '.join(global_licenses)
+        other_str = "*Other Licenses:*" + ', '.join(other_licenses)
+        return global_str + '\n\n' + other_str
     
     def get_instructions(self):
-        return 'Now we are importing common rules.'
-
-    
+        return 'Now we have imported the licenses identified from the cli xml.'
 
 class SubObligationsHandler(ContentGenerationHandler):
-    
     def __init__(self, bot=None):
         super().__init__(bot)
+        self.db = HardDB()
+        self.db.load()
 
+    def get_instructions(self):
+        return 'Now we have generated the obligations for this component'
+    
+    def _generate_content(self, shared: Dict):
+        current_item_idx = shared.get('current_item_idx', 0)
+        components = shared.get('shared',{}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        current_comp = components[current_item_idx]
+        licenses = self.db.get_unique_licenses(current_comp['compName'])
+        tables = shared['ParsedPCR']['tables'][1]['data']
+        obligations = get_license_descriptions(licenses, tables)
+        final_str = ''
+        for i in obligations:
+            mid = '- ' + i + '\n\n'
+            final_str += mid
+        return final_str
+    
 class SubRisksHandler(ContentGenerationHandler):
 
     def __init__(self, bot=None):

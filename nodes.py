@@ -1,5 +1,5 @@
 from pocketflow import Node, BatchNode
-import re, os
+import os
 from spire.doc import *
 from spire.doc.common import *
 from bs4 import BeautifulSoup
@@ -13,8 +13,10 @@ from utils.tools import (reverse_exec, format_oss_text_to_html, extract_h1_conte
 from utils.htmlParsing import parse_html
 from utils.itemFilter import filter_components_by_credential_requirement, filter_html_content
 import random
+from utils.PCR_Generation.original_PCR_parsing import parse_docx_to_hierarchical_json
 from log_config import get_logger
 from back_end.items_utils.item_utils import process_items_and_generate_finals
+from typing import Dict
 
 logger = get_logger(__name__)  # 每个模块用自己的名称
 class ParsingOriginalHtml(Node):
@@ -46,7 +48,6 @@ class ParsingOriginalHtml(Node):
                 return shared["data"]
         except Exception as e:
             logger.error(f"Error parsing HTML: {str(e)}")
-            raise
     
     def exec(self, data):
 
@@ -74,7 +75,6 @@ class LicenseReviewing(BatchNode):
 
     def prep(self, shared):
         logger.info('Now we are reviewing the components list')
-        # super的prep的话就是そのまま把数据搞出来了
         parsedHtml = shared["parsedHtml"]
         random_int = random.getrandbits(64)
         licenseTexts = [(item['id'], item['title'], item['text'],random_int)
@@ -158,14 +158,11 @@ class SpecialLicenseCollecting(BatchNode):
         # 返回许可证标题和它所属的类别
 
         if category:
-
             result = {
                 'licName': lTitle,
                 'category': category
             }
-
             return result
-        
         else:
             return None
     
@@ -178,6 +175,7 @@ class SpecialLicenseCollecting(BatchNode):
                 'category': 'GPL'
             }
         exec_res.append(test_item)
+
         filtered_results = [result for result in exec_res if result is not None]
         shared[TYPE_CONFIG[ItemType.SPECIALCHECK]['items_key']] = filtered_results
 
@@ -192,7 +190,7 @@ class RiskCheckingRAG(BatchNode):
         super().__init__(max_retries, wait)
         self.deployment = deployment
         self.embedding_deployment = embedding_deployment
-    # 这个prompt要改一下，我觉得check也得基于text
+
     def prep(self, shared):
         logger.info('Now checking the reviewed risks')
         parsedHtml = shared["parsedHtml"]
@@ -226,7 +224,6 @@ class RiskCheckingRAG(BatchNode):
         checker = RiskChecker(session_id=f'check{randInt:016x}')
         checkedRisk = checker.review(reviewedTitle,originalText, reviewedLevel,reviewedReason,retrievedDocument)
 
-        # 姑且以checker的结果为标准吧
         logger.info('We have checked one component')
 
         return checkedRisk
@@ -285,7 +282,7 @@ class DependecyCheckingRAG(BatchNode):
         return dependency, compDict
     
     def post(self, shared, prep_res, exec_res):
-
+        shared[TYPE_CONFIG[ItemType.PC]['items_key']] = prep_res
         dependencies, components = split_tuples(exec_res)
 
         credential_required_components = filter_components_by_credential_requirement(
@@ -427,3 +424,22 @@ class getFinalOSS(Node):
         document.Close()
         logger.info("We have generated the oss readme file successfully!")
         return super().post(shared, prep_res, exec_res)
+
+class ParsingPCR(Node):
+
+    def __init__(self, max_retries=1, wait=0):
+        super().__init__(max_retries, wait)
+
+    def prep(self, shared: Dict):
+        logger.info("Now we are parsing the original PCR file.")
+        PCR_path = shared.get('PCR_Path', '')
+
+        return PCR_path
+
+    def exec(self, prep_res):
+        pcr = parse_docx_to_hierarchical_json(prep_res, 'resultsInProgress/pcr.json')
+        return pcr
+    
+    def post(self, shared, prep_res, exec_res):
+        shared['ParsedPCR'] = exec_res
+        return 'default'

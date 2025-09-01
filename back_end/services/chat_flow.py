@@ -68,8 +68,12 @@ class WorkflowContext:
                 State.INPROGRESS.value: ConfirmationStatus.COMPONENTOVERVIEW
             },
             ConfirmationStatus.COMMONRULES: {
-                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
+                State.COMPLETED.value: ConfirmationStatus.OBLIGATIONS,
                 State.INPROGRESS.value: ConfirmationStatus.COMMONRULES
+            },
+            ConfirmationStatus.OBLIGATIONS: {
+                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
+                State.INPROGRESS.value: ConfirmationStatus.OBLIGATIONS,
             },
             ConfirmationStatus.COMPLETED: {
                 # 完成状态下一直停留在完成
@@ -182,7 +186,7 @@ class WorkflowContext:
         if subtask_info["has_subtasks"]:
             result.update(subtask_info)
             
-        return result["current_state"]
+        return result
 
 # 使用示例
 if __name__ == "__main__":

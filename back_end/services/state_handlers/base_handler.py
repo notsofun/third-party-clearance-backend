@@ -80,7 +80,7 @@ class ContentGenerationHandler(StateHandler):
         
         if not self.content_generated:
             self.content_generated = True
-            return "GENERATE_CONTENT"
+            return State.GENERATION.value
         
         # 如果已生成内容，检查用户是否确认，相当于两个next来实现这个跳过
         if self.content_generated:
@@ -291,37 +291,6 @@ class ChapterGeneration(SubTaskStateHandler):
     def _create_content_handlers(self):
         pass
 
-    def _content_generation(self, context: Dict[str, Any]) -> str:
-        """
-        内容生成方法 - Chat_service只通过handler._content_generation调用
-        通过shared里维护的当前item序号和子章节标题确定调用哪个子标题的状态生成器
-        """
-        shared = context.get('shared', {})
-        
-        if self.current_item_index >= len(self.items):
-            return "所有内容已生成完成"
-        
-        current_item = self.items[self.current_item_index]
-        item_key = current_item.get('id', current_item.get('title', f'item_{self.current_item_index}'))
-        
-        # 获取当前项目的子标题处理器列表
-        subtitle_handlers = self.nested_handlers.get(item_key, [])
-        
-        # 找到当前需要处理的子标题
-        for handler in subtitle_handlers:
-            if not getattr(handler, 'content_confirmed', False):
-                # 调用子标题的内容生成
-                content = handler._generate_content(context)
-                
-                # 存储内容到shared
-                subtitle_key = f"content_{item_key}_{handler.__class__.__name__}"
-                shared[subtitle_key] = content
-                
-                self.logger.info(f"Generated content for {item_key} - {handler.__class__.__name__}")
-                return content
-        
-        return "当前项目所有子标题已完成"
-
     def _state_transition(self, context: Dict[str, Any]) -> str:
         """
         状态流转方法 - 基于subtask和subcontent维护嵌套字典
@@ -357,50 +326,6 @@ class ChapterGeneration(SubTaskStateHandler):
         
         return State.INPROGRESS.value
 
-    def _aggregate_content(self, context: Dict[str, Any]) -> str:
-        """
-        内容合成方法 - 把每个项目的子章节内容组合起来并返回markdown字符串
-        返回: 聚合后的markdown内容字符串
-        """
-        shared = context.get('shared', {})
-        full_chapter_content_builder = MarkdownDocumentBuilder()
-        
-        for item in self.items:
-            item_key = item.get('id', item.get('title', ''))
-            item_title = item.get('title', item_key)
-            
-            # 添加项目标题
-            full_chapter_content_builder.add_section(f"## {item_title}")
-            
-            # 获取该项目的所有子标题内容
-            subtitle_handlers = self.nested_handlers.get(item_key, [])
-            for handler in subtitle_handlers:
-                subtitle_key = f"content_{item_key}_{handler.__class__.__name__}"
-                subtitle_content = shared.get(subtitle_key, "")
-                
-                if subtitle_content:
-                    subtitle_title = getattr(handler, 'subtitle_title', handler.__class__.__name__)
-                    full_chapter_content_builder.add_section(f"### {subtitle_title}\n\n{subtitle_content}")
-        
-        # 构建最终内容
-        final_content = full_chapter_content_builder.build_document()
-        
-        # 存储到shared（保留原有逻辑）
-        shared[self.chapter_content_key] = final_content
-        shared[self.chapter_title_key] = "Generated Chapter"
-        
-        self.logger.info("Content aggregation completed and stored in markdown format")
-        
-        # 返回markdown字符串
-        return final_content
-
-    def get_aggregated_content(self, context: Dict[str, Any]) -> str:
-        """
-        公共方法：获取聚合后的内容
-        供外部调用，返回最终的markdown内容
-        """
-        return self._aggregate_content(context)
-
     def handle(self, context: Dict[str, Any]) -> str:
         """
         处理章节生成状态
@@ -413,12 +338,7 @@ class ChapterGeneration(SubTaskStateHandler):
         # 执行状态流转
         state_result = self._state_transition(context)
         
-        # 如果状态流转返回完成，则执行内容合成
-        if state_result == State.COMPLETED.value:
-            self._aggregate_content(context)
-            return State.COMPLETED.value
-        
-        return State.INPROGRESS.value
+        return state_result
 
     def process_special_logic(self, shared: Dict[str, Any], result: Dict[str, Any] = None, content: str = None) -> Dict[str, Any]:
         """

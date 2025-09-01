@@ -147,7 +147,8 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
         }
 
         # Status here should be transitted to toDependency
-        updated_status = chat_flow.process(content).value
+        result_in_flow = chat_flow.process(content)
+        updated_status = result_in_flow['current_state'].value
         handler = chat_service.handler_factory.get_handler(updated_status)
 
         # Since the status has changed, here should return an instruction for dependency checking

@@ -10,6 +10,7 @@ class ItemType(Enum):
     CREDENTIAL = 'credential'
     SPECIALCHECK = 'specialcheck'
     MAINLICENSE = 'main_license'
+    PC = 'pure_component'
 
 # 单独添加配置映射
 TYPE_CONFIG = {
@@ -58,7 +59,10 @@ TYPE_CONFIG = {
         'default_name': 'Unknown component',
         'instruction_template': 'here is the component name {compName} and it is the license it contains {licenseList}',
         'instruction_fields': ['compName', 'licenseList'],
-    }
+    },
+    ItemType.PC : {
+        'items_key' : 'component'
+    },
 }
 
 class ItemStatus(Enum):
@@ -101,6 +105,7 @@ class State(Enum):
     CONTINUE = 'continue'
     NEXT = 'next'
     DISCARDED = "discarded"
+    GENERATION = "GENERATE_CONTENT"
 
 class ConfirmationStatus(Enum):
     """确认状态的枚举类型"""
@@ -116,6 +121,7 @@ class ConfirmationStatus(Enum):
     PRODUCTOVERVIEW = 'product_overview'
     COMPLETED = 'completed'
     COMPONENTOVERVIEW = 'component_overview'
+    OBLIGATIONS = 'obligations'
     COMMONRULES = 'common_rules'
 
 # 确认状态到处理类型的映射
