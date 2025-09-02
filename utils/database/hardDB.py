@@ -232,6 +232,26 @@ class HardDB(BaseDatabase):
             else:
                 return False
     
+    def get_general_assessment(self, comp_name):
+        '''获得对应组件的通用描述'''
+        components = self.find_by_component_name(comp_name)
+        
+        for comp in components:
+            if comp.get('general_assessment', '') != '':
+                return comp['general_assessment']
+        
+        logger.info(f'We have not found the general assessment for {comp_name}')
+
+    def get_additional_nots(self, comp_name):
+        '''获得对应组件的通用描述'''
+        components = self.find_by_component_name(comp_name)
+        
+        for comp in components:
+            if comp.get('additional_notes', '') != '':
+                return comp['additional_notes']
+        
+        logger.info(f'We have not found the additional notes for {comp_name}')
+
     def find_obligations_by_license(self, license_name):
         """查找与指定许可证相关的所有义务
         
@@ -365,19 +385,19 @@ if __name__ == '__main__':
     db = HardDB(default_type=TYPE.TYPE_XML.value)
 
     # 批量处理XML文件
-    # xml_folder_path = "../third-party-clearance/data"
-    # db.batch_process_xml_files(xml_folder_path, save_interval=5)
+    xml_folder_path = "../third-party-clearance/data"
+    db.batch_process_xml_files(xml_folder_path, save_interval=5)
 
     # 加载已有的数据库
-    db.load()
+    # db.load()
 
     # 查询特定组件的全局许可证
     # uniqueList = db.get_unique_licenses('GNU GNU Arm Embedded Toolchain Runtime Library   Partial for EmbeddedV')
     # # print(f'complete list is {uniqueList}')
     # true_list = [lic['name'] for lic in uniqueList]
     # print(f'查询到的单一许可证列表是{true_list}')
-    global_licenses = db.find_license_by_component("Amazon FreeRTOS-Kernel", "global")
-    print(f"查询组件的全局许可证: {global_licenses}")
+    # global_licenses = db.find_license_by_component("Amazon FreeRTOS-Kernel", "global")
+    # print(f"查询组件的全局许可证: {global_licenses}")
 
     # is_STM = db.is_COTS('STM32Cube G0xx HAL Driver')
     # print(f'是否为商业组件？{is_STM}')

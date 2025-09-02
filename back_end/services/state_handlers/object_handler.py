@@ -2,13 +2,13 @@
 from .base_handler import ContentGenerationHandler, SimpleStateHandler, SubTaskStateHandler, ChapterGeneration
 from utils.tools import get_strict_json
 from log_config import get_logger
-from back_end.items_utils.item_types import State, ItemType, TYPE_CONFIG
+from back_end.items_utils.item_types import ItemType, TYPE_CONFIG, ItemStatus
 from back_end.items_utils.item_utils import get_item_type_from_string, get_type_config
 from typing import Dict, Any
 from back_end.items_utils.item_utils import is_item_completed, get_items_from_context
 from utils.PCR_Generation.component_overview import generate_components_markdown_table
 from utils.database.hardDB import HardDB
-from utils.PCR_Generation.obligations import get_license_descriptions
+from utils.PCR_Generation.obligations import get_license_descriptions, list_to_string
 
 logger = get_logger(__name__)
 
@@ -280,8 +280,7 @@ class LicenseHandler(ContentGenerationHandler):
         else:
             shared['Licenses_identified'] = content
             return shared
-    
-    
+
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
         components = shared.get('shared',{}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
@@ -301,38 +300,183 @@ class SubObligationsHandler(ContentGenerationHandler):
         self.db.load()
 
     def get_instructions(self):
-        return 'Now we have generated the obligations for this component'
+        return 'Now we start importing the obligations for this component'
     
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
         components = shared.get('shared',{}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
         current_comp = components[current_item_idx]
         licenses = self.db.get_unique_licenses(current_comp['compName'])
-        tables = shared['ParsedPCR']['tables'][1]['data']
+        tables = shared['ParsedPCR']['tables'][13]['data']
         obligations = get_license_descriptions(licenses, tables)
-        final_str = ''
-        for i in obligations:
-            mid = '- ' + i + '\n\n'
-            final_str += mid
+        final_str = list_to_string(obligations)
         return final_str
+    
+    def process_special_logic(self, shared, result = None, content = None):
+        if content == None:
+            return shared
+        else:
+            shared['SubObligations'] = content
+            return shared
     
 class SubRisksHandler(ContentGenerationHandler):
 
     def __init__(self, bot=None):
         super().__init__(bot)
+        self.db = HardDB()
+        self.db.load()
 
+    def get_instructions(self):
+
+        return "Now we start importing the risks for this component"
+    
+    def _generate_content(self, shared: Dict):
+        current_item_idx = shared.get('current_item_idx', 0)
+        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        current_comp = components[current_item_idx]
+        licenses = self.db.get_unique_licenses(current_comp['compName'])
+        tables = shared['parsedPCR']['tables'][1]['data']
+        risks = get_license_descriptions(licenses, tables, 'License section reference and short Description')
+        final_str = list_to_string(risks)
+        return final_str
+    
+    def process_special_logic(self, shared, result = None, content = None):
+        if content == None:
+            return shared
+        else:
+            shared['SubRisk'] = content
+            return shared
+        
 class CommonRulesHandler(ContentGenerationHandler):
     def __init__(self, bot=None):
         super().__init__(bot)
+        self.db = HardDB()
+        self.db.load()
+
+    def get_instructions(self):
+        return "Now we are going to show you the licenses with common rules only"
+    
+    def _generate_content(self, shared: Dict):
+        current_item_idx = shared.get('current_item_idx', 0)
+        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        current_comp = components[current_item_idx]
+        licenses = self.db.get_unique_licenses(current_comp['compName'])
+        filtered_licenses = [license for license in licenses if license != "Apache-2.0"]
+        final_str = list_to_string(filtered_licenses)
+
+        return final_str
+    
+    def process_special_logic(self, shared, result = None, content = None):
+        if content == None:
+            return shared
+        else:
+            shared['CommonRulesOnlyLicenses'] = content
+            return shared
 
 class AdditionalHandler(ContentGenerationHandler):
     def __init__(self, bot=None):
         super().__init__(bot)
+        self.db = HardDB()
+        self.db.load()
 
+    def get_instructions(self):
+        return "Now we are going to check whether this release contains dual licenses..."
+    
+    def _generate_content(self, shared: Dict):
+        current_item_idx = shared.get('current_item_idx', 0)
+        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        current_comp = components[current_item_idx]
+        licenses = self.db.get_unique_licenses(current_comp['compName'])
+        filtered_licenses = [license for license in licenses if 'dual' in license]
+        if len(filtered_licenses) == 0:
+            return ''
+        else:
+            return '- Dual/triple license: document license selection.'
+        
+    def process_special_logic(self, shared, result = None, content = None):
+        if content == None:
+            return shared
+        else:
+            shared['AdditionalObligations'] = content
+            return shared
 class ImplementationHandler(ContentGenerationHandler):
     def __init__(self, bot=None):
         super().__init__(bot)
+        self.db = HardDB()
+        self.db.load()
 
+    def get_instructions(self):
+        return "Now we are going to generate details of the implementation"
+    
+    def _generate_content(self, shared: Dict):
+        current_item_idx = shared.get('current_item_idx', 0)
+        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        discarded_licenses = [lic for lic in shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.LICENSE.value)['items_key'], []) if lic['status'] == ItemStatus.DISCARDED.value]
+        current_comp = components[current_item_idx]
+        licenses = self.db.get_unique_licenses(current_comp['compName'])
+        filtered_licenses = [license for license in licenses if license in discarded_licenses]
+        final_str = list_to_string(filtered_licenses)
+        content = f"""
+            - Licenses and copyrights have been added to Readme_OSS.
+            - No Apache NOTICE file available.
+            - License selection has been documented in Readme_OSS.
+            - Source code is ready to be shipped to the customer.
+            - Licenses that do not apply:
+                - {final_str}
+            - Acknowledgements have been added to Readme_OSS.
+            - Check for required sub-components has been done.
+            - Risk: Component binary has not been built from cleared source code.
+        """
+        return content
+    
+    def process_special_logic(self, shared, result = None, content = None):
+        if content == None:
+            return shared
+        else:
+            shared['ImplementationDetails'] = content
+            return shared
+        
 class ObligationCombiningHandler(ContentGenerationHandler):
     def __init__(self, bot=None):
         super().__init__(bot)
+        self.db = HardDB()
+        self.db.load()
+
+    def get_instructions(self):
+        return "Now we have generated the combined version for this chapter"
+    
+    def _generate_content(self, shared: Dict):
+        Licenses_identified = shared['Licenses_identified']
+        SubObligations = shared['SubObligations']
+        CommonRulesOnlyLicenses = shared['CommonRulesOnlyLicenses']
+        SubRisk = shared['SubRisk']
+        AdditionalObligations = shared['AdditionalObligations']
+        ImplementationDetails = shared['ImplementationDetails']
+
+        current_item_idx = shared.get('current_item_idx', 0)
+        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        current_comp = components[current_item_idx]
+
+        general_assessment = self.db.get_general_assessment(current_comp['compName'])
+        additional_notes = self.db.get_additional_nots(current_comp['compName'])
+
+        final_chap = f"""
+        ## {current_comp['compName']} \n\n
+        General Assessment: {general_assessment}\n\n
+        Additional Notes: {additional_notes}\n\n
+        ### Licenses Identified\n\n
+        {Licenses_identified}\n\n
+        ### Obligations\n\n
+        {SubObligations}\n\n
+        ### Risks\n\n
+        {SubRisk}\n\n
+        ### Licenses with Common Rules Only\n\n
+        {CommonRulesOnlyLicenses}\n\n
+        ### Additional Obligations\n\n
+        {AdditionalObligations}
+        ### Implementation of Obligations / Remarks\n\n
+        {ImplementationDetails}
+
+        """
+
+        return final_chap

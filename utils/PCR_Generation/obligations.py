@@ -1,4 +1,4 @@
-def get_license_descriptions(licenses, data_list):
+def get_license_descriptions(licenses, data_list, desc_type:str = 'description'):
     """
     Extract license descriptions from a nested dictionary list based on license names.
     
@@ -17,9 +17,9 @@ def get_license_descriptions(licenses, data_list):
             continue
             
         # Check if this dictionary has license information
-        if "License" in item and "License section reference and short Description" in item:
+        if "License" in item and "description" in item:
             license_name = item["License"]
-            description = item["License section reference and short Description"]
+            description = item[desc_type]
             
             # Add the description to our map (handle multiple descriptions per license)
             if license_name in license_map:
@@ -39,3 +39,12 @@ def get_license_descriptions(licenses, data_list):
             result.append(f"No description found for license: {license_name}")
     
     return result
+
+def list_to_string(desc_list:list) -> str:
+
+    final_str = ''
+    for i in desc_list:
+        mid = '- ' + i + '\n\n'
+        final_str += mid
+
+    return final_str

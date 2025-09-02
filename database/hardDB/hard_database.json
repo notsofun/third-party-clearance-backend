@@ -1895,6 +1895,7 @@
     "component_name": "CMSIS_5",
     "component_version": "5.1.1",
     "general_assessment": "OSS component covered under Apache-2.0 license which has No copyleft effect.",
+    "additional_notes": "1] Notice file for Apache-2.0 is not found in source code.\n2] Since scanner has omitted files from following folder and also .exe files ,so please confirm if they are part of delivery, please provide source code for scanning.\n.exe files found in the source code in following folder:-\n//CMSIS_5-5.1.1/CMSIS/Utilities/Win32/PackChk.exe\n//CMSIS_5-5.1.1/CMSIS/Utilities/Win32/SVDConv.exe\n//CMSIS_5-5.1.1/CMSIS/Lib\n//CMSIS_5-5.1.1/CMSIS/RTOS/RTX/LIB\n//CMSIS_5-5.1.1/CMSIS/RTOS2/RTX/Library/ARM\n//CMSIS_5-5.1.1/CMSIS/RTOS2/RTX/Library/GCC\n//CMSIS_5-5.1.1/CMSIS/RTOS2/RTX/Library/IAR\n//CMSIS/RTOS/RTX/LIB\n3].png file found inside images folder of sub directories of this folder-//CMSIS_5-5.1.1/CMSIS/DoxyGen.\n4] Following text was found in //CMSIS_5-5.1.1/CMSIS/RTOS/Template/system_LPC177x_8x.c file under - Permission Notice for NXP, \"Software that is described herein is for illustrativ purpose only\".\n5] If the changes made to the software are to be sent back to ASF, they will have to be covered under Apache-2.0. This can be avoided by NOT submitting the changes back to ASF. \nContact BU Representative or Third Party License Manager if you plan to contribute fixes back to the community.\n6] The clearing team has checked for the dependencies for this package via the scan tool only. \n  Additional manual steps (scripts run on source files) to identify dependencies were not performed. \n  Identifying and listing the dependencies is the responsibility of the project team. The clearing team \n  shall not be held responsible for not identifying or listing the same during clearing of any packages.",
     "critical_files_found": "None",
     "_data_type": "xml"
   },
@@ -23271,6 +23272,7 @@
     "component_name": "FlashDB",
     "component_version": "2.0.0",
     "general_assessment": "OSS component covered under Apache-2.0 license which has no copyleft effect.",
+    "additional_notes": "1) Apache NOTICE file is not found.  2) Apache-2.0 Risk: If the changes made to the software are to be sent back to ASF, they will have to be covered under Apache-2.0. This can be avoided by NOT submitting the changes back to ASF.  Contact BU Representative or Third-Party License Manager if you plan to contribute fixes back to the community. 3) The clearing team has checked for the dependencies for this package via the scan tool only. Additional manual steps (scripts run on source files) to identify dependencies were not performed.  Identifying and listing the dependencies is the responsibility of the project team. The clearing team shall not be held responsible for not identifying or listing the same during clearing of any packages.",
     "critical_files_found": "None",
     "_data_type": "xml"
   },
@@ -24657,6 +24659,7 @@
     "component_name": "FreeRTOS",
     "component_version": "V10.4.6",
     "general_assessment": "This OSS component is covered under MIT License which has No Copyleft Effect",
+    "additional_notes": "//History.txt marked as irrelevant because it is change log.\nNotice file for Apache 2.0 is not found.",
     "critical_files_found": "None",
     "_data_type": "xml"
   },
@@ -25309,6 +25312,7 @@
     "component_name": "mbed TLS",
     "component_version": "2.14.0",
     "general_assessment": "OSS component covered under Apache-2.0 license which has No copyleft effect",
+    "additional_notes": "1] Notice file for Apache-2.0 is not found in the source code.\n\n2] Apache-2.0 Risk - If the changes made to the software are to be sent back to ASF, They will have to be covered under Apache-2.0. This can be avoided by NOT submitting the changes back to ASF. Contact BU Representative or Third-Party License Manager if you plan to contribute fixes back to the community. \n\n3] The clearing team has checked for the dependencies for this package via the scan tool only. Additional manual steps (scripts run on source files) to identify dependencies were not performed. Identifying and listing the dependencies is the responsibility of the project team. The clearing team shall not be held responsible for not identifying or listing the same during clearing of any packages.",
     "critical_files_found": "None",
     "_data_type": "xml"
   },
@@ -29086,6 +29090,7 @@
     "component_name": "OpenThread",
     "component_version": "20240613",
     "general_assessment": "OSS component is covered under BSD-3-Clause license which has No copyleft effect.",
+    "additional_notes": "1. openthread-4a0d6b7b6495a1e4e2e03ab7a4f8baa064df4a6e/third_party/mbedtls/repo folder has a lot of files with cypto information.\n\n2. A third party folder has components with different licenses which can be considered as dependencies.\n\n3. The clearing team has checked for the dependencies for this package via the scan tool only. Additional manual steps (scripts run on source files) to identify dependencies were not performed.  Identifying and listing the dependencies is the responsibility of the project team. The clearing team shall not be held responsible for not identifying or listing the same during clearing of any packages.\n\n4. Apache-2.0 Notice file not found.\n\n5. Apache-2.0 risk: If the changes made to the software are to be sent back to ASF, they will have to be covered under Apache-2.0. This can be avoided by NOT submitting the changes back to ASF.\nContact BU Representative or Third-Party License Manager if you plan to contribute fixes back to the community.\n\n6. GPL-2.0+ is found in the third_party folder. Viral effect of GPL-2.0+ and obligation to make source code available.\n\n7. GPL-2.0+ and Apache-2.0 found in third_party folder are incompatible to each other.\n\n8. ​​​​​​​Refer to Acknowledgements section for more information.\n\n9. Patents Found in the file openthread-4a0d6b7b6495a1e4e2e03ab7a4f8baa064df4a6e/NOTICE.\n\n10. Crypto information found in openthread-4a0d6b7b6495a1e4e2e03ab7a4f8baa064df4a6e/third_party/mbedtls/repo/include/mbedtls/psa_util.h.",
     "critical_files_found": "None",
     "_data_type": "xml"
   },
@@ -29236,6 +29241,7 @@
     "component_name": "tiny_sha3",
     "component_version": "1.0.0",
     "general_assessment": "OSS component covered under MIT license which has No copyleft effect.",
+    "additional_notes": "The clearing team has checked for the dependencies for this package via the scan tool only. Additional manual steps (scripts run on source files) to identify dependencies were not performed.  Identifying and listing the dependencies is the responsibility of the project team. The clearing team shall not be held responsible for not identifying or listing the same during clearing of any packages",
     "critical_files_found": "None",
     "_data_type": "xml"
   },
@@ -38911,6 +38917,7 @@
     "component_name": "GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV",
     "component_version": "12.2 rel1",
     "general_assessment": "OSS component covered under GPL-3.0+-with-GCC-exception-3.1 which has Limited copyleft effect.",
+    "additional_notes": "1) For acknowledgement-Refer Acknowledgements section for more information. 2) The clearing team has checked for the dependencies for this package via the scan tool only. Additional manual steps (scripts run on source files) to identify dependencies were not performed.  Identifying and listing the dependencies is the responsibility of the project team. The clearing team shall not be held responsible for not identifying or listing the same during clearing of any packages.",
     "critical_files_found": "None",
     "_data_type": "xml"
   }

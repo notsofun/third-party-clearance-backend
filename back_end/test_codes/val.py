@@ -1,17 +1,13 @@
-# formatted_licenses = ["**Apache-2.0**",'BSD-3-Clause' ]
+from docx import Document
+from docx.oxml.ns import qn
+from log_config import configure_logging, get_logger
 
-# licenses_str = ", ".join(formatted_licenses)
+configure_logging()
+logger = get_logger(__name__)
 
-# print(licenses_str)
+doc = Document(r'uploads\test\ProjectClearingReport-Wireless Room Sensor-2.0-2025-08-28_03_14_37.docx')
 
-str1 = 'GPL-3.0+ with GCC-exception-3.1, Apache-2.0 WITH LLVM-exception, Permission Notice , Spencer-94, LGPL-2.1+ with GCC-exception, Public-Domain, Permission Notice, SunPro, Dual-license, ISC, NCSA, BSD-3-Clause, MIT, BSD-2-Clause, BSL-1.0, LGPL-2.1-or-later, LGPL-2.0-or-later'
+body_elements = doc.element.body.iter()
 
-strlist = str1.split(',')
-
-length = len(strlist)
-
-list1 = ['Apache-2.0 WITH LLVM-exception', 'Permission Notice ', 'Spencer-94', 'LGPL-2.1+ with GCC-exception', 'Public-Domain', 'Permission Notice', 'GPL-3.0+ with GCC-exception-3.1', 'SunPro', 'Dual-license', 'ISC', 'NCSA', 'BSD-3-Clause', 'MIT', 'BSD-2-Clause', 'BSL-1.0', 'LGPL-2.1-or-later', 'LGPL-2.0-or-later']
-
-lenght1 = len(list1)
-
-print(f'original length{length}, now it is{lenght1}')
+for element in body_elements:
+    logger.info(f'{element}')

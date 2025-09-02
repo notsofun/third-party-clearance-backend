@@ -947,15 +947,8 @@
           "Release": "GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV (12.2 rel1), \nOpenThread (20240613)",
           "Status": "",
           "Type": "",
-          "Comment": ""
-        },
-        {
-          "Obligation": "You must contact your Patent Strategy Manager to check the patentleft effect",
-          "License": "",
-          "Release": "",
-          "Status": "",
-          "Type": "",
-          "Comment": ""
+          "Comment": "",
+          "description": "You must contact your Patent Strategy Manager to check the patentleft effect     "
         },
         {
           "Obligation": "marking modifications",
@@ -963,15 +956,8 @@
           "Release": "Mbed TLS (2.14.0), \nFreeRTOS-Kernel (V10.4.6), \nCMSIS_5 (5.1.1), \nOpenThread (20240613), \nFlashDB (2.0.0)",
           "Status": "",
           "Type": "",
-          "Comment": ""
-        },
-        {
-          "Obligation": "Note for Apache-2.0, ECL-2.0:  \nIf you modify this component and do not intend to contribute the modifications/the modified work back to open source community, you must conspicuously mark or designate the modifications as âNot a Contributionâ.\n\nIf you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.\n\nNote for CDDL-1.0:  \nIf you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.",
-          "License": "",
-          "Release": "",
-          "Status": "",
-          "Type": "",
-          "Comment": ""
+          "Comment": "",
+          "description": "Note for Apache-2.0, ECL-2.0:  \nIf you modify this component and do not intend to contribute the modifications/the modified work back to open source community, you must conspicuously mark or designate the modifications as âNot a Contributionâ.\n\nIf you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.\n\nNote for CDDL-1.0:  \nIf you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.     "
         },
         {
           "Obligation": "Obligation for indication",
@@ -979,15 +965,8 @@
           "Release": "GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV (12.2 rel1), \nOpenThread (20240613)",
           "Status": "",
           "Type": "",
-          "Comment": ""
-        },
-        {
-          "Obligation": "If you distribute your product on or accompanied by data carriers (e.g. DVDs), include the following text on the data carriers, otherwise include a leaflet with same content:\nâCopyright Â© [Your Legal Entity] , [YYYY], and licensors. All rights reserved.\nPortions include Open Source Software. See ReadMe_OSS.txt for details.â\n\nE.g. [Your Legal Entity] = Siemens AG",
-          "License": "",
-          "Release": "",
-          "Status": "",
-          "Type": "",
-          "Comment": ""
+          "Comment": "",
+          "description": "If you distribute your product on or accompanied by data carriers (e.g. DVDs), include the following text on the data carriers, otherwise include a leaflet with same content:\nâCopyright Â© [Your Legal Entity] , [YYYY], and licensors. All rights reserved.\nPortions include Open Source Software. See ReadMe_OSS.txt for details.â\n\nE.g. [Your Legal Entity] = Siemens AG     "
         },
         {
           "Obligation": "Right to modify the linked software",
@@ -995,15 +974,8 @@
           "Release": "GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV (12.2 rel1)",
           "Status": "",
           "Type": "",
-          "Comment": ""
-        },
-        {
-          "Obligation": "Add a statement to the README_OSS that the users are entitled to modify the Combined Product for their own use, including but not limited to the right to modify the Combined Product to relink modified versions of the LGPL Licensed Module, and they may reverse-engineer the Combined Product, but only to debug their modifications",
-          "License": "",
-          "Release": "",
-          "Status": "",
-          "Type": "",
-          "Comment": ""
+          "Comment": "",
+          "description": "Add a statement to the README_OSS that the users are entitled to modify the Combined Product for their own use, including but not limited to the right to modify the Combined Product to relink modified versions of the LGPL Licensed Module, and they may reverse-engineer the Combined Product, but only to debug their modifications     "
         },
         {
           "Obligation": "Provide acknowledgement",
@@ -1011,15 +983,8 @@
           "Release": "Mbed TLS (2.14.0), \nGNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV (12.2 rel1), \nFreeRTOS-Kernel (V10.4.6), \nCMSIS_5 (5.1.1), \nOpenThread (20240613), \nFlashDB (2.0.0)",
           "Status": "",
           "Type": "",
-          "Comment": ""
-        },
-        {
-          "Obligation": "Add all relevant acknowledgements to Readme_OSS \n\nNote for Apache-2.0: \nThe content of the NOTICE file must be made available in readable form. The content of the NOTICE file is made available in readable form as acknowledgement.\n\nNote for Catharon Open Source LICENSE:\nPortions of this software are copyright Â© Catharon Productions, Inc. All rights reserved\n\nNote for all CC licenses:\nIn CC licenses this acknowledgement (in CC terms \"appropriate credit\") shall inculde:\n - name of the creator \n - copyright notice \n - license notice \n - disclaimer \n - link to the material\n\nNote for ECL-2.0: \nThe content of the NOTICE file must be made available in readable form. The content of the NOTICE file is made available in readable form as acknowledgement.\n\nNote for all OWFa-1.0:\n - the acknowledgement must contain at minimum the specification name and version number\n\nNote for Independent JPEG Group License\n - the acknowledgement is: \"this software is based in part on the work of the Independent JPEG Group\"\n\nNote for Apache-1.1 and Apache-1.1-jakarta-oro-variant:\n - the acknowledgement is: \"This product includes software developed by the\n       Apache Software Foundation (http://www.apache.org/).\"\n\nNote for Apache-1.1-JRDF-Project:\n - the acknowledgement is: \"This product includes software developed by the \n         the JRDF Project (http://jrdf.sf.net/).\"\n\nNote for  Apache-1.1-University-of-Chicago:\n - the acknowledgement is: \"This product includes software developed by the\n   University of Chicago, as Operator of Argonne National Laboratory.\"\n\nNote for Dual License, Multiple License and Triple License:\n - the acknowledgement is the licensing decision: \"To the extend files may be licensed under ABC or XYZ, in this context ABC has been chosen. This shall not restrict the freedom of other users to choose ABC or XYZ. For convenience both license texts are provided\"\n\nNote for FTL-License:\n - the acknowledgement must contain the text: \"Portions of this software are copyright Â© The FreeType Project (www.freetype.org). All rights reserved.\"\n\nNote for Indiana-Extrem-License-1.1:\n - the acknowledgement is: \"This product includes software developed by the \n         the Indiana University Extreme! Lab.For further information please visit  http://www.extreme.indiana.edu/.\"\n\nNote for LDL-License:\n - the acknowledgement must contain the text: \"With permission of ...\"\n\nNote for RSA-Security License:\n - the acknowledgement must contain the text: \"This product includes software derived from the RSA Data Security, Inc. MD5 Message-Digest Algorithm\"\n\nNote for Nunit License:\n- the acknowledgement must contain the text: \" Portions Copyright Â© 2002-2012 Charlie Poole or Copyright Â© 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov or Copyright Â© 2000-2002 Philip A. Craig \"\n\nNote for JDOM-License:\n- the acknowledgement shall contain the text: \"This product includes software developed by the JDOM Project (http://www.jdom.org/).\"\n\nNote for OpenSSL, SSLeay License:\n- the acknowledgement text must contain the text:\n\"This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/)\"\n\"This product includes software written by Tim Hudson (tjh@cryptsoft.com)\"\n\"This product includes cryptographic software written by Eric Young (eay@cryptsoft.com)\"",
-          "License": "",
-          "Release": "",
-          "Status": "",
-          "Type": "",
-          "Comment": ""
+          "Comment": "",
+          "description": "Add all relevant acknowledgements to Readme_OSS \n\nNote for Apache-2.0: \nThe content of the NOTICE file must be made available in readable form. The content of the NOTICE file is made available in readable form as acknowledgement.\n\nNote for Catharon Open Source LICENSE:\nPortions of this software are copyright Â© Catharon Productions, Inc. All rights reserved\n\nNote for all CC licenses:\nIn CC licenses this acknowledgement (in CC terms \"appropriate credit\") shall inculde:\n - name of the creator \n - copyright notice \n - license notice \n - disclaimer \n - link to the material\n\nNote for ECL-2.0: \nThe content of the NOTICE file must be made available in readable form. The content of the NOTICE file is made available in readable form as acknowledgement.\n\nNote for all OWFa-1.0:\n - the acknowledgement must contain at minimum the specification name and version number\n\nNote for Independent JPEG Group License\n - the acknowledgement is: \"this software is based in part on the work of the Independent JPEG Group\"\n\nNote for Apache-1.1 and Apache-1.1-jakarta-oro-variant:\n - the acknowledgement is: \"This product includes software developed by the\n       Apache Software Foundation (http://www.apache.org/).\"\n\nNote for Apache-1.1-JRDF-Project:\n - the acknowledgement is: \"This product includes software developed by the \n         the JRDF Project (http://jrdf.sf.net/).\"\n\nNote for  Apache-1.1-University-of-Chicago:\n - the acknowledgement is: \"This product includes software developed by the\n   University of Chicago, as Operator of Argonne National Laboratory.\"\n\nNote for Dual License, Multiple License and Triple License:\n - the acknowledgement is the licensing decision: \"To the extend files may be licensed under ABC or XYZ, in this context ABC has been chosen. This shall not restrict the freedom of other users to choose ABC or XYZ. For convenience both license texts are provided\"\n\nNote for FTL-License:\n - the acknowledgement must contain the text: \"Portions of this software are copyright Â© The FreeType Project (www.freetype.org). All rights reserved.\"\n\nNote for Indiana-Extrem-License-1.1:\n - the acknowledgement is: \"This product includes software developed by the \n         the Indiana University Extreme! Lab.For further information please visit  http://www.extreme.indiana.edu/.\"\n\nNote for LDL-License:\n - the acknowledgement must contain the text: \"With permission of ...\"\n\nNote for RSA-Security License:\n - the acknowledgement must contain the text: \"This product includes software derived from the RSA Data Security, Inc. MD5 Message-Digest Algorithm\"\n\nNote for Nunit License:\n- the acknowledgement must contain the text: \" Portions Copyright Â© 2002-2012 Charlie Poole or Copyright Â© 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov or Copyright Â© 2000-2002 Philip A. Craig \"\n\nNote for JDOM-License:\n- the acknowledgement shall contain the text: \"This product includes software developed by the JDOM Project (http://www.jdom.org/).\"\n\nNote for OpenSSL, SSLeay License:\n- the acknowledgement text must contain the text:\n\"This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/)\"\n\"This product includes software written by Tim Hudson (tjh@cryptsoft.com)\"\n\"This product includes cryptographic software written by Eric Young (eay@cryptsoft.com)\"     "
         },
         {
           "Obligation": "Make source code available",
@@ -1027,15 +992,8 @@
           "Release": "GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV (12.2 rel1), \nOpenThread (20240613)",
           "Status": "",
           "Type": "",
-          "Comment": ""
-        },
-        {
-          "Obligation": "The source code of the covered code, including build and install scripts, must be made available in any of the following way:  \n * together with your product, or \n * by including a written offer in your ReadMe_OSS to deliver on physical media; \n * when you distribute the binaries solely on a website, it is sufficient to make the source code available through the same website.\n\n\nCovered code means the source code of the package including the source code developed by [Your Legal Entity], which is affected by the effective copyleft effect.\n\nIn case of GPL-3.0 / LGPL-3.0 / AGPL-3.0 it is allowed to provide a written offer in your ReadMe_OSS where the covered source code, including build and install scripts, can be downloaded from a website.\n\nIn case of CPL-1.0, EPL-1.0, EPL-2.0, MPL-1.1, MPL-2.0, SPL-1.0, RHeCos-1.1 it is allowed to make the covered source code available on a website. The licenses do not require that the build and installation scripts have to be made available. Thus they can be provided but it is not a must.\n\nIn case of Ecos-1.0 and Cygnus-eCos-1.0 the source code of the modifications must be made available to the initial developer too.\n\nIn case of OSL-3.0 you must make the source code of OSL covered code, available either: \n 1. together witch each copy of the the work or \n 2. in an online repository",
-          "License": "",
-          "Release": "",
-          "Status": "",
-          "Type": "",
-          "Comment": ""
+          "Comment": "",
+          "description": "The source code of the covered code, including build and install scripts, must be made available in any of the following way:  \n * together with your product, or \n * by including a written offer in your ReadMe_OSS to deliver on physical media; \n * when you distribute the binaries solely on a website, it is sufficient to make the source code available through the same website.\n\n\nCovered code means the source code of the package including the source code developed by [Your Legal Entity], which is affected by the effective copyleft effect.\n\nIn case of GPL-3.0 / LGPL-3.0 / AGPL-3.0 it is allowed to provide a written offer in your ReadMe_OSS where the covered source code, including build and install scripts, can be downloaded from a website.\n\nIn case of CPL-1.0, EPL-1.0, EPL-2.0, MPL-1.1, MPL-2.0, SPL-1.0, RHeCos-1.1 it is allowed to make the covered source code available on a website. The licenses do not require that the build and installation scripts have to be made available. Thus they can be provided but it is not a must.\n\nIn case of Ecos-1.0 and Cygnus-eCos-1.0 the source code of the modifications must be made available to the initial developer too.\n\nIn case of OSL-3.0 you must make the source code of OSL covered code, available either: \n 1. together witch each copy of the the work or \n 2. in an online repository     "
         },
         {
           "Obligation": "Risk of termination of the rights upon patent proceedings",
@@ -1043,15 +1001,8 @@
           "Release": "Mbed TLS (2.14.0), \nGNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV (12.2 rel1), \nFreeRTOS-Kernel (V10.4.6), \nCMSIS_5 (5.1.1), \nOpenThread (20240613), \nFlashDB (2.0.0)",
           "Status": "",
           "Type": "",
-          "Comment": ""
-        },
-        {
-          "Obligation": "Siemens will lose all rights (i.e. copyright and patent rights) granted to Siemens for the open source code if Siemens makes legal claims regarding Siemens patents in such covered open source code.",
-          "License": "",
-          "Release": "",
-          "Status": "",
-          "Type": "",
-          "Comment": ""
+          "Comment": "",
+          "description": "Siemens will lose all rights (i.e. copyright and patent rights) granted to Siemens for the open source code if Siemens makes legal claims regarding Siemens patents in such covered open source code.     "
         },
         {
           "Obligation": "Combined Libraries",
@@ -1059,15 +1010,8 @@
           "Release": "GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV (12.2 rel1)",
           "Status": "",
           "Type": "",
-          "Comment": ""
-        },
-        {
-          "Obligation": "In case of combined libraries (i.e. a single library consisting of a LGPL licensed library and other libraries not covered by the LGPL): \n* make sure that the separate distribution of the LGPL covered code and of the other libraries is permitted.\n* accompany the combined library with a copy of the LGPL licensed library, uncombined with any other library facilities. \n* give prominent notice with the combined library of the fact that part of it is licensed under LGPL, and explaining where to find the accompanying uncombined form of the same work.",
-          "License": "",
-          "Release": "",
-          "Status": "",
-          "Type": "",
-          "Comment": ""
+          "Comment": "",
+          "description": "In case of combined libraries (i.e. a single library consisting of a LGPL licensed library and other libraries not covered by the LGPL): \n* make sure that the separate distribution of the LGPL covered code and of the other libraries is permitted.\n* accompany the combined library with a copy of the LGPL licensed library, uncombined with any other library facilities. \n* give prominent notice with the combined library of the fact that part of it is licensed under LGPL, and explaining where to find the accompanying uncombined form of the same work.     "
         },
         {
           "Obligation": "Risk of termination of patent licenses upon patent proceedings",
@@ -1075,15 +1019,8 @@
           "Release": "Mbed TLS (2.14.0), \nFreeRTOS-Kernel (V10.4.6), \nCMSIS_5 (5.1.1), \nOpenThread (20240613), \nFlashDB (2.0.0)",
           "Status": "",
           "Type": "",
-          "Comment": ""
-        },
-        {
-          "Obligation": "If [Your Legal Entity] sues contributors regarding [Your Legal Entity] patents, any patent license granted to [Your Legal Entity] for this component will automatically terminate",
-          "License": "",
-          "Release": "",
-          "Status": "",
-          "Type": "",
-          "Comment": ""
+          "Comment": "",
+          "description": "If [Your Legal Entity] sues contributors regarding [Your Legal Entity] patents, any patent license granted to [Your Legal Entity] for this component will automatically terminate     "
         },
         {
           "Obligation": "(Copyleft Effect) license derived works under the same license",
@@ -1091,15 +1028,8 @@
           "Release": "GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV (12.2 rel1), \nOpenThread (20240613)",
           "Status": "",
           "Type": "",
-          "Comment": ""
-        },
-        {
-          "Obligation": "In case of AGPL-1.0, AGPL-3.0:\n* If the copyleft effect applies and if your Application supports interaction with users through a computer network, you must provide all users with online access to the source code of your Application free-of-charge\n\n\nIn case of GPL-2.0, GPL-3.0:\n* linking statically or dynamically to GPL covered code typically triggers the copyleft effect and causes your own code to become GPLâed too\n* code changes and additions made to the GPL covered code must be distributed under GPL\n* derivative works of the program\n\nIn case of LGPL-2.0, LGPL-2.1, LGPL-3.0:\n* linking statically requires you to provide the complete machine-readable application code, as object code and/or source code, so that the user can modify the library and then relink to produce a modified executable containing the modified library\n* code changes and additions made to the LGPL covered code must be distributed under LGPL\n\nIn case of EPL-1.0 or CPL-1.0 or IPL-1.0:\n* code changes and additions made to the EPL-1.0/EPL-2.0/CPL-1.0/IPL-1.0 covered code must be distributed under EPL-1.0/EPL-2.0/CPL-1.0/IPL-1.0. \n\nIn case of OSL-3.0:\nDerivative Works have to be licensed under OSL-3.0.\n\nIn any case contact your 3rd Party Software Manager to check the copyleft effect",
-          "License": "",
-          "Release": "",
-          "Status": "",
-          "Type": "",
-          "Comment": ""
+          "Comment": "",
+          "description": "In case of AGPL-1.0, AGPL-3.0:\n* If the copyleft effect applies and if your Application supports interaction with users through a computer network, you must provide all users with online access to the source code of your Application free-of-charge\n\n\nIn case of GPL-2.0, GPL-3.0:\n* linking statically or dynamically to GPL covered code typically triggers the copyleft effect and causes your own code to become GPLâed too\n* code changes and additions made to the GPL covered code must be distributed under GPL\n* derivative works of the program\n\nIn case of LGPL-2.0, LGPL-2.1, LGPL-3.0:\n* linking statically requires you to provide the complete machine-readable application code, as object code and/or source code, so that the user can modify the library and then relink to produce a modified executable containing the modified library\n* code changes and additions made to the LGPL covered code must be distributed under LGPL\n\nIn case of EPL-1.0 or CPL-1.0 or IPL-1.0:\n* code changes and additions made to the EPL-1.0/EPL-2.0/CPL-1.0/IPL-1.0 covered code must be distributed under EPL-1.0/EPL-2.0/CPL-1.0/IPL-1.0. \n\nIn case of OSL-3.0:\nDerivative Works have to be licensed under OSL-3.0.\n\nIn any case contact your 3rd Party Software Manager to check the copyleft effect     "
         }
       ]
     }

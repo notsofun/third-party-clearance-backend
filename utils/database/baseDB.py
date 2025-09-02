@@ -84,6 +84,10 @@ class BaseDatabase:
                 assessment = assessment_summary.find("GeneralAssessment")
                 if assessment is not None and assessment.text:
                     component_info['general_assessment'] = assessment.text.strip()
+
+                additional_notes = assessment_summary.find('AdditionalNotes')
+                if additional_notes is not None and additional_notes.text:
+                    component_info['additional_notes'] = additional_notes.text.strip()
                 
                 critical_files = assessment_summary.find("CriticalFilesFound")
                 if critical_files is not None and critical_files.text:

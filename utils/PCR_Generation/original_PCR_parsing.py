@@ -5,6 +5,15 @@ import docx
 import json
 import os
 
+SPECIAL_HEADERS = [
+        "Obligation",
+        "License",
+        "Release",
+        "Status",
+        "Type",
+        "Comment"
+    ]
+
 def parse_docx_to_hierarchical_json(docx_path, output_path=None, verbose=False):
     """
     将Word文档解析为层次化的JSON结构
@@ -128,18 +137,40 @@ def parse_docx_to_hierarchical_json(docx_path, output_path=None, verbose=False):
                         if not headers[j]:
                             headers[j] = f"Column_{j+1}"
                     
-                    # 处理数据行
-                    for row_idx in range(1, len(table.rows)):
-                        row = table.rows[row_idx]
-                        row_data = {}
-                        
-                        for col_idx, cell in enumerate(row.cells):
-                            if col_idx < len(headers):
-                                row_data[headers[col_idx]] = cell.text.strip()
-                        
-                        # 只添加非空行
-                        if any(row_data.values()):
-                            data_rows.append(row_data)
+                    is_special_table = (headers == SPECIAL_HEADERS)
+
+                    if is_special_table:
+                        row_idx = 1
+                        while row_idx < len(table.rows) - 1 :
+                            row = table.rows[row_idx]
+                            next_row = table.rows[row_idx + 1]
+
+                            row_data = {}
+                            for col_idx, cell in enumerate(row.cells):
+                                if col_idx < len(headers):
+                                    row_data[headers[col_idx]] = cell.text.strip()
+
+                            description_text = ' '.join([cell.text.strip() for cell in next_row.cells])
+                            row_data['description'] = description_text
+
+                            if any(v for k,v in row_data.items() if k != 'description'):
+                                data_rows.append(row_data)
+
+                            row_idx += 2
+
+                    else:
+                        # 处理数据行
+                        for row_idx in range(1, len(table.rows)):
+                            row = table.rows[row_idx]
+                            row_data = {}
+                            
+                            for col_idx, cell in enumerate(row.cells):
+                                if col_idx < len(headers):
+                                    row_data[headers[col_idx]] = cell.text.strip()
+                            
+                            # 只添加非空行
+                            if any(row_data.values()):
+                                data_rows.append(row_data)
                 
                 # 创建表格结构
                 table_structure = {

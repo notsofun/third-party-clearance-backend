@@ -198,8 +198,6 @@ class ChatService:
         """
         logger.info('chat_service._handle_chapter_generation: Processing ChapterGeneration with result: %s', result)
         self.gen = ChatGenerator(handler=handler)
-        # 设置用户输入到shared中，供ChapterGeneration使用
-        shared['user_input'] = shared.get('current_user_input', '')
         
         # 构建context
         content = {
@@ -210,6 +208,9 @@ class ChatService:
         
         # 只处理内容生成，仅返回子标题内容
         gen_content, all_completed = self.gen.generate_content(content)
+
+        # 每次回调特殊逻辑存储数据
+        shared = handler.process_special_logic(shared, content=gen_content)
 
         # 如果章节生成完成，状态流转往下走，
         if all_completed:
@@ -231,7 +232,6 @@ class ChatService:
             
             return status, shared, self._ensure_list(completion_message)
         
-        # 章节生成仍在进行中
         else:
             # 获取当前的指导语
             instruction = handler.get_instructions()
