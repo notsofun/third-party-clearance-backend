@@ -12,7 +12,10 @@ class ChatGenerator:
 
     def generate_content(self, content:Dict) -> Tuple[str, bool]:
         result = self._content_generation(content)
-        return "All subtitles have been finished", True if result else result, False
+        if result:
+            return "All subtitles have been finished", True
+        else:
+            return result, False
 
     def _content_generation(self, context: Dict[str, Any]) -> str:
         """

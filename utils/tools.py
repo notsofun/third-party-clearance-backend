@@ -559,7 +559,6 @@ def get_strict_json(model:object, user_input, var=False, tags:list = None):
             response = model._request(user_input, tags)
 
         result = json_strip(response)
-        logger.info('we should have result like %s', result)
         if result:
             return result
     return logger.error("Model did not give valid JSON after retries.")

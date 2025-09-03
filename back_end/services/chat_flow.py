@@ -120,25 +120,6 @@ class WorkflowContext:
         # 如果转换规则是直接的状态值，则直接返回
         return transition
 
-    def get_current_subtask_info(self, context: Dict[str, Any]) -> Dict:
-        """获取当前子任务信息（如果有）"""
-        handler = self.handlers.get_handler(self.current_state.value, self.bot)
-        if not handler or not handler.has_subtasks():
-            return {"has_subtasks": False}
-            
-        # 确保子任务已初始化
-        if self.current_state not in self.initialized_states:
-            handler.initialize_subtasks(context)
-            self.initialized_states.add(self.current_state)
-            
-        subtask_id = handler.get_current_subtask_id()
-        return {
-            "has_subtasks": True,
-            "current_subtask": subtask_id,
-            "subtask_index": handler.current_subtask_index,
-            "total_subtasks": len(handler.subtasks)
-        }
-    
     def process(self, context: Dict[str, Any]) -> Dict:
         """处理当前状态并可能转移到下一个状态"""
         handler = self.handlers.get_handler(self.current_state.value, self.bot)
@@ -181,11 +162,6 @@ class WorkflowContext:
             "event": event
         }
         
-        # 如果有子任务，添加子任务信息
-        subtask_info = self.get_current_subtask_info(context)
-        if subtask_info["has_subtasks"]:
-            result.update(subtask_info)
-            
         return result
 
 # 使用示例

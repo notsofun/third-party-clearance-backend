@@ -246,15 +246,17 @@ class CompletedHandler(SimpleStateHandler):
 
         return 'We have finished all checking in current session, please reupload a new license info file to start a new session.'
     
-class ObiligationsHandler(ChapterGeneration):
+class ObligationsHandler(ChapterGeneration):
 
-    def __init__(self, bot=None, item_list_key = TYPE_CONFIG[ItemType.COMPONENT]['items_key'],
+    def __init__(self, bot=None, item_list_key = TYPE_CONFIG[ItemType.PC]['items_key'],
                 chapter_title_key = 'Obligations resulting from the use of 3rd party components',
                 chapter_content_key = 'Generated Obligations resulting from the use of 3rd party components'):
         super().__init__(bot, item_list_key, chapter_title_key, chapter_content_key)
         
-    def get_instructions(self) -> str:
-        return 'Now we shall start generating obligations resulting from using 3rd party components'
+    def get_instructions(self):
+        prompt = '''Now switch to confirming mode, you should decide to continue when user is not satisfied with the result or go on when user is satisfied'''
+        response = get_strict_json(self.bot, prompt)
+        return response.get('talking', 'Please check the result for product overview')
     
     def _create_content_handlers(self):
         return [
@@ -480,3 +482,10 @@ class ObligationCombiningHandler(ContentGenerationHandler):
         """
 
         return final_chap
+    
+    def process_special_logic(self, shared, result = None, content = None):
+        if content is None:
+            return shared
+        else:
+            shared['generated_obligations'] = content
+            return shared

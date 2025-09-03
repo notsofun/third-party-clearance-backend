@@ -74,7 +74,7 @@ class HardDB(BaseDatabase):
             try:
                 with open(self.db_path, 'r', encoding='utf-8') as f:
                     self.data = json.load(f)
-                print(f"成功加载数据库，包含 {len(self.data)} 个项目")
+                # print(f"成功加载数据库，包含 {len(self.data)} 个项目")
                 return True
             except Exception as e:
                 print(f"加载数据库出错: {e}")

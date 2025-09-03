@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Any, Tuple, Optional
 from .chat_manager import ChatManager
-from items_utils.item_types import State
+from back_end.items_utils.item_types import State
 from back_end.items_utils.item_types import get_processing_type_from_status
 from back_end.services.chat_flow import WorkflowContext, ConfirmationStatus
 from back_end.items_utils.item_utils import get_item_type_from_value
@@ -11,6 +11,7 @@ from log_config import get_logger
 from back_end.services.state_handlers.handler_factory import StateHandlerFactory
 from back_end.services.chat_gen.generator import ChatGenerator
 from back_end.services.state_handlers.base_handler import SubTaskStateHandler,ContentGenerationHandler, ChapterGeneration
+
 logger = get_logger(__name__)  # 每个模块用自己的名称
 
 class ChatService:
@@ -32,22 +33,23 @@ class ChatService:
         处理用户输入，优先检查大状态变化，然后处理嵌套逻辑
         """
         tags = [status]
+        logger.info("user_input: %s", user_input)
         response = get_strict_json(self.bot, user_input,tags=tags)
+        logger.info('chat_service.process_user_input: we have this response %s', response)
         result = response.get('result')
         reply = self._extract_reply(response)
-        logger.info("user_input: %s", user_input)
         # 保存当前用户输入，供ChapterGeneration使用
         shared['current_user_input'] = user_input
         shared['riskBot'] = self.bot
 
-        # 处理状态特定的逻辑
+        # 处理状态特定的逻辑，其实是只有OEM
         handler = self.handler_factory.get_handler(status, self.bot)
         if handler:
             shared = handler.process_special_logic(shared, result=result)
 
         # 检查大状态变化
         content = {'shared': shared, 'status': result}
-        result_in_flow = chat_flow.process(content)
+        result_in_flow = self.chat_flow.process(content)
         updated_status = result_in_flow['current_state'].value
         
         logger.info('chat_service.process_user_input: Current status: %s, Updated status: %s', status, updated_status)
@@ -162,7 +164,7 @@ class ChatService:
             'user_input': shared.get('user_input', ''),
             'status': result
         }
-        result_in_flow = chat_flow.process(content)
+        result_in_flow = self.chat_flow.process(content)
         event = result_in_flow.get('event')
         
         if event == State.GENERATION.value:
@@ -218,7 +220,7 @@ class ChatService:
             
             # 重新检查大状态转换
             content = {'shared': shared, 'status': 'next'}
-            result_in_flow = chat_flow.process(content)
+            result_in_flow = self.chat_flow.process(content)
             final_status = result_in_flow['current_state'].value
             
             # 如果状态发生变化，处理状态变化
@@ -275,7 +277,7 @@ class ChatService:
             logger.info('chat_service.handle_nested: we have finished the checking for this state %s',self.chat_flow.current_state.value )
             # 重新检查大状态转换
             content = {'shared': updated_shared, 'status': 'next'}
-            result_in_flow = chat_flow.process(content)
+            result_in_flow = self.chat_flow.process(content)
             final_status = result_in_flow['current_state'].value
             
             final_status, updated_shared, message = self._status_check(

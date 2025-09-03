@@ -1,0 +1,41 @@
+2025-09-03 16:48:22 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250903_16h48m22s.log
+2025-09-03 16:48:22 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2025-09-03 16:48:22 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2025-09-03 16:48:22 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes. This is only an error if you're trying to use GPU Faiss.
+2025-09-03 16:48:22 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250903_16h48m22s.log
+2025-09-03 16:48:22 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250903_16h48m22s.log
+2025-09-03 16:48:22 - nodes - INFO - Now we are parsing the original HTML File
+2025-09-03 16:48:23 - nodes - INFO - Successfully parsed!
+2025-09-03 16:48:23 - nodes - INFO - Now we are parsing the original PCR file.
+2025-09-03 16:48:31 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-09-03 16:48:31 - back_end.services.chat_manager - WARNING - now we start with checking: pure_component
+2025-09-03 16:48:33 - testing - INFO - 检验测试环境初始化...
+2025-09-03 16:48:33 - testing - INFO - 测试环境验证通过!
+2025-09-03 16:48:33 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-09-03 16:48:33 - testing - INFO - Now we are using the customized shared dictionary
+2025-09-03 16:48:33 - testing - INFO - 开始执行测试: test_initial_content_generation
+2025-09-03 16:48:33 - back_end.services.chat_service - INFO - user_input: 
+            That's totally OK.
+
+    
+2025-09-03 16:48:35 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'Could you please provide more details or context regarding your inquiry? This will help me assist you better.'}
+2025-09-03 16:48:50 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 0
+2025-09-03 16:49:05 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 1
+2025-09-03 16:49:20 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 2
+2025-09-03 16:49:35 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 3
+2025-09-03 16:49:50 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 4
+2025-09-03 16:50:05 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 5
+2025-09-03 16:50:19 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 6
+2025-09-03 16:50:50 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 7
+2025-09-03 16:50:50 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-03 16:50:50 - ObligationsHandler - INFO - All subtitles completed for item: item_0
+2025-09-03 16:50:50 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-03 16:50:50 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-03 16:50:50 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-03 16:50:50 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-03 16:50:50 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-03 16:50:50 - ObligationsHandler - INFO - All subtitles completed for item: item_1
+2025-09-03 16:50:51 - testing - INFO - 开始执行测试: test_user_in_flow
+2025-09-03 16:50:51 - testing - INFO - 当前对话轮次1, 用户输入OK, show me the first subtitle
+2025-09-03 16:50:51 - back_end.services.chat_service - INFO - user_input: OK, show me the first subtitle
+2025-09-03 16:50:54 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'Could you please clarify which specific subtitle you are referring to? Are you looking for a particular section or topic related to software compliance?'}

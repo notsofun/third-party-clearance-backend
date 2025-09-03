@@ -15,8 +15,7 @@ def run_report(shared):
     flow.run(shared)
     return shared
 
-def run_test(html_path):
-    shared = {"html_path": html_path}
+def run_test(shared):
     flow = test_flow()
     flow.run(shared)
     return shared

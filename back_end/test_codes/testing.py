@@ -6,7 +6,7 @@ from log_config import configure_logging, get_logger
 from back_end.items_utils.item_types import State, ConfirmationStatus
 from back_end.services.chat_flow import WorkflowContext
 from back_end.services.chat_manager import ChatManager
-from utils.tools import get_strict_json
+import json
 from back_end.services.chat_service import ChatService
 from back_end.services.state_handlers.handler_factory import StateHandlerFactory
 from utils.LLM_Analyzer import RiskBot
@@ -33,10 +33,14 @@ def get_singleton_risk_bot():
 @pytest.fixture(scope="class")
 def class_context(request):
     """创建类级别的context，在整个测试类中共享"""
-    shared = run_test(r"C:\Users\z0054unn\Downloads\LicenseInfo-Wireless Room Sensor-2.0-2025-08-22_01_44_49.html")
+    shared = {
+        'html_path': r"C:\Users\z0054unn\Downloads\LicenseInfo-Wireless Room Sensor-2.0-2025-08-22_01_44_49.html",
+        'PCR_Path': r'uploads\test\ProjectClearingReport-Wireless Room Sensor-2.0-2025-08-28_03_14_37.docx',
+    }
+    shared = run_test(shared)
     shared['riskBot'] = get_singleton_risk_bot()
     
-    workflow_context = WorkflowContext(curren_state=ConfirmationStatus.COMMONRULES, bot=shared.get('riskBot'))
+    workflow_context = WorkflowContext(curren_state=ConfirmationStatus.OBLIGATIONS, bot=shared.get('riskBot'))
     chat_manager = ChatManager()
     chat_service = ChatService(workflow_context)
 
@@ -51,19 +55,13 @@ def class_context(request):
         # 只更新特定键，不替换整个字典
         shared.update({
             'user_input': '''
-            Just generate the markdown
+            That's totally OK.
 
     ''',
             'status': workflow_context.current_state.value,
             'extra_data': 'Additional context information',
         })
-    else:  # 默认使用基础上下文
-        # 只更新特定键
-        shared.update({
-            'user_input': '以下是项目信息...',
-            'status': workflow_context.current_state.value,
-        })
-        
+
     # 将context保存到类属性中，便于所有测试方法访问
     request.cls.context_data = {
         'workflow_context': workflow_context,
@@ -86,6 +84,22 @@ def class_context(request):
 class TestCustomProjectOverviewIntegration:
     """使用自定义共享上下文的项目概述处理器测试"""
     
+    @pytest.mark.order(0)
+    def test_environment_setup(self):
+        """验证测试环境是否正确初始化"""
+        logger.info("检验测试环境初始化...")
+        
+        # 验证关键组件
+        assert self.context_data is not None, "Context data has not been initialized"
+        assert 'chat_service' in self.context_data, "ChatService has not been initialized"
+        assert 'workflow_context' in self.context_data, "WorkflowContext has not been initialized"
+        assert 'shared' in self.context_data, "the shared data is empty"
+        
+        chat_service = self.context_data['chat_service']
+        assert chat_service is not None, "ChatService is empty"
+        
+        logger.info("测试环境验证通过!")
+
     @pytest.mark.order(1)
     def test_custom_instruction_retrieval(self):
         """使用自定义上下文测试指令获取"""
@@ -93,7 +107,7 @@ class TestCustomProjectOverviewIntegration:
         chat_service = self.context_data['chat_service']
         shared = self.context_data['shared']
         
-        print(f"Using custom shared context: {shared}")
+        logger.info('Now we are using the customized shared dictionary')
         
         instructions = chat_service.get_instructions(
             chat_service.chat_flow.current_state.value
@@ -102,7 +116,7 @@ class TestCustomProjectOverviewIntegration:
         assert isinstance(instructions, str)
         assert len(instructions) > 0
         
-        print(f"Retrieved instructions with custom context: {instructions}")
+        logger.info(f"Retrieved instructions with custom context: {instructions}")
     
     @pytest.mark.order(2)
     def test_initial_content_generation(self):
@@ -123,7 +137,7 @@ class TestCustomProjectOverviewIntegration:
         max_attempts = 3
         attempts = 0
         
-        while status == 'continue' and attempts < max_attempts:
+        while status == State.CONTINUE.value and attempts < max_attempts:
             attempts += 1
             print(f"收到'continue'响应(第{attempts}次)，提供额外信息...")
             
@@ -135,13 +149,11 @@ class TestCustomProjectOverviewIntegration:
             )
         
         # 验证最终结果
-        assert status == 'common_rules'
-        # for k in updated_shared.keys():
-        #     logger.info('we have those keys in this shared %s', k)
+        assert status == 'obligations'
 
-        assert 'generated_common_rules' in updated_shared
+        assert 'generated_obligations' in updated_shared
         
-        content = updated_shared['generated_common_rules']
+        content = updated_shared['generated_obligations']
         assert content
         
         handler_factory.add_section(status, content)
@@ -158,6 +170,61 @@ class TestCustomProjectOverviewIntegration:
         # 验证确认消息格式
         assert isinstance(reply, list)
         assert len(reply) > 0
+
+    @pytest.mark.order(3)
+    def test_user_inFlow(self):
+        '''导入对话文件测试节点流转状态'''
+        logger.info("开始执行测试: test_user_in_flow")
+        chat_service = self.context_data['chat_service']
+        updated_shared = self.context_data['updated_shared']
+        current_status = self.context_data['current_status']
+        handler_factory = self.context_data['handler_factory']
+
+        with open(r'back_end\test_codes\test_dialogue\test_obligations.json', 'r', encoding='utf-8') as f:
+            dialogue = json.load(f)
+            for i, turn in enumerate(dialogue['turns']):
+                turn_num = i + 1
+                logger.info(f'当前对话轮次{turn_num}, 用户输入{turn['user_input']}')
+
+                status, updated_shared, reply = chat_service.process_user_input(
+                    shared = updated_shared,
+                    user_input = turn['user_input'],
+                    status = current_status
+                )
+
+                logger.info(f"状态: {status}")
+                logger.info(f"系统回复: {reply[:100]}..." if isinstance(reply, str) and len(reply) > 100 else f"系统回复: {reply}")
+
+                # 处理继续状态
+                max_attempts = 2
+                attempts = 0
+                
+                while status == 'continue' and attempts < max_attempts and 'follow_up_if_continue' in turn:
+                    attempts += 1
+                    followup = turn['follow_up_if_continue']
+                    
+                    f.write(f"\n用户跟进 #{attempts}: {followup}\n")
+                    logger.info(f"用户跟进 #{attempts}: {followup}")
+                    
+                    status, updated_shared, reply = chat_service.process_user_input(
+                        shared=updated_shared,
+                        user_input=followup,
+                        status=current_status
+                    )
+                    
+                    f.write(f"状态: {status}\n")
+                    f.write(f"系统回复: {reply}\n")
+                    logger.info(f"状态: {status}")
+                    logger.info(f"系统回复: {reply[:100]}..." if isinstance(reply, str) and len(reply) > 100 else f"系统回复: {reply}")
+
+                shared = updated_shared
+                current_status = status
+
+        handler_factory.md.save_document(f'./downloads/test/product_clearance/report.md')
+        self.context_data['shared'] = shared
+        self.context_data['current_status'] = status
+
+        return status, shared
 
     @pytest.mark.order(3)
     def test_user_satisfied_flow(self):
@@ -265,4 +332,8 @@ if __name__ == '__main__':
     # 使用pytest运行指定的测试类
     # 运行自定义上下文测试
     print("\n=== 运行自定义上下文测试 ===")
-    pytest.main(["-v", __file__ + "::TestCustomProjectOverviewIntegration"])
+    pytest.main(["-v",
+                f"{__file__}::TestCustomProjectOverviewIntegration::test_environment_setup",
+                f"{__file__}::TestCustomProjectOverviewIntegration::test_custom_instruction_retrieval",
+                f"{__file__}::TestCustomProjectOverviewIntegration::test_initial_content_generation",
+                f"{__file__}::TestCustomProjectOverviewIntegration::test_user_inFlow"])

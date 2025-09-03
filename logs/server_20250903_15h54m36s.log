@@ -1,0 +1,31 @@
+2025-09-03 15:54:36 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250903_15h54m36s.log
+2025-09-03 15:54:36 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250903_15h54m36s.log
+2025-09-03 15:54:36 - nodes - INFO - Now we are parsing the original HTML File
+2025-09-03 15:54:37 - nodes - INFO - Successfully parsed!
+2025-09-03 15:54:37 - nodes - INFO - Now we are parsing the original PCR file.
+2025-09-03 15:54:49 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-09-03 15:54:49 - back_end.services.chat_manager - WARNING - now we start with checking: pure_component
+2025-09-03 15:54:52 - testing - INFO - 检验测试环境初始化...
+2025-09-03 15:54:52 - testing - INFO - 测试环境验证通过!
+2025-09-03 15:54:52 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-09-03 15:54:52 - testing - INFO - Now we are using the customized shared dictionary
+2025-09-03 15:54:52 - testing - INFO - 开始执行测试: test_initial_content_generation
+2025-09-03 15:54:52 - back_end.services.chat_service - INFO - user_input: 
+            That's totally OK.
+
+    
+2025-09-03 15:54:55 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'Could you please provide more details about your compliance needs or specific questions you have regarding OSS or PSS?'}
+2025-09-03 15:55:15 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: item_0
+2025-09-03 15:55:35 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: item_1
+2025-09-03 15:55:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: item_2
+2025-09-03 15:56:17 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: item_3
+2025-09-03 15:56:37 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: item_4
+2025-09-03 15:56:58 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: item_5
+2025-09-03 15:57:18 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: item_6
+2025-09-03 15:57:40 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: item_7
+2025-09-03 15:57:40 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-03 15:57:40 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - LicenseHandler
+2025-09-03 15:57:41 - testing - INFO - 开始执行测试: test_user_in_flow
+2025-09-03 15:57:41 - testing - INFO - 当前对话轮次1, 用户输入OK, show me the first subtitle
+2025-09-03 15:57:41 - back_end.services.chat_service - INFO - user_input: OK, show me the first subtitle
+2025-09-03 15:57:43 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'The first subtitle within this context could relate to the primary aspects of OSS or PSS compliance. If you have a document or specific topic in mind, please share it so I can assist you further.'}

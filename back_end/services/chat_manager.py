@@ -309,7 +309,7 @@ class ChatManager:
             return shared, "所有项目已确认完毕"
         
         # 确定开始处理的项目类型（这里可以定义优先级）
-        selected_type, selected_idx = pending_types[1]  # 默认选第一个
+        selected_type, selected_idx = pending_types[0]  # 默认选第一个
         
         # 获取选中类型的配置
         config = get_type_config(selected_type)

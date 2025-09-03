@@ -110,6 +110,7 @@ class SubTaskStateHandler(StateHandler):
     """包含子任务的状态处理器基类"""
     def __init__(self):
         self.subtasks = []  # 子任务ID列表
+        self.nest_handlers = {} # 双层嵌套结构
         self.current_subtask_index = 0
     
     def has_subtasks(self) -> bool:
@@ -244,7 +245,6 @@ class ChapterGeneration(SubTaskStateHandler):
                 subcontent_factory: Callable[[Any, Any, Any], Any] = None,
                 chapter_title_key: str = "generated_chapter_title",
                 chapter_content_key: str = "generated_chapter_content"):
-        super().__init__(bot)
         if item_list_key is None:
             self.logger.error("item_list_key must be provided for ChapterGenerationHandler")
         if subtask_factory is None:
@@ -257,6 +257,7 @@ class ChapterGeneration(SubTaskStateHandler):
         self.subcontent_factory = subcontent_factory
         self.chapter_title_key = chapter_title_key
         self.chapter_content_key = chapter_content_key
+        self.bot = bot
         
         # 嵌套字典：{item_key: [子标题生成实例列表]}
         self.nested_handlers = {}
@@ -264,6 +265,7 @@ class ChapterGeneration(SubTaskStateHandler):
         self.current_item_index = 0
         # 项目列表
         self.items = []
+        super().__init__()
 
     def initialize_subtasks(self, context: Dict[str, Any]):
         """
@@ -275,14 +277,14 @@ class ChapterGeneration(SubTaskStateHandler):
         
         self.nested_handlers = {}
         self.current_item_index = 0
+        self.current_subhandler_index = 0
+        idx = 0
         
-        for item_data in self.items:
-            item_key = item_data.get('id', item_data.get('title', f'item_{len(self.nested_handlers)}'))
-            
+        for _ in self.items:
             subtitle_handlers = self._create_content_handlers()
-            
-            self.nested_handlers[item_key] = subtitle_handlers
-            self.logger.info(f"Initialized {len(subtitle_handlers)} subtitle handlers for item: {item_key}")
+            self.nested_handlers[idx] = subtitle_handlers
+            self.logger.info(f"Initialized {len(subtitle_handlers)} subtitle handlers for item: {idx}")
+            idx += 1
 
         if not self.nested_handlers:
             self.logger.warning(f"No items found for key '{self.item_list_key}'. Chapter will be empty.")
@@ -309,6 +311,7 @@ class ChapterGeneration(SubTaskStateHandler):
         for handler in subtitle_handlers:
             if not getattr(handler, 'content_confirmed', False):
                 handler.content_confirmed = True
+                self.current_subhandler_index += 1
                 self.logger.info(f"Marked content_confirmed for {item_key} - {handler.__class__.__name__}")
                 break
         
@@ -325,6 +328,9 @@ class ChapterGeneration(SubTaskStateHandler):
                 return State.COMPLETED.value
         
         return State.INPROGRESS.value
+
+    def is_subtask_completed(self, context, subtask_id):
+        return super().is_subtask_completed(context, subtask_id)
 
     def handle(self, context: Dict[str, Any]) -> str:
         """

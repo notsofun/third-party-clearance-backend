@@ -5,8 +5,8 @@ from log_config import get_logger
 logger = get_logger(__name__)  # 每个模块用自己的名称
 class ItemType(Enum):
     """项目类型枚举"""
-    LICENSE = "license"
     COMPONENT = "component"
+    LICENSE = "license"
     CREDENTIAL = 'credential'
     SPECIALCHECK = 'specialcheck'
     MAINLICENSE = 'main_license'
@@ -61,7 +61,11 @@ TYPE_CONFIG = {
         'instruction_fields': ['compName', 'licenseList'],
     },
     ItemType.PC : {
-        'items_key' : 'component'
+        'items_key' : 'component',
+        'error_msg': 'sorry, We have found the component needing to be checked in the PCR',
+        'name_field': 'compName',
+        'default_name': 'Unknown component',
+        'current_key': "current_pc_idx",
     },
 }
 
@@ -130,7 +134,8 @@ CONFIRMATION_STATUS_TO_TYPE_MAP = {
     ConfirmationStatus.DEPENDENCY.value: ItemType.COMPONENT.value,  # 依赖关系对应组件处理
     ConfirmationStatus.COMPLIANCE.value: ItemType.LICENSE.value,    # 合规性对应许可证处理
     ConfirmationStatus.CREDENTIAL.value: ItemType.CREDENTIAL.value,  # 凭证处理
-    ConfirmationStatus.MAINLICENSE.value: ItemType.MAINLICENSE.value # 确认组件的主许可证
+    ConfirmationStatus.MAINLICENSE.value: ItemType.MAINLICENSE.value, # 确认组件的主许可证
+    ConfirmationStatus.OBLIGATIONS.value: ItemType.PC.value, # 确认组件的子标题
 }
 
 # 默认处理类型

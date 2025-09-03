@@ -52,11 +52,16 @@ class ParsingOriginalHtml(Node):
     def exec(self, data):
 
         final_Result = parse_html(data)
+        components = [ {"compName": item['name'], "licenses": item['license_names']}
+            for item in final_Result['releases']]
 
-        return final_Result
+        return final_Result, components
     
     def post(self, shared, prep_res, exec_res):
-        shared["parsedHtml"] =  exec_res
+        final, comps = exec_res
+        shared[TYPE_CONFIG[ItemType.PC]['items_key']] = comps
+        shared["parsedHtml"] =  final
+        shared
         with open("resultsInProgress/parsed_original_oss.json","w",encoding="utf-8") as f:
             json.dump(exec_res,f,ensure_ascii=False,indent=2)
         logger.info("Successfully parsed!")
@@ -282,7 +287,6 @@ class DependecyCheckingRAG(BatchNode):
         return dependency, compDict
     
     def post(self, shared, prep_res, exec_res):
-        shared[TYPE_CONFIG[ItemType.PC]['items_key']] = prep_res
         dependencies, components = split_tuples(exec_res)
 
         credential_required_components = filter_components_by_credential_requirement(
