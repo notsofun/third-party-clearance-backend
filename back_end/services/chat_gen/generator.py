@@ -1,5 +1,4 @@
-from back_end.items_utils.item_types import State
-from back_end.services.state_handlers.base_handler import ChapterGeneration
+from back_end.services.state_handlers.content_handler import ChapterGeneration
 from typing import Tuple, Dict, Any
 from utils.string_to_markdown import MarkdownDocumentBuilder
 from log_config import get_logger
@@ -10,13 +9,34 @@ class ChatGenerator:
         self.handler = handler
         self.logger = get_logger(__name__)
 
+    def load_new_handler(self, handler: ChapterGeneration):
+        """
+        更新当前使用的章节生成处理器
+        
+        Args:
+            handler: 新的ChapterGeneration处理器实例
+        """
+        if handler is None:
+            self.logger.warning("尝试加载None处理器，操作被忽略")
+            return
+            
+        if not isinstance(handler, ChapterGeneration):
+            self.logger.warning(f"处理器类型不匹配，期望ChapterGeneration，得到{handler.__class__.__name__}")
+            return
+            
+        self.logger.info(f"更新处理器: {self.handler.__class__.__name__} -> {handler.__class__.__name__}")
+        self.handler = handler
+
     def generate_content(self, content:Dict) -> Tuple[str, bool]:
         result = self._content_generation(content)
-        if result:
+        # 根据_content_generation的返回值类型判断情况
+        if result is True:  # 所有子标题都已完成
             return "All subtitles have been finished", True
-        else:
+        elif result is False:  # 没有找到处理器
+            return "No handlers found for current item", False
+        else:  # 正常生成了内容
             return result, False
-
+        
     def _content_generation(self, context: Dict[str, Any]) -> str:
         """
         内容生成方法 - Chat_service只通过handler._content_generation调用
@@ -31,7 +51,7 @@ class ChatGenerator:
         item_key = current_item.get('id', current_item.get('title', f'item_{self.handler.current_item_index}'))
         
         # 获取当前项目的子标题处理器列表
-        subtitle_handlers = self.handler.nested_handlers.get(item_key, [])
+        subtitle_handlers = self.handler.nested_handlers.get(self.handler.current_item_index, [])
         
         # 找到当前需要处理的子标题
         for handler in subtitle_handlers:
@@ -47,7 +67,7 @@ class ChatGenerator:
                 self.logger.info(f"Generated content for {item_key} - {handler.__class__.__name__}")
                 return content
         
-        return True
+        return False
 
     def _aggregate_content(self, context: Dict[str, Any]) -> str:
         """

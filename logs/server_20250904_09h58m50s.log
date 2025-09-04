@@ -1,0 +1,31 @@
+2025-09-04 09:58:50 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250904_09h58m50s.log
+2025-09-04 09:58:50 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250904_09h58m50s.log
+2025-09-04 09:58:50 - nodes - INFO - Now we are parsing the original HTML File
+2025-09-04 09:58:50 - nodes - INFO - Successfully parsed!
+2025-09-04 09:58:50 - nodes - INFO - Now we are parsing the original PCR file.
+2025-09-04 09:58:59 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-09-04 09:58:59 - back_end.services.chat_manager - WARNING - now we start with checking: pure_component
+2025-09-04 09:59:02 - testing - INFO - 检验测试环境初始化...
+2025-09-04 09:59:02 - testing - INFO - 测试环境验证通过!
+2025-09-04 09:59:02 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-09-04 09:59:02 - testing - INFO - Now we are using the customized shared dictionary
+2025-09-04 09:59:04 - testing - INFO - Retrieved instructions with custom context: I understand that you want to switch to confirming mode. Please let me know your specific queries or concerns, and I will address them. Once you're satisfied with the response, we can move on.
+2025-09-04 09:59:04 - testing - INFO - 开始执行测试: test_initial_content_generation
+2025-09-04 09:59:04 - back_end.services.chat_service - INFO - user_input: 
+            That's totally OK.
+
+    
+2025-09-04 09:59:05 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Thank you for your confirmation. If you have any additional questions or need further assistance, feel free to let me know so we can continue with the next task.'}
+2025-09-04 09:59:20 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 0
+2025-09-04 09:59:35 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 1
+2025-09-04 09:59:50 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 2
+2025-09-04 10:00:05 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 3
+2025-09-04 10:00:20 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 4
+2025-09-04 10:00:35 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 5
+2025-09-04 10:00:50 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 6
+2025-09-04 10:01:05 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 7
+2025-09-04 10:01:05 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-04 10:01:06 - testing - INFO - 开始执行测试: test_user_in_flow
+2025-09-04 10:01:06 - testing - INFO - 当前对话轮次1, 用户输入OK, show me the first subtitle
+2025-09-04 10:01:06 - back_end.services.chat_service - INFO - user_input: OK, show me the first subtitle
+2025-09-04 10:01:08 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': "Could you please clarify what you mean by 'the first subtitle'? Are you referring to a specific document, a software project, or a certain section of compliance information? This will help me provide you with the most relevant assistance."}

@@ -1,5 +1,5 @@
-# state_handlers/oem_handler.py
-from .base_handler import ContentGenerationHandler, SimpleStateHandler, SubTaskStateHandler, ChapterGeneration
+from .base_handler import SimpleStateHandler, SubTaskStateHandler, ContentGenerationHandler
+from .content_handler import ChapterGeneration, SubContentGenerationHandler
 from utils.tools import get_strict_json
 from log_config import get_logger
 from back_end.items_utils.item_types import ItemType, TYPE_CONFIG, ItemStatus
@@ -9,6 +9,7 @@ from back_end.items_utils.item_utils import is_item_completed, get_items_from_co
 from utils.PCR_Generation.component_overview import generate_components_markdown_table
 from utils.database.hardDB import HardDB
 from utils.PCR_Generation.obligations import get_license_descriptions, list_to_string
+from back_end.services.state_handlers.handler_registry import HandlerStateWrapper
 
 logger = get_logger(__name__)
 
@@ -259,17 +260,29 @@ class ObligationsHandler(ChapterGeneration):
         return response.get('talking', 'Please check the result for product overview')
     
     def _create_content_handlers(self):
-        return [
-            LicenseHandler(),
-            SubObligationsHandler(),
-            SubRisksHandler(),
-            CommonRulesHandler(),
-            AdditionalHandler(),
-            ImplementationHandler(),
-            ObligationCombiningHandler(),
+        """创建handler包装器列表，每个包装器包含共享的handler实例"""
+        handlers = []
+        handler_classes = [
+            LicenseHandler,
+            SubObligationsHandler,
+            SubRisksHandler,
+            CommonRulesHandler,
+            AdditionalHandler,
+            ImplementationHandler,
+            ObligationCombiningHandler,
         ]
+        
+        for handler_class in handler_classes:
+            # 确保每个handler_class都继承自SubContentGenerationHandler
+            if not issubclass(handler_class, SubContentGenerationHandler):
+                self.logger.warning(f"{handler_class.__name__} 不是SubContentGenerationHandler的子类，可能无法正确管理状态")
+            shared_handler = self.handler_registry.get_handler(handler_class)
+            # 创建该实例的状态包装器
+            handler_wrapper = HandlerStateWrapper(shared_handler)
+            handlers.append(handler_wrapper)
+        return handlers
     
-class LicenseHandler(ContentGenerationHandler):
+class LicenseHandler(SubContentGenerationHandler):
 
     def __init__(self, bot=None):
         super().__init__(bot)
@@ -285,7 +298,7 @@ class LicenseHandler(ContentGenerationHandler):
 
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared',{}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        components = shared.get('shared',{}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         global_licenses = self.db.find_license_by_component(components[current_item_idx]['compName'], 'global')
         other_licenses = self.db.find_license_by_component(components[current_item_idx]['compName'], 'other')
         global_str = "*Global Licenses:*" + ', '.join(global_licenses)
@@ -295,7 +308,7 @@ class LicenseHandler(ContentGenerationHandler):
     def get_instructions(self):
         return 'Now we have imported the licenses identified from the cli xml.'
 
-class SubObligationsHandler(ContentGenerationHandler):
+class SubObligationsHandler(SubContentGenerationHandler):
     def __init__(self, bot=None):
         super().__init__(bot)
         self.db = HardDB()
@@ -306,7 +319,7 @@ class SubObligationsHandler(ContentGenerationHandler):
     
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared',{}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        components = shared.get('shared',{}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         current_comp = components[current_item_idx]
         licenses = self.db.get_unique_licenses(current_comp['compName'])
         tables = shared['ParsedPCR']['tables'][13]['data']
@@ -321,7 +334,7 @@ class SubObligationsHandler(ContentGenerationHandler):
             shared['SubObligations'] = content
             return shared
     
-class SubRisksHandler(ContentGenerationHandler):
+class SubRisksHandler(SubContentGenerationHandler):
 
     def __init__(self, bot=None):
         super().__init__(bot)
@@ -334,7 +347,7 @@ class SubRisksHandler(ContentGenerationHandler):
     
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         current_comp = components[current_item_idx]
         licenses = self.db.get_unique_licenses(current_comp['compName'])
         tables = shared['parsedPCR']['tables'][1]['data']
@@ -349,7 +362,7 @@ class SubRisksHandler(ContentGenerationHandler):
             shared['SubRisk'] = content
             return shared
         
-class CommonRulesHandler(ContentGenerationHandler):
+class CommonRulesHandler(SubContentGenerationHandler):
     def __init__(self, bot=None):
         super().__init__(bot)
         self.db = HardDB()
@@ -360,7 +373,7 @@ class CommonRulesHandler(ContentGenerationHandler):
     
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         current_comp = components[current_item_idx]
         licenses = self.db.get_unique_licenses(current_comp['compName'])
         filtered_licenses = [license for license in licenses if license != "Apache-2.0"]
@@ -375,7 +388,7 @@ class CommonRulesHandler(ContentGenerationHandler):
             shared['CommonRulesOnlyLicenses'] = content
             return shared
 
-class AdditionalHandler(ContentGenerationHandler):
+class AdditionalHandler(SubContentGenerationHandler):
     def __init__(self, bot=None):
         super().__init__(bot)
         self.db = HardDB()
@@ -386,7 +399,7 @@ class AdditionalHandler(ContentGenerationHandler):
     
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         current_comp = components[current_item_idx]
         licenses = self.db.get_unique_licenses(current_comp['compName'])
         filtered_licenses = [license for license in licenses if 'dual' in license]
@@ -401,7 +414,7 @@ class AdditionalHandler(ContentGenerationHandler):
         else:
             shared['AdditionalObligations'] = content
             return shared
-class ImplementationHandler(ContentGenerationHandler):
+class ImplementationHandler(SubContentGenerationHandler):
     def __init__(self, bot=None):
         super().__init__(bot)
         self.db = HardDB()
@@ -412,8 +425,8 @@ class ImplementationHandler(ContentGenerationHandler):
     
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
-        discarded_licenses = [lic for lic in shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.LICENSE.value)['items_key'], []) if lic['status'] == ItemStatus.DISCARDED.value]
+        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
+        discarded_licenses = [lic for lic in shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.LICENSE)['items_key'], []) if lic['status'] == ItemStatus.DISCARDED.value]
         current_comp = components[current_item_idx]
         licenses = self.db.get_unique_licenses(current_comp['compName'])
         filtered_licenses = [license for license in licenses if license in discarded_licenses]
@@ -438,7 +451,7 @@ class ImplementationHandler(ContentGenerationHandler):
             shared['ImplementationDetails'] = content
             return shared
         
-class ObligationCombiningHandler(ContentGenerationHandler):
+class ObligationCombiningHandler(SubContentGenerationHandler):
     def __init__(self, bot=None):
         super().__init__(bot)
         self.db = HardDB()
@@ -456,7 +469,7 @@ class ObligationCombiningHandler(ContentGenerationHandler):
         ImplementationDetails = shared['ImplementationDetails']
 
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC.value)['items_key'], [])
+        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         current_comp = components[current_item_idx]
 
         general_assessment = self.db.get_general_assessment(current_comp['compName'])

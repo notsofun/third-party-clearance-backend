@@ -94,6 +94,8 @@ class TestCustomProjectOverviewIntegration:
         assert 'chat_service' in self.context_data, "ChatService has not been initialized"
         assert 'workflow_context' in self.context_data, "WorkflowContext has not been initialized"
         assert 'shared' in self.context_data, "the shared data is empty"
+        assert 'parsedHtml' in self.context_data['shared']
+        assert 'ParsedPCR' in self.context_data['shared']
         
         chat_service = self.context_data['chat_service']
         assert chat_service is not None, "ChatService is empty"
@@ -116,6 +118,9 @@ class TestCustomProjectOverviewIntegration:
         assert isinstance(instructions, str)
         assert len(instructions) > 0
         
+        self.context_data['shared'] = shared
+        self.context_data['chat_service'] = chat_service
+
         logger.info(f"Retrieved instructions with custom context: {instructions}")
     
     @pytest.mark.order(2)
@@ -176,6 +181,8 @@ class TestCustomProjectOverviewIntegration:
         '''导入对话文件测试节点流转状态'''
         logger.info("开始执行测试: test_user_in_flow")
         chat_service = self.context_data['chat_service']
+        shared = self.context_data['shared']
+        assert 'ParsedPCR' in shared
         updated_shared = self.context_data['updated_shared']
         current_status = self.context_data['current_status']
         handler_factory = self.context_data['handler_factory']
@@ -186,8 +193,8 @@ class TestCustomProjectOverviewIntegration:
                 turn_num = i + 1
                 logger.info(f'当前对话轮次{turn_num}, 用户输入{turn['user_input']}')
 
-                status, updated_shared, reply = chat_service.process_user_input(
-                    shared = updated_shared,
+                status, shared, reply = chat_service.process_user_input(
+                    shared = shared,
                     user_input = turn['user_input'],
                     status = current_status
                 )
@@ -203,26 +210,24 @@ class TestCustomProjectOverviewIntegration:
                     attempts += 1
                     followup = turn['follow_up_if_continue']
                     
-                    f.write(f"\n用户跟进 #{attempts}: {followup}\n")
                     logger.info(f"用户跟进 #{attempts}: {followup}")
                     
-                    status, updated_shared, reply = chat_service.process_user_input(
-                        shared=updated_shared,
+                    status, shared, reply = chat_service.process_user_input(
+                        shared=shared,
                         user_input=followup,
                         status=current_status
                     )
                     
-                    f.write(f"状态: {status}\n")
-                    f.write(f"系统回复: {reply}\n")
                     logger.info(f"状态: {status}")
                     logger.info(f"系统回复: {reply[:100]}..." if isinstance(reply, str) and len(reply) > 100 else f"系统回复: {reply}")
 
-                shared = updated_shared
+                updated_shared = shared
                 current_status = status
 
         handler_factory.md.save_document(f'./downloads/test/product_clearance/report.md')
         self.context_data['shared'] = shared
         self.context_data['current_status'] = status
+        self.context_data['updated_shared'] = updated_shared
 
         return status, shared
 
@@ -335,5 +340,4 @@ if __name__ == '__main__':
     pytest.main(["-v",
                 f"{__file__}::TestCustomProjectOverviewIntegration::test_environment_setup",
                 f"{__file__}::TestCustomProjectOverviewIntegration::test_custom_instruction_retrieval",
-                f"{__file__}::TestCustomProjectOverviewIntegration::test_initial_content_generation",
                 f"{__file__}::TestCustomProjectOverviewIntegration::test_user_inFlow"])

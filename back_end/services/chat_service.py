@@ -10,7 +10,8 @@ from utils.LLM_Analyzer import RiskBot
 from log_config import get_logger
 from back_end.services.state_handlers.handler_factory import StateHandlerFactory
 from back_end.services.chat_gen.generator import ChatGenerator
-from back_end.services.state_handlers.base_handler import SubTaskStateHandler,ContentGenerationHandler, ChapterGeneration
+from back_end.services.state_handlers.base_handler import SubTaskStateHandler, ContentGenerationHandler
+from back_end.services.state_handlers.content_handler import ChapterGeneration
 
 logger = get_logger(__name__)  # 每个模块用自己的名称
 
@@ -46,13 +47,16 @@ class ChatService:
         handler = self.handler_factory.get_handler(status, self.bot)
         if handler:
             shared = handler.process_special_logic(shared, result=result)
-
+        assert 'ParsedPCR' in shared
         # 检查大状态变化
         content = {'shared': shared, 'status': result}
         result_in_flow = self.chat_flow.process(content)
         updated_status = result_in_flow['current_state'].value
         
         logger.info('chat_service.process_user_input: Current status: %s, Updated status: %s', status, updated_status)
+
+        # 调用最新的handler给下方，包含了初始化能力
+        handler = self.chat_flow.handlers.get_handler(updated_status)
         
         final_status, updated_shared, reply = self._status_check(shared, updated_status, status, result,reply, handler)
 
@@ -214,7 +218,7 @@ class ChatService:
         # 每次回调特殊逻辑存储数据
         shared = handler.process_special_logic(shared, content=gen_content)
 
-        # 如果章节生成完成，状态流转往下走，
+        # 如果章节生成完成，状态流转往下走，为什么continue第一次调用就判断全部完成了？
         if all_completed:
             logger.info('chat_service._handle_chapter_generation: Chapter generation completed')
             

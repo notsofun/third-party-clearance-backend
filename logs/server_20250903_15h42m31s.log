@@ -1,5 +1,0 @@
-2025-09-03 15:42:31 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250903_15h42m31s.log
-2025-09-03 15:42:31 - nodes - INFO - Now we are parsing the original HTML File
-2025-09-03 15:42:31 - nodes - INFO - Successfully parsed!
-2025-09-03 15:42:31 - nodes - INFO - Now we are parsing the original PCR file.
-2025-09-03 15:42:43 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
