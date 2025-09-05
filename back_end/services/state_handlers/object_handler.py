@@ -298,9 +298,9 @@ class LicenseHandler(SubContentGenerationHandler):
 
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared',{}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
+        components = shared.get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         global_licenses = self.db.find_license_by_component(components[current_item_idx]['compName'], 'global')
-        other_licenses = self.db.find_license_by_component(components[current_item_idx]['compName'], 'other')
+        other_licenses = self.db.find_license_by_component(components[current_item_idx]['compName'], other= True)
         global_str = "*Global Licenses:*" + ', '.join(global_licenses)
         other_str = "*Other Licenses:*" + ', '.join(other_licenses)
         return global_str + '\n\n' + other_str
@@ -319,7 +319,7 @@ class SubObligationsHandler(SubContentGenerationHandler):
     
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared',{}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
+        components = shared.get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         current_comp = components[current_item_idx]
         licenses = self.db.get_unique_licenses(current_comp['compName'])
         tables = shared['ParsedPCR']['tables'][13]['data']
@@ -347,10 +347,10 @@ class SubRisksHandler(SubContentGenerationHandler):
     
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
+        components = shared.get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         current_comp = components[current_item_idx]
         licenses = self.db.get_unique_licenses(current_comp['compName'])
-        tables = shared['parsedPCR']['tables'][1]['data']
+        tables = shared['ParsedPCR']['tables'][1]['data']
         risks = get_license_descriptions(licenses, tables, 'License section reference and short Description')
         final_str = list_to_string(risks)
         return final_str
@@ -373,7 +373,7 @@ class CommonRulesHandler(SubContentGenerationHandler):
     
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
+        components = shared.get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         current_comp = components[current_item_idx]
         licenses = self.db.get_unique_licenses(current_comp['compName'])
         filtered_licenses = [license for license in licenses if license != "Apache-2.0"]
@@ -399,7 +399,7 @@ class AdditionalHandler(SubContentGenerationHandler):
     
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
+        components = shared.get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         current_comp = components[current_item_idx]
         licenses = self.db.get_unique_licenses(current_comp['compName'])
         filtered_licenses = [license for license in licenses if 'dual' in license]
@@ -425,8 +425,8 @@ class ImplementationHandler(SubContentGenerationHandler):
     
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
-        discarded_licenses = [lic for lic in shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.LICENSE)['items_key'], []) if lic['status'] == ItemStatus.DISCARDED.value]
+        components = shared.get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
+        discarded_licenses = [lic for lic in shared.get(TYPE_CONFIG.get(ItemType.LICENSE)['items_key'], []) if lic['status'] == ItemStatus.DISCARDED.value]
         current_comp = components[current_item_idx]
         licenses = self.db.get_unique_licenses(current_comp['compName'])
         filtered_licenses = [license for license in licenses if license in discarded_licenses]
@@ -469,7 +469,7 @@ class ObligationCombiningHandler(SubContentGenerationHandler):
         ImplementationDetails = shared['ImplementationDetails']
 
         current_item_idx = shared.get('current_item_idx', 0)
-        components = shared.get('shared', {}).get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
+        components = shared.get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
         current_comp = components[current_item_idx]
 
         general_assessment = self.db.get_general_assessment(current_comp['compName'])

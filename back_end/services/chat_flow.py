@@ -1,7 +1,6 @@
 from typing import Dict, Any
 from back_end.items_utils.item_types import State, ConfirmationStatus
 from back_end.services.state_handlers.handler_factory import StateHandlerFactory
-from utils.LLM_Analyzer import RiskBot
 
 from log_config import get_logger
 
@@ -9,7 +8,7 @@ logger = get_logger(__name__)  # 每个模块用自己的名称
 
 class WorkflowContext:
     """工作流上下文，管理状态和转换"""
-    def __init__(self, bot:RiskBot, curren_state=ConfirmationStatus.OEM):
+    def __init__(self, curren_state=ConfirmationStatus.OEM):
         # 状态转移表
         self.transition_rules = {
             ConfirmationStatus.OEM: {
@@ -84,7 +83,6 @@ class WorkflowContext:
         
         # 注册状态处理器
         self.handlers = StateHandlerFactory()
-        self.bot = bot
         self.current_state = curren_state
         self.initialized_states = set()  # 记录已初始化的状态
     
@@ -122,7 +120,7 @@ class WorkflowContext:
 
     def process(self, context: Dict[str, Any]) -> Dict:
         """处理当前状态并可能转移到下一个状态"""
-        handler = self.handlers.get_handler(self.current_state.value, self.bot)
+        handler = self.handlers.get_handler(self.current_state.value)
         if not handler:
             logger.error(f"We have not found the corresponding state: {self.current_state}")
             return {
@@ -166,8 +164,7 @@ class WorkflowContext:
 
 # 使用示例
 if __name__ == "__main__":
-    riskbot = RiskBot(session_id='test')
-    workflow = WorkflowContext(curren_state= ConfirmationStatus.MAINLICENSE, bot=riskbot)
+    workflow = WorkflowContext(curren_state= ConfirmationStatus.MAINLICENSE)
     context = {
         'shared': {
             "dependency_required__components": [

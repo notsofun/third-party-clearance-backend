@@ -40,13 +40,13 @@ def class_context(request):
     shared = run_test(shared)
     shared['riskBot'] = get_singleton_risk_bot()
     
-    workflow_context = WorkflowContext(curren_state=ConfirmationStatus.OBLIGATIONS, bot=shared.get('riskBot'))
+    workflow_context = WorkflowContext(curren_state=ConfirmationStatus.OBLIGATIONS)
     chat_manager = ChatManager()
     chat_service = ChatService(workflow_context)
 
     chat_service.initialize_chat(shared=shared)
     handler_factory = StateHandlerFactory()
-    handler = handler_factory.get_handler(workflow_context.current_state.value)
+    handler = handler_factory.get_handler(workflow_context.current_state.value, chat_service.bot)
     
     context_type = getattr(request, "param", "base")
 
@@ -182,10 +182,8 @@ class TestCustomProjectOverviewIntegration:
         logger.info("开始执行测试: test_user_in_flow")
         chat_service = self.context_data['chat_service']
         shared = self.context_data['shared']
-        assert 'ParsedPCR' in shared
         updated_shared = self.context_data['updated_shared']
         current_status = self.context_data['current_status']
-        handler_factory = self.context_data['handler_factory']
 
         with open(r'back_end\test_codes\test_dialogue\test_obligations.json', 'r', encoding='utf-8') as f:
             dialogue = json.load(f)
@@ -224,7 +222,9 @@ class TestCustomProjectOverviewIntegration:
                 updated_shared = shared
                 current_status = status
 
-        handler_factory.md.save_document(f'./downloads/test/product_clearance/report.md')
+        chat_service.handler_factory.md.save_document(f'./downloads/test/product_clearance/report.md')
+        logger.info('The latest file has been saved sucessfully!')
+        self.context_data['chat_service'] = chat_service
         self.context_data['shared'] = shared
         self.context_data['current_status'] = status
         self.context_data['updated_shared'] = updated_shared

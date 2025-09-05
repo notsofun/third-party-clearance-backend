@@ -58,7 +58,7 @@ class ChatGenerator:
             if not getattr(handler, 'content_confirmed', False):
                 # 调用子标题的内容生成
                 context['current_item_idx'] = self.handler.current_item_index
-                content = handler._generate_content(context)
+                content = handler._generate_content(shared)
                 
                 # 存储内容到shared
                 subtitle_key = f"content_{item_key}_{handler.__class__.__name__}"

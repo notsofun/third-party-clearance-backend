@@ -11,7 +11,7 @@ class SubContentGenerationHandler(ContentGenerationHandler):
     '''
     def __init__(self, bot = None):
         '''通过索引实现转移，subtask列表包含的每一个元素是一个statehandler'''
-        super().__init__(self)
+        super().__init__(bot)
         self.subtasks = []
 
     def set_bot(self, bot):
@@ -62,7 +62,6 @@ class ChapterGeneration(SubTaskStateHandler):
         self.subcontent_factory = subcontent_factory
         self.chapter_title_key = chapter_title_key
         self.chapter_content_key = chapter_content_key
-        self.bot = bot
         
         # 嵌套字典：{item_key: [子标题生成实例列表]}
         self.nested_handlers = {}
@@ -71,7 +70,7 @@ class ChapterGeneration(SubTaskStateHandler):
         # 项目列表
         self.items = []
         self.handler_registry = HandlerRegistry()
-        super().__init__()
+        super().__init__(bot)
 
     def initialize_subtasks(self, context: Dict[str, Any]):
         """
@@ -156,6 +155,7 @@ class ChapterGeneration(SubTaskStateHandler):
         
         return state_result
 
+    # 待会改一下，现在这里是不会有subtitle_handlers的列表的
     def process_special_logic(self, shared: Dict[str, Any], result: Dict[str, Any] = None, content: str = None) -> Dict[str, Any]:
         """
         处理特殊逻辑，传递给当前处理的子标题处理器
@@ -163,7 +163,7 @@ class ChapterGeneration(SubTaskStateHandler):
         if self.current_item_index < len(self.items):
             current_item = self.items[self.current_item_index]
             item_key = current_item.get('id', current_item.get('title', f'item_{self.current_item_index}'))
-            subtitle_handlers = self.nested_handlers.get(item_key, [])
+            subtitle_handlers = self.nested_handlers.get(self.current_item_index, [])
             
             # 找到当前正在处理的子标题处理器
             for handler in subtitle_handlers:

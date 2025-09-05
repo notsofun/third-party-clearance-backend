@@ -37,7 +37,42 @@ test_dialog = {
         {
             "user_input": "Show me the licenses",
             "expected_status": "component_overview"
-        }
+        },
+        {
+            "user_input": "ok, next, please",
+            "expected_status": "obligations",
+            "follow_up_if_continue": "Here's additional information about distribution"
+        },
+        {
+            "user_input": "ok, next, please",
+            "expected_status": "obligations",
+            "follow_up_if_continue": "Here's additional information about distribution"
+        },
+        {
+            "user_input": "ok, next, please",
+            "expected_status": "obligations",
+            "follow_up_if_continue": "Here's additional information about distribution"
+        },
+        {
+            "user_input": "ok, next, please",
+            "expected_status": "obligations",
+            "follow_up_if_continue": "Here's additional information about distribution"
+        },
+        {
+            "user_input": "ok, next, please",
+            "expected_status": "obligations",
+            "follow_up_if_continue": "Here's additional information about distribution"
+        },
+        {
+            "user_input": "ok, next, please",
+            "expected_status": "obligations",
+            "follow_up_if_continue": "Here's additional information about distribution"
+        },
+        {
+            "user_input": "ok, next, please",
+            "expected_status": "obligations",
+            "follow_up_if_continue": "Here's additional information about distribution"
+        },
     ]
 }
 

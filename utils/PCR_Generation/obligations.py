@@ -30,13 +30,15 @@ def get_license_descriptions(licenses, data_list, desc_type:str = 'description')
     
     # Retrieve descriptions for each requested license
     result = []
+    
     for license_name in licenses:
+        if isinstance(license_name, dict):
+            license_name = license_name['name']
+
         if license_name in license_map:
             # Join all descriptions for this license with a separator
             descriptions = license_map[license_name]
             result.append("\n\n".join(descriptions))
-        else:
-            result.append(f"No description found for license: {license_name}")
     
     return result
 

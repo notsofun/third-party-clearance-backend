@@ -64,7 +64,7 @@ async def analyze_file(file: UploadFile = File(...)):
 
         # 运行分析流程
         shared = run_analysis(str(file_path.absolute()))
-        session_chat_flow = WorkflowContext(shared.get('riskBot', None))
+        session_chat_flow = WorkflowContext()
         chat_service = ChatService(session_chat_flow)
         updated_shared = chat_service.initialize_chat(shared)
         status = chat_service.chat_flow.current_state.value
@@ -112,12 +112,6 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
             "SHARED_DATA_NOT_FOUND",
             f"Shared data not found in session {session_id}"
         )
-    # 检查riskBot
-    if 'riskBot' not in session['shared']:
-        return create_error_response(
-            "RISK_BOT_NOT_FOUND",
-            f"RiskBot not found in session {session_id}"
-        )
     
     curr_shared = session['shared']
     chat_flow = session['chat_flow']
@@ -135,7 +129,6 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
             buffer.write(content)
         logger.info(f'The file is stored at: {file_path}')
         analysis_result = chat_service.bot.contract_check(file_path)
-        # 这里会生成结果为next的回答
         logger.info(f"Contract analysis completed successfully for session {session_id}")
         sessions[session_id]['contract_analysis'] = analysis_result
 
@@ -149,7 +142,7 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
         # Status here should be transitted to toDependency
         result_in_flow = chat_flow.process(content)
         updated_status = result_in_flow['current_state'].value
-        handler = chat_service.handler_factory.get_handler(updated_status)
+        handler = chat_service.handler_factory.get_handler(updated_status, chat_service.bot)
 
         # Since the status has changed, here should return an instruction for dependency checking
         updated_status, updated_shared, message = chat_service._status_check(

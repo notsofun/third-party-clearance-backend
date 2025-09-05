@@ -27,7 +27,6 @@ class ChatService:
         self.handler_factory = StateHandlerFactory()
         self.chat_flow = chat_flow
         self.chat_manager = ChatManager()
-        self.bot = chat_flow.bot
     
     def process_user_input(self, shared: Dict[str, Any], user_input: str, status: str) -> Tuple[bool, Dict[str, Any], str]:
         """
@@ -56,7 +55,7 @@ class ChatService:
         logger.info('chat_service.process_user_input: Current status: %s, Updated status: %s', status, updated_status)
 
         # 调用最新的handler给下方，包含了初始化能力
-        handler = self.chat_flow.handlers.get_handler(updated_status)
+        handler = self.chat_flow.handlers.get_handler(updated_status, self.bot)
         
         final_status, updated_shared, reply = self._status_check(shared, updated_status, status, result,reply, handler)
 
@@ -215,6 +214,10 @@ class ChatService:
         # 只处理内容生成，仅返回子标题内容
         gen_content, all_completed = self.gen.generate_content(content)
 
+        # 测试时，将每章内容先存进handler_factory.md
+        current_subhandler = handler.nested_handlers[handler.current_item_index][handler.current_subhandler_index].handler.__class__.__name__
+        self.handler_factory.md.add_section(gen_content,f'### {current_subhandler}')
+
         # 每次回调特殊逻辑存储数据
         shared = handler.process_special_logic(shared, content=gen_content)
 
@@ -330,7 +333,7 @@ class ChatService:
         """
 
         # 确保风险评估机器人存在
-        risk_bot = self.chat_flow.bot
+        risk_bot = shared.get('riskBot', None)
         if not risk_bot:
             raise ValueError("共享数据中未找到RiskBot")
         

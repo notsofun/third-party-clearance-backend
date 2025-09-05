@@ -163,7 +163,7 @@ class HardDB(BaseDatabase):
         
         return self._base_query(query)
     
-    def find_license_by_component(self, comp_name, license_type="global"):
+    def find_license_by_component(self, comp_name, license_type="global", other = False):
         """查找指定组件的特定类型的许可证
         
         Args:
@@ -177,9 +177,12 @@ class HardDB(BaseDatabase):
         
         unique_licenses = self.get_unique_licenses(comp_name)
         
-        filtered_licenses = self.filter_licenses_by_type(unique_licenses, license_type)
-        
-        return [lic.get('name') for lic in filtered_licenses if lic.get('name')]
+        if other:
+            filtered_licenses = self.filter_other_licenses(unique_licenses)
+            return [lic.get('name') for lic in filtered_licenses if lic.get('name')]
+        else:
+            filtered_licenses = self.filter_licenses_by_type(unique_licenses, license_type)
+            return [lic.get('name') for lic in filtered_licenses if lic.get('name')]
 
     def get_unique_licenses(self, comp_name:str):
         """提取组件列表中的所有许可证并按照name和content去重
@@ -214,6 +217,16 @@ class HardDB(BaseDatabase):
             符合条件的许可证列表
         """
         return [lic for lic in licenses if lic.get('type') == license_type]
+    
+    def filter_other_licenses(self, licenses):
+        """从许可证列表中筛选特定类型的许可证
+        Args:
+            licenses: 许可证列表
+            license_type: 许可证类型
+        Returns:
+            符合条件的许可证列表
+        """
+        return [lic for lic in licenses if lic.get('type') != 'global']
     
     def is_COTS(self, comp_name):
         """查找指定组件的特定类型的许可证
