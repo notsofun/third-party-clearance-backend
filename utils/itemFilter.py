@@ -136,6 +136,16 @@ def filter_components_by_criteria(components, parsed_html, risk_analysis, criter
 import re
 
 class ContentNormalizer:
+
+    @staticmethod
+    def remove_n(name:str) -> list:
+        '''规范化名称，删除字符串中的\n'''
+        first_name = name.split('\n')
+        mid_name = [license.strip().rstrip(',').lower() for license in first_name]
+        final_name = ''.join(mid_name)
+
+        return mid_name
+
     @staticmethod
     def normalize_name(name):
         """

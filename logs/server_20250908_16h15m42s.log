@@ -1,0 +1,208 @@
+2025-09-08 16:15:42 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250908_16h15m42s.log
+2025-09-08 16:15:42 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250908_16h15m42s.log
+2025-09-08 16:15:43 - nodes - INFO - Now we are parsing the original HTML File
+2025-09-08 16:15:49 - nodes - INFO - Successfully parsed!
+2025-09-08 16:15:49 - nodes - INFO - Now we are parsing the original PCR file.
+2025-09-08 16:16:00 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-09-08 16:16:00 - back_end.services.chat_manager - WARNING - now we start with checking: pure_component
+2025-09-08 16:16:00 - testing - INFO - 检验测试环境初始化...
+2025-09-08 16:16:00 - testing - INFO - 测试环境验证通过!
+2025-09-08 16:16:00 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-09-08 16:16:00 - testing - INFO - Now we are using the customized shared dictionary
+2025-09-08 16:16:03 - testing - INFO - Retrieved instructions with custom context: I'm ready to assist you with confirming and assessing your compliance concerns. Please share the specific issues or results you'd like to discuss, and I'll provide further insights.
+2025-09-08 16:16:03 - testing - INFO - 开始执行测试: test_user_in_flow
+2025-09-08 16:16:03 - testing - INFO - 当前对话轮次1, 用户输入OK, show me the first subtitle
+2025-09-08 16:16:18 - back_end.services.chat_service - INFO - user_input: OK, show me the first subtitle
+2025-09-08 16:16:20 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': "Could you please clarify what you mean by 'the first subtitle'? Are you referring to a specific document or a section within a compliance context? Your additional details will help me assist you better."}
+2025-09-08 16:16:41 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 0
+2025-09-08 16:16:41 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 1
+2025-09-08 16:16:41 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 2
+2025-09-08 16:16:41 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 3
+2025-09-08 16:16:41 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 4
+2025-09-08 16:16:41 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 5
+2025-09-08 16:16:41 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 6
+2025-09-08 16:16:41 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 7
+2025-09-08 16:16:41 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 16:16:41 - LicenseHandler - INFO - Now we are checking...
+2025-09-08 16:16:41 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 16:16:41 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 16:16:41 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-08 16:16:56 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 16:17:21 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 16:17:21 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 16:17:21 - testing - INFO - 状态: obligations
+2025-09-08 16:17:21 - testing - INFO - 系统回复: ['Now we have imported the licenses identified from the cli xml.', '*Global Licenses:*\n\n*Other Licenses:*']
+2025-09-08 16:17:21 - testing - INFO - 当前对话轮次2, 用户输入ok, next, please
+2025-09-08 16:20:11 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-08 16:20:18 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': "Let's proceed to the next mode. Please provide the next topic or area of focus regarding compliance or any specific questions you have in mind."}
+2025-09-08 16:20:30 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 16:20:30 - LicenseHandler - INFO - Now we are checking...
+2025-09-08 16:20:30 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - LicenseHandler
+2025-09-08 16:20:35 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 16:20:50 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 16:20:58 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-08 16:21:16 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:16 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:21:35 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:35 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:35 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:35 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:35 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:35 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:35 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:21:38 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:38 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:38 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:38 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:38 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:38 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:38 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:21:51 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:51 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:51 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:51 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:51 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:51 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:51 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:51 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:21:57 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:21:57 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:21:57 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:21:57 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:21:57 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:21:57 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:21:57 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:22:05 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:22:06 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:22:07 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:22:08 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:08 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:22:08 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:08 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:22:08 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:22:08 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:22:08 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:22:08 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:22:09 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:22:09 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:09 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:22:09 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:22:09 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:22:09 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:22:09 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:22:11 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:13 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:15 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:16 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 16:22:17 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 16:22:26 - utils.database.hardDB - INFO - this is the found components

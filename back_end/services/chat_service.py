@@ -16,7 +16,7 @@ from back_end.services.state_handlers.content_handler import ChapterGeneration
 logger = get_logger(__name__)  # 每个模块用自己的名称
 
 class ChatService:
-    def __init__(self, chat_flow: WorkflowContext):
+    def __init__(self):
         """
         初始化聊天服务
         这个类专注处理消息，根据传入状态不同调用不同的方法。
@@ -25,7 +25,7 @@ class ChatService:
         然后instructions的方法说是只是instruction，其实可以理解为某种mode，来切换到不同的判断状态
         """
         self.handler_factory = StateHandlerFactory()
-        self.chat_flow = chat_flow
+        self.chat_flow = WorkflowContext(handlers=self.handler_factory)
         self.chat_manager = ChatManager()
     
     def process_user_input(self, shared: Dict[str, Any], user_input: str, status: str) -> Tuple[bool, Dict[str, Any], str]:
@@ -46,7 +46,6 @@ class ChatService:
         handler = self.handler_factory.get_handler(status, self.bot)
         if handler:
             shared = handler.process_special_logic(shared, result=result)
-        assert 'ParsedPCR' in shared
         # 检查大状态变化
         content = {'shared': shared, 'status': result}
         result_in_flow = self.chat_flow.process(content)
@@ -55,7 +54,7 @@ class ChatService:
         logger.info('chat_service.process_user_input: Current status: %s, Updated status: %s', status, updated_status)
 
         # 调用最新的handler给下方，包含了初始化能力
-        handler = self.chat_flow.handlers.get_handler(updated_status, self.bot)
+        handler = self.handler_factory.get_handler(updated_status, self.bot)
         
         final_status, updated_shared, reply = self._status_check(shared, updated_status, status, result,reply, handler)
 
@@ -214,9 +213,11 @@ class ChatService:
         # 只处理内容生成，仅返回子标题内容
         gen_content, all_completed = self.gen.generate_content(content)
 
-        # 测试时，将每章内容先存进handler_factory.md
-        current_subhandler = handler.nested_handlers[handler.current_item_index][handler.current_subhandler_index].handler.__class__.__name__
-        self.handler_factory.md.add_section(gen_content,f'### {current_subhandler}')
+        # 测试时，将每章内容先存进handler_factory.md, 还得确保这个wrapper是confirmed
+        handlers_list = handler.nested_handlers.get(handler.current_item_index, [])
+        if handlers_list and handler.current_subhandler_index < len(handlers_list):
+            current_subhandler = handlers_list[handler.current_subhandler_index].handler.__class__.__name__
+            self.handler_factory.md.add_section(gen_content, f'### {current_subhandler}')
 
         # 每次回调特殊逻辑存储数据
         shared = handler.process_special_logic(shared, content=gen_content)
@@ -243,7 +244,7 @@ class ChatService:
         
         else:
             # 获取当前的指导语
-            instruction = handler.get_instructions()
+            instruction = handler.nested_handlers[handler.current_item_index][handler.current_subhandler_index].handler.get_instructions()
             messages = [instruction, gen_content]
             
             return status, shared, self._ensure_list(messages)

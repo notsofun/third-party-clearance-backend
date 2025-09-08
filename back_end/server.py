@@ -64,8 +64,7 @@ async def analyze_file(file: UploadFile = File(...)):
 
         # 运行分析流程
         shared = run_analysis(str(file_path.absolute()))
-        session_chat_flow = WorkflowContext()
-        chat_service = ChatService(session_chat_flow)
+        chat_service = ChatService()
         updated_shared = chat_service.initialize_chat(shared)
         status = chat_service.chat_flow.current_state.value
         initial_message = chat_service.get_instructions(status)
@@ -78,7 +77,6 @@ async def analyze_file(file: UploadFile = File(...)):
             "shared": shared,
             "state": status if not updated_shared.get("all_confirmed") else "completed",
             'chat_service': chat_service,
-            'chat_flow': chat_service.chat_flow
         }
         
         return {
@@ -114,7 +112,6 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
         )
     
     curr_shared = session['shared']
-    chat_flow = session['chat_flow']
     chat_service = session['chat_service']
     
     # 处理文件
@@ -132,7 +129,7 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
         logger.info(f"Contract analysis completed successfully for session {session_id}")
         sessions[session_id]['contract_analysis'] = analysis_result
 
-        status = chat_flow.current_state.value
+        status = chat_service.chat_flow.current_state.value
 
         content = {
             'shared': curr_shared,
@@ -140,7 +137,7 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
         }
 
         # Status here should be transitted to toDependency
-        result_in_flow = chat_flow.process(content)
+        result_in_flow = chat_service.chat_flow.process(content)
         updated_status = result_in_flow['current_state'].value
         handler = chat_service.handler_factory.get_handler(updated_status, chat_service.bot)
 
@@ -155,7 +152,6 @@ async def analyze_contract(session_id: str, file: UploadFile = File(...)):
         )
 
         sessions[session_id].update({
-            'chat_flow': chat_flow,
             'state': updated_status,
             'shared': updated_shared,
             'chat_service' : chat_service

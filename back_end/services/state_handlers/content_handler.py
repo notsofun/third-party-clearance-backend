@@ -130,6 +130,8 @@ class ChapterGeneration(SubTaskStateHandler):
         if all_confirmed:
             self.logger.info(f"All subtitles completed for item: {item_key}")
             self.current_item_index += 1
+            # 需要充值子标题处理器的索引
+            self.current_subhandler_index = 0
             
             # 检查是否所有项目都已完成
             if self.current_item_index >= len(self.items):
@@ -155,7 +157,6 @@ class ChapterGeneration(SubTaskStateHandler):
         
         return state_result
 
-    # 待会改一下，现在这里是不会有subtitle_handlers的列表的
     def process_special_logic(self, shared: Dict[str, Any], result: Dict[str, Any] = None, content: str = None) -> Dict[str, Any]:
         """
         处理特殊逻辑，传递给当前处理的子标题处理器
@@ -163,13 +164,20 @@ class ChapterGeneration(SubTaskStateHandler):
         if self.current_item_index < len(self.items):
             current_item = self.items[self.current_item_index]
             item_key = current_item.get('id', current_item.get('title', f'item_{self.current_item_index}'))
+            
+            # 获取subtitle_handlers并确保它是一个列表
             subtitle_handlers = self.nested_handlers.get(self.current_item_index, [])
             
-            # 找到当前正在处理的子标题处理器
+            # 添加日志，帮助调试
+            self.logger.debug(f"Processing item {self.current_item_index}, found {len(subtitle_handlers)} handlers")
+            
+            # 安全迭代
             for handler in subtitle_handlers:
                 if not getattr(handler, 'content_confirmed', False):
                     if hasattr(handler, 'process_special_logic'):
                         shared = handler.process_special_logic(shared, result, content)
+                        # 记录已处理的handler
+                        self.logger.debug(f"Processed handler: {handler.__class__.__name__}")
                     break
         
         return shared

@@ -1,0 +1,431 @@
+2025-09-08 09:14:21 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250908_09h14m21s.log
+2025-09-08 09:14:21 - nodes - INFO - Now we are parsing the original HTML File
+2025-09-08 09:14:25 - nodes - INFO - Successfully parsed!
+2025-09-08 09:14:25 - nodes - INFO - Now we are parsing the original PCR file.
+2025-09-08 09:14:37 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-09-08 09:14:37 - back_end.services.chat_manager - WARNING - now we start with checking: pure_component
+2025-09-08 09:14:39 - testing - INFO - 检验测试环境初始化...
+2025-09-08 09:14:39 - testing - INFO - 测试环境验证通过!
+2025-09-08 09:14:39 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-09-08 09:14:39 - testing - INFO - Now we are using the customized shared dictionary
+2025-09-08 09:14:42 - testing - INFO - Retrieved instructions with custom context: I am currently in the compliance analysis mode. Please provide information or details about your OSS or PSS components for analysis, and let me know if you're satisfied with the outcome at each step.
+2025-09-08 09:14:42 - testing - INFO - 开始执行测试: test_user_in_flow
+2025-09-08 09:14:42 - testing - INFO - 当前对话轮次1, 用户输入OK, show me the first subtitle
+2025-09-08 09:40:05 - back_end.services.chat_service - INFO - user_input: OK, show me the first subtitle
+2025-09-08 09:40:07 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': "Please clarify what you mean by 'first subtitle.' Are you referring to a specific section in a document, title of a component, or something else? Providing context will help me assist you better."}
+2025-09-08 09:40:24 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 0
+2025-09-08 09:40:24 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 1
+2025-09-08 09:40:24 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 2
+2025-09-08 09:40:24 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 3
+2025-09-08 09:40:24 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 4
+2025-09-08 09:40:24 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 5
+2025-09-08 09:40:24 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 6
+2025-09-08 09:40:24 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 7
+2025-09-08 09:40:24 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 09:40:24 - LicenseHandler - INFO - Now we are checking...
+2025-09-08 09:40:24 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 09:40:24 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 09:40:24 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-08 09:40:59 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 09:41:11 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 09:41:11 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 09:43:53 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:53 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:43:55 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:04 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:44:06 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:47:50 - testing - INFO - 状态: obligations
+2025-09-08 09:47:51 - testing - INFO - 系统回复: ['Switching to confirming mode. Please let me know if you are satisfied with the responses provided or if you require further information.', '*Global Licenses:*MIT\n\n*Other Licenses:*GPL-2.0-with-FreeRTOS exception, Dual license MIT and BSD-3-Clause, BSD-3-Clause, Apache-2.0']
+2025-09-08 09:47:58 - testing - INFO - 当前对话轮次2, 用户输入ok, next, please
+2025-09-08 09:48:05 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-08 09:49:15 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Moving on to the next mode. Please provide the details of your OSS or PSS components for compliance analysis, and I will assist you further.'}
+2025-09-08 09:49:33 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 09:49:33 - LicenseHandler - INFO - Now we are checking...
+2025-09-08 09:49:33 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - LicenseHandler
+2025-09-08 09:49:35 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 09:49:56 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 09:50:07 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-08 09:50:22 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 09:52:13 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:52:13 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:52:13 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:52:13 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:52:13 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:52:13 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:52:13 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:52:13 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:52:18 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:52:18 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:52:18 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:52:18 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:52:18 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:52:18 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:52:18 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:52:18 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:52:33 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:52:33 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:52:33 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:52:33 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:52:33 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:52:33 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:52:33 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:52:33 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:52:35 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:52:35 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:52:35 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:52:35 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:52:35 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:52:35 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:52:35 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:52:35 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:52:37 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:52:37 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:52:37 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:52:37 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:52:37 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:52:37 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:52:37 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:52:49 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 09:52:49 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:52:49 - LicenseHandler - ERROR - 访问 handler.__iter__ 时出错: 'LicenseHandler' object has no attribute '__iter__'
+2025-09-08 09:52:49 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:52:49 - SubRisksHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubRisksHandler' object has no attribute '__iter__'
+2025-09-08 09:52:49 - CommonRulesHandler - ERROR - 访问 handler.__iter__ 时出错: 'CommonRulesHandler' object has no attribute '__iter__'
+2025-09-08 09:52:49 - AdditionalHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalHandler' object has no attribute '__iter__'
+2025-09-08 09:52:49 - ImplementationHandler - ERROR - 访问 handler.__iter__ 时出错: 'ImplementationHandler' object has no attribute '__iter__'
+2025-09-08 09:52:49 - ObligationCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'ObligationCombiningHandler' object has no attribute '__iter__'
+2025-09-08 09:53:00 - SubObligationsHandler - ERROR - 访问 handler.__iter__ 时出错: 'SubObligationsHandler' object has no attribute '__iter__'
+2025-09-08 09:54:43 - testing - INFO - 状态: obligations
+2025-09-08 09:54:43 - testing - INFO - 系统回复: ['Switching to confirming mode again. Please let me know if you are satisfied with the previous assistance or if you need further clarification on any issues.', '']
+2025-09-08 09:54:43 - testing - INFO - 当前对话轮次3, 用户输入show me the obligation
+2025-09-08 09:54:47 - back_end.services.chat_service - INFO - user_input: show me the obligation
+2025-09-08 09:54:49 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'To provide you with the obligations related to OSS or PSS components, I need to know which specific licenses or software components you are referring to. Please provide the names or details of the components in question.'}
+2025-09-08 09:54:49 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 09:54:49 - SubObligationsHandler - INFO - Now we are checking...
+2025-09-08 09:54:49 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 09:54:49 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 09:54:49 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-08 09:54:56 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 09:55:30 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 09:55:32 - testing - INFO - 状态: obligations
+2025-09-08 09:55:32 - testing - INFO - 系统回复: ['Switching to confirming mode. Please confirm if you are satisfied with the response, or if you require additional information or clarification before proceeding.', '']
+2025-09-08 09:55:32 - testing - INFO - 当前对话轮次4, 用户输入I am not satisfied with it, generate again
+2025-09-08 09:56:54 - back_end.services.chat_service - INFO - user_input: I am not satisfied with it, generate again
+2025-09-08 09:56:56 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'I apologize for the previous response. To better assist you, please specify which obligations you would like to know about. Are you looking for obligations related to a specific OSS or PSS component and its licensing requirements?'}
+2025-09-08 09:56:56 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 09:56:56 - SubObligationsHandler - INFO - Now we are checking...
+2025-09-08 09:56:56 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 09:56:56 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 09:56:56 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-08 09:57:03 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 09:57:23 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 09:57:25 - testing - INFO - 状态: obligations
+2025-09-08 09:57:25 - testing - INFO - 系统回复: ['Switching to confirming mode again. Please let me know if you are satisfied with the response provided, or if you would like further assistance or clarification on the obligations.', '- Note for Apache-2.0, ECL-2.0:  \nIf you modify this component and do not intend to contribute the modifications/the modified work back to open source community, you must conspicuously mark or designate the modifications as â\x80\x9cNot a Contributionâ\x80\x9d.\n\nIf you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.\n\nNote for CDDL-1.0:  \nIf you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.     \n\nIf [Your Legal Entity] sues contributors regarding [Your Legal Entity] patents, any patent license granted to [Your Legal Entity] for this component will automatically terminate     \n\n']
+2025-09-08 09:57:25 - testing - INFO - 当前对话轮次5, 用户输入Show me the licenses
+2025-09-08 09:57:29 - back_end.services.chat_service - INFO - user_input: Show me the licenses
+2025-09-08 09:57:30 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'To provide the relevant licenses, I need to know which specific OSS or PSS components you are referring to. Please specify the names or details of the components to assist you better.'}
+2025-09-08 09:57:30 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 09:57:30 - SubObligationsHandler - INFO - Now we are checking...
+2025-09-08 09:57:30 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 09:57:30 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 09:57:30 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-08 09:57:38 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 09:58:26 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 09:58:28 - testing - INFO - 状态: obligations
+2025-09-08 09:58:28 - testing - INFO - 系统回复: ['Switching to confirming mode. Please confirm if you are satisfied with the response, or if you require additional information regarding the licenses.', '- Note for Apache-2.0, ECL-2.0:  \nIf you modify this component and do not intend to contribute the modifications/the modified work back to open source community, you must conspicuously mark or designate the modifications as â\x80\x9cNot a Contributionâ\x80\x9d.\n\nIf you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.\n\nNote for CDDL-1.0:  \nIf you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.     \n\nIf [Your Legal Entity] sues contributors regarding [Your Legal Entity] patents, any patent license granted to [Your Legal Entity] for this component will automatically terminate     \n\n']
+2025-09-08 09:58:28 - testing - INFO - 当前对话轮次6, 用户输入ok, next, please
+2025-09-08 09:58:32 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-08 09:58:33 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': "Moving on to the next mode. Please provide specific details about the OSS or PSS components you'd like to analyze, and I will assist you with compliance and licensing information."}
+2025-09-08 09:58:33 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 09:58:33 - SubObligationsHandler - INFO - Now we are checking...
+2025-09-08 09:58:33 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - SubObligationsHandler
+2025-09-08 09:58:33 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 09:58:33 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 09:58:33 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-08 09:58:40 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 09:58:40 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 09:58:43 - testing - INFO - 状态: obligations
+2025-09-08 09:58:43 - testing - INFO - 系统回复: ['Switching to confirming mode again. Please let me know if you are satisfied with the assistance provided so far or if you require further information.', '']
+2025-09-08 09:58:43 - testing - INFO - 当前对话轮次7, 用户输入ok, next, please
+2025-09-08 09:59:14 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-08 09:59:17 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Proceeding to the next mode. Please provide the specific OSS or PSS components you need assistance with for compliance analysis or any other related inquiries.'}
+2025-09-08 09:59:17 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 09:59:17 - SubRisksHandler - INFO - Now we are checking...
+2025-09-08 09:59:17 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - SubRisksHandler
+2025-09-08 09:59:17 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 09:59:17 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 09:59:17 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-08 09:59:24 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 09:59:24 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 09:59:26 - testing - INFO - 状态: obligations
+2025-09-08 09:59:26 - testing - INFO - 系统回复: ['Switching to confirming mode once more. Please let me know if you are satisfied with the services provided, or if you need further clarification on any issue.', '']
+2025-09-08 09:59:26 - testing - INFO - 当前对话轮次8, 用户输入ok, next, please
+2025-09-08 10:00:19 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-08 10:00:22 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Continuing to the next mode. Please specify any OSS or PSS components you would like to analyze for compliance risks or further areas of concern.'}
+2025-09-08 10:00:22 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 10:00:22 - CommonRulesHandler - INFO - Now we are checking...
+2025-09-08 10:00:22 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - CommonRulesHandler
+2025-09-08 10:00:22 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 10:00:22 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 10:00:22 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-08 10:00:29 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 10:00:29 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 10:00:31 - testing - INFO - 状态: obligations
+2025-09-08 10:00:31 - testing - INFO - 系统回复: ['Switching to confirming mode again. Please confirm if you are satisfied with the assistance provided, or if you need further clarification on your inputs or any other areas.', '']
+2025-09-08 10:00:31 - testing - INFO - 当前对话轮次9, 用户输入ok, next, please
+2025-09-08 10:01:16 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-08 10:01:21 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Moving on to the next mode. Please provide specific information about the OSS or PSS components you need help with for compliance analysis, or any other related inquiry you may have.'}
+2025-09-08 10:01:21 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 10:01:21 - AdditionalHandler - INFO - Now we are checking...
+2025-09-08 10:01:21 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - AdditionalHandler
+2025-09-08 10:01:21 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 10:01:21 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 10:01:21 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-08 10:01:28 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 10:01:28 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 10:01:31 - testing - INFO - 状态: obligations
+2025-09-08 10:01:31 - testing - INFO - 系统回复: ['Switching to confirming mode once more. Please let me know if you are satisfied with the current assistance, or if you require any additional information or clarification.', '\n            - Licenses and copyrights have been added to Readme_OSS.\n            - No Apache NOTICE file available.\n            - License selection has been documented in Readme_OSS.\n            - Source code is ready to be shipped to the customer.\n            - Licenses that do not apply:\n                - \n            - Acknowledgements have been added to Readme_OSS.\n            - Check for required sub-components has been done.\n            - Risk: Component binary has not been built from cleared source code.\n        ']
+2025-09-08 10:01:31 - testing - INFO - 当前对话轮次10, 用户输入ok, next, please
+2025-09-08 10:02:42 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-08 10:02:44 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Proceeding to the next mode. Please provide details regarding any specific OSS or PSS components you would like me to assist you with in terms of compliance assessment or risk analysis.'}
+2025-09-08 10:02:44 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 10:02:44 - ImplementationHandler - INFO - Now we are checking...
+2025-09-08 10:02:44 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - ImplementationHandler
+2025-09-08 10:02:44 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 10:02:44 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 10:02:44 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-08 10:03:04 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 10:03:07 - testing - INFO - 状态: obligations
+2025-09-08 10:03:07 - testing - INFO - 系统回复: ['Switching to confirming mode again. Please confirm if you are satisfied with the responses given so far, or if additional information is needed.', '\n        ## Amazon FreeRTOS-Kernel V10.4.6\n                            ⇧ \n\n\n        General Assessment: This OSS component is covered under MIT License which has No Copyleft Effect\n\n\n        Additional Notes: //History.txt marked as irrelevant because it is change log.\nNotice file for Apache 2.0 is not found.\n\n\n        ### Licenses Identified\n\n\n        *Global Licenses:*MIT\n\n*Other Licenses:*GPL-2.0-with-FreeRTOS exception, Dual license MIT and BSD-3-Clause, BSD-3-Clause, Apache-2.0\n\n\n        ### Obligations\n\n\n        - Note for Apache-2.0, ECL-2.0:  \nIf you modify this component and do not intend to contribute the modifications/the modified work back to open source community, you must conspicuously mark or designate the modifications as â\x80\x9cNot a Contributionâ\x80\x9d.\n\nIf you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.\n\nNote for CDDL-1.0:  \nIf you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.     \n\nIf [Your Legal Entity] sues contributors regarding [Your Legal Entity] patents, any patent license granted to [Your Legal Entity] for this component will automatically terminate     \n\n\n\n\n        ### Risks\n\n\n        \n\n\n        ### Licenses with Common Rules Only\n\n\n        \n\n\n        ### Additional Obligations\n\n\n        \n        ### Implementation of Obligations / Remarks\n\n\n        \n            - Licenses and copyrights have been added to Readme_OSS.\n            - No Apache NOTICE file available.\n            - License selection has been documented in Readme_OSS.\n            - Source code is ready to be shipped to the customer.\n            - Licenses that do not apply:\n                - \n            - Acknowledgements have been added to Readme_OSS.\n            - Check for required sub-components has been done.\n            - Risk: Component binary has not been built from cleared source code.\n        \n\n        ']
+2025-09-08 10:03:07 - testing - INFO - 当前对话轮次11, 用户输入ok, next, please
+2025-09-08 10:03:44 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-08 10:05:40 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Moving on to the next mode. Please provide specific details or questions regarding OSS or PSS components for compliance analysis, or any relevant issues you would like to address.'}
+2025-09-08 10:06:39 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 10:06:39 - ObligationCombiningHandler - INFO - Now we are checking...
+2025-09-08 10:06:39 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - ObligationCombiningHandler
+2025-09-08 10:06:39 - ObligationsHandler - INFO - All subtitles completed for item: item_0
+2025-09-08 10:06:39 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 10:06:39 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 10:06:39 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-08 10:07:16 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 10:07:53 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 10:07:53 - back_end.services.chat_gen.generator - INFO - Generated content for item_1 - HandlerStateWrapper

@@ -1,0 +1,106 @@
+2025-09-08 15:11:21 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250908_15h11m21s.log
+2025-09-08 15:11:21 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250908_15h11m21s.log
+2025-09-08 15:11:21 - nodes - INFO - Now we are parsing the original HTML File
+2025-09-08 15:11:25 - nodes - INFO - Successfully parsed!
+2025-09-08 15:11:25 - nodes - INFO - Now we are parsing the original PCR file.
+2025-09-08 15:11:33 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-09-08 15:11:33 - back_end.services.chat_manager - WARNING - now we start with checking: pure_component
+2025-09-08 15:11:33 - testing - INFO - 检验测试环境初始化...
+2025-09-08 15:11:33 - testing - INFO - 测试环境验证通过!
+2025-09-08 15:11:33 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-09-08 15:11:33 - testing - INFO - Now we are using the customized shared dictionary
+2025-09-08 15:11:35 - testing - INFO - Retrieved instructions with custom context: I understand that you want to confirm the mode-switching process. Please let me know if you are satisfied with the current responses or if you need more information or clarification.
+2025-09-08 15:11:35 - testing - INFO - 开始执行测试: test_user_in_flow
+2025-09-08 15:11:35 - testing - INFO - 当前对话轮次1, 用户输入OK, show me the first subtitle
+2025-09-08 15:11:40 - back_end.services.chat_service - INFO - user_input: OK, show me the first subtitle
+2025-09-08 15:11:41 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': "Could you please specify the context or document you are referring to regarding the 'first subtitle'? I need more details to assist you effectively."}
+2025-09-08 15:11:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 0
+2025-09-08 15:11:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 1
+2025-09-08 15:11:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 2
+2025-09-08 15:11:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 3
+2025-09-08 15:11:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 4
+2025-09-08 15:11:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 5
+2025-09-08 15:11:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 6
+2025-09-08 15:11:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 7
+2025-09-08 15:11:56 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 15:11:56 - LicenseHandler - INFO - Now we are checking...
+2025-09-08 15:11:56 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 15:11:56 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 15:11:56 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-08 15:12:15 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 15:12:27 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 15:12:27 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 15:12:27 - testing - INFO - 状态: obligations
+2025-09-08 15:12:27 - testing - INFO - 系统回复: ['Now we have imported the licenses identified from the cli xml.', '*Global Licenses:*MIT\n\n*Other Licenses:*GPL-2.0-with-FreeRTOS exception, Dual license MIT and BSD-3-Clause, BSD-3-Clause, Apache-2.0']
+2025-09-08 15:12:27 - testing - INFO - 当前对话轮次2, 用户输入ok, next, please
+2025-09-08 15:16:08 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-08 15:16:10 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': "Since you've indicated we can move forward, please provide the next topic or area of focus regarding OSS and PSS compliance that you would like to discuss or analyze."}
+2025-09-08 15:16:10 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 15:16:10 - LicenseHandler - INFO - Now we are checking...
+2025-09-08 15:16:10 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - LicenseHandler
+2025-09-08 15:16:10 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 15:16:10 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 15:16:10 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-08 15:16:17 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 15:16:19 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 15:16:19 - testing - INFO - 状态: obligations
+2025-09-08 15:16:19 - testing - INFO - 系统回复: ['Now we start importing the obligations for this component', '']
+2025-09-08 15:16:19 - testing - INFO - 当前对话轮次3, 用户输入show me the obligation
+2025-09-08 15:16:21 - back_end.services.chat_service - INFO - user_input: show me the obligation
+2025-09-08 15:16:23 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'Could you clarify which specific obligations you would like to review? For instance, are you interested in obligations related to a specific OSS license, proprietary software licensing terms, or contractual obligations? More details will help me assist you better.'}
+2025-09-08 15:16:23 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 15:16:23 - SubObligationsHandler - INFO - Now we are checking...
+2025-09-08 15:16:23 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 15:16:23 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 15:16:23 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-08 15:16:30 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 15:16:37 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 15:16:37 - testing - INFO - 状态: obligations
+2025-09-08 15:16:37 - testing - INFO - 系统回复: ['Now we start importing the obligations for this component', '']
+2025-09-08 15:16:37 - testing - INFO - 当前对话轮次4, 用户输入I am not satisfied with it, generate again
+2025-09-08 15:16:38 - back_end.services.chat_service - INFO - user_input: I am not satisfied with it, generate again
+2025-09-08 15:16:41 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'I apologize for not meeting your expectations. To assist you better, please provide specific details regarding the obligations you want to review, such as the type of software or licenses in question.'}
+2025-09-08 15:16:41 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 15:16:41 - SubObligationsHandler - INFO - Now we are checking...
+2025-09-08 15:16:41 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 15:16:41 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 15:16:41 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-08 15:16:50 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 15:16:50 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 15:16:50 - testing - INFO - 状态: obligations
+2025-09-08 15:16:50 - testing - INFO - 系统回复: ['Now we start importing the obligations for this component', '']
+2025-09-08 15:16:50 - testing - INFO - 当前对话轮次5, 用户输入Show me the licenses
+2025-09-08 15:17:15 - back_end.services.chat_service - INFO - user_input: Show me the licenses
+2025-09-08 15:17:18 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'Could you specify which licenses you would like to see? There are many different types of licenses for open source and proprietary software (e.g., GPL, MIT, Apache, BSD, etc.). Providing more context will help me deliver the relevant information.'}
+2025-09-08 15:17:18 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 15:17:18 - SubObligationsHandler - INFO - Now we are checking...
+2025-09-08 15:17:18 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 15:17:18 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 15:17:18 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-08 15:17:27 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 15:17:27 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 15:17:27 - testing - INFO - 状态: obligations
+2025-09-08 15:17:27 - testing - INFO - 系统回复: ['Now we start importing the obligations for this component', '']
+2025-09-08 15:17:27 - testing - INFO - 当前对话轮次6, 用户输入ok, next, please
+2025-09-08 15:17:33 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-08 15:17:35 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Thank you for your response. Please provide further instructions or specify the next area of focus regarding OSS and PSS compliance that you would like to explore.'}
+2025-09-08 15:17:35 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 15:17:35 - SubObligationsHandler - INFO - Now we are checking...
+2025-09-08 15:17:35 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - SubObligationsHandler
+2025-09-08 15:17:35 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 15:17:35 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 15:17:35 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-08 15:17:42 - utils.database.hardDB - INFO - this is the found components
+2025-09-08 15:17:42 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-08 15:17:42 - testing - INFO - 状态: obligations
+2025-09-08 15:17:42 - testing - INFO - 系统回复: ['Now we start importing the risks for this component', '']
+2025-09-08 15:17:42 - testing - INFO - 当前对话轮次7, 用户输入ok, next, please
+2025-09-08 15:17:47 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-08 15:17:49 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'It seems you are ready to continue. Please indicate the next topic or question related to software compliance that you would like to address.'}
+2025-09-08 15:17:49 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-08 15:17:49 - SubRisksHandler - INFO - Now we are checking...
+2025-09-08 15:17:49 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - SubRisksHandler
+2025-09-08 15:17:49 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-08 15:17:49 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-08 15:17:49 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-08 15:17:56 - utils.database.hardDB - INFO - this is the found components

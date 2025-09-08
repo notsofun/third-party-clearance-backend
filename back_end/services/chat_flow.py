@@ -8,7 +8,7 @@ logger = get_logger(__name__)  # 每个模块用自己的名称
 
 class WorkflowContext:
     """工作流上下文，管理状态和转换"""
-    def __init__(self, curren_state=ConfirmationStatus.OEM):
+    def __init__(self, handlers: StateHandlerFactory, current_state=ConfirmationStatus.OEM):
         # 状态转移表
         self.transition_rules = {
             ConfirmationStatus.OEM: {
@@ -82,8 +82,8 @@ class WorkflowContext:
         }
         
         # 注册状态处理器
-        self.handlers = StateHandlerFactory()
-        self.current_state = curren_state
+        self.handlers = handlers
+        self.current_state = current_state
         self.initialized_states = set()  # 记录已初始化的状态
     
     def get_next_state(self, old_state, event, context):

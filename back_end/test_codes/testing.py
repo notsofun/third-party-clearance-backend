@@ -40,13 +40,11 @@ def class_context(request):
     shared = run_test(shared)
     shared['riskBot'] = get_singleton_risk_bot()
     
-    workflow_context = WorkflowContext(curren_state=ConfirmationStatus.OBLIGATIONS)
-    chat_manager = ChatManager()
-    chat_service = ChatService(workflow_context)
+    chat_service = ChatService()
+    chat_service.chat_flow.current_state = ConfirmationStatus.OBLIGATIONS
 
     chat_service.initialize_chat(shared=shared)
-    handler_factory = StateHandlerFactory()
-    handler = handler_factory.get_handler(workflow_context.current_state.value, chat_service.bot)
+    handler = chat_service.handler_factory.get_handler(chat_service.chat_flow.current_state.value, chat_service.bot)
     
     context_type = getattr(request, "param", "base")
 
@@ -58,21 +56,21 @@ def class_context(request):
             That's totally OK.
 
     ''',
-            'status': workflow_context.current_state.value,
+            'status': chat_service.chat_flow.current_state.value,
             'extra_data': 'Additional context information',
         })
 
     # 将context保存到类属性中，便于所有测试方法访问
     request.cls.context_data = {
-        'workflow_context': workflow_context,
-        'chat_manager': chat_manager,
+        'workflow_context': chat_service.chat_flow.current_state,
+        'chat_manager': chat_service.chat_manager,
         'chat_service': chat_service,
         'bot': chat_service.bot,
         'handler': handler,
-        'handler_factory': handler_factory,
+        'handler_factory': chat_service.handler_factory,
         'shared': shared,
         'updated_shared': None,  # 用于存储更新后的共享数据
-        'current_status': workflow_context.current_state.value  # 跟踪当前状态
+        'current_status': chat_service.chat_flow.current_state.value  # 跟踪当前状态
     }
     
     return request.cls.context_data
