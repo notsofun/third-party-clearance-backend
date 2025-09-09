@@ -1,7 +1,10 @@
 from typing import Dict
 from .base_handler import StateHandler
-from .object_handler import OEMStateHandler, CompletedHandler, ComplianceHandler, ContractHandler, CredentialHandler, SpecialCheckHandler,DependencyHandler, FinalListHandler, ProductOverviewHandler, OSSGeneratingHandler, MainLicenseHandler, ComponenetOverviewHandler, CommonRulesHandler, ObligationsHandler
+from .simple_handler import OEMStateHandler, CompletedHandler, ContractHandler, FinalListHandler, ProductOverviewHandler, OSSGeneratingHandler, ComponenetOverviewHandler, CommonRulesHandler, InteractionHandler, CopyLeftHandler
+from .subtask_handlers import ComplianceHandler, CredentialHandler, SpecialCheckHandler,DependencyHandler, MainLicenseHandler
+from .obligations_handler import ObligationsHandler
 from utils.string_to_markdown import MarkdownDocumentBuilder
+from back_end.services.chat_flow import ConfirmationStatus
 
 class StateHandlerFactory:
     """状态处理器工厂，负责在chat_service、chat_flow中根据状态创建和缓存各状态的处理器"""
@@ -13,7 +16,6 @@ class StateHandlerFactory:
     
     def _register_handlers(self):
         """注册所有状态处理器"""
-        from back_end.services.chat_flow import ConfirmationStatus
         
         # 状态处理器映射表
         self._handlers = {
@@ -30,7 +32,9 @@ class StateHandlerFactory:
             ConfirmationStatus.MAINLICENSE.value: MainLicenseHandler(),
             ConfirmationStatus.COMPONENTOVERVIEW.value: ComponenetOverviewHandler(),
             ConfirmationStatus.OBLIGATIONS.value: ObligationsHandler(),
-            ConfirmationStatus.COMMONRULES.value: CommonRulesHandler()
+            ConfirmationStatus.COMMONRULES.value: CommonRulesHandler(),
+            ConfirmationStatus.INTERACTION.value: InteractionHandler(),
+            ConfirmationStatus.COPYLEFT.value: CopyLeftHandler(),
         }
     
     def get_handler(self, status: str, bot=None) -> StateHandler:

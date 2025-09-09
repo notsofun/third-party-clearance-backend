@@ -41,7 +41,7 @@ def class_context(request):
     shared['riskBot'] = get_singleton_risk_bot()
     
     chat_service = ChatService()
-    chat_service.chat_flow.current_state = ConfirmationStatus.OBLIGATIONS
+    chat_service.chat_flow.current_state = ConfirmationStatus.INTERACTION
 
     chat_service.initialize_chat(shared=shared)
     handler = chat_service.handler_factory.get_handler(chat_service.chat_flow.current_state.value, chat_service.bot)
@@ -173,6 +173,46 @@ class TestCustomProjectOverviewIntegration:
         # 验证确认消息格式
         assert isinstance(reply, list)
         assert len(reply) > 0
+
+    @pytest.mark.order(4)
+    def test_answer_simple_state(self):
+        logger.info("开始执行测试: test_answer_simple_state")
+        chat_service = self.context_data['chat_service']
+        shared = self.context_data['shared']
+        updated_shared = self.context_data['updated_shared']
+        current_status = self.context_data['current_status']
+        user_input_list = [
+            'ok, I have checked.',
+            'I do not know hot to check',
+            'OK, I have done'
+        ]
+
+        instruction = chat_service.get_instructions(current_status)
+        logger.info('Now we enter this instructions: %s', instruction)
+
+        for i, user_input in enumerate(user_input_list):
+
+            status, shared, reply = chat_service.process_user_input(
+                shared = shared,
+                user_input = user_input,
+                status = current_status,
+            )
+
+            logger.info(f"状态: {status}")
+            logger.info(f"系统回复: {reply[:100]}..." if isinstance(reply, str) and len(reply) > 100 else f"系统回复: {reply}")
+
+
+            updated_shared = shared
+            current_status = status
+
+        chat_service.handler_factory.md.save_document(f'./downloads/test/product_clearance/report.md')
+        logger.info('The latest file has been saved sucessfully!')
+        self.context_data['chat_service'] = chat_service
+        self.context_data['shared'] = shared
+        self.context_data['current_status'] = current_status
+        self.context_data['updated_shared'] = updated_shared
+
+        return status, shared
 
     @pytest.mark.order(3)
     def test_user_inFlow(self):
@@ -338,4 +378,4 @@ if __name__ == '__main__':
     pytest.main(["-v",
                 f"{__file__}::TestCustomProjectOverviewIntegration::test_environment_setup",
                 f"{__file__}::TestCustomProjectOverviewIntegration::test_custom_instruction_retrieval",
-                f"{__file__}::TestCustomProjectOverviewIntegration::test_user_inFlow"])
+                f"{__file__}::TestCustomProjectOverviewIntegration::test_answer_simple_state"])

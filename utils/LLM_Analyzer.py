@@ -110,6 +110,23 @@ class RelevanceChecker(AzureOpenAIChatClient):
         result = get_strict_string(self,message)
 
         return result
+    
+class LicRelevanceChecker(AzureOpenAIChatClient):
+    def __init__(self, endpoint="https://openai-aiattack-msa-001905-eastus-bsce-ai-00.openai.azure.com", deployment=None, embedding_deployment=None, api_version="2025-01-01-preview", client_id=None, client_secret=None, tenant_id=None, session_id='default', promptName='automation/LicRelevance'):
+        super().__init__(endpoint, deployment, embedding_deployment, api_version, client_id, client_secret, tenant_id, session_id, promptName)
+        self.promptName = promptName
+
+    def check(self,search_lic:str,can_lic:str) -> str:
+        """
+        result should be a True or False
+        """
+        message = {
+            "Query" : search_lic,
+            "Candidate" : can_lic,
+        }
+        result = get_strict_string(self,message)
+
+        return result
 
 class RiskChecker(AzureOpenAIChatClient):
 

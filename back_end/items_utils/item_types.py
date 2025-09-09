@@ -127,6 +127,8 @@ class ConfirmationStatus(Enum):
     COMPONENTOVERVIEW = 'component_overview'
     OBLIGATIONS = 'obligations'
     COMMONRULES = 'common_rules'
+    INTERACTION = 'interaction'
+    COPYLEFT = 'copyleft'
 
 # 确认状态到处理类型的映射
 CONFIRMATION_STATUS_TO_TYPE_MAP = {

@@ -86,7 +86,7 @@ class ChatService:
                 handler.process_special_logic(shared=shared, content=content_gen_result)
                 self.handler_factory.add_section(status, content_gen_result)
                 return status, shared, message
-        
+
         # 默认情况：返回原始回复
         return status, shared, self._ensure_list(reply)
 
@@ -192,6 +192,8 @@ class ChatService:
             ConfirmationStatus.SPECIAL_CHECK.value, # 有license 需要确认
             ConfirmationStatus.COMPLIANCE.value,
             ConfirmationStatus.MAINLICENSE.value,
+            ConfirmationStatus.INTERACTION.value,
+            ConfirmationStatus.COPYLEFT.value,
         }
         return status in compulsory_states
 

@@ -71,8 +71,16 @@ class WorkflowContext:
                 State.INPROGRESS.value: ConfirmationStatus.COMMONRULES
             },
             ConfirmationStatus.OBLIGATIONS: {
-                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
+                State.COMPLETED.value: ConfirmationStatus.INTERACTION,
                 State.INPROGRESS.value: ConfirmationStatus.OBLIGATIONS,
+            },
+            ConfirmationStatus.INTERACTION: {
+                State.COMPLETED.value: ConfirmationStatus.COPYLEFT,
+                State.INPROGRESS.value: ConfirmationStatus.INTERACTION,
+            },
+            ConfirmationStatus.COPYLEFT: {
+                State.COMPLETED.value: ConfirmationStatus.COMPLETED,
+                State.INPROGRESS.value: ConfirmationStatus.COPYLEFT,
             },
             ConfirmationStatus.COMPLETED: {
                 # 完成状态下一直停留在完成

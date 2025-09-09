@@ -220,6 +220,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
                 "url": download_url,
                 "filename": file_name
             }
+            updated_shared['download_url']
 
         # 加上一个
         if status == ConfirmationStatus.PRODUCTOVERVIEW.value and session.get('ReportNotGenerated', True) == True:

@@ -6,10 +6,13 @@ def parse_html(data:BeautifulSoup):
     if data is None:
         return None
     
+    project_title = [h1.text for h1 in data.find_all('h1')][0]
+
     meta = {
         "doctype" : "html",
         "head" : str(data.head),
-        "title" : data.title.text if data.title else ""
+        "title" : data.title.text if data.title else "",
+        "project_title": project_title,
     }
 
     body = data.body
@@ -124,3 +127,10 @@ def parse_html(data:BeautifulSoup):
     # 聚合全部
 
     return final_Result
+
+if __name__ == '__main__':
+
+    with open(r"C:\Users\z0054unn\Downloads\LicenseInfo-Wireless Room Sensor-2.0-2025-08-22_01_40_30.html", 'r', encoding='utf-8') as html:
+        html_content = html.read()
+        soup = BeautifulSoup(html_content, "html.parser")
+        json_result = parse_html(soup)

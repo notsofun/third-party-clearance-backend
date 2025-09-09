@@ -3,7 +3,7 @@
 import sys
 sys.path.append(r'C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance')
 from utils.database.baseDB import TYPE, BaseDatabase
-from utils.LLM_Analyzer import RelevanceChecker
+from utils.LLM_Analyzer import RelevanceChecker, LicRelevanceChecker
 from log_config import configure_logging, get_logger
 
 configure_logging()
@@ -19,6 +19,7 @@ class HardDB(BaseDatabase):
         self.db_path = db_path
         self.data = []  # 存储所有数据项
         self.rel = RelevanceChecker(session_id='relevancyChecker')
+        self.lic_rel = LicRelevanceChecker(session_id='lic_relevancyChecker')
 
     def build_index(self, data_dict, data_type=None):
         """构建索引并存储为JSON文件
@@ -303,7 +304,8 @@ class HardDB(BaseDatabase):
                 
             has_license = False
             for lic in item.get('licenses', []):
-                if lic.get('name') == license_name:
+                mat = self.lic_rel.check(license_name, lic.get('name'))
+                if mat == 'true':
                     has_license = True
                     break
             

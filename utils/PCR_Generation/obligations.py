@@ -63,3 +63,34 @@ def list_to_string(desc_list:list) -> str:
         final_str += mid
 
     return final_str
+
+def generate_component_license_markdown(lic_comp_map):
+    """
+    生成组件与其许可证关系的Markdown格式列表
+    
+    参数:
+    lic_comp_map -- 许可证到组件的映射字典，格式为 {许可证: [组件列表]}
+    
+    返回:
+    Markdown格式的字符串，列出每个组件及其关联的许可证
+    """
+    # 步骤1: 创建反向映射 (组件 -> 许可证列表)
+    comp_lic_map = {}
+    
+    for license_name, components in lic_comp_map.items():
+        for component in components:
+            if component not in comp_lic_map:
+                comp_lic_map[component] = []
+            comp_lic_map[component].append(license_name)
+    
+    # 步骤2: 生成Markdown格式的输出
+    markdown_lines = []
+    
+    for component, licenses in comp_lic_map.items():
+        # 构建组件项，格式: "组件名 (许可证1) (许可证2) ..."
+        license_parts = " ".join([f"({lic})" for lic in licenses])
+        markdown_line = f"• {component} {license_parts}"
+        markdown_lines.append(markdown_line)
+    
+    # 步骤3: 将所有行连接为一个字符串
+    return "\n".join(markdown_lines)
