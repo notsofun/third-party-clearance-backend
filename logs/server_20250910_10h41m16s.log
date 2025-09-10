@@ -1,0 +1,132 @@
+2025-09-10 10:41:16 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250910_10h41m16s.log
+2025-09-10 10:41:16 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2025-09-10 10:41:16 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2025-09-10 10:41:16 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes. This is only an error if you're trying to use GPU Faiss.
+2025-09-10 10:41:16 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250910_10h41m16s.log
+2025-09-10 10:41:16 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250910_10h41m16s.log
+2025-09-10 10:41:16 - nodes - INFO - Now we are parsing the original HTML File
+2025-09-10 10:41:16 - nodes - INFO - Successfully parsed!
+2025-09-10 10:41:16 - nodes - INFO - Now we are parsing the original PCR file.
+2025-09-10 10:41:21 - SpecialConsiderationHandler - ERROR - item_list_key must be provided for ChapterGenerationHandler
+2025-09-10 10:41:21 - SpecialConsiderationHandler - ERROR - content_handler_factory must be provided for ChapterGenerationHandler
+2025-09-10 10:41:21 - SpecialConsiderationHandler - ERROR - subcontent_factory must be provided for ChapterGeneration
+2025-09-10 10:41:21 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-09-10 10:41:21 - back_end.services.chat_manager - WARNING - now we start with checking: pure_component
+2025-09-10 10:41:21 - testing - INFO - 检验测试环境初始化...
+2025-09-10 10:41:21 - testing - INFO - 测试环境验证通过!
+2025-09-10 10:41:21 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-09-10 10:41:21 - testing - INFO - Now we are using the customized shared dictionary
+2025-09-10 10:41:24 - testing - INFO - Retrieved instructions with custom context: Please provide the details or feedback regarding the previous result so I can confirm whether you are satisfied or if further assistance is required.
+2025-09-10 10:41:24 - testing - INFO - 开始执行测试: test_user_in_flow
+2025-09-10 10:41:24 - testing - INFO - 当前对话轮次1, 用户输入OK, show me the first subtitle
+2025-09-10 10:41:24 - back_end.services.chat_service - INFO - user_input: OK, show me the first subtitle
+2025-09-10 10:41:25 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': "Could you please clarify what you mean by 'the first subtitle'? Are you referring to a specific document or section of a report? More context will help me assist you accurately."}
+2025-09-10 10:41:25 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:41:25 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:41:25 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:41:25 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.SPECIAL_CONSIDERATION -> ConfirmationStatus.COMPLETED
+2025-09-10 10:41:25 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: completed
+2025-09-10 10:41:25 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> completed
+2025-09-10 10:41:25 - back_end.items_utils.item_types - WARNING - 最新状态为completed，未找到处理类型(processing_type)，使用默认值: component
+2025-09-10 10:41:25 - testing - INFO - 状态: completed
+2025-09-10 10:41:25 - testing - INFO - 系统回复: ['We have finished all checking in current session, please reupload a new license info file to start a new session.']
+2025-09-10 10:41:25 - testing - INFO - 当前对话轮次2, 用户输入ok, next, please
+2025-09-10 10:41:25 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:41:26 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Moving to the next mode. Please provide the next set of instructions or the area you would like to focus on regarding compliance clearance or risk assessment.'}
+2025-09-10 10:41:26 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLETED
+2025-09-10 10:41:26 - CompletedHandler - INFO - Now we are checking...
+2025-09-10 10:41:26 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: completed, Updated status: completed
+2025-09-10 10:41:26 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: completed -> completed
+2025-09-10 10:41:26 - testing - INFO - 状态: completed
+2025-09-10 10:41:26 - testing - INFO - 系统回复: ['Moving to the next mode. Please provide the next set of instructions or the area you would like to focus on regarding compliance clearance or risk assessment.']
+2025-09-10 10:41:26 - testing - INFO - 当前对话轮次3, 用户输入show me the obligation
+2025-09-10 10:41:26 - back_end.services.chat_service - INFO - user_input: show me the obligation
+2025-09-10 10:41:27 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'Could you please clarify which obligations you would like to see? Are you referring to specific obligations under OSS licenses, proprietary software contracts, or another context? Providing more details will help me give you the relevant information.'}
+2025-09-10 10:41:27 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLETED
+2025-09-10 10:41:27 - CompletedHandler - INFO - Now we are checking...
+2025-09-10 10:41:27 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: completed, Updated status: completed
+2025-09-10 10:41:27 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: completed -> completed
+2025-09-10 10:41:27 - testing - INFO - 状态: completed
+2025-09-10 10:41:27 - testing - INFO - 系统回复: ['Could you please clarify which obligations you would like to see? Are you referring to specific obligations under OSS licenses, proprietary software contracts, or another context? Providing more details will help me give you the relevant information.']
+2025-09-10 10:41:27 - testing - INFO - 当前对话轮次4, 用户输入I am not satisfied with it, generate again
+2025-09-10 10:41:27 - back_end.services.chat_service - INFO - user_input: I am not satisfied with it, generate again
+2025-09-10 10:41:28 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': "Understood. To assist you better, please specify the type of obligations you're inquiring about. Are you looking for obligations related to a specific open source license, proprietary software agreement, or something else? This will help me provide the correct information."}
+2025-09-10 10:41:28 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLETED
+2025-09-10 10:41:28 - CompletedHandler - INFO - Now we are checking...
+2025-09-10 10:41:28 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: completed, Updated status: completed
+2025-09-10 10:41:28 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: completed -> completed
+2025-09-10 10:41:28 - testing - INFO - 状态: completed
+2025-09-10 10:41:28 - testing - INFO - 系统回复: ["Understood. To assist you better, please specify the type of obligations you're inquiring about. Are you looking for obligations related to a specific open source license, proprietary software agreement, or something else? This will help me provide the correct information."]
+2025-09-10 10:41:28 - testing - INFO - 当前对话轮次5, 用户输入Show me the licenses
+2025-09-10 10:41:28 - back_end.services.chat_service - INFO - user_input: Show me the licenses
+2025-09-10 10:41:29 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'Please specify which licenses you would like to see. Are you asking for a list of common open source licenses (e.g., MIT, GPL, Apache) or specific licenses related to a particular software or project? More context will help me provide the most relevant information.'}
+2025-09-10 10:41:29 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLETED
+2025-09-10 10:41:29 - CompletedHandler - INFO - Now we are checking...
+2025-09-10 10:41:29 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: completed, Updated status: completed
+2025-09-10 10:41:29 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: completed -> completed
+2025-09-10 10:41:29 - testing - INFO - 状态: completed
+2025-09-10 10:41:29 - testing - INFO - 系统回复: ['Please specify which licenses you would like to see. Are you asking for a list of common open source licenses (e.g., MIT, GPL, Apache) or specific licenses related to a particular software or project? More context will help me provide the most relevant information.']
+2025-09-10 10:41:29 - testing - INFO - 当前对话轮次6, 用户输入ok, next, please
+2025-09-10 10:41:29 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:41:30 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Proceeding to the next mode. Please provide your next instructions or specify the area where you need further assistance regarding compliance or risk assessment.'}
+2025-09-10 10:41:30 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLETED
+2025-09-10 10:41:30 - CompletedHandler - INFO - Now we are checking...
+2025-09-10 10:41:30 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: completed, Updated status: completed
+2025-09-10 10:41:30 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: completed -> completed
+2025-09-10 10:41:30 - testing - INFO - 状态: completed
+2025-09-10 10:41:30 - testing - INFO - 系统回复: ['Proceeding to the next mode. Please provide your next instructions or specify the area where you need further assistance regarding compliance or risk assessment.']
+2025-09-10 10:41:30 - testing - INFO - 当前对话轮次7, 用户输入ok, next, please
+2025-09-10 10:41:30 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:41:31 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'I am ready to move on. Please let me know what specific compliance-related tasks or questions you would like to address next.'}
+2025-09-10 10:41:31 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLETED
+2025-09-10 10:41:31 - CompletedHandler - INFO - Now we are checking...
+2025-09-10 10:41:31 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: completed, Updated status: completed
+2025-09-10 10:41:31 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: completed -> completed
+2025-09-10 10:41:31 - testing - INFO - 状态: completed
+2025-09-10 10:41:31 - testing - INFO - 系统回复: ['I am ready to move on. Please let me know what specific compliance-related tasks or questions you would like to address next.']
+2025-09-10 10:41:31 - testing - INFO - 当前对话轮次8, 用户输入ok, next, please
+2025-09-10 10:41:31 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:41:32 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Continuing to the next mode. Please provide your next set of instructions or inquiries related to compliance auditing or risk assessment.'}
+2025-09-10 10:41:32 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLETED
+2025-09-10 10:41:32 - CompletedHandler - INFO - Now we are checking...
+2025-09-10 10:41:32 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: completed, Updated status: completed
+2025-09-10 10:41:32 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: completed -> completed
+2025-09-10 10:41:32 - testing - INFO - 状态: completed
+2025-09-10 10:41:32 - testing - INFO - 系统回复: ['Continuing to the next mode. Please provide your next set of instructions or inquiries related to compliance auditing or risk assessment.']
+2025-09-10 10:41:32 - testing - INFO - 当前对话轮次9, 用户输入ok, next, please
+2025-09-10 10:41:32 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:41:33 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'I am now ready for the next task. Please specify what you need assistance with regarding software compliance or risk assessment.'}
+2025-09-10 10:41:33 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLETED
+2025-09-10 10:41:33 - CompletedHandler - INFO - Now we are checking...
+2025-09-10 10:41:33 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: completed, Updated status: completed
+2025-09-10 10:41:33 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: completed -> completed
+2025-09-10 10:41:33 - testing - INFO - 状态: completed
+2025-09-10 10:41:33 - testing - INFO - 系统回复: ['I am now ready for the next task. Please specify what you need assistance with regarding software compliance or risk assessment.']
+2025-09-10 10:41:33 - testing - INFO - 当前对话轮次10, 用户输入ok, next, please
+2025-09-10 10:41:33 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:41:34 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Moving forward. Please provide your next instructions or the focus of your inquiry related to compliance clearance.'}
+2025-09-10 10:41:34 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLETED
+2025-09-10 10:41:34 - CompletedHandler - INFO - Now we are checking...
+2025-09-10 10:41:34 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: completed, Updated status: completed
+2025-09-10 10:41:34 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: completed -> completed
+2025-09-10 10:41:34 - testing - INFO - 状态: completed
+2025-09-10 10:41:34 - testing - INFO - 系统回复: ['Moving forward. Please provide your next instructions or the focus of your inquiry related to compliance clearance.']
+2025-09-10 10:41:34 - testing - INFO - 当前对话轮次11, 用户输入ok, next, please
+2025-09-10 10:41:34 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:41:35 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'I am prepared to proceed to the next step. Please let me know what you would like to address regarding compliance or any specific questions you may have.'}
+2025-09-10 10:41:35 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLETED
+2025-09-10 10:41:35 - CompletedHandler - INFO - Now we are checking...
+2025-09-10 10:41:35 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: completed, Updated status: completed
+2025-09-10 10:41:35 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: completed -> completed
+2025-09-10 10:41:35 - testing - INFO - 状态: completed
+2025-09-10 10:41:35 - testing - INFO - 系统回复: ['I am prepared to proceed to the next step. Please let me know what you would like to address regarding compliance or any specific questions you may have.']
+2025-09-10 10:41:35 - testing - INFO - 当前对话轮次12, 用户输入ok, next, please
+2025-09-10 10:41:35 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:41:36 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Ready to advance further. Please provide your next instructions or specific areas of compliance auditing you would like to explore.'}
+2025-09-10 10:41:36 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPLETED
+2025-09-10 10:41:36 - CompletedHandler - INFO - Now we are checking...
+2025-09-10 10:41:36 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: completed, Updated status: completed
+2025-09-10 10:41:36 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: completed -> completed
+2025-09-10 10:41:36 - testing - INFO - 状态: completed
+2025-09-10 10:41:36 - testing - INFO - 系统回复: ['Ready to advance further. Please provide your next instructions or specific areas of compliance auditing you would like to explore.']
+2025-09-10 10:41:36 - testing - INFO - The latest file has been saved sucessfully!

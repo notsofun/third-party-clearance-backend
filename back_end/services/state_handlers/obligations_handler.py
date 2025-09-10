@@ -210,6 +210,7 @@ class ImplementationHandler(SubContentGenerationHandler):
             shared['ImplementationDetails'] = content
             return shared
         
+# 这里需要注意一下怎么去拼之后对应每一个item
 class ObligationCombiningHandler(SubContentGenerationHandler):
     def __init__(self, bot=None):
         super().__init__(bot)
@@ -250,7 +251,6 @@ class ObligationCombiningHandler(SubContentGenerationHandler):
         {AdditionalObligations}
         ### Implementation of Obligations / Remarks\n\n
         {ImplementationDetails}
-
         """
 
         return final_chap

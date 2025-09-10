@@ -3,6 +3,7 @@ from .base_handler import StateHandler
 from .simple_handler import OEMStateHandler, CompletedHandler, ContractHandler, FinalListHandler, ProductOverviewHandler, OSSGeneratingHandler, ComponenetOverviewHandler, CommonRulesHandler, InteractionHandler, CopyLeftHandler
 from .subtask_handlers import ComplianceHandler, CredentialHandler, SpecialCheckHandler,DependencyHandler, MainLicenseHandler
 from .obligations_handler import ObligationsHandler
+from .special_consideration_handler import SpecialConsiderationHandler
 from utils.string_to_markdown import MarkdownDocumentBuilder
 from back_end.services.chat_flow import ConfirmationStatus
 
@@ -35,6 +36,7 @@ class StateHandlerFactory:
             ConfirmationStatus.COMMONRULES.value: CommonRulesHandler(),
             ConfirmationStatus.INTERACTION.value: InteractionHandler(),
             ConfirmationStatus.COPYLEFT.value: CopyLeftHandler(),
+            ConfirmationStatus.SPECIAL_CONSIDERATION.value: SpecialConsiderationHandler(),
         }
     
     def get_handler(self, status: str, bot=None) -> StateHandler:

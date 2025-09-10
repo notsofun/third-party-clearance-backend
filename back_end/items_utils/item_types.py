@@ -129,6 +129,7 @@ class ConfirmationStatus(Enum):
     COMMONRULES = 'common_rules'
     INTERACTION = 'interaction'
     COPYLEFT = 'copyleft'
+    SPECIAL_CONSIDERATION = 'special_consideration'
 
 # 确认状态到处理类型的映射
 CONFIRMATION_STATUS_TO_TYPE_MAP = {

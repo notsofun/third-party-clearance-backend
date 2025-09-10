@@ -1,0 +1,174 @@
+2025-09-10 10:38:55 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250910_10h38m55s.log
+2025-09-10 10:38:55 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250910_10h38m55s.log
+2025-09-10 10:38:55 - nodes - INFO - Now we are parsing the original HTML File
+2025-09-10 10:38:55 - nodes - INFO - Successfully parsed!
+2025-09-10 10:38:55 - nodes - INFO - Now we are parsing the original PCR file.
+2025-09-10 10:39:00 - SpecialConsiderationHandler - ERROR - item_list_key must be provided for ChapterGenerationHandler
+2025-09-10 10:39:00 - SpecialConsiderationHandler - ERROR - content_handler_factory must be provided for ChapterGenerationHandler
+2025-09-10 10:39:00 - SpecialConsiderationHandler - ERROR - subcontent_factory must be provided for ChapterGeneration
+2025-09-10 10:39:00 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-09-10 10:39:00 - back_end.services.chat_manager - WARNING - now we start with checking: pure_component
+2025-09-10 10:39:00 - testing - INFO - 检验测试环境初始化...
+2025-09-10 10:39:00 - testing - INFO - 测试环境验证通过!
+2025-09-10 10:39:00 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-09-10 10:39:00 - testing - INFO - Now we are using the customized shared dictionary
+2025-09-10 10:39:02 - testing - INFO - Retrieved instructions with custom context: I understand that you want to switch to confirming mode. Please provide me with the topic or the result you would like to confirm, and I will assist you accordingly.
+2025-09-10 10:39:02 - testing - INFO - 开始执行测试: test_user_in_flow
+2025-09-10 10:39:02 - testing - INFO - 当前对话轮次1, 用户输入OK, show me the first subtitle
+2025-09-10 10:39:02 - back_end.services.chat_service - INFO - user_input: OK, show me the first subtitle
+2025-09-10 10:39:04 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': "It seems I need more information to understand what you mean by 'the first subtitle.' Are you referring to a section in a document, a specific list of licenses, or something else? Please clarify so I can assist you effectively."}
+2025-09-10 10:39:04 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:04 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:04 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:04 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:04 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:04 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-10 10:39:04 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:04 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:04 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:04 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:04 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:04 - testing - INFO - 当前对话轮次2, 用户输入ok, next, please
+2025-09-10 10:39:04 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:39:05 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Proceeding to the next mode. If you have further questions or need assistance with compliance auditing or risk assessment, please provide the necessary details.'}
+2025-09-10 10:39:05 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:05 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:05 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:05 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:05 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-10 10:39:05 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:05 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:05 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:05 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:05 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:05 - testing - INFO - 当前对话轮次3, 用户输入show me the obligation
+2025-09-10 10:39:05 - back_end.services.chat_service - INFO - user_input: show me the obligation
+2025-09-10 10:39:06 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'Could you please specify which obligation you are referring to? Are you asking about the obligations under a specific OSS or PSS license, or do you want obligations related to a contract or compliance framework? Your clarification will help me provide accurate information.'}
+2025-09-10 10:39:06 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:06 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:06 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:06 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:06 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-10 10:39:06 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:06 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:06 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:06 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:06 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:06 - testing - INFO - 当前对话轮次4, 用户输入I am not satisfied with it, generate again
+2025-09-10 10:39:06 - back_end.services.chat_service - INFO - user_input: I am not satisfied with it, generate again
+2025-09-10 10:39:09 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'I appreciate your feedback. Please provide more context on the specific obligations you want to learn about, whether they are related to open source licenses, proprietary software contracts, or compliance requirements. This will help me assist you better.'}
+2025-09-10 10:39:09 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:09 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:09 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:09 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:09 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-10 10:39:09 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:09 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:09 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:09 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:09 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:09 - testing - INFO - 当前对话轮次5, 用户输入Show me the licenses
+2025-09-10 10:39:09 - back_end.services.chat_service - INFO - user_input: Show me the licenses
+2025-09-10 10:39:10 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': 'Could you specify which licenses you would like me to show you? Are you looking for a list of common open source licenses, specific licenses related to your project, or something else? Please provide more details for accurate assistance.'}
+2025-09-10 10:39:10 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:10 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:10 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:10 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:10 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-10 10:39:10 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:10 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:10 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:10 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:10 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:10 - testing - INFO - 当前对话轮次6, 用户输入ok, next, please
+2025-09-10 10:39:10 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:39:11 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Moving on to the next mode. If you have any specific questions or need further information regarding licenses, compliance, or related topics, feel free to ask!'}
+2025-09-10 10:39:11 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:11 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:11 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:11 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:11 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-10 10:39:11 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:11 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:11 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:11 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:11 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:11 - testing - INFO - 当前对话轮次7, 用户输入ok, next, please
+2025-09-10 10:39:11 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:39:12 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': "Proceeding to the next mode. Please let me know how I can assist you further, whether it's regarding compliance clearance, risk assessment, or other related matters."}
+2025-09-10 10:39:12 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:12 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:12 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:12 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:12 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-10 10:39:12 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:12 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:12 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:12 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:12 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:12 - testing - INFO - 当前对话轮次8, 用户输入ok, next, please
+2025-09-10 10:39:12 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:39:13 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Continuing to the next mode. If you have a specific topic or question in mind related to compliance or software components, please let me know.'}
+2025-09-10 10:39:13 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:13 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:13 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:13 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:13 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-10 10:39:13 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:13 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:13 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:13 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:13 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:13 - testing - INFO - 当前对话轮次9, 用户输入ok, next, please
+2025-09-10 10:39:13 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:39:14 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Advancing to the next mode. If there are any particular compliance issues or assessments you would like to address, please provide the details.'}
+2025-09-10 10:39:14 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:14 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:14 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:14 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:14 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-10 10:39:14 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:14 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:14 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:14 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:14 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:14 - testing - INFO - 当前对话轮次10, 用户输入ok, next, please
+2025-09-10 10:39:14 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:39:15 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Transitioning to the next mode. Please specify any questions or areas related to compliance, risk assessment, or software components that you need assistance with.'}
+2025-09-10 10:39:15 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:15 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:15 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:15 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:15 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-10 10:39:15 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:15 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:15 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:15 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:15 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:15 - testing - INFO - 当前对话轮次11, 用户输入ok, next, please
+2025-09-10 10:39:15 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:39:16 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': "Continuing to the next mode. If there's a specific area of compliance or software risk you would like to discuss, please let me know."}
+2025-09-10 10:39:16 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:16 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:16 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:16 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:16 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-10 10:39:16 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:16 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:16 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:16 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:16 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:16 - testing - INFO - 当前对话轮次12, 用户输入ok, next, please
+2025-09-10 10:39:16 - back_end.services.chat_service - INFO - user_input: ok, next, please
+2025-09-10 10:39:17 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Advancing to the next mode. If you have any specific topics or questions regarding compliance or software components, please feel free to share.'}
+2025-09-10 10:39:17 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:17 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:17 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-10 10:39:17 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-10 10:39:17 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-10 10:39:17 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Chapter generation completed
+2025-09-10 10:39:17 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-10 10:39:17 - SpecialConsiderationHandler - WARNING - No items found for key 'None'. Chapter will be empty.
+2025-09-10 10:39:17 - testing - INFO - 状态: special_consideration
+2025-09-10 10:39:17 - testing - INFO - 系统回复: ['Content for current chapter has been generated']
+2025-09-10 10:39:17 - testing - INFO - The latest file has been saved sucessfully!

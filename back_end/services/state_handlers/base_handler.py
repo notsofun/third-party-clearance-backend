@@ -66,7 +66,6 @@ class SubTaskStateHandler(StateHandler):
     """包含子任务的状态处理器基类"""
     def __init__(self, bot = None):
         self.subtasks = []  # 子任务ID列表
-        self.nest_handlers = {} # 双层嵌套结构
         self.current_subtask_index = 0
         super().__init__(bot)
     
@@ -117,10 +116,9 @@ class SubTaskStateHandler(StateHandler):
         """检查所有子任务是否已完成"""
         return all(self.is_subtask_completed(context, task_id) for task_id in self.subtasks)
     
-    @abstractmethod
     def is_subtask_completed(self, context: Dict[str, Any], subtask_id: Any) -> bool:
         """检查指定子任务是否已完成"""
-        pass
+        return False
 
 class ContentGenerationHandler(StateHandler):
     """

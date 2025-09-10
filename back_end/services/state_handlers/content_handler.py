@@ -51,7 +51,7 @@ class ChapterGeneration(SubTaskStateHandler):
                 chapter_title_key: str = "generated_chapter_title",
                 chapter_content_key: str = "generated_chapter_content"):
         if item_list_key is None:
-            self.logger.error("item_list_key must be provided for ChapterGenerationHandler")
+            self.logger.info('No items will be found.')
         if subtask_factory is None:
             self.logger.error("content_handler_factory must be provided for ChapterGenerationHandler")
         if subcontent_factory is None:
@@ -92,7 +92,7 @@ class ChapterGeneration(SubTaskStateHandler):
             idx += 1
 
         if not self.nested_handlers:
-            self.logger.warning(f"No items found for key '{self.item_list_key}'. Chapter will be empty.")
+            self.logger.warning(f"No subtask has been initialized")
 
     @abstractmethod
     def _create_content_handlers(self):
@@ -139,9 +139,6 @@ class ChapterGeneration(SubTaskStateHandler):
                 return State.COMPLETED.value
         
         return State.INPROGRESS.value
-
-    def is_subtask_completed(self, context, subtask_id):
-        return super().is_subtask_completed(context, subtask_id)
 
     def handle(self, context: Dict[str, Any]) -> str:
         """
@@ -199,5 +196,118 @@ class ChapterGeneration(SubTaskStateHandler):
                     break
             
             return f"正在处理项目: {current_item.get('title', item_key)}"
+        
+        return "正在生成章节内容，请稍候。"
+    
+class SimpleChapterGeneration(ChapterGeneration):
+    """
+    简单章节生成处理器 - 单层嵌套（仅处理子标题列表）
+    
+    与ChapterGeneration的区别：
+    - 不需要item_list，直接处理subtitle_handlers列表
+    - nested_handlers简化为一个简单列表
+    - 状态流转逻辑简化
+    """
+
+    def __init__(self, bot=None,
+                subcontent_factory: Callable[[Any, Any, Any], Any] = None,
+                chapter_title_key: str = "generated_chapter_title",
+                chapter_content_key: str = "generated_chapter_content"):
+        
+        # 调用父类构造函数，但传入None作为item_list_key和subtask_factory
+        super().__init__(
+            bot=bot,
+            item_list_key=None,  # 明确设置为None
+            subtask_factory=None,  # 不需要subtask_factory
+            subcontent_factory=subcontent_factory,
+            chapter_title_key=chapter_title_key,
+            chapter_content_key=chapter_content_key
+        )
+        
+        # 重写为简单列表
+        self.subtitle_handlers = []
+        self.current_handler_index = 0
+
+    def initialize_subtasks(self, context: Dict[str, Any]):
+        """
+        初始化子标题处理器列表（简化版）
+        """
+        self.subtitle_handlers = self._create_content_handlers()
+        self.current_handler_index = 0
+        
+        self.logger.info(f"Initialized {len(self.subtitle_handlers)} subtitle handlers")
+        
+        if not self.subtitle_handlers:
+            self.logger.warning("No subtitle handlers have been initialized")
+
+    def _state_transition(self, context: Dict[str, Any]) -> str:
+        """
+        简化的状态流转方法 - 仅处理subtitle_handlers列表
+        """
+        if self.current_handler_index >= len(self.subtitle_handlers):
+            return State.COMPLETED.value
+        
+        # 获取当前处理的handler
+        current_handler_wrapper = self.subtitle_handlers[self.current_handler_index]
+        
+        # 处理当前handler
+        if not current_handler_wrapper.content_confirmed:
+            go, handler_wrapper = current_handler_wrapper.handler.handle(context, current_handler_wrapper)
+            if go:
+                handler_class_name = handler_wrapper.handler.__class__.__name__
+                self.logger.info(f"Marked content_confirmed for handler {self.current_handler_index} - {handler_class_name}")
+                self.current_handler_index += 1
+            else:
+                # 当前handler还未完成，继续等待
+                pass
+        else:
+            # 当前handler已完成，移动到下一个
+            self.current_handler_index += 1
+        
+        # 检查是否所有handler都已完成
+        if self.current_handler_index >= len(self.subtitle_handlers):
+            self.logger.info("All subtitle handlers completed")
+            return State.COMPLETED.value
+        
+        return State.INPROGRESS.value
+
+    def handle(self, context: Dict[str, Any]) -> str:
+        """
+        处理简单章节生成状态
+        """
+        # 如果还未初始化，先初始化
+        if not hasattr(self, 'subtitle_handlers') or not self.subtitle_handlers:
+            self.initialize_subtasks(context)
+        
+        # 执行状态流转
+        state_result = self._state_transition(context)
+        
+        return state_result
+
+    def process_special_logic(self, shared: Dict[str, Any], result: Dict[str, Any] = None, content: str = None) -> Dict[str, Any]:
+        """
+        处理特殊逻辑，传递给当前处理的子标题处理器
+        """
+        if self.current_handler_index < len(self.subtitle_handlers):
+            current_handler = self.subtitle_handlers[self.current_handler_index]
+            
+            if not getattr(current_handler, 'content_confirmed', False):
+                if hasattr(current_handler, 'process_special_logic'):
+                    shared = current_handler.process_special_logic(shared, result, content)
+                    self.logger.debug(f"Processed handler: {current_handler.__class__.__name__}")
+        
+        return shared
+
+    def get_instructions(self) -> str:
+        """
+        获取当前状态的指导语
+        """
+        if self.current_handler_index < len(self.subtitle_handlers):
+            current_handler = self.subtitle_handlers[self.current_handler_index]
+            
+            if hasattr(current_handler, 'get_instructions'):
+                return current_handler.get_instructions()
+            
+            return f"正在处理第 {self.current_handler_index + 1} 个子标题"
         
         return "正在生成章节内容，请稍候。"

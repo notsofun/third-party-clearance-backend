@@ -41,7 +41,7 @@ def class_context(request):
     shared['riskBot'] = get_singleton_risk_bot()
     
     chat_service = ChatService()
-    chat_service.chat_flow.current_state = ConfirmationStatus.INTERACTION
+    chat_service.chat_flow.current_state = ConfirmationStatus.SPECIAL_CONSIDERATION
 
     chat_service.initialize_chat(shared=shared)
     handler = chat_service.handler_factory.get_handler(chat_service.chat_flow.current_state.value, chat_service.bot)
@@ -260,7 +260,7 @@ class TestCustomProjectOverviewIntegration:
                 updated_shared = shared
                 current_status = status
 
-        chat_service.handler_factory.md.save_document(f'./downloads/test/product_clearance/report.md')
+        chat_service.handler_factory.md.save_document(f'./downloads/test/product_clearance/6th_report.md')
         logger.info('The latest file has been saved sucessfully!')
         self.context_data['chat_service'] = chat_service
         self.context_data['shared'] = shared
@@ -378,4 +378,4 @@ if __name__ == '__main__':
     pytest.main(["-v",
                 f"{__file__}::TestCustomProjectOverviewIntegration::test_environment_setup",
                 f"{__file__}::TestCustomProjectOverviewIntegration::test_custom_instruction_retrieval",
-                f"{__file__}::TestCustomProjectOverviewIntegration::test_answer_simple_state"])
+                f"{__file__}::TestCustomProjectOverviewIntegration::test_user_inFlow"])
