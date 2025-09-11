@@ -1,4 +1,4 @@
-from .base_handler import SubTaskStateHandler, ContentGenerationHandler
+from ..base_handler import SubTaskStateHandler, ContentGenerationHandler
 from utils.tools import get_strict_json
 from log_config import get_logger
 from back_end.items_utils.item_types import ItemType

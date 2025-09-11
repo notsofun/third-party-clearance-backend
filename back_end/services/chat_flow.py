@@ -58,6 +58,10 @@ class WorkflowContext:
                 State.COMPLETED.value: ConfirmationStatus.PRODUCTOVERVIEW,
                 State.INPROGRESS.value: ConfirmationStatus.OSSGENERATION,
             },
+            ConfirmationStatus.CONCLUSION: {
+                State.COMPLETED.value: ConfirmationStatus.PRODUCTOVERVIEW,
+                State.INPROGRESS.value: ConfirmationStatus.CONCLUSION,
+            },
             ConfirmationStatus.PRODUCTOVERVIEW: {
                 State.COMPLETED.value: ConfirmationStatus.COMPONENTOVERVIEW,
                 State.INPROGRESS.value: ConfirmationStatus.PRODUCTOVERVIEW,

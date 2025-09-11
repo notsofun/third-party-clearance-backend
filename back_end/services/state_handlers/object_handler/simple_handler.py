@@ -1,4 +1,4 @@
-from .base_handler import SimpleStateHandler, ContentGenerationHandler
+from ..base_handler import SimpleStateHandler, ContentGenerationHandler
 from utils.tools import get_strict_json
 from log_config import get_logger
 from utils.PCR_Generation.component_overview import generate_components_markdown_table
@@ -78,7 +78,7 @@ class ProductOverviewHandler(ContentGenerationHandler):
         response = get_strict_json(self.bot, prompt)
         return response.get('talking', 'Please check the result for product overview')
         
-class ComponenetOverviewHandler(ContentGenerationHandler):
+class ComponentOverviewHandler(ContentGenerationHandler):
 
     def process_special_logic(self, shared, result = None, content = None):
         if content == None:
@@ -132,3 +132,21 @@ class CompletedHandler(SimpleStateHandler):
     def get_instructions(self) -> str:
 
         return 'We have finished all checking in current session, please reupload a new license info file to start a new session.'
+    
+class ConclusionHandler(ContentGenerationHandler):
+
+    def process_special_logic(self, shared, result = None, content = None):
+        if content == None:
+            return shared
+        else:
+            shared['generated_conclusion'] = content
+            return shared
+        
+    def _generate_content(self, shared):
+
+        with open('src/doc/self_conclusion.md','r',encoding='utf-8') as f:
+            result = f.read()
+        return result
+    
+    def get_instructions(self):
+        return 'Now we are importing the conclusion.'

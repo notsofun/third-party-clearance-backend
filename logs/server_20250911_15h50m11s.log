@@ -1,0 +1,307 @@
+2025-09-11 15:50:11 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250911_15h50m11s.log
+2025-09-11 15:50:11 - nodes - INFO - Now we are parsing the original HTML File
+2025-09-11 15:50:11 - nodes - INFO - Successfully parsed!
+2025-09-11 15:50:11 - nodes - INFO - Now we are parsing the original PCR file.
+2025-09-11 15:50:15 - SpecialConsiderationHandler - INFO - No items will be found.
+2025-09-11 15:50:15 - SpecialConsiderationHandler - ERROR - content_handler_factory must be provided for ChapterGenerationHandler
+2025-09-11 15:50:15 - SpecialConsiderationHandler - ERROR - subcontent_factory must be provided for ChapterGeneration
+2025-09-11 15:50:15 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-09-11 15:50:15 - back_end.services.chat_manager - WARNING - now we start with checking: pure_component
+2025-09-11 15:50:15 - testing - INFO - 检验测试环境初始化...
+2025-09-11 15:50:15 - testing - INFO - 测试环境验证通过!
+2025-09-11 15:50:15 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-09-11 15:50:15 - testing - INFO - Now we are using the customized shared dictionary
+2025-09-11 15:50:15 - testing - INFO - Retrieved instructions with custom context: Now we are importing the conclusion.
+2025-09-11 15:50:15 - testing - INFO - 开始执行测试: test_user_in_flow
+2025-09-11 15:50:15 - testing - INFO - 当前对话轮次1, 用户输入ok, I am satisfied with it
+2025-09-11 15:50:15 - back_end.services.chat_service - INFO - user_input: ok, I am satisfied with it
+2025-09-11 15:50:18 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Thank you for your response. If you have any specific compliance-related questions or need assistance with a project, please let me know!'}
+2025-09-11 15:50:18 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.CONCLUSION
+2025-09-11 15:50:18 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: conclusion, Updated status: conclusion
+2025-09-11 15:50:18 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: conclusion -> conclusion
+2025-09-11 15:50:18 - back_end.services.chat_service - INFO - now we started generating content with this handler ConclusionHandler
+2025-09-11 15:50:18 - testing - INFO - 状态: conclusion
+2025-09-11 15:50:18 - testing - INFO - 系统回复: ['Based on the information you proived, I have generated the following content: \n\n# Conclusion\n## Clearing summary\nThe handling of 3rd party software components for this product is at a good state. The Readme_OSS document contains all required licenses.\n## Obligations to be fulfilled from superordinated product\nAll superordinated products must include the Readme_OSS of this product into their respective Readme_OSS document.\n## Obligations and restrictions which could not be fulfilled\nNone.\n## Remaining risks\n### General risks\nGeneral risks relating to OSS:\n- Termination/Revocation: OSS licenses may terminate or can be revoked immediately.\n- Local and International Jurisdiction: Due to place of venue clauses and arbitration clauses, disputes may be settled, relating to the seat of the licensor, before foreign courts.\n- Warranty/Liability Disclaimer: There is general absence of warranty / liability, e.g. – error corrections must be made by or ordered by SIEMENS, and SIEMENS must cover all damages.\n- Proprietorship of a copyright: It cannot be verified whether contributors to open source software are legally permitted to contribute(the code could e.g.belong to his employer, and not the developer).\n### Special risks\nNone.\n\n Would you mind telling me if it meets your requirements?']
+2025-09-11 15:50:18 - testing - INFO - 当前对话轮次2, 用户输入ok, I am satisfied with it
+2025-09-11 15:50:18 - back_end.services.chat_service - INFO - user_input: ok, I am satisfied with it
+2025-09-11 15:50:19 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Thank you for confirming your satisfaction. If you would like to discuss any specific compliance issues or need assistance with a project, please provide details.'}
+2025-09-11 15:50:19 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.CONCLUSION
+2025-09-11 15:50:19 - ConclusionHandler - INFO - we have generated content...
+2025-09-11 15:50:19 - ConclusionHandler - INFO - Now we are checking...
+2025-09-11 15:50:19 - ConclusionHandler - INFO - we have reset the status of completion
+2025-09-11 15:50:19 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.CONCLUSION -> ConfirmationStatus.PRODUCTOVERVIEW
+2025-09-11 15:50:19 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: conclusion, Updated status: product_overview
+2025-09-11 15:50:19 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: conclusion -> product_overview
+2025-09-11 15:50:19 - back_end.items_utils.item_types - WARNING - 最新状态为product_overview，未找到处理类型(processing_type)，使用默认值: component
+2025-09-11 15:50:20 - testing - INFO - 状态: product_overview
+2025-09-11 15:50:20 - testing - INFO - 系统回复: ["Welcome! Please tell me about your product: 1) What it does and its features, 2) How it will be sold, and 3) Who's developing it and what technology it uses."]
+2025-09-11 15:50:20 - testing - INFO - 当前对话轮次3, 用户输入ok, I am satisfied with it
+2025-09-11 15:50:20 - back_end.services.chat_service - INFO - user_input: ok, I am satisfied with it
+2025-09-11 15:50:21 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Thank you for your response. If you have any specific questions or need further assistance with your product overview, please let me know!'}
+2025-09-11 15:50:21 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.PRODUCTOVERVIEW
+2025-09-11 15:50:21 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: product_overview, Updated status: product_overview
+2025-09-11 15:50:21 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: product_overview -> product_overview
+2025-09-11 15:50:21 - back_end.services.chat_service - INFO - now we started generating content with this handler ProductOverviewHandler
+2025-09-11 15:50:24 - testing - INFO - 状态: product_overview
+2025-09-11 15:50:24 - testing - INFO - 系统回复: ['Based on the information you proived, I have generated the following content: \n\n# Product Overview\n\n## Product Description\nPlease provide a general description of your product, including its specifications and purpose.\n\n### Key Features\n- Feature 1\n- Feature 2\n- Feature 3\n  - Sub-feature 1\n  - Sub-feature 2\n\nAny additional product information can be included here.\n\n## Sales and Delivery Channels\nPlease provide details about how the product will be sold, including distribution methods and target markets.\n\n## Development Details\nPlease include information about the development team, the technology stack used, and the development approach of the product.\n\nOnce I have this information, I can generate a comprehensive product overview.\n\n Would you mind telling me if it meets your requirements?']
+2025-09-11 15:50:24 - testing - INFO - 当前对话轮次4, 用户输入ok, I am satisfied with it
+2025-09-11 15:50:24 - back_end.services.chat_service - INFO - user_input: ok, I am satisfied with it
+2025-09-11 15:50:26 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Thank you for your response. If you have any specific questions or further information to provide, please let me know so I can assist you accordingly!'}
+2025-09-11 15:50:26 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.PRODUCTOVERVIEW
+2025-09-11 15:50:26 - ProductOverviewHandler - INFO - we have generated content...
+2025-09-11 15:50:26 - ProductOverviewHandler - INFO - Now we are checking...
+2025-09-11 15:50:26 - ProductOverviewHandler - INFO - we have reset the status of completion
+2025-09-11 15:50:26 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.PRODUCTOVERVIEW -> ConfirmationStatus.COMPONENTOVERVIEW
+2025-09-11 15:50:26 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: product_overview, Updated status: component_overview
+2025-09-11 15:50:26 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: product_overview -> component_overview
+2025-09-11 15:50:26 - back_end.items_utils.item_types - WARNING - 最新状态为component_overview，未找到处理类型(processing_type)，使用默认值: component
+2025-09-11 15:50:26 - testing - INFO - 状态: component_overview
+2025-09-11 15:50:26 - testing - INFO - 系统回复: ['Now we are generating component overview']
+2025-09-11 15:50:26 - testing - INFO - 当前对话轮次5, 用户输入ok, I am satisfied with it
+2025-09-11 15:50:26 - back_end.services.chat_service - INFO - user_input: ok, I am satisfied with it
+2025-09-11 15:50:27 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Thank you for your confirmation. If you require further assistance or have any other questions, feel free to ask!'}
+2025-09-11 15:50:27 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPONENTOVERVIEW
+2025-09-11 15:50:27 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: component_overview, Updated status: component_overview
+2025-09-11 15:50:27 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: component_overview -> component_overview
+2025-09-11 15:50:27 - back_end.services.chat_service - INFO - now we started generating content with this handler ComponentOverviewHandler
+2025-09-11 15:50:39 - utils.PCR_Generation.component_overview - INFO - We have normalized names Amazon FreeRTOS-Kernel and original release names Amazon FreeRTOS-Kernel V10.4.6
+                            ⇧
+2025-09-11 15:50:52 - utils.database.hardDB - INFO - this is the found components
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - we have found the global_licenses for Amazon FreeRTOS-Kernel, which are ['MIT']
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Dual license MIT and BSD-3-Clause
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license GPL-2.0-with-FreeRTOS exception
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license MIT
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: True
+2025-09-11 15:50:52 - utils.PCR_Generation.component_overview - INFO - MATCH FOUND - Adding as bold: **MIT**
+2025-09-11 15:50:58 - utils.PCR_Generation.component_overview - INFO - We have normalized names Amazon FreeRTOS-Kernel and original release names Amazon FreeRTOS-Kernel V10.4.6
+                            ⇧
+2025-09-11 15:50:58 - utils.PCR_Generation.component_overview - INFO - We have normalized names CMSIS 5 and original release names CMSIS_5 5.1.1
+                            ⇧
+2025-09-11 15:51:11 - utils.database.hardDB - INFO - this is the found components
+2025-09-11 15:51:11 - utils.PCR_Generation.component_overview - INFO - we have found the global_licenses for CMSIS 5, which are ['Apache-2.0']
+2025-09-11 15:51:11 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-09-11 15:51:11 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: True
+2025-09-11 15:51:11 - utils.PCR_Generation.component_overview - INFO - MATCH FOUND - Adding as bold: **Apache-2.0**
+2025-09-11 15:51:11 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-09-11 15:51:11 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:11 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-09-11 15:51:11 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:11 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Preserve Copyright Notice_Author
+2025-09-11 15:51:11 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:17 - utils.PCR_Generation.component_overview - INFO - We have normalized names Amazon FreeRTOS-Kernel and original release names Amazon FreeRTOS-Kernel V10.4.6
+                            ⇧
+2025-09-11 15:51:17 - utils.PCR_Generation.component_overview - INFO - We have normalized names CMSIS 5 and original release names CMSIS_5 5.1.1
+                            ⇧
+2025-09-11 15:51:17 - utils.PCR_Generation.component_overview - INFO - We have normalized names FlashDB and original release names FlashDB 2.0.0
+                            ⇧
+2025-09-11 15:51:29 - utils.database.hardDB - INFO - this is the found components
+2025-09-11 15:51:29 - utils.PCR_Generation.component_overview - INFO - we have found the global_licenses for FlashDB, which are ['Apache-2.0']
+2025-09-11 15:51:29 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-09-11 15:51:29 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: True
+2025-09-11 15:51:29 - utils.PCR_Generation.component_overview - INFO - MATCH FOUND - Adding as bold: **Apache-2.0**
+2025-09-11 15:51:36 - utils.PCR_Generation.component_overview - INFO - We have normalized names Amazon FreeRTOS-Kernel and original release names Amazon FreeRTOS-Kernel V10.4.6
+                            ⇧
+2025-09-11 15:51:36 - utils.PCR_Generation.component_overview - INFO - We have normalized names CMSIS 5 and original release names CMSIS_5 5.1.1
+                            ⇧
+2025-09-11 15:51:36 - utils.PCR_Generation.component_overview - INFO - We have normalized names FlashDB and original release names FlashDB 2.0.0
+                            ⇧
+2025-09-11 15:51:36 - utils.PCR_Generation.component_overview - INFO - We have normalized names GNU GNU Arm Embedded Toolchain Runtime Library   Partial for EmbeddedV and original release names GNU GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV 12.2 rel1
+                            ⇧
+2025-09-11 15:51:49 - utils.database.hardDB - INFO - this is the found components
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - we have found the global_licenses for GNU GNU Arm Embedded Toolchain Runtime Library   Partial for EmbeddedV, which are ['GPL-3.0+ with GCC-exception-3.1']
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0 WITH LLVM-exception
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license BSL-1.0
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Dual-license
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license GPL-3.0+ with GCC-exception-3.1
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: True
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - MATCH FOUND - Adding as bold: **GPL-3.0+ with GCC-exception-3.1**
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license ISC
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license LGPL-2.0-or-later
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license LGPL-2.1+ with GCC-exception
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license LGPL-2.1-or-later
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license MIT
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license NCSA
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice 
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Public-Domain
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Spencer-94
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license SunPro
+2025-09-11 15:51:49 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:51:55 - utils.PCR_Generation.component_overview - INFO - We have normalized names Amazon FreeRTOS-Kernel and original release names Amazon FreeRTOS-Kernel V10.4.6
+                            ⇧
+2025-09-11 15:51:55 - utils.PCR_Generation.component_overview - INFO - We have normalized names CMSIS 5 and original release names CMSIS_5 5.1.1
+                            ⇧
+2025-09-11 15:51:55 - utils.PCR_Generation.component_overview - INFO - We have normalized names FlashDB and original release names FlashDB 2.0.0
+                            ⇧
+2025-09-11 15:51:55 - utils.PCR_Generation.component_overview - INFO - We have normalized names GNU GNU Arm Embedded Toolchain Runtime Library   Partial for EmbeddedV and original release names GNU GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV 12.2 rel1
+                            ⇧
+2025-09-11 15:51:55 - utils.PCR_Generation.component_overview - INFO - We have normalized names Mbed TLS and original release names Mbed TLS 2.14.0
+                            ⇧
+2025-09-11 15:52:08 - utils.database.hardDB - INFO - this is the found components
+2025-09-11 15:52:08 - utils.PCR_Generation.component_overview - INFO - we have found the global_licenses for Mbed TLS, which are ['Apache-2.0']
+2025-09-11 15:52:08 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-09-11 15:52:08 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: True
+2025-09-11 15:52:08 - utils.PCR_Generation.component_overview - INFO - MATCH FOUND - Adding as bold: **Apache-2.0**
+2025-09-11 15:52:14 - utils.PCR_Generation.component_overview - INFO - We have normalized names Amazon FreeRTOS-Kernel and original release names Amazon FreeRTOS-Kernel V10.4.6
+                            ⇧
+2025-09-11 15:52:14 - utils.PCR_Generation.component_overview - INFO - We have normalized names CMSIS 5 and original release names CMSIS_5 5.1.1
+                            ⇧
+2025-09-11 15:52:14 - utils.PCR_Generation.component_overview - INFO - We have normalized names FlashDB and original release names FlashDB 2.0.0
+                            ⇧
+2025-09-11 15:52:14 - utils.PCR_Generation.component_overview - INFO - We have normalized names GNU GNU Arm Embedded Toolchain Runtime Library   Partial for EmbeddedV and original release names GNU GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV 12.2 rel1
+                            ⇧
+2025-09-11 15:52:14 - utils.PCR_Generation.component_overview - INFO - We have normalized names Mbed TLS and original release names Mbed TLS 2.14.0
+                            ⇧
+2025-09-11 15:52:14 - utils.PCR_Generation.component_overview - INFO - We have normalized names OpenThread and original release names OpenThread 20240613
+                            ⇧
+2025-09-11 15:52:39 - utils.database.hardDB - INFO - this is the found components
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - we have found the global_licenses for OpenThread, which are ['BSD-3-Clause']
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0 OR GPL-2.0-or-later
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-2-Clause
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: True
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - MATCH FOUND - Adding as bold: **BSD-3-Clause**
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Permission Notice
+2025-09-11 15:52:39 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:52:45 - utils.PCR_Generation.component_overview - INFO - We have normalized names Amazon FreeRTOS-Kernel and original release names Amazon FreeRTOS-Kernel V10.4.6
+                            ⇧
+2025-09-11 15:52:45 - utils.PCR_Generation.component_overview - INFO - We have normalized names CMSIS 5 and original release names CMSIS_5 5.1.1
+                            ⇧
+2025-09-11 15:52:45 - utils.PCR_Generation.component_overview - INFO - We have normalized names FlashDB and original release names FlashDB 2.0.0
+                            ⇧
+2025-09-11 15:52:45 - utils.PCR_Generation.component_overview - INFO - We have normalized names GNU GNU Arm Embedded Toolchain Runtime Library   Partial for EmbeddedV and original release names GNU GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV 12.2 rel1
+                            ⇧
+2025-09-11 15:52:45 - utils.PCR_Generation.component_overview - INFO - We have normalized names Mbed TLS and original release names Mbed TLS 2.14.0
+                            ⇧
+2025-09-11 15:52:45 - utils.PCR_Generation.component_overview - INFO - We have normalized names OpenThread and original release names OpenThread 20240613
+                            ⇧
+2025-09-11 15:52:45 - utils.PCR_Generation.component_overview - INFO - We have normalized names ST STM32CubeWB and original release names ST STM32CubeWB V1.14.0
+                            ⇧
+2025-09-11 15:52:58 - utils.database.hardDB - INFO - this is the found components
+2025-09-11 15:52:58 - utils.PCR_Generation.component_overview - INFO - we have found the global_licenses for ST STM32CubeWB, which are ['SOFTWARE PACKAGE LICENSE AGREEMENT � SLA00048']
+2025-09-11 15:52:58 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license Apache-2.0
+2025-09-11 15:52:58 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:52:58 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-1-Clause
+2025-09-11 15:52:58 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:52:58 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-3-Clause
+2025-09-11 15:52:58 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:52:58 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license BSD-4-Clause-UC
+2025-09-11 15:52:58 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:52:58 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license MIT
+2025-09-11 15:52:58 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: False
+2025-09-11 15:53:04 - utils.PCR_Generation.component_overview - INFO - We have normalized names Amazon FreeRTOS-Kernel and original release names Amazon FreeRTOS-Kernel V10.4.6
+                            ⇧
+2025-09-11 15:53:04 - utils.PCR_Generation.component_overview - INFO - We have normalized names CMSIS 5 and original release names CMSIS_5 5.1.1
+                            ⇧
+2025-09-11 15:53:04 - utils.PCR_Generation.component_overview - INFO - We have normalized names FlashDB and original release names FlashDB 2.0.0
+                            ⇧
+2025-09-11 15:53:04 - utils.PCR_Generation.component_overview - INFO - We have normalized names GNU GNU Arm Embedded Toolchain Runtime Library   Partial for EmbeddedV and original release names GNU GNU Arm Embedded Toolchain Runtime Library - Partial for EmbeddedV 12.2 rel1
+                            ⇧
+2025-09-11 15:53:04 - utils.PCR_Generation.component_overview - INFO - We have normalized names Mbed TLS and original release names Mbed TLS 2.14.0
+                            ⇧
+2025-09-11 15:53:04 - utils.PCR_Generation.component_overview - INFO - We have normalized names OpenThread and original release names OpenThread 20240613
+                            ⇧
+2025-09-11 15:53:04 - utils.PCR_Generation.component_overview - INFO - We have normalized names ST STM32CubeWB and original release names ST STM32CubeWB V1.14.0
+                            ⇧
+2025-09-11 15:53:04 - utils.PCR_Generation.component_overview - INFO - We have normalized names tinycbor and original release names tinycbor 0.5.3
+                            ⇧
+2025-09-11 15:53:17 - utils.database.hardDB - INFO - this is the found components
+2025-09-11 15:53:17 - utils.PCR_Generation.component_overview - INFO - we have found the global_licenses for tinycbor, which are ['MIT']
+2025-09-11 15:53:17 - utils.PCR_Generation.component_overview - INFO - Now We are reviewing this component_license MIT
+2025-09-11 15:53:17 - utils.PCR_Generation.component_overview - INFO - Is in global licenses: True
+2025-09-11 15:53:17 - utils.PCR_Generation.component_overview - INFO - MATCH FOUND - Adding as bold: **MIT**
+2025-09-11 15:53:17 - testing - INFO - 状态: component_overview
+2025-09-11 15:53:17 - testing - INFO - 系统回复: ['Based on the information you proived, I have generated the following content: \n\n| Component Name | Component Version | Type | Licenses |\n|---------------|------------------|------|----------|\n| Amazon FreeRTOS-Kernel | V10.4.6 | OSS | Apache-2.0, BSD-3-Clause, Dual license MIT and BSD-3-Clause, GPL-2.0-with-FreeRTOS exception, **MIT** |\n| CMSIS 5 | 5.1.1 | OSS | **Apache-2.0**, BSD-3-Clause, Permission Notice, Preserve Copyright Notice_Author |\n| FlashDB | 2.0.0 | OSS | **Apache-2.0** |\n| GNU GNU Arm Embedded Toolchain Runtime Library   Partial for EmbeddedV | 12.2 | OSS | Apache-2.0 WITH LLVM-exception, BSD-2-Clause, BSD-3-Clause, BSL-1.0, Dual-license, **GPL-3.0+ with GCC-exception-3.1**, ISC, LGPL-2.0-or-later, LGPL-2.1+ with GCC-exception, LGPL-2.1-or-later, MIT, NCSA, Permission Notice, Permission Notice , Public-Domain, Spencer-94, SunPro |\n| Mbed TLS | 2.14.0 | OSS | **Apache-2.0** |\n| OpenThread | 20240613 | OSS | Apache-2.0, Apache-2.0 OR GPL-2.0-or-later, BSD-2-Clause, **BSD-3-Clause**, Permission Notice |\n| ST STM32CubeWB | V1.14.0 | COTS | Apache-2.0, BSD-1-Clause, BSD-3-Clause, BSD-4-Clause-UC, MIT |\n| tinycbor | 0.5.3 | OSS | **MIT** |\n\n\n Would you mind telling me if it meets your requirements?']
+2025-09-11 15:53:17 - testing - INFO - 当前对话轮次6, 用户输入ok, I am satisfied with it
+2025-09-11 15:53:17 - back_end.services.chat_service - INFO - user_input: ok, I am satisfied with it
+2025-09-11 15:53:20 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': "Thank you for confirming your satisfaction. If you need any additional support or have other inquiries in the future, please don't hesitate to reach out!"}
+2025-09-11 15:53:20 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMPONENTOVERVIEW
+2025-09-11 15:53:20 - ComponentOverviewHandler - INFO - we have generated content...
+2025-09-11 15:53:20 - ComponentOverviewHandler - INFO - Now we are checking...
+2025-09-11 15:53:20 - ComponentOverviewHandler - INFO - we have reset the status of completion
+2025-09-11 15:53:20 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.COMPONENTOVERVIEW -> ConfirmationStatus.COMMONRULES
+2025-09-11 15:53:20 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: component_overview, Updated status: common_rules
+2025-09-11 15:53:20 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: component_overview -> common_rules
+2025-09-11 15:53:20 - back_end.items_utils.item_types - WARNING - 最新状态为common_rules，未找到处理类型(processing_type)，使用默认值: component
+2025-09-11 15:53:20 - testing - INFO - 状态: common_rules
+2025-09-11 15:53:20 - testing - INFO - 系统回复: ['Now we are importing common rules.']
+2025-09-11 15:53:20 - testing - INFO - 当前对话轮次7, 用户输入ok, I am satisfied with it
+2025-09-11 15:53:20 - back_end.services.chat_service - INFO - user_input: ok, I am satisfied with it
+2025-09-11 15:53:21 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': "Thank you for your feedback. If you have any more questions or need assistance down the line, I'm here to help!"}
+2025-09-11 15:53:21 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMMONRULES
+2025-09-11 15:53:21 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: common_rules, Updated status: common_rules
+2025-09-11 15:53:21 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: common_rules -> common_rules
+2025-09-11 15:53:21 - back_end.services.chat_service - INFO - now we started generating content with this handler CommonRulesHandler
+2025-09-11 15:53:21 - testing - INFO - 状态: common_rules
+2025-09-11 15:53:21 - testing - INFO - 系统回复: ['Based on the information you proived, I have generated the following content: \n\n# Common Rules\n\n## Common Rules - Open-Source Software\n\n### Documentation\n\nDocumentation of license conditions and copyright notices in product documentation (ReadMe_OSS).\n\n- When you do not use the ReadMe_OSS generated by your software clearing expert, please make sure you comply with the following requirements regarding the content of the README_OSS:\n  - All relevant open-source licenses, copyrights and acknowledgements for distributed code must be contained\n  - Licenses marked as "Do Not Use" must not be contained in the ReadMe_OSS\n- Use a template that has been reviewed by Legal and do not delete or modify legally relevant content from a README_OSS template (including, but not limited to, the offer for the provision of source code and the permission to reverse engineer).\n\n### Modification of Source Code\n\nModifications in Source Code (if modifications are permitted).\n\n- Do not change or delete Copyright, patent, trademark, attribution notices or any further legal notices or license texts in any files (e.g. by minification of JavaScript code) - i.e. neither within any source file of the component package nor in any of its documentation files.\n- Document all changes and modifications in source code files with copyright notices formatted pursuant to Siemens Norm SN 11108.pdf, e.g. \'© Siemens, [YEAR]\'.\n\n### Obligations and Risks\n\n- Ensure that your distribution terms which are agreed with Siemens\' customers (e.g. standard terms, "AGB", or individual agreements) define that the open source license conditions shall prevail over the Siemens\' license conditions with respect to the open source software.\n- Do not use any names, trademarks, service marks or product names of the author(s) and/or licensors to endorse or promote products derived from this software component without the prior written consent of the author(s) and/or the owner of such rights.\n- Consider for your product/project if you accept the general risk that it cannot be verified whether contributors to open source software are legally permitted to contribute (the code could e.g. belong to his employer, and not the developer). Usually, disclaimers or contribution policies exclude responsibility for contributors even to verify the legal status.\n\n## Common Rules - Commercial Software\n\n### General obligations and restrictions\n\n- As per the applicable copyright law(s), all license rights that are not explicitly granted to Siemens are reserved by the Licensor.\n- You must not change or remove copyright, patent, trademark or any further legal notices.\n- You must not use any names, trademarks or product names of the copyright owner(s) and/or licensors to endorse or promote products derived from this software component without the prior written consent of the author(s) and/or the owner of such rights.\n- You must not reverse engineer, decompile, disassemble CS except after prior approval of copyright owner or after written confirmation from your Legal department.\n- You must not disclose any confidential information (incl. the terms and/or existence of the license agreement) to an unauthorized third party.\n- You must not publish benchmark tests regarding the component.\n- Upon termination of a license agreement, your license rights end, and you must cease all use of the component, return or destroy the component (incl. all copies and related material in Siemens\' possession). Furthermore, you may be required to certify the deletion/destruction (if required by the licensor).\n- You must not assign or transfer the license, the license agreement or the component without the licensor\'s prior written consent.\n\n### Development obligations and restrictions\n\n- You must ensure that all involved team members and subcontractors comply with all applicable obligations and restrictions of the license agreement (e.g. to keep confidential information non-disclosed, e.g. no unauthorized use of the software).\n- You must use a backup copy only to replace a defective original copy.\n- You must not use the component or the licensed software to develop an application that competes with the component or the licensed software.\n- You must not use a trial, beta or demo version of the component for any other use than for evaluation purposes.\n\n### Distribution obligations and restrictions\n\n- You must not deliver proprietary Source Code except when explicitly mentioned in this Protocol and/or after prior written consent of the copyright owner and/or licensor.\n- You must not add commercial license agreements/ contracts to the Readme_OSS file except when explicitly requested.\n- You must not subject the component to any kind of Open Source license (in whole or in part).\n- You must not create obligations or representations on behalf of the licensor.\n- In case, the license allows you to transfer single license rights and/or the entire license agreement, you must bind the recipient/assignee to the license agreement before such transfer and transfer all copies of the component including all parts, material and documents.\n\n Would you mind telling me if it meets your requirements?']
+2025-09-11 15:53:21 - testing - INFO - 当前对话轮次8, 用户输入ok, I am satisfied with it
+2025-09-11 15:53:21 - back_end.services.chat_service - INFO - user_input: ok, I am satisfied with it
+2025-09-11 15:53:22 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': "Thank you for your continued confirmation. If there's anything else you need or any other topics you'd like to discuss, just let me know!"}
+2025-09-11 15:53:22 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.COMMONRULES
+2025-09-11 15:53:22 - CommonRulesHandler - INFO - we have generated content...
+2025-09-11 15:53:22 - CommonRulesHandler - INFO - Now we are checking...
+2025-09-11 15:53:22 - CommonRulesHandler - INFO - we have reset the status of completion
+2025-09-11 15:53:22 - back_end.services.chat_flow - INFO - chat_flow.process: 状态转移: ConfirmationStatus.COMMONRULES -> ConfirmationStatus.OBLIGATIONS
+2025-09-11 15:53:22 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: common_rules, Updated status: obligations
+2025-09-11 15:53:22 - back_end.services.chat_service - INFO - Status check - Processing type: component, Item type: ItemType.COMPONENT, Status: common_rules -> obligations
+2025-09-11 15:53:22 - back_end.services.chat_service - INFO - _process_status_change: ChapterGeneration completed, aggregating content
+2025-09-11 15:53:22 - back_end.services.chat_gen.generator - INFO - Content aggregation completed and stored in markdown format
+2025-09-11 15:53:22 - back_end.services.chat_service - WARNING - _process_status_change: No aggregated content returned from ChapterGeneration
+2025-09-11 15:53:23 - testing - INFO - 状态: obligations
+2025-09-11 15:53:23 - testing - INFO - 系统回复: ["I've switched to confirming mode. If you want to review any specific content or need modifications, please share your feedback. Otherwise, let me know if you are satisfied with the results."]
+2025-09-11 15:53:23 - testing - INFO - 当前对话轮次9, 用户输入ok, I am satisfied with it
+2025-09-11 15:53:23 - back_end.services.chat_service - INFO - user_input: ok, I am satisfied with it
+2025-09-11 15:53:25 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': 'Thank you for confirming your satisfaction. If you have any other requests or need further assistance in the future, feel free to ask!'}
+2025-09-11 15:53:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 0
+2025-09-11 15:53:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 1
+2025-09-11 15:53:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 2
+2025-09-11 15:53:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 3
+2025-09-11 15:53:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 4
+2025-09-11 15:53:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 5
+2025-09-11 15:53:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 6
+2025-09-11 15:53:56 - ObligationsHandler - INFO - Initialized 7 subtitle handlers for item: 7
+2025-09-11 15:53:56 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-11 15:53:56 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-11 15:53:56 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-11 15:53:56 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next
+2025-09-11 15:54:10 - utils.database.hardDB - INFO - this is the found components
+2025-09-11 15:54:22 - utils.database.hardDB - INFO - this is the found components
+2025-09-11 15:54:22 - back_end.services.chat_gen.generator - INFO - Generated content for item_0 - HandlerStateWrapper
+2025-09-11 15:54:22 - testing - INFO - 状态: obligations
+2025-09-11 15:54:22 - testing - INFO - 系统回复: ['Now we have imported the licenses identified from the cli xml.', '*Global Licenses:*MIT\n\n*Other Licenses:*GPL-2.0-with-FreeRTOS exception, Dual license MIT and BSD-3-Clause, BSD-3-Clause, Apache-2.0']
+2025-09-11 15:54:22 - testing - INFO - 当前对话轮次10, 用户输入ok, I am satisfied with it
+2025-09-11 15:54:22 - back_end.services.chat_service - INFO - user_input: ok, I am satisfied with it
+2025-09-11 15:54:25 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': "I appreciate your confirmation. If there's anything else you need or any other topics you'd like to address, I'm here to assist you!"}
+2025-09-11 15:54:25 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.OBLIGATIONS
+2025-09-11 15:54:25 - LicenseHandler - INFO - Now we are checking...
+2025-09-11 15:54:25 - ObligationsHandler - INFO - Marked content_confirmed for item_0 - LicenseHandler
+2025-09-11 15:54:25 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: obligations, Updated status: obligations
+2025-09-11 15:54:25 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: obligations -> obligations
+2025-09-11 15:54:25 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: next

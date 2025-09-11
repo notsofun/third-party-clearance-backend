@@ -1,9 +1,9 @@
 from typing import Dict
 from .base_handler import StateHandler
-from .simple_handler import OEMStateHandler, CompletedHandler, ContractHandler, FinalListHandler, ProductOverviewHandler, OSSGeneratingHandler, ComponenetOverviewHandler, CommonRulesHandler, InteractionHandler, CopyLeftHandler
-from .subtask_handlers import ComplianceHandler, CredentialHandler, SpecialCheckHandler,DependencyHandler, MainLicenseHandler
-from .obligations_handler import ObligationsHandler
-from .special_consideration_handler import SpecialConsiderationHandler
+from .object_handler.simple_handler import OEMStateHandler, CompletedHandler, ContractHandler, FinalListHandler, ProductOverviewHandler, OSSGeneratingHandler, ComponentOverviewHandler, CommonRulesHandler, InteractionHandler, CopyLeftHandler, ConclusionHandler
+from .object_handler.subtask_handlers import ComplianceHandler, CredentialHandler, SpecialCheckHandler,DependencyHandler, MainLicenseHandler
+from .object_handler.obligations_handler import ObligationsHandler
+from .object_handler.special_consideration_handler import SpecialConsiderationHandler
 from utils.string_to_markdown import MarkdownDocumentBuilder
 from back_end.services.chat_flow import ConfirmationStatus
 
@@ -31,12 +31,13 @@ class StateHandlerFactory:
             ConfirmationStatus.OSSGENERATION.value: OSSGeneratingHandler(),
             ConfirmationStatus.PRODUCTOVERVIEW.value: ProductOverviewHandler(),
             ConfirmationStatus.MAINLICENSE.value: MainLicenseHandler(),
-            ConfirmationStatus.COMPONENTOVERVIEW.value: ComponenetOverviewHandler(),
+            ConfirmationStatus.COMPONENTOVERVIEW.value: ComponentOverviewHandler(),
             ConfirmationStatus.OBLIGATIONS.value: ObligationsHandler(),
             ConfirmationStatus.COMMONRULES.value: CommonRulesHandler(),
             ConfirmationStatus.INTERACTION.value: InteractionHandler(),
             ConfirmationStatus.COPYLEFT.value: CopyLeftHandler(),
             ConfirmationStatus.SPECIAL_CONSIDERATION.value: SpecialConsiderationHandler(),
+            ConfirmationStatus.CONCLUSION.value: ConclusionHandler(),
         }
     
     def get_handler(self, status: str, bot=None) -> StateHandler:

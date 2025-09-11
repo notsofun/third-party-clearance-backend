@@ -1,0 +1,23 @@
+2025-09-11 15:15:44 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250911_15h15m44s.log
+2025-09-11 15:15:44 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250911_15h15m44s.log
+2025-09-11 15:15:44 - nodes - INFO - Now we are parsing the original HTML File
+2025-09-11 15:15:48 - nodes - INFO - Successfully parsed!
+2025-09-11 15:15:48 - nodes - INFO - Now we are parsing the original PCR file.
+2025-09-11 15:15:54 - SpecialConsiderationHandler - INFO - No items will be found.
+2025-09-11 15:15:54 - SpecialConsiderationHandler - ERROR - content_handler_factory must be provided for ChapterGenerationHandler
+2025-09-11 15:15:54 - SpecialConsiderationHandler - ERROR - subcontent_factory must be provided for ChapterGeneration
+2025-09-11 15:15:54 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-09-11 15:15:54 - back_end.services.chat_manager - WARNING - now we start with checking: pure_component
+2025-09-11 15:15:54 - testing - INFO - 检验测试环境初始化...
+2025-09-11 15:15:54 - testing - INFO - 测试环境验证通过!
+2025-09-11 15:15:54 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-09-11 15:15:54 - testing - INFO - Now we are using the customized shared dictionary
+2025-09-11 15:15:54 - testing - INFO - Retrieved instructions with custom context: Now we are importing the conclusion.
+2025-09-11 15:15:54 - testing - INFO - 开始执行测试: test_user_in_flow
+2025-09-11 15:15:54 - testing - INFO - 当前对话轮次1, 用户输入OK, show me the first subtitle
+2025-09-11 15:27:50 - back_end.services.chat_service - INFO - user_input: OK, show me the first subtitle
+2025-09-11 15:28:00 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'next', 'talking': "The first subtitle is 'Core Responsibilities.' If you need further details on each responsibility or would like to switch to another mode, please let me know!"}
+2025-09-11 15:28:09 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.CONCLUSION
+2025-09-11 15:29:05 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: conclusion, Updated status: conclusion
+2025-09-11 15:29:19 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: conclusion -> conclusion
+2025-09-11 15:30:02 - back_end.services.chat_service - INFO - now we started generating content with this handler ConclusionHandler

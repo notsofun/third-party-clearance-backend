@@ -1,4 +1,4 @@
-from .content_handler import ChapterGeneration, SubContentGenerationHandler
+from ..content_handler import ChapterGeneration, SubContentGenerationHandler
 from back_end.items_utils.item_types import ItemType, TYPE_CONFIG, ItemStatus
 from utils.PCR_Generation.obligations import get_license_descriptions, list_to_string
 from utils.tools import get_strict_json

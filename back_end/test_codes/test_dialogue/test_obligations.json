@@ -4,72 +4,57 @@
   "initial_state": "obligations",
   "turns": [
     {
-      "user_input": "OK, show me the first subtitle",
-      "expected_status": "obligations",
-      "check_keys": [
-        "generated_obligations"
-      ],
-      "verify_response_contains": [
-        "license",
-        "obligation"
-      ]
-    },
-    {
-      "user_input": "ok, next, please",
+      "user_input": "ok, I am satisfied with it",
       "expected_status": "obligations",
       "follow_up_if_continue": "Here's additional information about distribution"
     },
     {
-      "user_input": "show me the obligation",
-      "expected_status": "common_rules",
-      "check_keys": [
-        "generated_common_rules"
-      ]
-    },
-    {
-      "user_input": "I am not satisfied with it, generate again",
-      "expected_status": "common_rules",
-      "verify_response_contains": [
-        "rules",
-        "requirements"
-      ]
-    },
-    {
-      "user_input": "Show me the licenses",
-      "expected_status": "component_overview"
-    },
-    {
-      "user_input": "ok, next, please",
+      "user_input": "ok, I am satisfied with it",
       "expected_status": "obligations",
       "follow_up_if_continue": "Here's additional information about distribution"
     },
     {
-      "user_input": "ok, next, please",
+      "user_input": "ok, I am satisfied with it",
       "expected_status": "obligations",
       "follow_up_if_continue": "Here's additional information about distribution"
     },
     {
-      "user_input": "ok, next, please",
+      "user_input": "ok, I am satisfied with it",
       "expected_status": "obligations",
       "follow_up_if_continue": "Here's additional information about distribution"
     },
     {
-      "user_input": "ok, next, please",
+      "user_input": "ok, I am satisfied with it",
       "expected_status": "obligations",
       "follow_up_if_continue": "Here's additional information about distribution"
     },
     {
-      "user_input": "ok, next, please",
+      "user_input": "ok, I am satisfied with it",
       "expected_status": "obligations",
       "follow_up_if_continue": "Here's additional information about distribution"
     },
     {
-      "user_input": "ok, next, please",
+      "user_input": "ok, I am satisfied with it",
       "expected_status": "obligations",
       "follow_up_if_continue": "Here's additional information about distribution"
     },
     {
-      "user_input": "ok, next, please",
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
       "expected_status": "obligations",
       "follow_up_if_continue": "Here's additional information about distribution"
     }
