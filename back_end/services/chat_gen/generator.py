@@ -1,4 +1,4 @@
-from back_end.services.state_handlers.content_handler import ChapterGeneration
+from back_end.services.state_handlers.content_handler import ChapterGeneration, SimpleChapterGeneration
 from typing import Tuple, Dict, Any
 from utils.string_to_markdown import MarkdownDocumentBuilder
 from log_config import get_logger
@@ -28,7 +28,12 @@ class ChatGenerator:
         self.handler = handler
 
     def generate_content(self, content:Dict) -> Tuple[str, bool]:
-        result = self._content_generation(content)
+
+        if isinstance(self.handler, SimpleChapterGeneration):
+            result = self._simple_content_generation(content)
+        else:
+            result = self._content_generation(content)
+
         # 根据_content_generation的返回值类型判断情况
         if result is True:  # 所有子标题都已完成
             return "All subtitles have been finished", True
@@ -59,6 +64,8 @@ class ChatGenerator:
                 # 调用子标题的内容生成
                 context['current_item_idx'] = self.handler.current_item_index
                 content = handler._generate_content(shared)
+                if content:
+                    handler.content_generated = True
                 
                 # 存储内容到shared
                 subtitle_key = f"content_{item_key}_{handler.handler.__class__.__name__}"
@@ -68,11 +75,34 @@ class ChatGenerator:
                 return content
         
         return False
+    
+    def _simple_content_generation(self, context: Dict[str, Any]) -> str:
+
+        '''内容生成方法，但不使用遍历项目的逻辑'''
+
+        shared = context.get('shared', {})
+        
+        for handler in self.handler.nested_handlers:
+            if not getattr(handler, 'content_confirmed', False):
+                content = handler._generate_content(shared)
+                if content:
+                    handler.content_generated = True
+
+                # 存储内容到shared
+                subtitle_key = f"content_{handler.handler.__class__.__name__}"
+                shared[subtitle_key] = content
+                
+                self.logger.info(f"Generated content for {handler.__class__.__name__}")
+                return content
+        
+        return False
+
 
     def _aggregate_content(self, context: Dict[str, Any]) -> str:
         """
         内容合成方法 - 把每个项目的子章节内容组合起来并返回markdown字符串
         返回: 聚合后的markdown内容字符串
+        应该simple的不会调这个方法
         """
         shared = context.get('shared', {})
         full_chapter_content_builder = MarkdownDocumentBuilder()

@@ -1,0 +1,32 @@
+2025-09-11 10:42:18 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250911_10h42m18s.log
+2025-09-11 10:42:18 - nodes - INFO - Now we are parsing the original HTML File
+2025-09-11 10:42:22 - nodes - INFO - Successfully parsed!
+2025-09-11 10:42:22 - nodes - INFO - Now we are parsing the original PCR file.
+2025-09-11 10:42:27 - SpecialConsiderationHandler - INFO - No items will be found.
+2025-09-11 10:42:27 - SpecialConsiderationHandler - ERROR - content_handler_factory must be provided for ChapterGenerationHandler
+2025-09-11 10:42:27 - SpecialConsiderationHandler - ERROR - subcontent_factory must be provided for ChapterGeneration
+2025-09-11 10:42:27 - back_end.services.chat_service - INFO - we have found risk bot when initializing the chat service!
+2025-09-11 10:42:27 - back_end.services.chat_manager - WARNING - now we start with checking: pure_component
+2025-09-11 10:42:27 - testing - INFO - 检验测试环境初始化...
+2025-09-11 10:42:27 - testing - INFO - 测试环境验证通过!
+2025-09-11 10:42:27 - testing - INFO - 开始执行测试: test_custom_instruction_retrieval
+2025-09-11 10:42:27 - testing - INFO - Now we are using the customized shared dictionary
+2025-09-11 10:42:29 - testing - INFO - Retrieved instructions with custom context: I understand that you want to switch to confirming mode. Please provide the details or results you'd like me to confirm, and let me know if you're satisfied with it or if you need further clarification.
+2025-09-11 10:42:29 - testing - INFO - 开始执行测试: test_user_in_flow
+2025-09-11 10:42:29 - testing - INFO - 当前对话轮次1, 用户输入OK, show me the first subtitle
+2025-09-11 10:43:54 - back_end.services.chat_service - INFO - user_input: OK, show me the first subtitle
+2025-09-11 10:43:56 - back_end.services.chat_service - INFO - chat_service.process_user_input: we have this response {'result': 'continue', 'talking': "Could you please specify what you mean by 'the first subtitle'? Are you referring to a specific document, section, or topic within OSS and PSS compliance? This will help me provide relevant information."}
+2025-09-11 10:44:01 - SpecialConsiderationHandler - INFO - Initialized 8 subtitle handlers
+2025-09-11 10:44:01 - back_end.services.chat_flow - INFO - chat_flow.process: 处理状态: ConfirmationStatus.SPECIAL_CONSIDERATION
+2025-09-11 10:44:01 - back_end.services.chat_service - INFO - chat_service.process_user_input: Current status: special_consideration, Updated status: special_consideration
+2025-09-11 10:44:01 - back_end.services.chat_service - INFO - Status check - Processing type: pure_component, Item type: ItemType.PC, Status: special_consideration -> special_consideration
+2025-09-11 10:44:01 - back_end.services.chat_service - INFO - chat_service._handle_chapter_generation: Processing ChapterGeneration with result: continue
+2025-09-11 10:44:01 - back_end.services.chat_gen.generator - INFO - Generated content for HandlerStateWrapper
+2025-09-11 10:44:01 - InteractionObligationHandler - ERROR - 访问 handler.__iter__ 时出错: 'InteractionObligationHandler' object has no attribute '__iter__'
+2025-09-11 10:44:01 - CopyLeftHandler - ERROR - 访问 handler.__iter__ 时出错: 'CopyLeftHandler' object has no attribute '__iter__'
+2025-09-11 10:44:01 - AdditionalObligationHandler - ERROR - 访问 handler.__iter__ 时出错: 'AdditionalObligationHandler' object has no attribute '__iter__'
+2025-09-11 10:44:01 - OtherObligations - ERROR - 访问 handler.__iter__ 时出错: 'OtherObligations' object has no attribute '__iter__'
+2025-09-11 10:44:01 - ReadmeOSS - ERROR - 访问 handler.__iter__ 时出错: 'ReadmeOSS' object has no attribute '__iter__'
+2025-09-11 10:44:01 - SourceCodeHandler - ERROR - 访问 handler.__iter__ 时出错: 'SourceCodeHandler' object has no attribute '__iter__'
+2025-09-11 10:44:01 - RemainingHandler - ERROR - 访问 handler.__iter__ 时出错: 'RemainingHandler' object has no attribute '__iter__'
+2025-09-11 10:44:01 - SpecialCombiningHandler - ERROR - 访问 handler.__iter__ 时出错: 'SpecialCombiningHandler' object has no attribute '__iter__'

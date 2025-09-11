@@ -86,9 +86,9 @@ class ChapterGeneration(SubTaskStateHandler):
         idx = 0
         
         for _ in self.items:
-            subtitle_handlers = self._create_content_handlers()
-            self.nested_handlers[idx] = subtitle_handlers
-            self.logger.info(f"Initialized {len(subtitle_handlers)} subtitle handlers for item: {idx}")
+            nested_handlers = self._create_content_handlers()
+            self.nested_handlers[idx] = nested_handlers
+            self.logger.info(f"Initialized {len(nested_handlers)} subtitle handlers for item: {idx}")
             idx += 1
 
         if not self.nested_handlers:
@@ -114,6 +114,10 @@ class ChapterGeneration(SubTaskStateHandler):
         
         # 子标题是按顺序的，所以找到第一个未确认的子标题就是当前子标题的方法是对的，但是得加上check_completion的逻辑
         for handler_wrapper in subtitle_handlers:
+            # 若未生成内容，则先生成
+            if not handler_wrapper.content_generated:
+                return State.GENERATION.value
+            
             if not handler_wrapper.content_confirmed:  # 使用包装器的状态
                 go, handler_wrapper = handler_wrapper.handler.handle(context, handler_wrapper)
                 if go:
@@ -204,7 +208,7 @@ class SimpleChapterGeneration(ChapterGeneration):
     简单章节生成处理器 - 单层嵌套（仅处理子标题列表）
     
     与ChapterGeneration的区别：
-    - 不需要item_list，直接处理subtitle_handlers列表
+    - 不需要item_list，直接处理nested_handlers列表
     - nested_handlers简化为一个简单列表
     - 状态流转逻辑简化
     """
@@ -225,30 +229,34 @@ class SimpleChapterGeneration(ChapterGeneration):
         )
         
         # 重写为简单列表
-        self.subtitle_handlers = []
+        self.nested_handlers = []
         self.current_handler_index = 0
 
     def initialize_subtasks(self, context: Dict[str, Any]):
         """
         初始化子标题处理器列表（简化版）
         """
-        self.subtitle_handlers = self._create_content_handlers()
+        self.nested_handlers = self._create_content_handlers()
         self.current_handler_index = 0
         
-        self.logger.info(f"Initialized {len(self.subtitle_handlers)} subtitle handlers")
+        self.logger.info(f"Initialized {len(self.nested_handlers)} subtitle handlers")
         
-        if not self.subtitle_handlers:
+        if not self.nested_handlers:
             self.logger.warning("No subtitle handlers have been initialized")
 
     def _state_transition(self, context: Dict[str, Any]) -> str:
         """
-        简化的状态流转方法 - 仅处理subtitle_handlers列表
+        简化的状态流转方法 - 仅处理nested_handlers列表
         """
-        if self.current_handler_index >= len(self.subtitle_handlers):
+        if self.current_handler_index >= len(self.nested_handlers):
             return State.COMPLETED.value
         
         # 获取当前处理的handler
-        current_handler_wrapper = self.subtitle_handlers[self.current_handler_index]
+        current_handler_wrapper = self.nested_handlers[self.current_handler_index]
+
+        # 若未生成内容，则先生成
+        if not current_handler_wrapper.content_generated:
+            return State.GENERATION.value
         
         # 处理当前handler
         if not current_handler_wrapper.content_confirmed:
@@ -265,7 +273,7 @@ class SimpleChapterGeneration(ChapterGeneration):
             self.current_handler_index += 1
         
         # 检查是否所有handler都已完成
-        if self.current_handler_index >= len(self.subtitle_handlers):
+        if self.current_handler_index >= len(self.nested_handlers):
             self.logger.info("All subtitle handlers completed")
             return State.COMPLETED.value
         
@@ -276,7 +284,7 @@ class SimpleChapterGeneration(ChapterGeneration):
         处理简单章节生成状态
         """
         # 如果还未初始化，先初始化
-        if not hasattr(self, 'subtitle_handlers') or not self.subtitle_handlers:
+        if not hasattr(self, 'nested_handlers') or not self.nested_handlers:
             self.initialize_subtasks(context)
         
         # 执行状态流转
@@ -288,8 +296,8 @@ class SimpleChapterGeneration(ChapterGeneration):
         """
         处理特殊逻辑，传递给当前处理的子标题处理器
         """
-        if self.current_handler_index < len(self.subtitle_handlers):
-            current_handler = self.subtitle_handlers[self.current_handler_index]
+        if self.current_handler_index < len(self.nested_handlers):
+            current_handler = self.nested_handlers[self.current_handler_index]
             
             if not getattr(current_handler, 'content_confirmed', False):
                 if hasattr(current_handler, 'process_special_logic'):
@@ -302,8 +310,8 @@ class SimpleChapterGeneration(ChapterGeneration):
         """
         获取当前状态的指导语
         """
-        if self.current_handler_index < len(self.subtitle_handlers):
-            current_handler = self.subtitle_handlers[self.current_handler_index]
+        if self.current_handler_index < len(self.nested_handlers):
+            current_handler = self.nested_handlers[self.current_handler_index]
             
             if hasattr(current_handler, 'get_instructions'):
                 return current_handler.get_instructions()

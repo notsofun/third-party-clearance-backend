@@ -11,7 +11,7 @@ from log_config import get_logger
 from back_end.services.state_handlers.handler_factory import StateHandlerFactory
 from back_end.services.chat_gen.generator import ChatGenerator
 from back_end.services.state_handlers.base_handler import SubTaskStateHandler, ContentGenerationHandler
-from back_end.services.state_handlers.content_handler import ChapterGeneration
+from back_end.services.state_handlers.content_handler import ChapterGeneration, SimpleChapterGeneration
 
 logger = get_logger(__name__)  # 每个模块用自己的名称
 
@@ -50,6 +50,7 @@ class ChatService:
         content = {'shared': shared, 'status': result}
         result_in_flow = self.chat_flow.process(content)
         updated_status = result_in_flow['current_state'].value
+        shared['event'] = result_in_flow['event']
         
         logger.info('chat_service.process_user_input: Current status: %s, Updated status: %s', status, updated_status)
 
@@ -72,6 +73,9 @@ class ChatService:
         if updated_status != status:
             return self._process_status_change(shared, status, updated_status, handler)
         
+        if isinstance(handler, SimpleChapterGeneration):
+            return self._handle_simple_chapter_generation(shared, status, result, reply, handler)
+
         # 特殊处理 ChapterGeneration 类
         if isinstance(handler, ChapterGeneration):
             return self._handle_chapter_generation(shared, status, result, reply, handler)
@@ -107,7 +111,7 @@ class ChatService:
         shared['processing_type'] = processing_type
         
         # 检查是否是从ChapterGeneration状态转出，需要聚合内容
-        if isinstance(handler, ChapterGeneration) and old_status != new_status:
+        if isinstance(handler, ChapterGeneration) and old_status != new_status and handler.item_list_key is not None:
             self.gen = ChatGenerator(handler=handler)
             logger.info('_process_status_change: ChapterGeneration completed, aggregating content')
             
@@ -146,6 +150,71 @@ class ChatService:
         
         return new_status, shared, messages
 
+    def _handle_simple_chapter_generation(self, shared: Dict[str, Any], status: str, result: str, reply: str, handler) -> Tuple[str, Dict[str, Any], str]:
+        """
+        处理 SimpleChapterGeneration 的逻辑
+        - 使用简单的列表结构 (nested_handlers 是 list)
+        - 不需要 all_completed 判断
+        - 走完 nested_handlers 列表就完成
+        """
+        logger.info('chat_service._handle_simple_chapter_generation: Processing SimpleChapterGeneration')
+        
+        self.gen = ChatGenerator(handler=handler)
+        event = shared.get('event', '')
+        
+        # 构建context
+        content = {
+            'shared': shared,
+            'user_input': shared.get('user_input', ''),
+            'status': result
+        }
+        
+        gen_content = ""
+        if event == State.GENERATION.value:
+            # 生成内容
+            gen_content, _ = self.gen.generate_content(content)  # 忽略all_completed
+            
+            # 存储到markdown（简单列表结构）
+            handlers_list = handler.nested_handlers  # 直接是list
+            if handlers_list and handler.current_handler_index < len(handlers_list):
+                current_subhandler = handlers_list[handler.current_handler_index].handler.__class__.__name__
+                self.handler_factory.md.add_section(gen_content, f'### {current_subhandler}')
+            
+            # 处理特殊逻辑
+            shared = handler.process_special_logic(shared, content=gen_content)
+        
+        # 检查是否完成：走完整个列表就算完成
+        if handler.current_handler_index >= len(handler.nested_handlers):
+            logger.info('chat_service._handle_simple_chapter_generation: All subtitle handlers completed')
+            
+            # 重新检查大状态转换
+            content = {'shared': shared, 'status': 'next'}
+            result_in_flow = self.chat_flow.process(content)
+            final_status = result_in_flow['current_state'].value
+            
+            # 如果状态发生变化，处理状态变化
+            if final_status != status:
+                return self._process_status_change(shared, status, final_status, handler)
+            
+            # 状态未变化，返回完成消息
+            completion_message = "Simple chapter generation completed"
+            if shared.get(handler.chapter_content_key):
+                completion_message += f"\n\nGenerated chapter has been saved."
+            
+            return status, shared, self._ensure_list(completion_message)
+        
+        else:
+            # 获取当前的指导语（简单列表结构）
+            if handler.current_handler_index < len(handler.nested_handlers):
+                current_handler_wrapper = handler.nested_handlers[handler.current_handler_index]
+                instruction = current_handler_wrapper.handler.get_instructions()
+            else:
+                instruction = "Processing simple chapter generation..."
+            
+            messages = [instruction]
+                        
+            return status, shared, self._ensure_list(messages)
+
     def _handle_content_generation(self, handler: ContentGenerationHandler, shared: Dict[str, Any],status: str, result: str, reply: str) -> Optional[Tuple[str, Dict[str, Any], str]]:
         """
         处理内容生成逻辑
@@ -166,8 +235,7 @@ class ChatService:
             'user_input': shared.get('user_input', ''),
             'status': result
         }
-        result_in_flow = self.chat_flow.process(content)
-        event = result_in_flow.get('event')
+        event = shared.get('event')
         
         if event == State.GENERATION.value:
             logger.info(f"now we started generating content with this handler {handler.__class__.__name__}")
@@ -203,8 +271,8 @@ class ChatService:
         Chat_service 进入此大状态后分为两部分：内容生成和状态流转
         """
         logger.info('chat_service._handle_chapter_generation: Processing ChapterGeneration with result: %s', result)
-        self.gen = ChatGenerator(handler=handler)
-        
+        self.gen = ChatGenerator(handler=handler) # 每次调用时更新
+        event = shared.get('event', '')
         # 构建context
         content = {
             'shared': shared,
@@ -212,17 +280,18 @@ class ChatService:
             'status': result
         }
         
-        # 只处理内容生成，仅返回子标题内容
-        gen_content, all_completed = self.gen.generate_content(content)
-
-        # 测试时，将每章内容先存进handler_factory.md, 还得确保这个wrapper是confirmed
-        handlers_list = handler.nested_handlers.get(handler.current_item_index, [])
-        if handlers_list and handler.current_subhandler_index < len(handlers_list):
-            current_subhandler = handlers_list[handler.current_subhandler_index].handler.__class__.__name__
-            self.handler_factory.md.add_section(gen_content, f'### {current_subhandler}')
-
-        # 每次回调特殊逻辑存储数据
-        shared = handler.process_special_logic(shared, content=gen_content)
+        if event == State.GENERATION.value:
+            # 生成内容
+            gen_content, all_completed = self.gen.generate_content(content)
+            
+            # 存储到markdown（嵌套字典结构）
+            handlers_list = handler.nested_handlers.get(handler.current_item_index, [])
+            if handlers_list and handler.current_subhandler_index < len(handlers_list):
+                current_subhandler = handlers_list[handler.current_subhandler_index].handler.__class__.__name__
+                self.handler_factory.md.add_section(gen_content, f'### {current_subhandler}')
+            
+            # 处理特殊逻辑
+            shared = handler.process_special_logic(shared, content=gen_content)
 
         # 如果章节生成完成，状态流转往下走，为什么continue第一次调用就判断全部完成了？
         if all_completed:
@@ -245,9 +314,19 @@ class ChatService:
             return status, shared, self._ensure_list(completion_message)
         
         else:
-            # 获取当前的指导语
-            instruction = handler.nested_handlers[handler.current_item_index][handler.current_subhandler_index].handler.get_instructions()
-            messages = [instruction, gen_content]
+            # 获取当前的指导语（嵌套字典结构）
+            handlers_list = handler.nested_handlers.get(handler.current_item_index, [])
+            if handlers_list and handler.current_subhandler_index < len(handlers_list):
+                current_handler_wrapper = handlers_list[handler.current_subhandler_index]
+                instruction = current_handler_wrapper.handler.get_instructions()
+            else:
+                instruction = "Processing chapter generation..."
+            
+            messages = [instruction]
+            
+            # 如果有生成的内容，也加入消息
+            if event == State.GENERATION.value and gen_content:
+                messages.append(gen_content)
             
             return status, shared, self._ensure_list(messages)
 

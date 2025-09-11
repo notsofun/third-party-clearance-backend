@@ -260,7 +260,7 @@ class TestCustomProjectOverviewIntegration:
                 updated_shared = shared
                 current_status = status
 
-        chat_service.handler_factory.md.save_document(f'./downloads/test/product_clearance/6th_report.md')
+        chat_service.handler_factory.md.save_document(f'./downloads/test/product_clearance/1th_report.md')
         logger.info('The latest file has been saved sucessfully!')
         self.context_data['chat_service'] = chat_service
         self.context_data['shared'] = shared
