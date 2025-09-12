@@ -235,7 +235,7 @@ class RiskChecker(AzureOpenAIChatClient):
                 "Justification": f"自动审核失败，原因：{str(e)}"
             }
 
-class DependecyChecker(AzureOpenAIChatClient):
+class DependencyChecker(AzureOpenAIChatClient):
     """
     注意！是检查各个组件之间的依赖关系，而不是在各个许可证。
     """

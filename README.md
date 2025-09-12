@@ -1,362 +1,133 @@
-# 合规性风险评估系统（Compliance Risk Assessment System）
+# Siemens Third-Party Clearance 项目设计文档
 
-本项目基于大型语言模型（LLM）与向量检索技术，结合人工确认环节，实现软件依赖包的合规性风险自动分析与智能评估。核心由LangChain框架驱动，调用Azure OpenAI完成文本分析，结合PocketFlow实现任务节点编排，最终生成结构化合规报告。
+## 1. 项目目标
 
----
-
-## 项目背景与目标
-
-随着软件依赖包的数量和复杂度激增，传统人工审核流程效率低、误判率高。本系统旨在：
-
-- 利用LLM自动理解依赖包文本内容及许可协议
-- 结合向量数据库实现历史案例快速检索
-- 通过多阶段状态机管理合规评估流程（OEM、依赖、合规等）
-- 结合人工确认节点保证结果准确可靠
-- 最终生成可供法律与开发团队参考的合规报告
+本项目旨在实现对第三方开源组件（OSS）合规性自动化分析、风险评估、用户交互确认及报告生成。支持上传 OSS 相关 HTML 文件，自动解析、风险分析、依赖分析、用户交互确认，并最终生成合规报告。前后端分离，支持 Web 聊天交互。
 
 ---
 
-## 系统架构
+## 2. 总体架构
 
-```mermaid
-flowchart TD
-    A[用户上传依赖包清单] --> B[LLM分析模块<br>（LangChain + Azure OpenAI）]
-    B --> C[向量数据库检索历史分析]
-    C -->|无匹配或需更新| D[风险评估节点<br>（LLM + Prompt模板）]
-    C -->|匹配命中| E[返回历史分析结果]
-    D --> F[人工确认环节]
-    E --> F
-    F --> G[报告生成节点]
-    G --> H[输出合规性报告]
-    
-    subgraph 流程编排引擎
-    B
-    C
-    D
-    F
-    G
-    end
-```
+详细架构图及流程图请参照该文档: [架构图+流程图](README_Doc\Architecture_Workflow.md)
 
-* **LLM分析模块**：负责解析依赖包及许可文本，调用Azure OpenAI生成语义向量及初步分析。
-* **向量数据库**：存储历史分析结果，提升复用效率。
-* **风险评估节点**：对未命中或需更新的条目，重新调用LLM做合规风险评估。
-* **人工确认环节**：基于状态机（OEM、依赖、合规、合同等）引导人工逐步确认。
-* **报告生成节点**：整合所有确认结果，自动生成结构化合规报告。
+- **前端**：React + TypeScript，负责文件上传、组件风险展示、与后端对话交互。
+- **后端**：FastAPI（Python），负责文件接收、PocketFlow 工作流调度、对话管理、报告生成。
+- **核心流程**：PocketFlow 流程引擎，节点式编排各类自动化与交互任务。
+- **AI能力**：集成 Azure OpenAI/LLM，自动化风险评估、合规建议、对话交互。
+- **数据存储**：本地 JSON 文件存储中间结果，支持后续扩展数据库。
 
 ---
 
-## 核心模块设计
+## 3. 主要模块说明
 
-### 状态机设计
-
-
-* 采用抽象基类`StateHandler`定义状态处理器接口
-* 定义具体状态处理器：`SpecialCheckHandler`, `OEMHandler`, `DependencyHandler`, `ComplianceHandler`
-* `WorkflowContext`负责状态管理和转移
-* 状态枚举由`ConfirmationStatus`定义，包含`SPECIAL_CHECK`, `OEM`, `DEPENDENCY`, `COMPLIANCE`, `CONTRACT`。
-  
-状态机大致示意
-
-```mermaid
-
-graph TD
-    A[OEM] --> B[CONTRACT]
-    B --> C[CONTRACT]
-    C --> D[Dependecy]
-    
-    subgraph 处理Dependecy嵌套状态
-    D --> D1[处理当前组件]
-    D1 --> D2{还有更多组件?}
-    D2 -->|是| D1
-    D2 -->|否| D3[组件处理完毕]
-    end
-    
-    D3 --> G[Credential]
-
-    subgraph 处理Credential嵌套状态
-    G --> G1[处理当前组件]
-    G1 --> G2{还有更多组件?}
-    G2 -->|是| G1
-    G2 -->|否| G3[组件处理完毕]
-    end
-    
-    G3 --> E
-
-    E[SpecialCheck] --> F[Report Generating]
+### 3.1 后端目录结构
 
 ```
-
-#### `chat_service`状态流转详细流程图
-
-```mermaid
-flowchart TD
-    A[用户输入] --> B[Chat_Service.process_user_input]
-    B --> C[get_strict_json解析用户意图]
-    C --> D[获取当前状态Handler]
-    D --> E{状态是否变化?}
-    
-    E -->|是| F[_process_status_change]
-    E -->|否| G{Handler类型判断}
-    
-    F --> F1[更新processing_type]
-    F --> F2[获取新状态指导语]
-    F --> F3{需要嵌套项指导语?}
-    F3 -->|是| F4[ChatManager.handle_item_action]
-    F3 -->|否| F5[返回基础指导语]
-    
-    G -->|ChapterGeneration| H[_handle_chapter_generation]
-    G -->|SubTaskStateHandler| I[_handle_nested_logic]
-    G -->|ContentGenerationHandler| J[_handle_content_generation]
-    G -->|其他| K[返回原始回复]
-    
-    H --> H1[构建Context上下文]
-    H1 --> H2[ChapterGeneration.handle]
-    H2 --> H3[初始化嵌套字典结构]
-    H3 --> H4{是否已初始化?}
-    H4 -->|否| H5[initialize_subtasks]
-    H4 -->|是| H6[执行状态流转]
-    
-    H5 --> H5a[遍历item_list获取项目]
-    H5a --> H5b[为每个项目创建子标题处理器列表]
-    H5b --> H5c[nested_handlers字典初始化完成]
-    H5c --> H6
-    
-    H6 --> H7[_state_transition]
-    H7 --> H8{当前项目索引检查}
-    H8 -->|超出范围| H9[返回COMPLETED]
-    H8 -->|在范围内| H10[获取当前项目的子标题列表]
-    
-    H10 --> H11{查找未确认的子标题}
-    H11 -->|找到| H12[标记content_confirmed=true]
-    H11 -->|未找到| H13[检查当前项目是否全部完成]
-    
-    H12 --> H13
-    H13 --> H14{所有子标题都已确认?}
-    H14 -->|是| H15[current_item_index++]
-    H14 -->|否| H16[返回IN_PROGRESS]
-    
-    H15 --> H17{所有项目都已完成?}
-    H17 -->|是| H18[返回COMPLETED]
-    H17 -->|否| H16
-    
-    H18 --> H19[_aggregate_content内容聚合]
-    H19 --> H20[MarkdownDocumentBuilder构建]
-    H20 --> H21[遍历所有项目和子标题]
-    H21 --> H22[组合markdown格式内容]
-    H22 --> H23[存储到shared字典]
-    H23 --> H24[返回最终状态]
-    
-    H16 --> H25[_content_generation内容生成]
-    H25 --> H26[获取当前项目信息]
-    H26 --> H27[查找当前需要处理的子标题]
-    H27 --> H28{找到未处理的子标题?}
-    H28 -->|是| H29[调用子标题内容生成器]
-    H28 -->|否| H30[当前项目所有子标题已完成]
-    
-    H29 --> H31[生成具体内容]
-    H31 --> H32[存储到shared字典]
-    H32 --> H33[返回生成的内容]
-    
-    H33 --> H34{ChapterGeneration结果检查}
-    H34 -->|COMPLETED| H35[重新检查大状态转换]
-    H34 -->|IN_PROGRESS| H36[获取当前指导语]
-    
-    H35 --> H37{状态是否变化?}
-    H37 -->|是| H38[处理状态变化]
-    H37 -->|否| H39[返回完成消息]
-    
-    H36 --> H40{是否有新生成内容?}
-    H40 -->|是| H41[显示生成内容+指导语]
-    H40 -->|否| H42{用户输入是继续指令?}
-    H42 -->|是| H43[显示进度信息+指导语]
-    H42 -->|否| H44[返回当前指导语]
-    
-    style A fill:#e1f5fe
-    style H fill:#fff3e0
-    style H2 fill:#fff3e0
-    style H5 fill:#fff3e0
-    style H7 fill:#fff3e0
-    style H19 fill:#fff3e0
-    style H25 fill:#fff3e0
-    style I fill:#f3e5f5
-    style J fill:#e8f5e8
-
+third-party-clearance/
+│
+├─ back_end/
+│   ├─ run_server.py / server.py      # FastAPI 服务入口
+│   ├─ services/                      # 聊天/流程服务
+│   ├─ items_utils/                   # 组件类型与工具
+│   ├─ test_codes/                    # 测试代码
+│   └─ uploads/                       # 上传文件存储
+│
+├─ utils/
+│   ├─ LLM_Analyzer.py                # LLM/AI相关分析与对话
+│   ├─ tools.py                       # 通用工具
+│   ├─ htmlParsing.py                 # HTML解析
+│   ├─ itemFilter.py                  # 组件/许可证筛选
+│   ├─ database/                      # 各类DB工具
+│   └─ PCR_Generation/                # PCR报告相关
+│
+├─ nodes.py                           # PocketFlow节点定义
+├─ flow.py                            # PocketFlow流程编排
+├─ main.py                            # 流程运行入口
+└─ ...
 ```
 
+### 3.2 核心流程（PocketFlow）
 
-### 后端聊天服务
+- **pre_chat_flow**：文件解析、风险分析、依赖分析、初始化会话
+- **chat_flow**：与用户交互确认高/中风险组件
+- **post_chat_flow**：根据用户确认结果生成最终合规报告
 
-* 类`ChatService`负责接收用户输入，调用对应状态处理器处理消息
-* 通过`WorkflowContext`维护会话状态和状态转移，该在`ChatFlow`框架下，通过`transition_table`维护节点走向
-* 使用`FastAPI`实现接口，提供文件上传分析接口和聊天交互接口
-* 开发`ChatManager`支持多组件、许可证依次确认，管理多轮对话上下文
+#### 主要节点（nodes.py）
+
+- `ParsingOriginalHtml`：解析上传的 HTML，提取组件、许可证等结构化信息
+- `LicenseReviewing`：自动化评估每个许可证的风险等级
+- `SpecialLicenseCollecting`：收集特殊类型许可证（如GPL等）
+- `RiskCheckingRAG`：结合知识库/向量DB进一步校验风险
+- `DependencyCheckingRAG`：分析组件间依赖关系
+- `initializeSession`：初始化对话机器人
+- `GetUserConfirming`：与用户交互确认高/中风险项
+- `itemFiltering`：根据用户确认结果筛选最终合规项
+- `getFinalOSS`：生成最终合规报告HTML
+
+### 3.3 AI与知识库
+
+- `LLM_Analyzer.py`：封装了与 Azure OpenAI 的对接，支持风险评估、合规建议、对话交互等。
+- `database/vectorDB.py`：向量数据库，用于知识检索和RAG增强。
+
+### 3.4 服务层（back_end/services）
+
+- `chat_service.py`：对话服务，管理会话状态、与前端交互
+- `chat_flow.py`：对话流程管理
+- `chat_manager.py`：多会话管理
+- `state_handlers/`：对话状态机与多种对话场景处理
 
 ---
 
-## 快速开始
+## 4. 数据流与交互流程
 
-### 环境依赖
+1. **文件上传**（前端 -> /analyze）
+	- FastAPI 保存文件，调用 pre_chat_flow，完成自动化解析与风险分析，返回 session_id 和待确认组件列表。
 
-* Python 3.9+
-* FastAPI
-* uvicorn
-* LangChain
-* Azure OpenAI SDK
-* PocketFlow（流程编排）
+2. **用户交互**（前端 -> /chat/{session_id}）
+	- 前端逐步与后端对话，确认每个高/中风险组件，后端通过 chat_flow 管理对话状态。
 
-```bash
-pip install -r requirements.txt
-```
-
-### 启动服务
-
-```bash
-uvicorn back_end.server:app --reload --host 127.0.0.1 --port 8000
-```
-
-### 使用流程
-
-1. **上传依赖文件**
-
-通过`npm run dev`在前端根目录运行交互页面，并上传文件。
-
-返回 `session_id` 和初始确认组件信息。
-
-2. **发起聊天确认**
-
-```bash
-curl -X POST "http://127.0.0.1:8000/chat/{session_id}" -H "Content-Type: application/json" -d '{"message":"用户输入内容"}'
-```
-
-服务器返回当前确认状态和系统回复。
-
-3. **查询会话状态**
-
-```bash
-curl -X GET "http://127.0.0.1:8000/sessions/{session_id}"
-```
+3. **报告生成**（后端自动或前端触发）
+	- 用户全部确认后，后端调用 post_chat_flow，生成最终合规报告，前端可下载或查看。
 
 ---
 
-## 开发指南
+## 5. 扩展性与可维护性
 
-* 关键逻辑位于 `back_end/services/chat_service.py` 与 `back_end/services/chat_flow.py`
-* `WorkflowContext` 实现状态转移，易于扩展更多状态
-* FastAPI 服务器入口在 `back_end/server.py`
-* 日志采用标准`logging`，级别可调节方便调试
-
-### 如何在ChatFlow中新增普通节点？
-1. 在`item_types.py`的`ConfirmationStatus`类中新增映射，如`OEM = "OEMing"`即为新增了对于项目类型进行确认的节点
-2. 在`chat_flow.py`中新增对应类，比如`OEMHandler`类，以`SimpleStateHandler`类为基类，示例代码如下。
-```python
-class OEMHandler(SimpleStateHandler):
-    def check_completion(self, context: Dict[str, Any]) -> bool:
-        print("执行OEM处理...")
-        status = context.get('status')
-        if status == State.NEXT.value:
-            return State.COMPLETED
-        elif status == State.CONTINUE.value:
-            return State.INPROGRESS
-        else:
-            raise RuntimeError('Model did not determine to go on or continue')
-```
-3. 在`WorkflowContext`中的`transition_table`和`handlers`两个属性中分别注册状态转移规则和对应处理器
-```python
- transition_table = {
-        ConfirmationStatus.OEM: {
-            State.COMPLETED.value: ConfirmationStatus.CONTRACT, # 模型判断当前状态结束后的下一个状态
-            State.INPROGRESS.value: ConfirmationStatus.OEM # 模型判断继续时停留在当前节点
-        }
-    }
-
-handlers = {
-        ConfirmationStatus.OEM: OEMHandler(), # 注册后，Chatflow能够根据当前状态选择对应的处理器
-    }
-```
-4. 接下来，需要处理Chatbot普通节点状态转移时向用户展示指引的逻辑。此处在`chat_service.py`的`ChatService`类的`status_handlers`属性中注册对应方法
-```python
-status_handlers = {
-        ConfirmationStatus.OEM.value: self._handle_oem,
-    }
-```
-5. 同时，在`ChatService`类中实现该方法
-```python
-def _handle_oem(self) -> str:
-    """处理OEM状态"""
-    prompt = self.bot.langfuse.get_prompt("bot/OEM").prompt
-    response = get_strict_json(self.bot, prompt)
-    return response.get('talking', '请确认OEM信息')
-```
-6. 最后，在[Langfuse](http://140.231.236.162:8500/project/cmdh3nlkv0005pe07n90sru1k/prompts?pageIndex=0&pageSize=50&folder=bot)平台中创建对应的prompt，命名和代码中`get_prompt()`中的参数一致
-![图片](src\imgs\langfuse_creating_pics.png)
-
-
-### 如何在ChatFlow中新增嵌套节点？
-* 基本依靠配置关键文件的方法就能实现更新
-1. 确保在`node.py`中已经提前处理了待处理的数据在`shared`中，目前的嵌套节点仅支持`List[dict]`的形式。
-```python
-
-# 示例数据
-exec_res = [
-  {
-    "title": "Apache-2.0",
-    "originalLevel": "low",
-    "CheckedLevel": "low",
-    "Justification": "..."
-  },
-  # 其他待确认
-]
-
-shared['toBeConfirmedLicense'] = exec_res
-
-```
-2. 在`item_types.py`的`ConfirmationStatus`类中新增映射，如`LICENSE = "license"`即为新增了对于许可证进行确认的节点
-3. 在`item_types.py`中的`TYOE_CONFIG`字典中配置映射
-```python
-# 示例配置
-
-ItemType.LICENSE: {
-    "current_key": "current_license_idx", #用于在shared中维护目前确认的item索引
-    "items_key": "checkedRisk", # 方便chat_manager去获取item列表，需与在shared中定义的键一致
-    "error_msg": "错误：没有找到要确认的许可证",
-    "name_field": "title", #在shared的字典中，用来表示待确认的item的名称的键
-    "default_name": "未命名许可证",
-    "instruction_template": "here is the licenseName: {title}, CheckedLevel: {CheckedLevel}, and Justification: {Justification}", # 用于在大状态中引导模型发送指导用户挨个确认item的指导文
-    "instruction_fields": ["title", "CheckedLevel", "Justification"] # 方便chat_manager去找对应信息的placeholder，需与shared中的字典键一致，也需要与上面template的placeholder一致
-}
-
-
-```
-4. 在`chat_flow.py`中新增对应类，比如`ComlianceHandler`类，以`SubTaskStateHandler`类为基类，示例代码如下。
-   - 需要注意的是在`lic.get()`的部分，需要确保这里的参数应该是在`shared`中item对应的title键
-```python
-class ComplianceHandler(SubTaskStateHandler):
-    def initialize_subtasks(self, context: Dict[str, Any]):
-        """初始化待确认组件子任务"""
-        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.LICENSE]['items_key'], [])
-        # 以组件ID作为子任务标识
-        self.subtasks = [lic.get("title", f"lic_{idx}") for idx, lic in enumerate(licenses)]
-        logger.info(f"chat_flow.LicenseCheck: 依赖处理: 初始化了 {len(self.subtasks)} 个组件子任务")
-    
-    def is_subtask_completed(self, context: Dict[str, Any], subtask_id: str) -> bool:
-        """检查组件是否已确认"""
-        licenses = context.get("shared", {}).get(TYPE_CONFIG[ItemType.LICENSE]['items_key'], [])
-        for lic in licenses:
-            if lic.get("title") == subtask_id:
-                return lic.get("status") == ItemStatus.CONFIRMED.value
-        return False
-
-```
-5. 在`WorkflowContext`中的`transition_table`和`handlers`两个属性中分别注册状态转移规则和对应处理器（方法与普通节点一致）
-6. 此后步骤和普通节点一致，需要实现大状态指导语的prompt
-
+- **节点式编排**：所有自动化与交互逻辑都以节点形式实现，易于插拔、扩展和单元测试。
+- **多流程分离**：解析/分析、交互、报告生成分为独立流程，便于维护和复用。
+- **AI能力可插拔**：LLM相关能力集中在 utils/LLM_Analyzer.py，便于更换模型或API。
+- **前后端解耦**：API接口清晰，前端可独立开发和升级。
+- **会话与状态管理**：支持多用户并发、会话持久化，便于后续扩展为多租户SaaS。
 
 ---
 
-## 未来优化方向
+## 6. 典型用例
 
-* 增加更多智能异常检测与预警策略
-* 扩展多语言支持，覆盖更多许可协议语境
-* 深度集成知识图谱，提升推理能力
-* 接入更丰富的人机交互接口，实现多渠道合规审核
+1. 用户上传 OSS HTML 文件
+2. 系统自动解析、风险分析、依赖分析
+3. 前端展示待确认组件，用户逐一确认
+4. 系统根据用户确认结果生成合规报告
+5. 用户下载或查看报告
+
+---
+
+## 7. 关键技术点
+
+- **PocketFlow**：轻量级节点式流程引擎，支持灵活的流程编排
+- **LangChain/Azure OpenAI**：自动化风险评估、合规建议、对话交互
+- **向量数据库**：知识增强与RAG
+- **FastAPI**：高性能API服务，易于前后端分离
+- **React**：现代化前端，支持文件上传、聊天、进度展示
+
+---
+
+## 8. 未来可扩展方向
+
+- 支持更多文件格式（如 docx、pdf）
+- 支持多语言和国际化
+- 支持多种 LLM/AI 服务切换
+- 支持更细粒度的权限与多用户协作
+- 支持云端部署与大规模并发
+
+## 9.开发指南
+请参照此[指南](README_Doc\Tutorial.md)

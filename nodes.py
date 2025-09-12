@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import json
 from utils.LLM_Analyzer import (RiskReviewer, RiskChecker, RiskBot,
                                 credentialChecker, sourceCodeChecker,
-                                DependecyChecker)
+                                DependencyChecker)
 from utils.database.vectorDB import VectorDatabase
 from back_end.items_utils.item_types import TYPE_CONFIG, ItemType
 from utils.tools import (reverse_exec, format_oss_text_to_html, extract_h1_content, split_tuples)
@@ -274,7 +274,7 @@ class DependecyCheckingRAG(BatchNode):
         db = VectorDatabase()
         db.load('component_licenses_db')
         context = db.search(compName)
-        dependecyChecker = DependecyChecker(
+        dependecyChecker = DependencyChecker(
             session_id=f'check{randInt:016x}')
         dependency = dependecyChecker.check(compName,compHtml,context)
         compDict = {

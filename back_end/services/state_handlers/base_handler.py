@@ -59,8 +59,7 @@ class SimpleStateHandler(StateHandler):
         if self.check_completion(context):
             return State.COMPLETED.value
         return State.INPROGRESS.value
-
-
+    
 class SubTaskStateHandler(StateHandler):
     
     """包含子任务的状态处理器基类"""
