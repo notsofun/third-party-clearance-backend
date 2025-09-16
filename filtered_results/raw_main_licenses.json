@@ -7,7 +7,7 @@
       "CC-BY-4.0",
       "MIT"
     ],
-    "status": "confirmed",
-    "main_license": "Apache-2.0 has been confirmed as the main license."
+    "status": "discarded",
+    "main_license": "It seems you've indicated an affirmative response without specifying a license selection. If you don't need to select a main license, I'll proceed with discarding the license selection stage."
   }
 ]

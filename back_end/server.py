@@ -4,7 +4,8 @@ from fastapi.responses import JSONResponse, FileResponse
 from pydantic import BaseModel
 import uvicorn
 from utils.tools import create_error_response, create_success_response
-import os,re
+import os, re
+from back_end.config import settings
 from pathlib import Path
 from main import run_analysis, run_report
 import uuid
@@ -25,6 +26,9 @@ async def lifespan(app: FastAPI):
     # 应用启动时再次确保日志配置正确
     # 这对热重载很重要
     logger.info("FastAPI应用启动")
+    # 初始化API基础URL
+    settings.init_api_base_url()
+    logger.info(f"API base URL: {settings.API_BASE_URL}")
     yield
     logger.info("FastAPI应用关闭")
     # 确保日志刷新
@@ -183,9 +187,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
             404
         )
     chat_service = session['chat_service']
-    chat_flow = session['chat_flow']
-
-    status = chat_flow.current_state.value
+    status = chat_service.chat_flow.current_state.value
     logger.info('server: before processing input, we are in the status of: %s', status)
 
     # 用于对话结束后减少无用请求
@@ -210,24 +212,32 @@ async def chat(session_id: str, chat_message: ChatMessage):
         if status == ConfirmationStatus.OSSGENERATION.value and session.get('ReportNotGenerated', True) == True:
             logger.info('All checking finished. Now we are generating the report...')
             updated_shared['session_id'] = session_id
-            run_report(updated_shared)
+            updated_shared = run_report(updated_shared)
             sessions[session_id]['ReportGenerated'] = False
             # 添加文件下载URL到响应
-            file_name, download_url = 'Final_OSS_Readme.docx', f"download/{session_id}"
+            file_name = 'Final_OSS_Readme.docx'
+            download_path = f"download/{session_id}"
+            # 构建完整的下载URL
+            download_url = f"{settings.API_BASE_URL}/{download_path}"
             # 设置下载信息
             download_info = {
                 "available": True,
-                "url": download_url,
+                "url": download_path,
                 "filename": file_name
             }
-            updated_shared['download_url']
+            updated_shared['download_url'] = download_url
+            content = {
+                'shared': updated_shared,
+                'status': 'next',
+            }
+            result_in_flow = chat_service.chat_flow.process(content)
+            status = result_in_flow['current_state'].value
 
         # 加上一个
         if status == ConfirmationStatus.PRODUCTOVERVIEW.value and session.get('ReportNotGenerated', True) == True:
             chat_service.handler_factory.md.save_document(f'downloads/{session_id}/product_clearance/report.md')
 
         sessions[session_id].update({
-        'chat_flow': chat_flow,
         'state': status,
         'shared': updated_shared,
         'chat_service' : chat_service,
@@ -304,4 +314,17 @@ if __name__ == "__main__":
     
     # 将当前目录加入到Python路径
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    uvicorn.run("back_end.server:app", host="127.0.0.1", port=8000, reload=True, log_config=None)
+    
+    # 初始化API基础URL
+    settings.HOST = "127.0.0.1"
+    settings.PORT = 8000
+    settings.init_api_base_url()
+    
+    # 启动服务器
+    uvicorn.run(
+        "back_end.server:app",
+        host=settings.HOST,
+        port=settings.PORT,
+        reload=True,
+        log_config=None
+    )

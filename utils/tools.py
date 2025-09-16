@@ -488,8 +488,12 @@ def json_strip(text:str) -> str:
         response_strip = response_strip[3:].strip()
     if response_strip.endswith('```'):
         response_strip = response_strip[:-3].strip()
+    processed_response_strip = response_strip.replace('True', 'true')
+    processed_response_strip = processed_response_strip.replace('False', 'false')
+    processed_response_strip = processed_response_strip.replace('None', 'null')
+
     try:
-        data = json.loads(response_strip)
+        data = json.loads(processed_response_strip)
         if isinstance(data, dict):
             return data
     except json.JSONDecodeError: # 更具体的捕获 JSON 解析错误
@@ -563,59 +567,67 @@ def get_strict_json(model:object, user_input, var=False, tags:list = None):
             return result
     return logger.error("Model did not give valid JSON after retries.")
 
-def is_valid_response(response):
+import json
+import typing
+
+def process_response(response_raw: typing.Union[str, dict]):
     """
-    Check if the response contains 'talking' and 'result' keys.
-    
+    Processes a raw response (string or dict) to ensure it has 'result' and 'talking' keys.
+    It first attempts to parse the input, handling markdown code blocks and Python-style
+    boolean/None values.
+    - If 'result' is missing, it defaults to 'continue'.
+    - If 'talking' is missing, or if there are other keys besides 'result' and 'talking',
+        all remaining keys (excluding 'result' and 'talking' if they exist) are
+        merged into a new dictionary, which then becomes the value of 'talking'.
+    - If parsing fails, a default structure is returned.
+
     Args:
-        response: The response object to check (dict or string)
-        
+        response_raw: The raw response object to process (dict or string).
+
     Returns:
-        bool: True if response has required keys, False otherwise
+        dict: A processed dictionary guaranteed to have 'result' and 'talking' keys.
     """
-    
-    try:
-        # 如果响应是字符串，尝试解析JSON
-        if isinstance(response, str):
-            try:
-                response = json.loads(response)
-            except json.JSONDecodeError as e:
-                logger.error(f"JSON decode error: {e}")
-                return False
-        
-        # 检查是否为字典
-        if not isinstance(response, dict):
-            logger.error(f"Response is not a dictionary: {type(response)}")
-            return False
-        
-        # 检查是否包含必要的键
-        has_required_keys = "talking" in response and "result" in response
-        if not has_required_keys:
-            logger.error(f"Missing required keys. Keys present: {list(response.keys())}")
-            return False
-        
-        # 检查talking和result的类型是否符合预期
-        if not isinstance(response["result"], str):
-            logger.error(f"'result' is not a string: {type(response['result'])}")
-            return False
-            
-        # talking允许字典或字符串类型
-        if not (isinstance(response["talking"], str) or isinstance(response["talking"], dict)):
-            logger.error(f"'talking' is not a string or dict: {type(response['talking'])}")
-            return False
-            
-        return True
-    except Exception as e:
-        logger.error(f"Unexpected error: {e}")
-        return False
+    response_dict = {}
+
+    if isinstance(response_raw, str):
+        try:
+            parsed_content = json_strip(response_raw)
+            if isinstance(parsed_content, dict):
+                response_dict = parsed_content
+            else:
+                response_dict = {"result": "continue", "talking": "Invalid JSON content (not a dictionary)"}
+        except json.JSONDecodeError as e:
+            response_dict = {"result": "continue", "talking": f"JSON decode error: {e}"}
+        except Exception as e:
+            response_dict = {"result": "continue", "talking": f"Unexpected parsing error: {e}"}
+    elif isinstance(response_raw, dict):
+        response_dict = response_raw
+    else:
+        response_dict = {"result": "continue", "talking": "Invalid input type"}
+
+    final_response = {}
+
+    final_response["result"] = response_dict.get("result", "continue")
+
+    other_keys_for_talking = {}
+    for key, value in response_dict.items():
+        if key not in ["result", "talking"]:
+            other_keys_for_talking[key] = value
+
+    if other_keys_for_talking:
+        final_response["talking"] = other_keys_for_talking
+    elif "talking" in response_dict:
+        final_response["talking"] = response_dict["talking"]
+    else:
+        final_response["talking"] = {}
+
+    return final_response
 
 def get_strict_talking(model:object, promptName, variable):
     for i in range(5):
         logger.error(f"Attempt {i+1} to get valid JSON response")
         response = model._req_variable(promptName, variable)
-        if is_valid_response(response):
-
-            return response
+        response = process_response(response)
         logger.error("Response validation failed, retrying...")
     
     return logger.error("Model did not give valid response after 5 retries.")

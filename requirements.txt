@@ -15,6 +15,9 @@ spire.doc
 openai
 transformers
 sentence-transformers
+pocketflow
+langchain
+langfuse
 
 # 数据库与存储
 sqlalchemy
@@ -22,13 +25,7 @@ pymysql
 
 # 其他工具
 loguru
+logging
 
 # 测试
 pytest
-
-# 可选：如需OCR、PDF等高级功能
-# pytesseract
-# pdfplumber
-
-# Windows下如需spacy等NLP工具，可自行添加
-# spacy
