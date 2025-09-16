@@ -183,9 +183,7 @@ async def chat(session_id: str, chat_message: ChatMessage):
             404
         )
     chat_service = session['chat_service']
-    chat_flow = session['chat_flow']
-
-    status = chat_flow.current_state.value
+    status = chat_service.chat_flow.current_state.value
     logger.info('server: before processing input, we are in the status of: %s', status)
 
     # 用于对话结束后减少无用请求
@@ -227,7 +225,6 @@ async def chat(session_id: str, chat_message: ChatMessage):
             chat_service.handler_factory.md.save_document(f'downloads/{session_id}/product_clearance/report.md')
 
         sessions[session_id].update({
-        'chat_flow': chat_flow,
         'state': status,
         'shared': updated_shared,
         'chat_service' : chat_service,
