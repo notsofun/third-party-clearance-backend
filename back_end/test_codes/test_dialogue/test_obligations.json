@@ -1,0 +1,62 @@
+{
+  "name": "License Obligations Flow",
+  "description": "To test the ability of generating obligations for a system",
+  "initial_state": "obligations",
+  "turns": [
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    },
+    {
+      "user_input": "ok, I am satisfied with it",
+      "expected_status": "obligations",
+      "follow_up_if_continue": "Here's additional information about distribution"
+    }
+  ]
+}

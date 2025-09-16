@@ -1,0 +1,2863 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ComponentLicenseInformation component="FreeRTOS-Kernel-10.4.6.zip" creator="snehal.bawankule.ext@siemens.com" date="2022-02-07" baseDoc="" toolUsed="FOSSologyNG" componentID="" includesAcknowledgements="true"   componentSHA1="04406445f861216894013351b524d58fcb834af7" version="1.5">
+
+  <GeneralInformation>
+    <ReportId>3caf54f2-8801-11ec-b77a-005056ba5969</ReportId>
+    
+    <ComponentName>FreeRTOS</ComponentName>
+    <Community>FreeRTOS http://freertos.org</Community>
+    <ComponentVersion>V10.4.6</ComponentVersion>
+    <ComponentHash>04406445F861216894013351B524D58FCB834AF7</ComponentHash>
+    <ComponentReleaseDate>13-Nov-2021</ComponentReleaseDate>
+    <LinkComponentManagement><![CDATA[https://sw360.siemens.com/group/guest/components/-/component/release/detailRelease/66c2e239ac40431ad03e35a157126211/d1d3e7f6361e4dc3b299d1f3c197bce5#/tab-Summary]]></LinkComponentManagement>
+  </GeneralInformation>
+
+  <AssessmentSummary>
+    <GeneralAssessment><![CDATA[This OSS component is covered under MIT License which has No Copyleft Effect]]></GeneralAssessment>
+    <CriticalFilesFound>None</CriticalFilesFound>
+    <DependencyNotes>SourceDependenciesFound</DependencyNotes>
+    <ExportRestrictionsFound>None</ExportRestrictionsFound>
+    <UsageRestrictionsFound>None</UsageRestrictionsFound>
+    <AdditionalNotes><![CDATA[//History.txt marked as irrelevant because it is change log.
+Notice file for Apache 2.0 is not found.]]></AdditionalNotes>
+  </AssessmentSummary>
+
+  <License type="global" name="MIT" spdxidentifier="MIT">
+    <Content><![CDATA[Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+]]></Content>
+    <Files><![CDATA[portable/IAR/ARM_CRx_No_GIC/portASM.s
+portable/IAR/V850ES/portasm.s85
+portable/IAR/V850ES/portasm_Hx2.s85
+portable/IAR/V850ES/portasm_Fx3.s85
+portable/IAR/LPC2000/ISR_Support.h
+portable/IAR/STR75x/ISR_Support.h
+portable/IAR/AtmelSAM7S64/ISR_Support.h
+portable/IAR/STR71x/ISR_Support.h
+portable/IAR/LPC2000/portasm.s79
+portable/IAR/AtmelSAM9XE/portasm.s79
+portable/IAR/AtmelSAM9XE/ISR_Support.h
+portable/IAR/RL78/ISR_Support.h
+portable/IAR/RL78/portasm.s87
+portable/IAR/ATMega323/portmacro.s90
+portable/IAR/STR75x/portasm.s79
+portable/IAR/ARM_CA9/portASM.h
+portable/IAR/ARM_CA9/portASM.s
+portable/IAR/78K0R/ISR_Support.h
+portable/IAR/78K0R/portasm.s26
+portable/IAR/AtmelSAM7S64/portasm.s79
+portable/IAR/STR71x/portasm.s79
+portable/IAR/AVR_AVRDx/portmacro.s90
+portable/IAR/ARM_CA5_No_GIC/portASM.h
+portable/IAR/ARM_CA5_No_GIC/portASM.s
+portable/IAR/AVR_Mega0/portmacro.s90
+portable/RVDS/ARM_CA9/portmacro.inc
+portable/RVDS/ARM_CA9/portASM.s
+portable/RVDS/ARM7_LPC21xx/portmacro.inc
+portable/RVDS/ARM7_LPC21xx/portASM.s
+portable/Renesas/RX700v3_DPFPU/port_asm.src
+portable/Renesas/RX600v2/port_asm.src
+portable/Renesas/RX600/port_asm.src
+portable/Renesas/SH2A_FPU/ISR_Support.inc
+portable/Renesas/RX100/port_asm.src
+portable/Renesas/RX200/port_asm.src
+portable/Renesas/SH2A_FPU/portasm.src
+portable/Tasking/ARM_CM4F/port_asm.asm
+portable/CCS/MSP430X/portext.asm
+portable/CCS/MSP430X/data_model.h
+portable/CCS/ARM_Cortex-R4/portASM.asm
+portable/CCS/ARM_CM3/portasm.asm
+portable/CCS/ARM_CM4F/portasm.asm
+portable/IAR/AVR32_UC3/read.c
+portable/IAR/AVR32_UC3/portmacro.h
+portable/IAR/AVR32_UC3/write.c
+portable/GCC/AVR32_UC3/exception.S
+portable/IAR/AVR32_UC3/port.c
+portable/GCC/AVR32_UC3/portmacro.h
+portable/GCC/AVR32_UC3/port.c
+portable/IAR/AVR32_UC3/exception.s82
+.github/CONTRIBUTING.md
+portable/ThirdParty/GCC/RISC-V/README-for-info-on-official-MIT-license-port.txt
+portable/ThirdParty/GCC/Xtensa_ESP32/port.c
+portable/ThirdParty/GCC/RP2040/port.c
+portable/ThirdParty/GCC/RP2040/idle_task_static_memory.c
+portable/ThirdParty/GCC/RP2040/include/rp2040_config.h
+portable/ThirdParty/GCC/RP2040/include/portmacro.h
+portable/ThirdParty/GCC/RP2040/include/freertos_sdk_config.h
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_vector_defaults.S
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_loadstore_handler.S
+include/StackMacros.h
+.github/scripts/kernel_checker.py
+timers.c
+include/FreeRTOS.h
+include/event_groups.h
+include/atomic.h
+include/projdefs.h
+include/timers.h
+include/mpu_prototypes.h
+include/stack_macros.h
+include/stream_buffer.h
+include/portable.h
+include/mpu_wrappers.h
+include/deprecated_definitions.h
+include/task.h
+include/semphr.h
+include/queue.h
+include/list.h
+include/message_buffer.h
+include/stdint.readme
+include/croutine.h
+LICENSE.md
+croutine.c
+list.c
+event_groups.c
+queue.c
+tasks.c
+stream_buffer.c
+portable/ThirdParty/XCC/Xtensa/xtensa_init.c
+portable/ThirdParty/XCC/Xtensa/xtensa_intr_asm.S
+portable/ThirdParty/XCC/Xtensa/xtensa_config.h
+portable/ThirdParty/XCC/Xtensa/xtensa_context.S
+portable/ThirdParty/XCC/Xtensa/xtensa_vectors.S
+portable/ThirdParty/XCC/Xtensa/portasm.S
+portable/ThirdParty/XCC/Xtensa/porttrace.h
+portable/ThirdParty/XCC/Xtensa/port.c
+portable/ThirdParty/XCC/Xtensa/portclib.c
+portable/ThirdParty/XCC/Xtensa/xtensa_intr.c
+portable/ThirdParty/XCC/Xtensa/xtensa_timer.h
+portable/ThirdParty/XCC/Xtensa/xtensa_rtos.h
+portable/ThirdParty/XCC/Xtensa/portmacro.h
+portable/ThirdParty/XCC/Xtensa/xtensa_api.h
+portable/ThirdParty/XCC/Xtensa/xtensa_overlay_os_hook.c
+portable/ThirdParty/XCC/Xtensa/portbenchmark.h
+portable/ThirdParty/XCC/Xtensa/xtensa_context.h
+portable/ThirdParty/CDK/T-HEAD_CK802/portasm.S
+portable/ThirdParty/CDK/T-HEAD_CK802/port.c
+portable/ThirdParty/CDK/T-HEAD_CK802/portmacro.h
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_init.c
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_intr_asm.S
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_context.S
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_timer.h
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_config.h
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_rtos.h
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_api.h
+portable/ThirdParty/GCC/Xtensa_ESP32/include/portbenchmark.h
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_context.h
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_vectors.S
+portable/ThirdParty/GCC/Xtensa_ESP32/portasm.S
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_intr.c
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_overlay_os_hook.c
+portable/ThirdParty/GCC/ARM_CM33_TFM/os_wrapper_freertos.c
+portable/ThirdParty/GCC/Posix/utils/wait_for_event.h
+portable/ThirdParty/GCC/Posix/utils/wait_for_event.c
+portable/ThirdParty/GCC/Posix/port.c
+portable/ThirdParty/GCC/Posix/portmacro.h
+portable/ThirdParty/GCC/ARC_EM_HS/arc_support.s
+portable/ThirdParty/GCC/ARC_EM_HS/arc_freertos_exceptions.c
+portable/ThirdParty/GCC/ARC_v1/arc_freertos_exceptions.c
+portable/ThirdParty/GCC/ARC_EM_HS/arc_freertos_exceptions.h
+portable/ThirdParty/GCC/ARC_v1/arc_freertos_exceptions.h
+portable/ThirdParty/GCC/ARC_EM_HS/freertos_tls.c
+portable/ThirdParty/GCC/ARC_EM_HS/port.c
+portable/ThirdParty/GCC/ARC_EM_HS/portmacro.h
+portable/ThirdParty/GCC/ARC_v1/arc_support.s
+portable/ThirdParty/GCC/ARC_v1/portmacro.h
+portable/ThirdParty/GCC/ARC_v1/port.c
+portable/ThirdParty/GCC/ATmega/port.c
+portable/ThirdParty/GCC/ATmega/portmacro.h
+portable/IAR/ARM_CRx_No_GIC/portmacro.h
+portable/IAR/ARM_CRx_No_GIC/port.c
+portable/IAR/V850ES/ISR_Support.h
+portable/IAR/V850ES/port.c
+portable/IAR/V850ES/portmacro.h
+portable/IAR/ARM_CM23/non_secure/portasm.h
+portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h
+portable/IAR/ARM_CM33/non_secure/portasm.h
+portable/IAR/ARM_CM23_NTZ/non_secure/portasm.h
+portable/ARMv8M/non_secure/portasm.h
+portable/GCC/ARM_CM23/non_secure/portasm.h
+portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h
+portable/GCC/ARM_CM33/non_secure/portasm.h
+portable/GCC/ARM_CM23_NTZ/non_secure/portasm.h
+portable/IAR/ARM_CM23/non_secure/portasm.s
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM23/portasm.s
+portable/IAR/ARM_CM23/non_secure/portmacro.h
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM23/portmacro.h
+portable/IAR/ARM_CM23/non_secure/port.c
+portable/IAR/ARM_CM33_NTZ/non_secure/port.c
+portable/IAR/ARM_CM33/non_secure/port.c
+portable/IAR/ARM_CM23_NTZ/non_secure/port.c
+portable/GCC/ARM_CM23/non_secure/port.c
+portable/GCC/ARM_CM33_NTZ/non_secure/port.c
+portable/IAR/ARM_CM23/secure/secure_context.h
+portable/IAR/ARM_CM33/secure/secure_context.h
+portable/ARMv8M/secure/context/secure_context.h
+portable/GCC/ARM_CM23/secure/secure_context.h
+portable/GCC/ARM_CM33/secure/secure_context.h
+portable/IAR/ARM_CM23/secure/secure_init.c
+portable/IAR/ARM_CM33/secure/secure_init.c
+portable/ARMv8M/secure/init/secure_init.c
+portable/GCC/ARM_CM23/secure/secure_init.c
+portable/GCC/ARM_CM33/secure/secure_init.c
+portable/IAR/ARM_CM23/secure/secure_context_port_asm.s
+portable/ARMv8M/secure/context/portable/IAR/ARM_CM23/secure_context_port_asm.s
+portable/IAR/ARM_CM23/secure/secure_context.c
+portable/IAR/ARM_CM33/secure/secure_context.c
+portable/ARMv8M/secure/context/secure_context.c
+portable/GCC/ARM_CM23/secure/secure_context.c
+portable/GCC/ARM_CM33/secure/secure_context.c
+portable/IAR/ARM_CM23/secure/secure_heap.h
+portable/IAR/ARM_CM33/secure/secure_heap.h
+portable/ARMv8M/secure/heap/secure_heap.h
+portable/GCC/ARM_CM23/secure/secure_heap.h
+portable/GCC/ARM_CM33/secure/secure_heap.h
+portable/IAR/ARM_CM23/secure/secure_init.h
+portable/IAR/ARM_CM33/secure/secure_init.h
+portable/ARMv8M/secure/init/secure_init.h
+portable/GCC/ARM_CM23/secure/secure_init.h
+portable/GCC/ARM_CM33/secure/secure_init.h
+portable/IAR/ARM_CM23/secure/secure_port_macros.h
+portable/IAR/ARM_CM33/secure/secure_port_macros.h
+portable/ARMv8M/secure/macros/secure_port_macros.h
+portable/GCC/ARM_CM23/secure/secure_port_macros.h
+portable/GCC/ARM_CM33/secure/secure_port_macros.h
+portable/IAR/ARM_CM23/secure/secure_heap.c
+portable/IAR/ARM_CM33/secure/secure_heap.c
+portable/ARMv8M/secure/heap/secure_heap.c
+portable/GCC/ARM_CM23/secure/secure_heap.c
+portable/GCC/ARM_CM33/secure/secure_heap.c
+portable/IAR/MSP430X/portext.s43
+portable/IAR/MSP430X/port.c
+portable/IAR/MSP430X/data_model.h
+portable/IAR/MSP430X/portmacro.h
+portable/IAR/STR91x/ISR_Support.h
+portable/IAR/STR91x/portasm.s79
+portable/IAR/STR91x/port.c
+portable/IAR/STR91x/portmacro.h
+portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ/portasm.s
+portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h
+portable/IAR/ARM_CM33/non_secure/portmacro.h
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ/portmacro.h
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM33/portmacro.h
+portable/IAR/LPC2000/port.c
+portable/IAR/LPC2000/portmacro.h
+portable/IAR/AtmelSAM9XE/port.c
+portable/IAR/AtmelSAM9XE/portmacro.h
+portable/IAR/RX700v3_DPFPU/port.c
+portable/IAR/RX700v3_DPFPU/portmacro.h
+portable/IAR/ARM_CM4F_MPU/portasm.s
+portable/IAR/ARM_CM4F_MPU/port.c
+portable/IAR/ARM_CM4F_MPU/portmacro.h
+portable/IAR/ARM_CM33/non_secure/portasm.s
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM33/portasm.s
+portable/IAR/ARM_CM33/secure/secure_context_port_asm.s
+portable/ARMv8M/secure/context/portable/IAR/ARM_CM33/secure_context_port_asm.s
+portable/IAR/RX600/port_asm.s
+portable/IAR/RX600/port.c
+portable/IAR/RX600/portmacro.h
+portable/IAR/RL78/port.c
+portable/IAR/RL78/portmacro.h
+portable/IAR/RISC-V/port.c
+portable/IAR/RISC-V/portmacro.h
+portable/IAR/RISC-V/chip_specific_extensions/RV32I_CLINT_no_extensions/freertos_risc_v_chip_specific_extensions.h
+portable/IAR/RISC-V/portASM.s
+portable/IAR/ATMega323/port.c
+portable/IAR/ATMega323/portmacro.h
+portable/IAR/ARM_CM0/portasm.s
+portable/IAR/ARM_CM0/port.c
+portable/IAR/ARM_CM0/portmacro.h
+portable/IAR/STR75x/port.c
+portable/IAR/STR75x/portmacro.h
+portable/IAR/ARM_CM7/r0p1/port.c
+portable/IAR/ARM_CM7/r0p1/portasm.s
+portable/IAR/ARM_CM7/r0p1/portmacro.h
+portable/IAR/ARM_CA9/port.c
+portable/IAR/ARM_CA9/portmacro.h
+portable/IAR/RX100/port_asm.s
+portable/IAR/RX100/portmacro.h
+portable/IAR/RX100/port.c
+portable/IAR/ARM_CM23_NTZ/non_secure/portmacro.h
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM23_NTZ/portmacro.h
+portable/IAR/ARM_CM23_NTZ/non_secure/portasm.s
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM23_NTZ/portasm.s
+portable/IAR/78K0R/port.c
+portable/IAR/78K0R/portmacro.h
+portable/IAR/MSP430/portasm.h
+portable/IAR/MSP430/portext.s43
+portable/IAR/MSP430/port.c
+portable/IAR/MSP430/portmacro.h
+portable/IAR/AtmelSAM7S64/port.c
+portable/IAR/AtmelSAM7S64/portmacro.h
+portable/IAR/STR71x/port.c
+portable/IAR/STR71x/portmacro.h
+portable/IAR/AVR_AVRDx/porthardware.h
+portable/IAR/AVR_AVRDx/port.c
+portable/IAR/AVR_AVRDx/portmacro.h
+portable/IAR/AVR_Mega0/portmacro.h
+portable/IAR/ARM_CM3/portasm.s
+portable/IAR/ARM_CM3/port.c
+portable/IAR/ARM_CM3/portmacro.h
+portable/IAR/ARM_CA5_No_GIC/port.c
+portable/IAR/ARM_CA5_No_GIC/portmacro.h
+portable/IAR/ARM_CM4F/portasm.s
+portable/IAR/ARM_CM4F/port.c
+portable/IAR/ARM_CM4F/portmacro.h
+portable/IAR/AVR_Mega0/porthardware.h
+portable/IAR/AVR_Mega0/port.c
+portable/IAR/RXv2/port_asm.s
+portable/IAR/RXv2/port.c
+portable/IAR/RXv2/portmacro.h
+portable/BCC/16BitDOS/Flsh186/prtmacro.h
+portable/BCC/16BitDOS/Flsh186/port.c
+portable/BCC/16BitDOS/PC/prtmacro.h
+portable/BCC/16BitDOS/PC/port.c
+portable/BCC/16BitDOS/common/portasm.h
+portable/BCC/16BitDOS/common/portcomn.c
+portable/RVDS/ARM_CM4_MPU/port.c
+portable/RVDS/ARM_CM4_MPU/portmacro.h
+portable/RVDS/ARM_CM0/port.c
+portable/RVDS/ARM_CM0/portmacro.h
+portable/RVDS/ARM_CM7/r0p1/port.c
+portable/RVDS/ARM_CM7/r0p1/portmacro.h
+portable/RVDS/ARM_CA9/port.c
+portable/RVDS/ARM_CA9/portmacro.h
+portable/RVDS/ARM_CM3/port.c
+portable/RVDS/ARM_CM3/portmacro.h
+portable/RVDS/ARM_CM4F/port.c
+portable/RVDS/ARM_CM4F/portmacro.h
+portable/RVDS/ARM7_LPC21xx/port.c
+portable/RVDS/ARM7_LPC21xx/portmacro.h
+portable/CodeWarrior/ColdFire_V2/portasm.S
+portable/CodeWarrior/ColdFire_V2/port.c
+portable/CodeWarrior/ColdFire_V2/portmacro.h
+portable/CodeWarrior/HCS12/port.c
+portable/CodeWarrior/HCS12/portmacro.h
+portable/CodeWarrior/ColdFire_V1/portasm.S
+portable/CodeWarrior/ColdFire_V1/port.c
+portable/CodeWarrior/ColdFire_V1/portmacro.h
+portable/Rowley/MSP430F449/portasm.h
+portable/Rowley/MSP430F449/portext.asm
+portable/Rowley/MSP430F449/port.c
+portable/Rowley/MSP430F449/portmacro.h
+portable/MSVC-MingW/port.c
+portable/MSVC-MingW/portmacro.h
+portable/MikroC/ARM_CM4F/port.c
+portable/MikroC/ARM_CM4F/portmacro.h
+portable/Paradigm/Tern_EE/small/portasm.h
+portable/Paradigm/Tern_EE/small/port.c
+portable/Paradigm/Tern_EE/small/portmacro.h
+portable/Paradigm/Tern_EE/large_untested/portasm.h
+portable/Paradigm/Tern_EE/large_untested/port.c
+portable/Paradigm/Tern_EE/large_untested/portmacro.h
+portable/Softune/MB91460/port.c
+portable/Softune/MB91460/__STD_LIB_sbrk.c
+portable/Softune/MB96340/__STD_LIB_sbrk.c
+portable/Softune/MB91460/portmacro.h
+portable/Softune/MB96340/port.c
+portable/Softune/MB96340/portmacro.h
+portable/MemMang/heap_4.c
+portable/MemMang/heap_2.c
+portable/MemMang/heap_5.c
+portable/MemMang/heap_3.c
+portable/MemMang/heap_1.c
+portable/MPLAB/PIC32MZ/port_asm.S
+portable/MPLAB/PIC32MZ/ISR_Support.h
+portable/MPLAB/PIC32MZ/port.c
+portable/MPLAB/PIC32MZ/portmacro.h
+portable/MPLAB/PIC18F/port.c
+portable/MPLAB/PIC18F/portmacro.h
+portable/MPLAB/PIC32MX/port_asm.S
+portable/MPLAB/PIC32MX/ISR_Support.h
+portable/MPLAB/PIC32MX/port.c
+portable/MPLAB/PIC32MX/portmacro.h
+portable/MPLAB/PIC24_dsPIC/port.c
+portable/MPLAB/PIC24_dsPIC/portasm_dsPIC.S
+portable/MPLAB/PIC24_dsPIC/portasm_PIC24.S
+portable/MPLAB/PIC24_dsPIC/portmacro.h
+portable/MPLAB/PIC32MEC14xx/port_asm.S
+portable/MPLAB/PIC32MEC14xx/ISR_Support.h
+portable/MPLAB/PIC32MEC14xx/port.c
+portable/MPLAB/PIC32MEC14xx/portmacro.h
+portable/Renesas/RX700v3_DPFPU/port.c
+portable/Renesas/RX700v3_DPFPU/portmacro.h
+portable/Renesas/RX600v2/port.c
+portable/Renesas/RX600v2/portmacro.h
+portable/Renesas/RX600/port.c
+portable/Renesas/RX600/portmacro.h
+portable/Renesas/SH2A_FPU/port.c
+portable/Renesas/SH2A_FPU/portmacro.h
+portable/Renesas/RX100/port.c
+portable/Renesas/RX200/port.c
+portable/Renesas/RX100/portmacro.h
+portable/Renesas/RX200/portmacro.h
+portable/Common/mpu_wrappers.c
+portable/oWatcom/16BitDOS/Flsh186/port.c
+portable/oWatcom/16BitDOS/Flsh186/portmacro.h
+portable/oWatcom/16BitDOS/PC/portmacro.h
+portable/oWatcom/16BitDOS/PC/port.c
+portable/oWatcom/16BitDOS/common/portasm.h
+portable/oWatcom/16BitDOS/common/portcomn.c
+portable/WizC/PIC18/addFreeRTOS.h
+portable/WizC/PIC18/port.c
+portable/WizC/PIC18/portmacro.h
+portable/WizC/PIC18/Drivers/Tick/isrTick.c
+portable/WizC/PIC18/Drivers/Tick/Tick.c
+portable/Tasking/ARM_CM4F/port.c
+portable/Tasking/ARM_CM4F/portmacro.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM23/portasm.c
+portable/GCC/ARM_CM23/non_secure/portasm.c
+portable/ARMv8M/non_secure/port.c
+portable/GCC/ARM_CM33/non_secure/port.c
+portable/GCC/ARM_CM23_NTZ/non_secure/port.c
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM23/portmacro.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM23_NTZ/portmacro.h
+portable/GCC/ARM_CM23/non_secure/portmacro.h
+portable/GCC/ARM_CM23_NTZ/non_secure/portmacro.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ/portasm.c
+portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ/portmacro.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM33/portmacro.h
+portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h
+portable/GCC/ARM_CM33/non_secure/portmacro.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM33/portasm.c
+portable/GCC/ARM_CM33/non_secure/portasm.c
+portable/ARMv8M/copy_files.py
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM23_NTZ/portasm.c
+portable/GCC/ARM_CM23_NTZ/non_secure/portasm.c
+portable/ARMv8M/secure/context/portable/GCC/ARM_CM33/secure_context_port.c
+portable/GCC/ARM_CM33/secure/secure_context_port.c
+portable/ARMv8M/secure/context/portable/GCC/ARM_CM23/secure_context_port.c
+portable/GCC/ARM_CM23/secure/secure_context_port.c
+portable/SDCC/Cygnal/port.c
+portable/SDCC/Cygnal/portmacro.h
+portable/CCS/MSP430X/port.c
+portable/CCS/MSP430X/portmacro.h
+portable/CCS/ARM_Cortex-R4/port.c
+portable/CCS/ARM_Cortex-R4/portmacro.h
+portable/CCS/ARM_CM3/port.c
+portable/CCS/ARM_CM3/portmacro.h
+portable/CCS/ARM_CM4F/port.c
+portable/CCS/ARM_CM4F/portmacro.h
+portable/GCC/ARM_CRx_No_GIC/portASM.S
+portable/GCC/ARM_CRx_No_GIC/port.c
+portable/GCC/ARM_CRx_No_GIC/portmacro.h
+portable/GCC/TriCore_1782/porttrap.c
+portable/GCC/TriCore_1782/port.c
+portable/GCC/TriCore_1782/portmacro.h
+portable/GCC/ARM_CR5/portASM.S
+portable/GCC/ARM_CR5/port.c
+portable/GCC/ARM_CR5/portmacro.h
+portable/GCC/ARM7_LPC23xx/portISR.c
+portable/GCC/ARM7_LPC23xx/port.c
+portable/GCC/ARM7_LPC23xx/portmacro.h
+portable/GCC/ARM_CM4_MPU/port.c
+portable/GCC/ARM_CM4_MPU/portmacro.h
+portable/GCC/ARM7_LPC2000/portISR.c
+portable/GCC/ARM7_LPC2000/port.c
+portable/GCC/ARM7_LPC2000/portmacro.h
+portable/GCC/ARM_CM3_MPU/portmacro.h
+portable/GCC/ARM_CM3_MPU/port.c
+portable/GCC/ColdFire_V2/port.c
+portable/GCC/ColdFire_V2/portasm.S
+portable/GCC/ColdFire_V2/portmacro.h
+portable/GCC/RX700v3_DPFPU/port.c
+portable/GCC/RX700v3_DPFPU/portmacro.h
+portable/GCC/ARM_CA53_64_BIT/port.c
+portable/GCC/ARM_CA53_64_BIT/portASM.S
+portable/GCC/ARM_CA53_64_BIT/portmacro.h
+portable/GCC/RX600v2/port.c
+portable/GCC/MSP430F449/port.c
+portable/GCC/RX600v2/portmacro.h
+portable/GCC/RX600/portmacro.h
+portable/GCC/MSP430F449/portmacro.h
+portable/GCC/RX600/port.c
+portable/GCC/PPC440_Xilinx/portasm.S
+portable/GCC/PPC405_Xilinx/portasm.S
+portable/GCC/PPC440_Xilinx/port.c
+portable/GCC/PPC440_Xilinx/FPU_Macros.h
+portable/GCC/PPC405_Xilinx/FPU_Macros.h
+portable/GCC/RL78/isr_support.h
+portable/GCC/PPC440_Xilinx/portmacro.h
+portable/GCC/PPC405_Xilinx/portmacro.h
+portable/GCC/RL78/portasm.S
+portable/GCC/RL78/port.c
+portable/GCC/RL78/portmacro.h
+portable/GCC/RISC-V/port.c
+portable/GCC/RISC-V/portASM.S
+portable/GCC/RISC-V/portmacro.h
+portable/GCC/RISC-V/chip_specific_extensions/RV32I_CLINT_no_extensions/freertos_risc_v_chip_specific_extensions.h
+portable/GCC/RISC-V/chip_specific_extensions/RISCV_MTIME_CLINT_no_extensions/freertos_risc_v_chip_specific_extensions.h
+portable/GCC/ATMega323/port.c
+portable/GCC/RISC-V/chip_specific_extensions/Pulpino_Vega_RV32M1RM/freertos_risc_v_chip_specific_extensions.h
+portable/GCC/ATMega323/portmacro.h
+portable/GCC/ARM_CM0/port.c
+portable/GCC/STR75x/portISR.c
+portable/GCC/ARM_CM0/portmacro.h
+portable/GCC/STR75x/port.c
+portable/GCC/STR75x/portmacro.h
+portable/GCC/ARM7_AT91FR40008/portISR.c
+portable/GCC/ARM7_AT91FR40008/port.c
+portable/GCC/ARM7_AT91FR40008/portmacro.h
+portable/GCC/ARM_CM7/r0p1/port.c
+portable/GCC/HCS12/port.c
+portable/GCC/ARM_CM7/r0p1/portmacro.h
+portable/GCC/HCS12/portmacro.h
+portable/GCC/ARM_CA9/portASM.S
+portable/GCC/ARM_CA9/portmacro.h
+portable/GCC/ARM_CA9/port.c
+portable/GCC/RX100/port.c
+portable/GCC/PPC405_Xilinx/port.c
+portable/GCC/RX100/portmacro.h
+portable/GCC/CORTUS_APS3/port.c
+portable/GCC/CORTUS_APS3/portmacro.h
+portable/GCC/RX200/port.c
+portable/GCC/RX200/portmacro.h
+portable/GCC/ARM7_AT91SAM7S/portISR.c
+portable/GCC/ARM7_AT91SAM7S/port.c
+portable/GCC/ARM7_AT91SAM7S/portmacro.h
+portable/GCC/H8S2329/port.c
+portable/GCC/H8S2329/portmacro.h
+portable/GCC/MicroBlazeV9/port_exceptions.c
+portable/GCC/MicroBlazeV8/port_exceptions.c
+portable/GCC/MicroBlazeV9/port.c
+portable/GCC/MicroBlazeV9/portasm.S
+portable/GCC/MicroBlazeV8/portasm.S
+portable/GCC/MicroBlazeV9/portmacro.h
+portable/GCC/MicroBlazeV8/portmacro.h
+portable/GCC/MicroBlazeV8/port.c
+portable/GCC/ARM_CA53_64_BIT_SRE/portASM.S
+portable/GCC/ARM_CA53_64_BIT_SRE/port.c
+portable/GCC/ARM_CA53_64_BIT_SRE/portmacro.h
+portable/GCC/ARM_CM3/port.c
+portable/GCC/ARM_CM4F/port.c
+portable/GCC/ARM_CM3/portmacro.h
+portable/GCC/ARM_CM4F/portmacro.h
+portable/GCC/IA32_flat/portASM.S
+portable/GCC/IA32_flat/ISR_Support.h
+portable/GCC/IA32_flat/portmacro.h
+portable/GCC/IA32_flat/port.c
+portable/GCC/NiosII/port_asm.S
+portable/GCC/NiosII/port.c
+portable/GCC/NiosII/portmacro.h
+portable/GCC/MicroBlaze/portasm.s
+portable/GCC/MicroBlaze/port.c
+portable/GCC/MicroBlaze/portmacro.h
+]]></Files>
+    <FileHash><![CDATA[417c5974482a4865ac50b94370021db3a4000ad9
+0b50ceb147a853e095d8b796fb5ba149d3c0e212
+c6ad1e17920a6d8ab6f35ce422a1e971218c96a9
+1ff4dab13baffeb97b158c13c674a74fbef9f3c0
+158ccc95a99e5dd8b3cc06cd12ab82db6602027b
+158ccc95a99e5dd8b3cc06cd12ab82db6602027b
+158ccc95a99e5dd8b3cc06cd12ab82db6602027b
+158ccc95a99e5dd8b3cc06cd12ab82db6602027b
+49714e58d5140caccb37218ed8c1fea6e79eaac7
+29e627e63c6308e1555f0cf73fd31c3aab825959
+5e3603ea01903a9a6adc81f1f185caf0afd99dd9
+5ccd0d62dca3c25e8c8fe59eba048f110af6727d
+6ce5adaf983ae4f0406db14fa7f07606844435d1
+6ae20d6479c933a279c59e129cea93a9067336d9
+de54215b7ee9f45b3e8ad13be4620a0d03355709
+914f9f9d0c4171d0b197bee62a09c6aa48d1cd94
+3e90f77e45078ca2f05bac67f72d1138abf065d3
+0c81c005aa08f422c6d51843c19c481c7ad54f0d
+90845f8f11eb98be488ad711af6aebf3104e1362
+f605519ef55353fdbd2b85d995266ad4437aea79
+ff1be2baebd586b17de9765ee7df03c2e6bf3bf3
+9cc7934f33b38d2efa4cafd32d0caf59ad78903d
+8fdd888539117dfd7adf8fb9da32969f7b8d064a
+f80e1b9802e32e39ad4afef71df2bc395cb14eff
+a0702808f84315bbff7e6535f79c39eb86751cbf
+1c975d4e2f61bf8cb068666e50bb9a28a9c4a424
+959b3a428756e045706ed87174012110d1601422
+ba67764f115c3fcd22b79b31fb146a126962fdfa
+f0f9f93643fa8b82f3a0216ce0a01069187ff33d
+b1ed5936898c1e3406381bbf16316c7fc2e8e638
+dd111b829e97984d3f2a2481e335548ad3a3e2f3
+eb2a776d8add44028f8a322d29b8b3d79edbf902
+cf0da74a72482363ac9da13fb96aec937aefd0a6
+eb2a776d8add44028f8a322d29b8b3d79edbf902
+eb2a776d8add44028f8a322d29b8b3d79edbf902
+ac5af40f4c539ef7805519671b92f4ca8cd22d5c
+9e89cf76005519b9b882c9f29b2782fcc7ea23a3
+87f008d0896c3e440d328cd6437a09c65c87a9c4
+aae22a30670b55555c1dde2941da341c7f7e82e3
+f0a4e648818f357054d401e408249cef6fd54e3f
+f1fbb5f4f4e1c45ea8c47c653b2a93d68e1f5ded
+3de7ab8783d9a3eee62d44d6d3156533ec184a2c
+f114cc5a0c74c5cd33c00441ae423ac7ed172f65
+197387cc5f535a9a12321696ff51d3c3204854fb
+09be3efdfa9837ace5007f1adc9c01f4a8c41bd9
+3547761ff48de774b767ce3ae21c84d1583ca84c
+fe3c5beb26d50797be1973cfeaa97860162edbf1
+3e625335f835e8574f37c6188761a92e833badc5
+e3b0084c309a131ee5ddf1471238502e7c539b6b
+4ef6508705668dff5054f32cc0e1de0b00176bb8
+d4e020e19efd4c5954f66d86eef74bc16719a5a3
+6a5c9d9a63d5ff0caf402dea536f1320ab4d44a9
+7554f5412e52d7f11f7118012b1488565990bceb
+40aec266995d82a246ac0939d80bf5cb0e59f284
+fb36ca1e7d4c72ebc3bff94021f7076ba50cc8d8
+6256cbdd982dcefbc111718994f619c6732f3036
+4c9cf149508e0ae8e33d4251641cd3771d374a25
+399ccf82f6eb6bb70302db6fb72b81b822d3c391
+a336bde4d96bb46bd8eda0edb1bf01928b09e7da
+d796abc26db0fbd69cb16dcf44c38ab15d16d9ba
+331f54d93d4eb82c080c12206a0ebd138b5878a4
+47469a5fe8375cf319aba7aa1e71d126c93ee00e
+c39a9c7bd4f4b6dc483fb35111d4097d9cf233b9
+61c8af1be5c4aa9ffcd4530df167c3ee7bd4d70f
+dc8f199885e12397a0eb8437374c11c62aaa6c4f
+eeff8ef18494d711ff1acba026797723cc81b3e1
+b9dc3fe51fcfe8d5178b3d309b778605ca0d734c
+7ee956df0faed5ae576099125d9bb15247d24d4d
+9b0395545429d4238a332caec2d03717ccfe34b8
+b8e17af2d42f57d3fb0ddca8cb21b56bb12c7a0c
+a52ef5f8d01f50aae52640efe430e0d5f14b4ccf
+7500c802b5755c4701967d2921af04269d679bc2
+7847baf88d0bb040954b1d26dcbc487de26bba3d
+7609febef4f222ae7b3d3f8c37a0567101ab8479
+e1335d10f8e6a621f0a52953492c4e6ad09d2d87
+fbdce7d8b7b6a46d8cb743ff9268665c6f05364a
+6edf215c7f5a793238e9ee9b31cb4368aef1f951
+41bc64e10149b0d37759af629da36bd9d186cd80
+af1976b0979e598a0f1b8097c6be7211550e4294
+e7e9e01146a6113db0228651b73cf2bd1e405949
+b7478f10d47ec62f6f02353a7694a8fd299cacee
+218fc8c15534e8840cbff5801582c450c97869ab
+654567c314f6880372f5ebbbf5e5834931e1166b
+707c25dd3112b4e2c88aba0b5d5c579d9a4f99d3
+10d9f1c66492017bbd791086569b2766f4bcffd4
+7720bc403c1ec5aeda2c245511830d86b8c9e1e3
+e7fa1ce5e4023f8381eb71401186a8d67dcfc7df
+c9bd9d053734c336da4505a1ea28ce736bce6961
+d5498503369a0c6621cba2407ba87b98d141f010
+d1257498eaa45eb3aba7d53acf3c907165c67349
+cb19965fbe038e1fa13352e0a5d9d74c6b533b7d
+5fdf5262a604b27689812f29d0d54ccc72043610
+e282ec3ce34016394713b85f6821c994ff87ec2f
+45f9331590a7d4765b8f083d7d9031296c919d29
+6ed23bdab96f6dd539d064b5523d7d3c08f1c98a
+e876906b8eae247c0878927124929dd78b442df4
+cd123a68fbf5824b04bc73dec89f3f5419a8af33
+9d1f8793fe7cbe833d14ddd28a97b85eeb2dac93
+b1e2f33daa2f7e67b8f3a0757edb362dfb123819
+282f33842a8abc7cd2cb1636d6a8839371b9a1a9
+1390878f790a7ff121ad1693a5dfe251c7731b40
+f8605d3e68eb51e576ec308508dbd97aebf1259a
+46961feaba2b2ca24557f18594eb7ffd46f8e418
+18a696b616d85c910d62218738f842cfa46dfeaa
+a215447ab1728a7739537dadc38820f2e80bd803
+fe387316be8be416e1261b5ac7bb8784ee4c5ccc
+7f58981ec9cd97ae40bd50098f122133b96d8494
+60dd9995c300cf47762247d598dd32e425c17c70
+14a39f336236d2a63cab5b9e0685ca0b5f307acc
+a2a113c5e6da60a50aabc982a2ffdefe1cd361ec
+fc129de65804bdfbb86b6375db60d54a563df6ce
+fe6358537d61c3e7081c548635ebe865ae2baea6
+cc2196c5296e5cb443a8c51059a6d74b8f9625cb
+2cade55b1532539270664a6501ed561508d5c1e1
+be70a8375d0bf172b353dee4fcd975715663e46a
+b76c29d9fba627fde7ac713290f1b1ba9ee43dd6
+ff0fdaeef54ca67bdd9b6ad2b2fa5c49a9a0ae42
+90cf2d9944697abc279fb9e348c49c4871dc6ea3
+3d190f83cd42644676398b5d0372ff2b86e33efd
+4861a7120813076590ac345d402f97a48e9dd990
+d6262e0efb425931d200e6893b3247fe16bdf5e6
+a1420f4f796a50fc3173a7a1600e7b1f43fbf809
+42c08496434ca5d6075da5d753242e06cccfee93
+f687e56dd5b05742a74ad6b9643d67d1e0076381
+e5a412c790742f63585af1f9b05ee26358f00de4
+a288d5344dcf695e791dfad49f3e712c301d5d04
+51935df077d959e90b0226abc55172ce1ad29faf
+91d84ccbf6dcfb6dd9902c59e952df8b7efd4c0f
+91d84ccbf6dcfb6dd9902c59e952df8b7efd4c0f
+aa93b521811a957c2712331ca8abc4bf47f69b21
+aa93b521811a957c2712331ca8abc4bf47f69b21
+d53543c9aade91522611d1a7f0371af5d8df72ea
+a3e19918e5f8400fd0d1386caf0ba4d5b78691d8
+468d4afec6618f228f46f47499eac5bba67f5ae6
+398829031613a0ab0a676903edc3a84b9de210a6
+c6597ce05ea82b8c197108c27f022b66037af4fe
+cbb68dcd268e8792709ee286909b9578821fb86f
+f83fa6cbc938bbc820d8539e4bda0e4e25e9906b
+2b960250047c98c79c348b49cb2eb32b085a89fd
+c7811834a6e25c54632d9871059538565bdccb00
+6e2ebb5e8891a5a8c2a4424429bc0b1e51732656
+cb32f5a642b1d91025b443680581e99f11fa83be
+1d153aad04a27abc687f8874d8081cce037768eb
+9c83e2d33c8dce8d2d7c025a96cae7c08dfffdd9
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+f3f99d2ddeaf52baf4a7c21c5500481b2542fa0b
+f3f99d2ddeaf52baf4a7c21c5500481b2542fa0b
+b9c2fc3122fa06233fef2ce67ccfc2f9fc922c2c
+b9c2fc3122fa06233fef2ce67ccfc2f9fc922c2c
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+9721a951e5d82e143e9b46efce11b4a1409531ee
+9721a951e5d82e143e9b46efce11b4a1409531ee
+9721a951e5d82e143e9b46efce11b4a1409531ee
+9721a951e5d82e143e9b46efce11b4a1409531ee
+9721a951e5d82e143e9b46efce11b4a1409531ee
+47d53dea7445eddd11d0100d968c3db7b0804228
+47d53dea7445eddd11d0100d968c3db7b0804228
+47d53dea7445eddd11d0100d968c3db7b0804228
+47d53dea7445eddd11d0100d968c3db7b0804228
+47d53dea7445eddd11d0100d968c3db7b0804228
+8bf57543900f37d8aac5bed90ec27b2ae631a5c3
+8bf57543900f37d8aac5bed90ec27b2ae631a5c3
+701af269bdfbdedb728d4beb729d1d0fbaf04d54
+701af269bdfbdedb728d4beb729d1d0fbaf04d54
+701af269bdfbdedb728d4beb729d1d0fbaf04d54
+701af269bdfbdedb728d4beb729d1d0fbaf04d54
+701af269bdfbdedb728d4beb729d1d0fbaf04d54
+aec19c9b04b3c176b7459cd674ab942519e4c6cf
+aec19c9b04b3c176b7459cd674ab942519e4c6cf
+aec19c9b04b3c176b7459cd674ab942519e4c6cf
+aec19c9b04b3c176b7459cd674ab942519e4c6cf
+aec19c9b04b3c176b7459cd674ab942519e4c6cf
+542fd2c67ece6e49e207b59da937a614776c9a7c
+542fd2c67ece6e49e207b59da937a614776c9a7c
+542fd2c67ece6e49e207b59da937a614776c9a7c
+542fd2c67ece6e49e207b59da937a614776c9a7c
+542fd2c67ece6e49e207b59da937a614776c9a7c
+15ce8597660b8d653f69ac7e26f2e217311c879f
+15ce8597660b8d653f69ac7e26f2e217311c879f
+15ce8597660b8d653f69ac7e26f2e217311c879f
+15ce8597660b8d653f69ac7e26f2e217311c879f
+15ce8597660b8d653f69ac7e26f2e217311c879f
+5139707b55cac21a6bf71671e0e84917cbfbdbfb
+5139707b55cac21a6bf71671e0e84917cbfbdbfb
+5139707b55cac21a6bf71671e0e84917cbfbdbfb
+5139707b55cac21a6bf71671e0e84917cbfbdbfb
+5139707b55cac21a6bf71671e0e84917cbfbdbfb
+4d6d9aa2a09122782becf4a167c121872b1f66fb
+45daf8c0dfe50fcdfae301dd87d20578b6e67241
+d0c4bf5629b6b9ecc725baf8d0041b7b04a926db
+076424be63302c6bac6aca62c9df8fabb7fed4a3
+774dee7c49dc9610a25914c926ba827a4e7c603d
+3665bde4961ef321d8b2af7e45e94266648f2d0e
+e18cae086b74a2cf925ac5c98d93a1fa4e330235
+9b7f0c41644b808045beb9a14ccec38336682d7d
+092954652cc71e3b1f5820df9fd16a46c8c000d9
+092954652cc71e3b1f5820df9fd16a46c8c000d9
+174735428d7cd8a8ff3f43d319f5d91deda638b1
+174735428d7cd8a8ff3f43d319f5d91deda638b1
+174735428d7cd8a8ff3f43d319f5d91deda638b1
+174735428d7cd8a8ff3f43d319f5d91deda638b1
+ed330c67a7af35a16f5219b62403e28762a89e24
+772b2f47a84760d235beb4b132c4ceb97e0bee30
+9f625e3311dcbbf169b6ded84541117ba37d36c8
+310e9d02fbd3062de2153cb02acac000de371288
+330c640f45eeee82ff762e46a0327cd91efdd60e
+94183e33f4c83be46e542680e4000a52e1c50e46
+7a87998258c20305e7efce6d6207532b1c5ce202
+ffddbc14fe9f3f1c1b1bfb02cf108b279ba0ee92
+99e0f7773b2a2f95e1cc5a08977f0070ea3e486f
+fe8497688a1675f5af9a0a9bc823e15907167e0e
+fe8497688a1675f5af9a0a9bc823e15907167e0e
+45fc2bcd347e290a8131f3432530a0ab87ed9043
+45fc2bcd347e290a8131f3432530a0ab87ed9043
+0ce249130fe72d941761ab15fe8dafc6a5d90681
+f76d39b4b1dbc6d40c827de9524b65628b00b8b6
+8dbc36f911196c11ed814de002a2b4901dfc9c3c
+3753d5c30b4c2854ef3e70c2fcef12546c572e2e
+cdd3015eb13f8f028b127ff88e8e5ba02432749c
+4d14d89fbf2b4c1fb8d3f9bbe3c9aee5f17e7bd8
+a9e80059fec0f17849cb1971b53f7ea05d563938
+aa5040bc6608060eface5cd64c74db9cdba1a4a5
+3526910b966b45cf98b0d13c0e7745cd2f74eaca
+2433a22d650398151aef30a578b535675dca577d
+493ad6ed13f6531a86d883b3cecb158b76cf6d79
+8ff5d52db4dab704f92bb276ba221408c0eb2c00
+0f3183e4728bb6ab621265c3874e07baac69c009
+193140d696e1cf4fae08023ae25ab1d70f6f74dc
+97878fcc0279284cba9da75ae7f3e535ce0b5396
+d7651ed570ddf736b725efb70e966d63bee30ab0
+2f3f0d4a2535521ce1f53a27a0aa60284b1ae2be
+631b053e90ac4a08702c83baf09f6a2777e2d768
+875adf6465856fbb75caaeededf0155aed39fac4
+a4c468d4322b64dab1a4f78cdd478e8744c1993a
+01ca50f4f44f20bc14e0b31e0db09e757135e406
+ca18d55b185aec7e2980be66bb8d241512e45c1b
+cfe8745ee777c772791675fa637df44ffdfb7c0f
+b4cc3793fdffd5d18aa0542a80f325e1ff0d8a92
+5742720d98e2fa58999656b9ef98fda7dade5b9f
+5742720d98e2fa58999656b9ef98fda7dade5b9f
+0687630205752fc33c9ed21cec4cad8245f075fc
+0687630205752fc33c9ed21cec4cad8245f075fc
+91c826844a0dac8a41a64adebbe9d8dd4eb912e6
+b82ed612b6b8c78ebd2ae51176e98104282ef3fd
+fb4dc2fe7a9ef21c0e7a1eed49b976adc97e9247
+f78a2326dff88f3268c2e00c3c0498b4c049b6c7
+2213665b42361698f9452235a94634f70ce69f24
+09ff6cdaa7ed41f9f780a60b9930f412698e1622
+397980e11696ffeab4717b89304d542244aae8a0
+4759368a60c51cdef1b69e857a263c2c99adfbe3
+a15b4bf8ab1933df4552a8db8652ae90cb8e2480
+193834c9335f34c3e48e0192e5e7e1b5c885b33e
+e8ef169c14adcd33a3aeb0242fcbf9e3884aec51
+2feede8a24ac4fbaaca6b7fe49a4ecc5ddf37fc0
+4da980515ba7d1cff0f91de61bba9dbfde733363
+4da980515ba7d1cff0f91de61bba9dbfde733363
+ae45454a9831b8d1e6a762fe17258a2f204206d3
+ebaa3219a4068712517b2698df5cd0079cbb5df3
+5dddbaf624d690efe4e4677cec635e708cf73484
+a344799c8aa61c4092d2b0c3516b7a950ee944b3
+c3c1c190875ec5bbe3426dec371e97b8e5b56d71
+a966c55fcc645c0e700f4bd70d13590888f00ea9
+2deec04a775adfb944c6ecbb2f59289aba1ba4bb
+81eb68d8b085cfeefa11902df8e4658b9cf97e41
+6d219801987d5bfac14e6bb4a723dd604ffb85bd
+79ea76ca3e66f23dee016c80120898295416f6c2
+10dd53d50a9781a38c3d47246946d89c5795efdf
+660b61cd06dbce4c6380cfa2987fbe29c3b0f915
+112ea302989a3e9d559f172b8142cede46872e02
+5a0a2da6b8554c9ddcf2dab3589008d724fad3c3
+1d3f2d27de6b8d794aa9394a51f5ff510a7e39df
+382ec4dd1560b48da5aa9ae44825b858b84a1f89
+bc0a70310f93f9d19a1d75163ba21bb575e693ef
+360ed62d3398186f8d753e425a49a34d2326d8c9
+a573d96c2a27d1788ce609e3600a0cc6226e395d
+cd663bcfd76e4aee089758c7bb3570c657a18861
+11dff07528d08498976eeeda64c5d7731025d16e
+c1bb62bf775785b8574de01c877de0b99cca8d71
+bcdde59223eb0b1726858af39855140bec9fcbe0
+36e276d215b3eddcfd5ee603c7dc4e887795ca1a
+c9ecc735098e59571f02f1416147cacab0b9814e
+8533c640a4f1eac040c3da2f78bc5d1c8d52bc3c
+8517b33e80b53b46a2b70ddc1b22fcdd4ad6c18c
+6a565aaa9cff08756b002fa8297a7aaf76124362
+31f0f58b6945bb12a55538a557d86d23a5490086
+2e3b044b7a7011b82f1c97488a05677b6804e5cf
+950a1839e31533264d3232d232823483f397819d
+f4d7f1b645866e0fc2ba6eb5a10cb99c91f8c64c
+b2bc57654852fa6aba35f63d9e88afb4d0c2a902
+255761b55d1332ac79bff3b3c63024f4e2c0dcad
+35c89d811c1f5ff1c3a78856ad236a0f631f4e8e
+c6d580ba4cff3d4cde2a076ad514575b94a8e046
+759d4850916c23acbc473c443e7fe57e29c7c483
+00d7cba587d05eb0efa07171f9218039b66e311d
+60fe0fae16092e3627b60b8d0e91f1614f27e015
+fc8753381f33bd1ce35cb972b07ba75bce16f117
+9a0918612ba5074e8116acc9b52937d8b18d8eba
+c0636aa79232df1e773802a8524eda00c3350458
+bbdd4e28f2eff7f39fcc3e164c343192fb9cfb79
+91b9d24fd14e9f82965efabf7f0fd35f3c59eec3
+caa36d23b87f8fb0a37b071f0d2b7c1006540f2b
+1d4eb3207222eee9aadedfc7cc717c9f98f71d62
+252b67663e2dc0e9fb69cfb00e080505cf76a5fd
+dcb5860e07a6f403d681ed5d64120266f181aee3
+31626f3b0758614694a572b3d81b1d1cfcfc28e9
+b6245c3cb642bdc7b2bc366910386628c8896cbd
+93a41c377921b2427b17ac696385495d2b455838
+052da50f0d5e98e4d9a43326348b5e86c59b53da
+1c4a0e11eb7b0cc004d941f0f981b666a2f80c55
+449f016e22d8c41111eb248c211008dfb2f79d96
+f7c7f20b62838cd23af82b6b4a106e3a575323e9
+04d8bfe2715a051a8463b55d4bd2f0623fa02175
+ed4ae8ad4bb4b327f4f6bfe5bfacb2fc36192a00
+ed4ae8ad4bb4b327f4f6bfe5bfacb2fc36192a00
+ccdbf38145b4b12d7fb0b50bd66dc78b4e90c874
+f66677b8acf30ac56ec3371a1f146a1f4855599e
+966cde887add206a6fc54c0c96abc2ba36f1ae3e
+0a78ac62b35a10247278c3ecb5c4d11d2e3f4461
+18f3ad0f5fc884448c3fc06c99c71396ff134e22
+33651477682b760a710cbc8d1ea47d7f87ccba41
+46726030eb2ad0417e50a5de0d57c1b7a7187a33
+3ce2917a05257640a54133046f516c6b983db249
+7b2b234c2135d9d2f28b81e4bcb509df1885b419
+52f71e730208d21f5f7304b5dff40dfc92284d3a
+b70830e40e72b2fe3a094a446050844c8ed9e74a
+ded583345d1d9956aa82fab476f266354f316362
+ad9f183c4a0c148050e2668915a3425651b40145
+96a23ae72c22be79160f770aee68fbada35cc3b6
+b67886d773b2bb100b56506df1c4c3036b489ffa
+f210bf0acb843b172d509e7f5f382a54c8094d22
+36ba700536a026499dc3ee3110a7285d474b46d8
+04ffae987f4a89909a2c1c4baa0502f4c13c11a8
+b0fee897209f64f104dfbd789f23df73d34b48f2
+06a18dd6e562655d32fed6845860bad238c0da34
+07f53d215ba940dafa5320a9e49637f9818091ef
+c57c4391967cc1457c5bb4fdd5e2b8fef4449f61
+be9e256b79501a36e32de6640db38c4318b87c31
+9980b3523ac3f5d0785643922d19d2113e504e95
+0a4e79ec4451d6d47639350225c655eb2f48f021
+6546724a890c72042213997bd76cfc8845866a50
+222d595bc65e87b49c8ad2700f46b10d9b9ad082
+72325058043d21acafd8cd45da8abf13f6631569
+0010de7c62d76f1fbca221cc0d68c1bec1bfe4fc
+53d9f4067c71c22d933adc40c654bc958be025e2
+4d9e47423c6f2e7ca7703646d08c8700c966f41a
+cc28b217c6b640356fdf6754b2b7edcff8d9d921
+0fc3edfe65eee47149a5a7f23c697d384e2815cf
+15b58dd023c95157a8e92fefc4ee838dac2b5ce7
+6678088f91df694163663ce9b8bcfb6678ec7be4
+9b9395984dd837a84accf0d8e534da44c283cea0
+76a65dfa6d4a1a689a813f667a9b26236e0c1141
+5a77ae7be72bc7ec533347bd38aaba04a0493298
+72af51604cc14597e8f0a0d6b9a73192f8ae319e
+614027e7f1970b736cfef25debfc60f53ae9f983
+4a9ee12ae5b07a25e9d6f670f3501b5b9a24dc76
+c4760622127c0f139ff10d06e615ef19369f00c6
+789e922ea38b05879cabb479d9871c02467c25a5
+c6f79d0c25f15d2d27419b34cffbc3dca0b6456c
+24070469b4242b321b6fb59175d3b359ea4ae9d1
+24e72ecac9b5766f409045c6b56df710e439b240
+57a35389413bc38ce66f177fa4691da6102770e4
+a8947d5f1c3ab6f66418edac01bcc273f920f873
+5ab49820fe14549d1b16c43ce61a8d68f364b368
+206398de42fe559a0043bff4b7c6cab9eab11109
+cfe21397f8907fda4c40f24d127e540a7b43e481
+22f4ecb8f593cd293151a62450f1cddb79cd240f
+c4900b11c01ea9be022d98677e9a84e60cee42c4
+c4900b11c01ea9be022d98677e9a84e60cee42c4
+19e589fee7ed58843bc8e79d74fa792ace299730
+19e589fee7ed58843bc8e79d74fa792ace299730
+19e589fee7ed58843bc8e79d74fa792ace299730
+baf753502ed66e2b6d081bb736e3b02ff35abbd8
+baf753502ed66e2b6d081bb736e3b02ff35abbd8
+baf753502ed66e2b6d081bb736e3b02ff35abbd8
+baf753502ed66e2b6d081bb736e3b02ff35abbd8
+4777911aa142b5ae38487f583a0690ca0a67fc10
+4777911aa142b5ae38487f583a0690ca0a67fc10
+06d62db0dd7fbad7684be465fa672e583bc9ac8b
+06d62db0dd7fbad7684be465fa672e583bc9ac8b
+06d62db0dd7fbad7684be465fa672e583bc9ac8b
+06d62db0dd7fbad7684be465fa672e583bc9ac8b
+0b790496998948fa2a4e5e08f6841a44716cd71d
+0b790496998948fa2a4e5e08f6841a44716cd71d
+064bd5fe87f216e2655567c43b9cc5bc70171107
+9b2cbc8779470a03f97f5e1a06dae9f4b34a3eac
+9b2cbc8779470a03f97f5e1a06dae9f4b34a3eac
+db376c3710476cb00fa0ae82f3a161e8f5a1526a
+db376c3710476cb00fa0ae82f3a161e8f5a1526a
+da4f6b14ed8eeb9da4a31d1b3d8809f4af5b1c3e
+da4f6b14ed8eeb9da4a31d1b3d8809f4af5b1c3e
+7cfd961eb92593c9dbad5eff56a3f1b19d3ae4e7
+541c42a521c57a8649654acec5833adaee3e1776
+41272c9b7baf7feaa8acd643e8a66b5596670f09
+cd4558d12d864336577d7a822068af253d388486
+9b8c7cb85155d86e0112a9485d486bc55a10c6c5
+f5e12b290c027997ae4385d3c27353d3c55fee1d
+52c6c8aac2157c8798ab03c676f7e2d15fe2648b
+9779b6171c6393d9a52442e5d7dc00cd0a362003
+3bd2e794e821f7826b1cae666bdf761c031b69aa
+ace0d3228e670a3537a564fbc673cd8a1f4b27e0
+2959b18015bca8ef08ff5ac16cc4a9ad6f9f5323
+4a835d615e6d16a0309c4d7fc81ce854dde80700
+b4b861c2b082b4530a641173545d427a3a250bca
+8b6bf5b14b268563bbe654445943d4f396295795
+de53d15c944766585fc54013b1882d2450059310
+19b4e357e4c53a554c33500c70b4425a1d2cf5b6
+fbceef43cc5fa41f5259bfe8adcd98ba5e879035
+90b08aa4d200c2fbd57d9073443b02c10f50e78b
+7d8a38a142e49ce6222468001b74dd63098dba8e
+af760335188958770ff45857696484b61769cff5
+d9b0c157491d9437e9d0e4eca834e9fef0e7c28f
+8f45b548ee010aa70710c9f59febbd1594fc6cd0
+a7ffe5c76baaefc445ff6d4dfee16bf09f83fdd1
+1b95477aacba428601dc68c677c6f3797cecb50b
+eda90e3616926e59b3eb1e7899d8f3a1a1956cc1
+702905a69f5df289d25f77be0ce24677788f189d
+e526a6f0ad5ebbcfd08922afbb9fcc234de4c780
+b3690f5b944b8cc2c4251481e9e465ab4541232a
+89648d616208904d3cd61a8438348f142803cab2
+9ca2e043e908f66a3cdf29cec03080d2148c6850
+397e5348b3d2d8ba111bc1bf1c4089134f89c129
+a9dc6e07092e0549f80c839a7007e1f79e3066d0
+6acaccdc0c98393f96b0ffa2532612593d143ffa
+4ae0b22bd7314a8285c60c68ffed192a5281d273
+5f372b6e52df5a03b511355ee07920602a37e24a
+fd362061554139b7de80cd8c6479ac92216b3c7c
+7a91fb8172b5fcbfea57fdddbff9922a861fb637
+ec31df8d0e1baa15b57f5411b7429cffaaf4d22a
+511f01dcbba064ecc2722419edbcd190259e8ddd
+e22ea2173711ba733f12758a09d1a7d0ae87cdb9
+e22ea2173711ba733f12758a09d1a7d0ae87cdb9
+bc0f260e65218fc4aa86bdc04cf00933d0132d44
+63cd92285c57b1b269b3695fd10544f9c40ca2db
+1ad331ce8f512b4982df9799987a797b3160cd33
+1ad331ce8f512b4982df9799987a797b3160cd33
+57b7eef59cfc2024171e79d3792dadb9cfa6d30a
+01158cd973a5f910656f1777760b6a4e5cfa812b
+01158cd973a5f910656f1777760b6a4e5cfa812b
+0b35c78521555deed12239bd581290f88a068fba
+51064ff390de968600c69b97bd9a590d59c6f52d
+51064ff390de968600c69b97bd9a590d59c6f52d
+37a9a66229b5f74c3df207cd52e0c9504cef5ddf
+393d7b0c5f4ee027ad80e1da12bee6f463069ba3
+f59c10e10d70985ce3f0d4af229c66755e658833
+e92b94a64fdb8af10655f50afda1d5235a15d690
+c1bdc4631b7b47a02baeff9b7924338c5bc4b1a0
+2a30ee0d01a2a5a5e5892a46ab87d1f0d6375930
+54c0056a035d702006c5f1621b4908c27031044a
+07c1c7c54a241667b844e184cb977342437d7789
+cc755dc1107805f7ee61d8d76201890fd06c46b2
+2d8ff6f2efc19c251355c01bbc096ab5171424ee
+c41bf2ec8ce52164042a913ea547e440b8bafec0
+0b524d1785ac3c3c16cde0d1e2c4182cb6d6903f
+e1a5711ff30c127f60d4ab4ed469fef903fcbb9f
+8c034b80e54103f602bc28ba06a733c96ede12c8
+c7f3b004621cc4d8606d9ea2905d64035454ab8b
+5d65b4a7b06df6e2ac47b2ab7ef50059338528a7
+61b10254867255d4f86e16db09092a0aa606e774
+b91e428262e4fcf2af4af7068f2db400712424ed
+2683cf1213ca71cd20cd0fe618d24baa0fc18167
+f82e881d36a6d467e3a316b7ea5be029701ffb38
+7cbb778e782000b3f782b6b5569ce7b5a66b026a
+d65d9047e3a555f5a6a5af275dd7faff2105dd30
+3025bf6be248345cf626e2ffc2df4f85f8ad5fc1
+4e495026c828aa6b863edfa940b47855314cdc54
+0cf905c083f2fb3009b56fea123edc790dddbac2
+53dd3e4d304e9334d552e67df5ab5a8ff9e4e261
+04f832689c9a8dc8bc3e252aa8f16d7629a9ab0b
+8b362c9337c89d8ceb453da435749e3ab3e2d9d0
+7dfc0733aa20c6eb773493af273620ee35c8bb52
+3e7633921d399a7ebb8b5ce533162c8274c34036
+fe165a92cf04c91991be86b206462f2a14ad7196
+7c06e20c5d178a3d37e22830babee278f714d6b8
+11f799eea7323dc446b79fd53ce99c34f6a6a41b
+9ea976bb1b74045de90c983173604fa019a942ce
+ee6029bf693615751dab984f7301b10c2bca0617
+2b7e144357f2e4d9dcfd2bcdcd54075b4bbe0272
+b3595623ff9da378779723d930d57b64fc0e58d6
+4abe50848c45f67aa6c2366afbae9aaca8a67646
+6226ed1b8d3b66e068edb7792b8cc3d92453e13b
+6226ed1b8d3b66e068edb7792b8cc3d92453e13b
+6ffa183075892d23160d6a3518a405554d84bc9f
+15d0ebc34f2474084d21971447856333a0680c61
+15d0ebc34f2474084d21971447856333a0680c61
+f88a269d8eef44136fb16175fb00036e6eafb1d5
+f88a269d8eef44136fb16175fb00036e6eafb1d5
+d86549281439530ac75541f164e473df78333097
+2aa91fcb31af78499c1e2b397ccdcffe6d9b2185
+edf0394140241e777320f9f01b0466f1092c65c6
+e3ee87008d7e53333417d0c97fc5478d5699346d
+0dfa68a06427340cb818621843203b465dcdd2d4
+81b99800e9459ad5f11ed8d4dcfa968148d3652e
+1e2522fba7b6addb456250a65fa113fc6e0002c1
+6fd472d41d6bbc8c562e9f2393a6f500c69ed2e9
+c493b4846a6111e06c192e6278f849068d1058da
+872f8ececb0bfae7726e6e36563cbf61e2f90d2b
+7d988a5512df81c5535ce883aa58f63e07c7d8a2
+34c8861e97a21009a6d76f5a65b243545eece103
+01aaae00e10278710789165ec8870dbd5938996a
+49a901cc478ef34d76d297ad14b6d160a838b47d
+b2e98b09567fc36a48c57804268fd7ce3cf407d2
+f1c3d198136cfeb4cb166a62247fe5dd299ca509
+408bfce919a4d18127b0ea31dc5dac739b685973
+35c0805c81d6ef1f1d6dbffd47df50cab1625c02
+]]></FileHash>
+  </License>
+  <License type="otherwhite" name="GPL-2.0-with-FreeRTOS exception" spdxidentifier="GPL-2.0-with-FreeRTOS exception">
+    <Content><![CDATA[GNU GENERAL PUBLIC LICENSE
+Preamble
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+How to Apply These Terms to Your New Programs
+GNU GENERAL PUBLIC LICENSE
+
+Version 2, June 1991
+
+Copyright (C) 1989, 1991 Free Software Foundation, Inc. 
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+Preamble
+
+The licenses for most software are designed to take away your freedom to share and change it. By contrast, the GNU General Public License is intended to guarantee your freedom to share and change free software--to make sure the software is free for all its users. This General Public License applies to most of the Free Software Foundation's software and to any other program whose authors commit to using it. (Some other Free Software Foundation software is covered by the GNU Lesser General Public License instead.) You can apply it to your programs, too.
+
+When we speak of free software, we are referring to freedom, not price. Our General Public Licenses are designed to make sure that you have the freedom to distribute copies of free software (and charge for this service if you wish), that you receive source code or can get it if you want it, that you can change the software or use pieces of it in new free programs; and that you know you can do these things.
+
+To protect your rights, we need to make restrictions that forbid anyone to deny you these rights or to ask you to surrender the rights. These restrictions translate to certain responsibilities for you if you distribute copies of the software, or if you modify it.
+
+For example, if you distribute copies of such a program, whether gratis or for a fee, you must give the recipients all the rights that you have. You must make sure that they, too, receive or can get the source code. And you must show them these terms so they know their rights.
+
+We protect your rights with two steps: (1) copyright the software, and (2) offer you this license which gives you legal permission to copy, distribute and/or modify the software.
+
+Also, for each author's protection and ours, we want to make certain that everyone understands that there is no warranty for this free software. If the software is modified by someone else and passed on, we want its recipients to know that what they have is not the original, so that any problems introduced by others will not reflect on the original authors' reputations.
+
+Finally, any free program is threatened constantly by software patents. We wish to avoid the danger that redistributors of a free program will individually obtain patent licenses, in effect making the program proprietary. To prevent this, we have made it clear that any patent must be licensed for everyone's free use or not licensed at all.
+
+The precise terms and conditions for copying, distribution and modification follow.
+
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+0. This License applies to any program or other work which contains a notice placed by the copyright holder saying it may be distributed under the terms of this General Public License. The "Program", below, refers to any such program or work, and a "work based on the Program" means either the Program or any derivative work under copyright law: that is to say, a work containing the Program or a portion of it, either verbatim or with modifications and/or translated into another language. (Hereinafter, translation is included without limitation in the term "modification".) Each licensee is addressed as "you".
+
+Activities other than copying, distribution and modification are not covered by this License; they are outside its scope. The act of running the Program is not restricted, and the output from the Program is covered only if its contents constitute a work based on the Program (independent of having been made by running the Program). Whether that is true depends on what the Program does.
+
+1. You may copy and distribute verbatim copies of the Program's source code as you receive it, in any medium, provided that you conspicuously and appropriately publish on each copy an appropriate copyright notice and disclaimer of warranty; keep intact all the notices that refer to this License and to the absence of any warranty; and give any other recipients of the Program a copy of this License along with the Program.
+
+You may charge a fee for the physical act of transferring a copy, and you may at your option offer warranty protection in exchange for a fee.
+
+2. You may modify your copy or copies of the Program or any portion of it, thus forming a work based on the Program, and copy and distribute such modifications or work under the terms of Section 1 above, provided that you also meet all of these conditions:
+
+a) You must cause the modified files to carry prominent notices stating that you changed the files and the date of any change.
+b) You must cause any work that you distribute or publish, that in whole or in part contains or is derived from the Program or any part thereof, to be licensed as a whole at no charge to all third parties under the terms of this License.
+c) If the modified program normally reads commands interactively when run, you must cause it, when started running for such interactive use in the most ordinary way, to print or display an announcement including an appropriate copyright notice and a notice that there is no warranty (or else, saying that you provide a warranty) and that users may redistribute the program under these conditions, and telling the user how to view a copy of this License. (Exception: if the Program itself is interactive but does not normally print such an announcement, your work based on the Program is not required to print an announcement.)
+These requirements apply to the modified work as a whole. If identifiable sections of that work are not derived from the Program, and can be reasonably considered independent and separate works in themselves, then this License, and its terms, do not apply to those sections when you distribute them as separate works. But when you distribute the same sections as part of a whole which is a work based on the Program, the distribution of the whole must be on the terms of this License, whose permissions for other licensees extend to the entire whole, and thus to each and every part regardless of who wrote it.
+
+Thus, it is not the intent of this section to claim rights or contest your rights to work written entirely by you; rather, the intent is to exercise the right to control the distribution of derivative or collective works based on the Program.
+
+In addition, mere aggregation of another work not based on the Program with the Program (or with a work based on the Program) on a volume of a storage or distribution medium does not bring the other work under the scope of this License.
+
+3. You may copy and distribute the Program (or a work based on it, under Section 2) in object code or executable form under the terms of Sections 1 and 2 above provided that you also do one of the following:
+
+a) Accompany it with the complete corresponding machine-readable source code, which must be distributed under the terms of Sections 1 and 2 above on a medium customarily used for software interchange; or,
+b) Accompany it with a written offer, valid for at least three years, to give any third party, for a charge no more than your cost of physically performing source distribution, a complete machine-readable copy of the corresponding source code, to be distributed under the terms of Sections 1 and 2 above on a medium customarily used for software interchange; or,
+c) Accompany it with the information you received as to the offer to distribute corresponding source code. (This alternative is allowed only for noncommercial distribution and only if you received the program in object code or executable form with such an offer, in accord with Subsection b above.)
+The source code for a work means the preferred form of the work for making modifications to it. For an executable work, complete source code means all the source code for all modules it contains, plus any associated interface definition files, plus the scripts used to control compilation and installation of the executable. However, as a special exception, the source code distributed need not include anything that is normally distributed (in either source or binary form) with the major components (compiler, kernel, and so on) of the operating system on which the executable runs, unless that component itself accompanies the executable.
+
+If distribution of executable or object code is made by offering access to copy from a designated place, then offering equivalent access to copy the source code from the same place counts as distribution of the source code, even though third parties are not compelled to copy the source along with the object code.
+
+4. You may not copy, modify, sublicense, or distribute the Program except as expressly provided under this License. Any attempt otherwise to copy, modify, sublicense or distribute the Program is void, and will automatically terminate your rights under this License. However, parties who have received copies, or rights, from you under this License will not have their licenses terminated so long as such parties remain in full compliance.
+
+5. You are not required to accept this License, since you have not signed it. However, nothing else grants you permission to modify or distribute the Program or its derivative works. These actions are prohibited by law if you do not accept this License. Therefore, by modifying or distributing the Program (or any work based on the Program), you indicate your acceptance of this License to do so, and all its terms and conditions for copying, distributing or modifying the Program or works based on it.
+
+6. Each time you redistribute the Program (or any work based on the Program), the recipient automatically receives a license from the original licensor to copy, distribute or modify the Program subject to these terms and conditions. You may not impose any further restrictions on the recipients' exercise of the rights granted herein. You are not responsible for enforcing compliance by third parties to this License.
+
+7. If, as a consequence of a court judgment or allegation of patent infringement or for any other reason (not limited to patent issues), conditions are imposed on you (whether by court order, agreement or otherwise) that contradict the conditions of this License, they do not excuse you from the conditions of this License. If you cannot distribute so as to satisfy simultaneously your obligations under this License and any other pertinent obligations, then as a consequence you may not distribute the Program at all. For example, if a patent license would not permit royalty-free redistribution of the Program by all those who receive copies directly or indirectly through you, then the only way you could satisfy both it and this License would be to refrain entirely from distribution of the Program.
+
+If any portion of this section is held invalid or unenforceable under any particular circumstance, the balance of the section is intended to apply and the section as a whole is intended to apply in other circumstances.
+
+It is not the purpose of this section to induce you to infringe any patents or other property right claims or to contest validity of any such claims; this section has the sole purpose of protecting the integrity of the free software distribution system, which is implemented by public license practices. Many people have made generous contributions to the wide range of software distributed through that system in reliance on consistent application of that system; it is up to the author/donor to decide if he or she is willing to distribute software through any other system and a licensee cannot impose that choice.
+
+This section is intended to make thoroughly clear what is believed to be a consequence of the rest of this License.
+
+8. If the distribution and/or use of the Program is restricted in certain countries either by patents or by copyrighted interfaces, the original copyright holder who places the Program under this License may add an explicit geographical distribution limitation excluding those countries, so that distribution is permitted only in or among countries not thus excluded. In such case, this License incorporates the limitation as if written in the body of this License.
+
+9. The Free Software Foundation may publish revised and/or new versions of the General Public License from time to time. Such new versions will be similar in spirit to the present version, but may differ in detail to address new problems or concerns.
+
+Each version is given a distinguishing version number. If the Program specifies a version number of this License which applies to it and "any later version", you have the option of following the terms and conditions either of that version or of any later version published by the Free Software Foundation. If the Program does not specify a version number of this License, you may choose any version ever published by the Free Software Foundation.
+
+10. If you wish to incorporate parts of the Program into other free programs whose distribution conditions are different, write to the author to ask for permission. For software which is copyrighted by the Free Software Foundation, write to the Free Software Foundation; we sometimes make exceptions for this. Our decision will be guided by the two goals of preserving the free status of all derivatives of our free software and of promoting the sharing and reuse of software generally.
+
+NO WARRANTY
+
+11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+12. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+END OF TERMS AND CONDITIONS
+
+How to Apply These Terms to Your New Programs
+
+If you develop a new program, and you want it to be of the greatest possible use to the public, the best way to achieve this is to make it free software which everyone can redistribute and change under these terms.
+
+To do so, attach the following notices to the program. It is safest to attach them to the start of each source file to most effectively convey the exclusion of warranty; and each file should have at least the "copyright" line and a pointer to where the full notice is found.
+
+one line to give the program's name and an idea of what it does.
+Copyright (C) yyyy name of author
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+Also add information on how to contact you by electronic and paper mail.
+
+If the program is interactive, make it output a short notice like this when it starts in an interactive mode:
+
+Gnomovision version 69, Copyright (C) year name of author
+Gnomovision comes with ABSOLUTELY NO WARRANTY; for details
+type `show w'. This is free software, and you are welcome
+to redistribute it under certain conditions; type `show c' 
+for details.
+The hypothetical commands `show w' and `show c' should show the appropriate parts of the General Public License. Of course, the commands you use may be called something other than `show w' and `show c'; they could even be mouse-clicks or menu items--whatever suits your program.
+
+You should also get your employer (if you work as a programmer) or your school, if any, to sign a "copyright disclaimer" for the program, if necessary. Here is a sample; alter the names:
+
+Yoyodyne, Inc., hereby disclaims all copyright
+interest in the program `Gnomovision'
+(which makes passes at compilers) written 
+by James Hacker.
+
+signature of Ty Coon, 1 April 1989
+Ty Coon, President of Vice
+This General Public License does not permit incorporating your program into proprietary programs. If your program is a subroutine library, you may consider it more useful to permit linking proprietary applications with the library. If this is what you want to do, use the GNU Lesser General Public License instead of this License.
+
+FreeRTOS is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License (version 2) as published by the
+Free Software Foundation AND MODIFIED BY the FreeRTOS exception.
+
+NOTE: The modification to the GPL is included to allow you to     
+distribute a combined work that includes FreeRTOS without being
+obliged to provide the source code for proprietary components     
+outside of the FreeRTOS kernel.                                   
+
+FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  Full license text is available on the following
+link: http://www.freertos.org/a00114.html
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/portmux_impl.inc.h
+portable/ThirdParty/GCC/Xtensa_ESP32/portmux_impl.h
+portable/ThirdParty/GCC/Xtensa_ESP32/port.c
+portable/ThirdParty/GCC/Xtensa_ESP32/include/portmacro.h
+]]></Files>
+    <FileHash><![CDATA[311ed13cc4f53bfef1e5d4010b058853fa8b94d7
+080b105eabb9e6a789e4a645bc17eaff3412820c
+7554f5412e52d7f11f7118012b1488565990bceb
+b4b6e1a5203bfe17fb2f5ca9f417421593351722
+]]></FileHash>
+  </License>
+  <License type="otherwhite" name="Dual license MIT and BSD-3-Clause" spdxidentifier="Dual license MIT and BSD-3-Clause">
+    <Content><![CDATA[SPDX-License-Identifier: MIT AND BSD-3-Clause
+]]></Content>
+    <Files><![CDATA[portable/IAR/AVR32_UC3/read.c
+portable/IAR/AVR32_UC3/portmacro.h
+portable/IAR/AVR32_UC3/write.c
+portable/GCC/AVR32_UC3/exception.S
+portable/IAR/AVR32_UC3/port.c
+portable/GCC/AVR32_UC3/portmacro.h
+portable/GCC/AVR32_UC3/port.c
+portable/IAR/AVR32_UC3/exception.s82
+]]></Files>
+    <FileHash><![CDATA[f114cc5a0c74c5cd33c00441ae423ac7ed172f65
+197387cc5f535a9a12321696ff51d3c3204854fb
+09be3efdfa9837ace5007f1adc9c01f4a8c41bd9
+3547761ff48de774b767ce3ae21c84d1583ca84c
+fe3c5beb26d50797be1973cfeaa97860162edbf1
+3e625335f835e8574f37c6188761a92e833badc5
+e3b0084c309a131ee5ddf1471238502e7c539b6b
+4ef6508705668dff5054f32cc0e1de0b00176bb8
+]]></FileHash>
+    <Acknowledgements><![CDATA[To the extent files may be licensed under MIT AND BSD-3-Clause, in this context both the licenses apply.
+]]></Acknowledgements>
+  </License>
+  <License type="otherwhite" name="BSD-3-Clause" spdxidentifier="BSD-3-Clause">
+    <Content><![CDATA[Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+   1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+   2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+   3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/RP2040/pico_sdk_import.cmake
+portable/ThirdParty/GCC/RP2040/library.cmake
+portable/ThirdParty/GCC/RP2040/LICENSE.md
+]]></Files>
+    <FileHash><![CDATA[b4bf86366fbbecc32fdee8712522df20299f6c4f
+08827fcd24d2d5df286b651be0421c5c7f247e23
+05e31713e67a3242c98c78d3f4ad6314531ae2f5
+]]></FileHash>
+  </License>
+  <License type="otherwhite" name="BSD-3-Clause" spdxidentifier="BSD-3-Clause">
+    <Content><![CDATA[   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+  
+   1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+  
+   2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+  
+   3. The name of ATMEL may not be used to endorse or promote products derived
+   from this software without specific prior written permission.
+  
+   THIS SOFTWARE IS PROVIDED BY ATMEL ``AS IS'' AND ANY EXPRESS OR IMPLIED
+   WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE EXPRESSLY AND
+   SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT,
+   INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+   (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+]]></Content>
+    <Files><![CDATA[portable/IAR/AVR32_UC3/read.c
+portable/IAR/AVR32_UC3/portmacro.h
+portable/IAR/AVR32_UC3/write.c
+portable/GCC/AVR32_UC3/exception.S
+portable/IAR/AVR32_UC3/port.c
+portable/GCC/AVR32_UC3/portmacro.h
+portable/GCC/AVR32_UC3/port.c
+portable/IAR/AVR32_UC3/exception.s82
+]]></Files>
+    <FileHash><![CDATA[f114cc5a0c74c5cd33c00441ae423ac7ed172f65
+197387cc5f535a9a12321696ff51d3c3204854fb
+09be3efdfa9837ace5007f1adc9c01f4a8c41bd9
+3547761ff48de774b767ce3ae21c84d1583ca84c
+fe3c5beb26d50797be1973cfeaa97860162edbf1
+3e625335f835e8574f37c6188761a92e833badc5
+e3b0084c309a131ee5ddf1471238502e7c539b6b
+4ef6508705668dff5054f32cc0e1de0b00176bb8
+]]></FileHash>
+  </License>
+  <License type="otheryellow" name="Apache-2.0" spdxidentifier="Apache-2.0">
+    <Content><![CDATA[Apache License
+
+Version 2.0, January 2004
+
+http://www.apache.org/licenses/ TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      
+
+      "License" shall mean the terms and conditions for use, reproduction, and distribution as defined by Sections 1 through 9 of this document.
+
+      
+
+      "Licensor" shall mean the copyright owner or entity authorized by the copyright owner that is granting the License.
+
+      
+
+      "Legal Entity" shall mean the union of the acting entity and all other entities that control, are controlled by, or are under common control with that entity. For the purposes of this definition, "control" means (i) the power, direct or indirect, to cause the direction or management of such entity, whether by contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the outstanding shares, or (iii) beneficial ownership of such entity.
+
+      
+
+      "You" (or "Your") shall mean an individual or Legal Entity exercising permissions granted by this License.
+
+      
+
+      "Source" form shall mean the preferred form for making modifications, including but not limited to software source code, documentation source, and configuration files.
+
+      
+
+      "Object" form shall mean any form resulting from mechanical transformation or translation of a Source form, including but not limited to compiled object code, generated documentation, and conversions to other media types.
+
+      
+
+      "Work" shall mean the work of authorship, whether in Source or Object form, made available under the License, as indicated by a copyright notice that is included in or attached to the work (an example is provided in the Appendix below).
+
+      
+
+      "Derivative Works" shall mean any work, whether in Source or Object form, that is based on (or derived from) the Work and for which the editorial revisions, annotations, elaborations, or other modifications represent, as a whole, an original work of authorship. For the purposes of this License, Derivative Works shall not include works that remain separable from, or merely link (or bind by name) to the interfaces of, the Work and Derivative Works thereof.
+
+      
+
+      "Contribution" shall mean any work of authorship, including the original version of the Work and any modifications or additions to that Work or Derivative Works thereof, that is intentionally submitted to Licensor for inclusion in the Work by the copyright owner or by an individual or Legal Entity authorized to submit on behalf of the copyright owner. For the purposes of this definition, "submitted" means any form of electronic, verbal, or written communication sent to the Licensor or its representatives, including but not limited to communication on electronic mailing lists, source code control systems, and issue tracking systems that are managed by, or on behalf of, the Licensor for the purpose of discussing and improving the Work, but excluding communication that is conspicuously marked or otherwise designated in writing by the copyright owner as "Not a Contribution."
+
+      
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity on behalf of whom a Contribution has been received by Licensor and subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to reproduce, prepare Derivative Works of, publicly display, publicly perform, sublicense, and distribute the Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this section) patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the Work, where such license applies only to those patent claims licensable by such Contributor that are necessarily infringed by their Contribution(s) alone or by combination of their Contribution(s) with the Work to which such Contribution(s) was submitted. If You institute patent litigation against any entity (including a cross-claim or counterclaim in a lawsuit) alleging that the Work or a Contribution incorporated within the Work constitutes direct or contributory patent infringement, then any patent licenses granted to You under this License for that Work shall terminate as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the Work or Derivative Works thereof in any medium, with or without modifications, and in Source or Object form, provided that You meet the following conditions:
+
+      (a) You must give any other recipients of the Work or Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works that You distribute, all copyright, patent, trademark, and attribution notices from the Source form of the Work, excluding those notices that do not pertain to any part of the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its distribution, then any Derivative Works that You distribute must include a readable copy of the attribution notices contained within such NOTICE file, excluding those notices that do not pertain to any part of the Derivative Works, in at least one of the following places: within a NOTICE text file distributed as part of the Derivative Works; within the Source form or documentation, if provided along with the Derivative Works; or, within a display generated by the Derivative Works, if and wherever such third-party notices normally appear. The contents of the NOTICE file are for informational purposes only and do not modify the License. You may add Your own attribution notices within Derivative Works that You distribute, alongside or as an addendum to the NOTICE text from the Work, provided that such additional attribution notices cannot be construed as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and may provide additional or different license terms and conditions for use, reproduction, or distribution of Your modifications, or for any such Derivative Works as a whole, provided Your use, reproduction, and distribution of the Work otherwise complies with the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise, any Contribution intentionally submitted for inclusion in the Work by You to the Licensor shall be under the terms and conditions of this License, without any additional terms or conditions. Notwithstanding the above, nothing herein shall supersede or modify the terms of any separate license agreement you may have executed with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade names, trademarks, service marks, or product names of the Licensor, except as required for reasonable and customary use in describing the origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or agreed to in writing, Licensor provides the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible for determining the appropriateness of using or redistributing the Work and assume any risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing the Work or Derivative Works thereof, You may choose to offer, and charge a fee for, acceptance of support, warranty, indemnity, or other liability obligations and/or rights consistent with this License. However, in accepting such obligations, You may act only on Your own behalf and on Your sole responsibility, not on behalf of any other Contributor, and only if You agree to indemnify, defend, and hold each Contributor harmless for any liability incurred by, or claims asserted against, such Contributor by reason of your accepting any such warranty or additional liability. END OF TERMS AND CONDITIONS
+
+APPENDIX: How to apply the Apache License to your work.
+
+To apply the Apache License to your work, attach the following boilerplate notice, with the fields enclosed by brackets "[]" replaced with your own identifying information. (Don't include the brackets!) The text should be enclosed in the appropriate comment syntax for the file format. We also recommend that a file or class name and description of purpose be included on the same "printed page" as the copyright notice for easier identification within third-party archives.
+
+Copyright [yyyy] [name of copyright owner]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+
+you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+
+distributed under the License is distributed on an "AS IS" BASIS,
+
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+See the License for the specific language governing permissions and
+
+limitations under the License.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/include/xt_asm_utils.h
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_vector_defaults.S
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_loadstore_handler.S
+]]></Files>
+    <FileHash><![CDATA[ba9bcb70da5692081bb150464c1aed5fbf169fce
+a336bde4d96bb46bd8eda0edb1bf01928b09e7da
+d796abc26db0fbd69cb16dcf44c38ab15d16d9ba
+]]></FileHash>
+  </License>
+  <Obligation>
+    <Topic><![CDATA[Risk of termination of patent licenses upon patent proceedings
+]]></Topic>
+    <Text><![CDATA[If [Your Legal Entity] sues contributors regarding [Your Legal Entity] patents, any patent license granted to [Your Legal Entity] for this component will automatically terminate
+]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[Provide acknowledgement
+]]></Topic>
+    <Text><![CDATA[Add all relevant acknowledgements to Readme_OSS 
+
+Note for Apache-2.0: 
+The content of the NOTICE file must be made available in readable form. The content of the NOTICE file is made available in readable form as acknowledgement.
+
+Note for Catharon Open Source LICENSE:
+Portions of this software are copyright © Catharon Productions, Inc. All rights reserved
+
+Note for all CC licenses:
+In CC licenses this acknowledgement (in CC terms "appropriate credit") shall inculde:
+ - name of the creator 
+ - copyright notice 
+ - license notice 
+ - disclaimer 
+ - link to the material
+
+Note for ECL-2.0: 
+The content of the NOTICE file must be made available in readable form. The content of the NOTICE file is made available in readable form as acknowledgement.
+
+Note for all OWFa-1.0:
+ - the acknowledgement must contain at minimum the specification name and version number
+
+Note for Independent JPEG Group License
+ - the acknowledgement is: "this software is based in part on the work of the Independent JPEG Group"
+
+Note for Apache-1.1 and Apache-1.1-jakarta-oro-variant:
+ - the acknowledgement is: "This product includes software developed by the
+       Apache Software Foundation (http://www.apache.org/)."
+
+Note for Apache-1.1-JRDF-Project:
+ - the acknowledgement is: "This product includes software developed by the 
+         the JRDF Project (http://jrdf.sf.net/)."
+
+Note for  Apache-1.1-University-of-Chicago:
+ - the acknowledgement is: "This product includes software developed by the
+   University of Chicago, as Operator of Argonne National Laboratory."
+
+Note for Dual License, Multiple License and Triple License:
+ - the acknowledgement is the licensing decision: "To the extend files may be licensed under ABC or XYZ, in this context ABC has been chosen. This shall not restrict the freedom of other users to choose ABC or XYZ. For convenience both license texts are provided"
+
+Note for FTL-License:
+ - the acknowledgement must contain the text: "Portions of this software are copyright © The FreeType Project (www.freetype.org). All rights reserved."
+
+Note for Indiana-Extrem-License-1.1:
+ - the acknowledgement is: "This product includes software developed by the 
+         the Indiana University Extreme! Lab.For further information please visit  http://www.extreme.indiana.edu/."
+
+Note for LDL-License:
+ - the acknowledgement must contain the text: "With permission of ..."
+
+Note for RSA-Security License:
+ - the acknowledgement must contain the text: "This product includes software derived from the RSA Data Security, Inc. MD5 Message-Digest Algorithm"
+
+Note for Nunit License:
+- the acknowledgement must contain the text: " Portions Copyright © 2002-2012 Charlie Poole or Copyright © 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov or Copyright © 2000-2002 Philip A. Craig "
+
+Note for JDOM-License:
+- the acknowledgement shall contain the text: "This product includes software developed by the JDOM Project (http://www.jdom.org/)."
+
+Note for OpenSSL, SSLeay License:
+- the acknowledgement text must contain the text:
+"This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/)"
+"This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
+"This product includes cryptographic software written by Eric Young (eay@cryptsoft.com)"
+]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[marking modifications
+]]></Topic>
+    <Text><![CDATA[Note for Apache-2.0, ECL-2.0:  
+If you modify this component and do not intend to contribute the modifications/the modified work back to open source community, you must conspicuously mark or designate the modifications as “Not a Contribution”.
+
+If you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.
+
+Note for CDDL-1.0:  
+If you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.
+]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[Risk of termination of the rights upon patent proceedings
+]]></Topic>
+    <Text><![CDATA[Siemens will lose all rights (i.e. copyright and patent rights) granted to Siemens for the open source code if Siemens makes legal claims regarding Siemens patents in such covered open source code.
+]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[Provide acknowledgement
+]]></Topic>
+    <Text><![CDATA[Add all relevant acknowledgements to Readme_OSS
+]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Copyright>
+    <Content><![CDATA[Copyright 2020 Cambridge Consultants Ltd.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Posix/portmacro.h
+]]></Files>
+    <FileHash><![CDATA[a288d5344dcf695e791dfad49f3e712c301d5d04
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright 2019 Espressif Systems (Shanghai) PTE LTD
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_loadstore_handler.S
+]]></Files>
+    <FileHash><![CDATA[d796abc26db0fbd69cb16dcf44c38ab15d16d9ba
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright 2015-2018 Espressif Systems (Shanghai) PTE LTD
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/include/xt_asm_utils.h
+]]></Files>
+    <FileHash><![CDATA[ba9bcb70da5692081bb150464c1aed5fbf169fce
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright 2015-2017 Espressif Systems (Shanghai) PTE LTD
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_vector_defaults.S
+]]></Files>
+    <FileHash><![CDATA[a336bde4d96bb46bd8eda0edb1bf01928b09e7da
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2021 Raspberry Pi (Trading) Ltd.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/RP2040/include/rp2040_config.h
+portable/ThirdParty/GCC/RP2040/include/freertos_sdk_config.h
+portable/ThirdParty/GCC/RP2040/include/portmacro.h
+portable/ThirdParty/GCC/RP2040/port.c
+portable/ThirdParty/GCC/RP2040/idle_task_static_memory.c
+]]></Files>
+    <FileHash><![CDATA[6256cbdd982dcefbc111718994f619c6732f3036
+399ccf82f6eb6bb70302db6fb72b81b822d3c391
+4c9cf149508e0ae8e33d4251641cd3771d374a25
+40aec266995d82a246ac0939d80bf5cb0e59f284
+fb36ca1e7d4c72ebc3bff94021f7076ba50cc8d8
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2020-2021, Arm Limited. All rights reserved.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/ARM_CM33_TFM/README.md
+]]></Files>
+    <FileHash><![CDATA[70becaf15d90947c15ddda77984267c1ac15c177
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2020-2021 Raspberry Pi (Trading) Ltd.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/RP2040/LICENSE.md
+]]></Files>
+    <FileHash><![CDATA[05e31713e67a3242c98c78d3f4ad6314531ae2f5
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/RP2040/pico_sdk_import.cmake
+portable/ThirdParty/GCC/RP2040/library.cmake
+]]></Files>
+    <FileHash><![CDATA[b4bf86366fbbecc32fdee8712522df20299f6c4f
+08827fcd24d2d5df286b651be0421c5c7f247e23
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2019-2020, Arm Limited. All rights reserved.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/ARM_CM33_TFM/os_wrapper_freertos.c
+]]></Files>
+    <FileHash><![CDATA[a1420f4f796a50fc3173a7a1600e7b1f43fbf809
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2017, Intel Corporation
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/include/xt_asm_utils.h
+]]></Files>
+    <FileHash><![CDATA[ba9bcb70da5692081bb150464c1aed5fbf169fce
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2007, Atmel Corporation All rights reserved.
+]]></Content>
+    <Files><![CDATA[portable/GCC/AVR32_UC3/port.c
+portable/GCC/AVR32_UC3/exception.S
+portable/GCC/AVR32_UC3/portmacro.h
+portable/IAR/AVR32_UC3/read.c
+portable/IAR/AVR32_UC3/port.c
+portable/IAR/AVR32_UC3/exception.s82
+portable/IAR/AVR32_UC3/portmacro.h
+portable/IAR/AVR32_UC3/write.c
+]]></Files>
+    <FileHash><![CDATA[e3b0084c309a131ee5ddf1471238502e7c539b6b
+3547761ff48de774b767ce3ae21c84d1583ca84c
+3e625335f835e8574f37c6188761a92e833badc5
+f114cc5a0c74c5cd33c00441ae423ac7ed172f65
+fe3c5beb26d50797be1973cfeaa97860162edbf1
+4ef6508705668dff5054f32cc0e1de0b00176bb8
+197387cc5f535a9a12321696ff51d3c3204854fb
+09be3efdfa9837ace5007f1adc9c01f4a8c41bd9
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2003-2015 Cadence Design Systems, Inc.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/port.c
+]]></Files>
+    <FileHash><![CDATA[7554f5412e52d7f11f7118012b1488565990bceb
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+]]></Content>
+    <Files><![CDATA[portable/IAR/AVR_Mega0/port.c
+portable/IAR/AVR_Mega0/portmacro.s90
+portable/IAR/RXv2/port_asm.s
+.github/scripts/kernel_checker.py
+portable/IAR/RXv2/port.c
+portable/IAR/RXv2/portmacro.h
+portable/BCC/16BitDOS/Flsh186/prtmacro.h
+portable/BCC/16BitDOS/Flsh186/port.c
+portable/BCC/16BitDOS/PC/prtmacro.h
+portable/BCC/16BitDOS/PC/port.c
+portable/BCC/16BitDOS/common/portasm.h
+timers.c
+portable/BCC/16BitDOS/common/portcomn.c
+portable/RVDS/ARM_CM4_MPU/port.c
+include/FreeRTOS.h
+portable/RVDS/ARM_CM4_MPU/portmacro.h
+include/event_groups.h
+include/atomic.h
+include/projdefs.h
+portable/RVDS/ARM_CM0/port.c
+portable/RVDS/ARM_CM0/portmacro.h
+include/timers.h
+portable/RVDS/ARM_CM7/r0p1/port.c
+include/StackMacros.h
+portable/RVDS/ARM_CM7/r0p1/portmacro.h
+include/mpu_prototypes.h
+include/stack_macros.h
+portable/RVDS/ARM_CA9/port.c
+portable/RVDS/ARM_CA9/portmacro.inc
+portable/RVDS/ARM_CA9/portmacro.h
+include/stream_buffer.h
+portable/RVDS/ARM_CA9/portASM.s
+portable/RVDS/ARM_CM3/port.c
+include/semphr.h
+portable/RVDS/ARM_CM3/portmacro.h
+include/portable.h
+include/mpu_wrappers.h
+portable/RVDS/ARM_CM4F/port.c
+include/deprecated_definitions.h
+portable/RVDS/ARM_CM4F/portmacro.h
+portable/RVDS/ARM7_LPC21xx/port.c
+portable/RVDS/ARM7_LPC21xx/portmacro.inc
+portable/RVDS/ARM7_LPC21xx/portmacro.h
+portable/RVDS/ARM7_LPC21xx/portASM.s
+portable/CodeWarrior/ColdFire_V2/portasm.S
+portable/CodeWarrior/ColdFire_V2/port.c
+portable/CodeWarrior/ColdFire_V2/portmacro.h
+portable/CodeWarrior/HCS12/port.c
+portable/CodeWarrior/HCS12/portmacro.h
+portable/CodeWarrior/ColdFire_V1/portasm.S
+include/task.h
+portable/CodeWarrior/ColdFire_V1/port.c
+portable/CodeWarrior/ColdFire_V1/portmacro.h
+portable/Rowley/MSP430F449/portasm.h
+portable/Rowley/MSP430F449/portext.asm
+portable/Rowley/MSP430F449/port.c
+portable/Rowley/MSP430F449/portmacro.h
+include/queue.h
+portable/MSVC-MingW/port.c
+portable/MSVC-MingW/portmacro.h
+include/list.h
+portable/MikroC/ARM_CM4F/port.c
+include/message_buffer.h
+portable/MikroC/ARM_CM4F/portmacro.h
+include/stdint.readme
+portable/Paradigm/Tern_EE/small/portasm.h
+portable/Paradigm/Tern_EE/small/port.c
+portable/Paradigm/Tern_EE/small/portmacro.h
+include/croutine.h
+portable/Paradigm/Tern_EE/large_untested/portasm.h
+portable/Paradigm/Tern_EE/large_untested/port.c
+croutine.c
+portable/Paradigm/Tern_EE/large_untested/portmacro.h
+portable/Softune/MB91460/port.c
+portable/Softune/MB91460/portmacro.h
+portable/Softune/MB91460/__STD_LIB_sbrk.c
+portable/Softune/MB96340/__STD_LIB_sbrk.c
+list.c
+portable/Softune/MB96340/port.c
+portable/Softune/MB96340/portmacro.h
+portable/MemMang/heap_4.c
+portable/MemMang/heap_2.c
+event_groups.c
+portable/MemMang/heap_5.c
+portable/MemMang/heap_3.c
+portable/MemMang/heap_1.c
+portable/MPLAB/PIC32MZ/port_asm.S
+portable/MPLAB/PIC32MZ/ISR_Support.h
+queue.c
+portable/MPLAB/PIC32MZ/port.c
+portable/MPLAB/PIC32MZ/portmacro.h
+portable/MPLAB/PIC18F/port.c
+stream_buffer.c
+portable/MPLAB/PIC18F/portmacro.h
+portable/MPLAB/PIC32MX/port_asm.S
+portable/MPLAB/PIC32MX/ISR_Support.h
+portable/MPLAB/PIC32MX/port.c
+portable/MPLAB/PIC32MX/portmacro.h
+portable/MPLAB/PIC24_dsPIC/portasm_dsPIC.S
+portable/MPLAB/PIC24_dsPIC/port.c
+portable/MPLAB/PIC24_dsPIC/portasm_PIC24.S
+portable/MPLAB/PIC24_dsPIC/portmacro.h
+portable/MPLAB/PIC32MEC14xx/port_asm.S
+portable/MPLAB/PIC32MEC14xx/ISR_Support.h
+tasks.c
+portable/MPLAB/PIC32MEC14xx/port.c
+portable/MPLAB/PIC32MEC14xx/portmacro.h
+portable/Renesas/RX700v3_DPFPU/port_asm.src
+portable/Renesas/RX700v3_DPFPU/port.c
+portable/Renesas/RX700v3_DPFPU/portmacro.h
+portable/Renesas/RX600v2/port_asm.src
+portable/ThirdParty/XCC/Xtensa/xtensa_init.c
+portable/Renesas/RX600v2/port.c
+portable/ThirdParty/XCC/Xtensa/xtensa_intr_asm.S
+portable/Renesas/RX600v2/portmacro.h
+portable/ThirdParty/XCC/Xtensa/xtensa_config.h
+portable/Renesas/RX600/port_asm.src
+portable/Renesas/RX100/port_asm.src
+portable/Renesas/RX200/port_asm.src
+portable/Renesas/RX600/port.c
+portable/Renesas/RX600/portmacro.h
+portable/Renesas/SH2A_FPU/ISR_Support.inc
+portable/ThirdParty/XCC/Xtensa/xtensa_context.S
+portable/Renesas/SH2A_FPU/port.c
+portable/Renesas/SH2A_FPU/portmacro.h
+portable/Renesas/SH2A_FPU/portasm.src
+portable/ThirdParty/XCC/Xtensa/xtensa_vectors.S
+portable/Renesas/RX100/port.c
+portable/ThirdParty/XCC/Xtensa/portasm.S
+portable/Renesas/RX100/portmacro.h
+portable/ThirdParty/XCC/Xtensa/porttrace.h
+portable/Renesas/RX200/port.c
+portable/ThirdParty/XCC/Xtensa/port.c
+portable/Renesas/RX200/portmacro.h
+portable/ThirdParty/XCC/Xtensa/portclib.c
+portable/ThirdParty/XCC/Xtensa/xtensa_intr.c
+portable/ThirdParty/XCC/Xtensa/xtensa_timer.h
+portable/ThirdParty/XCC/Xtensa/xtensa_rtos.h
+portable/Common/mpu_wrappers.c
+portable/ThirdParty/XCC/Xtensa/portmacro.h
+portable/ThirdParty/XCC/Xtensa/xtensa_api.h
+portable/oWatcom/16BitDOS/Flsh186/port.c
+portable/ThirdParty/XCC/Xtensa/xtensa_overlay_os_hook.c
+portable/ThirdParty/XCC/Xtensa/portbenchmark.h
+portable/oWatcom/16BitDOS/Flsh186/portmacro.h
+portable/oWatcom/16BitDOS/PC/port.c
+portable/ThirdParty/XCC/Xtensa/xtensa_context.h
+portable/oWatcom/16BitDOS/PC/portmacro.h
+portable/oWatcom/16BitDOS/common/portasm.h
+portable/oWatcom/16BitDOS/common/portcomn.c
+portable/WizC/PIC18/addFreeRTOS.h
+portable/WizC/PIC18/port.c
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_init.c
+portable/WizC/PIC18/portmacro.h
+portable/WizC/PIC18/Drivers/Tick/isrTick.c
+portable/WizC/PIC18/Drivers/Tick/Tick.c
+portable/Tasking/ARM_CM4F/port_asm.asm
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_intr_asm.S
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_vector_defaults.S
+portable/Tasking/ARM_CM4F/port.c
+portable/Tasking/ARM_CM4F/portmacro.h
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_context.S
+portable/ARMv8M/non_secure/port.c
+portable/GCC/ARM_CM33/non_secure/port.c
+portable/GCC/ARM_CM23_NTZ/non_secure/port.c
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_config.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM23/portasm.c
+portable/GCC/ARM_CM23/non_secure/portasm.c
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_timer.h
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_rtos.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM23/portmacro.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM23_NTZ/portmacro.h
+portable/GCC/ARM_CM23/non_secure/portmacro.h
+portable/GCC/ARM_CM23_NTZ/non_secure/portmacro.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ/portasm.c
+portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_api.h
+portable/ThirdParty/GCC/Xtensa_ESP32/include/portbenchmark.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ/portmacro.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM33/portmacro.h
+portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h
+portable/GCC/ARM_CM33/non_secure/portmacro.h
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM33/portasm.c
+portable/GCC/ARM_CM33/non_secure/portasm.c
+portable/ARMv8M/non_secure/portable/GCC/ARM_CM23_NTZ/portasm.c
+portable/GCC/ARM_CM23_NTZ/non_secure/portasm.c
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_context.h
+portable/ARMv8M/copy_files.py
+portable/ARMv8M/secure/context/portable/GCC/ARM_CM23/secure_context_port.c
+portable/GCC/ARM_CM23/secure/secure_context_port.c
+portable/ARMv8M/secure/context/portable/GCC/ARM_CM33/secure_context_port.c
+portable/GCC/ARM_CM33/secure/secure_context_port.c
+portable/SDCC/Cygnal/port.c
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_vectors.S
+portable/SDCC/Cygnal/portmacro.h
+portable/ThirdParty/GCC/Xtensa_ESP32/portasm.S
+portable/CCS/MSP430X/portext.asm
+portable/CCS/MSP430X/port.c
+portable/CCS/MSP430X/portmacro.h
+portable/CCS/MSP430X/data_model.h
+portable/CCS/ARM_Cortex-R4/port.c
+portable/CCS/ARM_Cortex-R4/portmacro.h
+portable/CCS/ARM_Cortex-R4/portASM.asm
+portable/CCS/ARM_CM3/portasm.asm
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_intr.c
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_loadstore_handler.S
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_overlay_os_hook.c
+portable/CCS/ARM_CM3/port.c
+portable/CCS/ARM_CM3/portmacro.h
+portable/CCS/ARM_CM4F/portasm.asm
+portable/CCS/ARM_CM4F/port.c
+portable/ThirdParty/GCC/Posix/utils/wait_for_event.h
+portable/ThirdParty/GCC/Posix/utils/wait_for_event.c
+portable/CCS/ARM_CM4F/portmacro.h
+portable/GCC/ARM_CRx_No_GIC/portASM.S
+portable/GCC/ARM_CRx_No_GIC/port.c
+portable/GCC/ARM_CRx_No_GIC/portmacro.h
+portable/GCC/TriCore_1782/porttrap.c
+portable/GCC/TriCore_1782/port.c
+portable/GCC/TriCore_1782/portmacro.h
+portable/GCC/ARM_CR5/portASM.S
+portable/GCC/ARM_CR5/port.c
+portable/GCC/ARM_CR5/portmacro.h
+portable/GCC/ARM7_LPC23xx/portISR.c
+portable/GCC/ARM7_LPC23xx/port.c
+portable/GCC/ARM7_LPC23xx/portmacro.h
+portable/GCC/ARM_CM4_MPU/port.c
+portable/GCC/ARM_CM4_MPU/portmacro.h
+portable/ThirdParty/GCC/ATmega/port.c
+portable/GCC/ARM7_LPC2000/portISR.c
+portable/GCC/ARM7_LPC2000/port.c
+portable/GCC/ARM7_LPC2000/portmacro.h
+portable/ThirdParty/GCC/ATmega/portmacro.h
+portable/GCC/ARM_CM3_MPU/port.c
+portable/GCC/ARM_CM3_MPU/portmacro.h
+portable/GCC/ColdFire_V2/portasm.S
+portable/GCC/ColdFire_V2/port.c
+portable/GCC/ColdFire_V2/portmacro.h
+portable/GCC/RX700v3_DPFPU/port.c
+portable/GCC/RX700v3_DPFPU/portmacro.h
+portable/GCC/ARM_CA53_64_BIT/portASM.S
+portable/GCC/ARM_CA53_64_BIT/port.c
+portable/ThirdParty/GCC/RP2040/idle_task_static_memory.c
+portable/GCC/ARM_CA53_64_BIT/portmacro.h
+portable/IAR/ARM_CRx_No_GIC/port.c
+portable/IAR/ARM_CRx_No_GIC/portmacro.h
+portable/GCC/RX600v2/port.c
+portable/IAR/ARM_CRx_No_GIC/portASM.s
+portable/IAR/V850ES/ISR_Support.h
+portable/GCC/RX600v2/portmacro.h
+portable/GCC/RX600/portmacro.h
+portable/IAR/V850ES/port.c
+portable/GCC/MSP430F449/port.c
+portable/IAR/V850ES/portasm.s85
+portable/GCC/MSP430F449/portmacro.h
+portable/IAR/V850ES/portmacro.h
+portable/GCC/RX600/port.c
+portable/GCC/PPC440_Xilinx/FPU_Macros.h
+portable/GCC/PPC405_Xilinx/FPU_Macros.h
+portable/GCC/PPC440_Xilinx/portasm.S
+portable/GCC/PPC405_Xilinx/portasm.S
+portable/GCC/PPC440_Xilinx/port.c
+portable/IAR/V850ES/portasm_Hx2.s85
+portable/GCC/PPC440_Xilinx/portmacro.h
+portable/GCC/PPC405_Xilinx/portmacro.h
+portable/IAR/V850ES/portasm_Fx3.s85
+portable/GCC/RL78/isr_support.h
+portable/IAR/ARM_CM23/non_secure/portasm.h
+portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h
+portable/IAR/ARM_CM33/non_secure/portasm.h
+portable/IAR/ARM_CM23_NTZ/non_secure/portasm.h
+portable/ARMv8M/non_secure/portasm.h
+portable/GCC/ARM_CM23/non_secure/portasm.h
+portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h
+portable/GCC/ARM_CM33/non_secure/portasm.h
+portable/GCC/ARM_CM23_NTZ/non_secure/portasm.h
+portable/GCC/RL78/portasm.S
+portable/IAR/ARM_CM23/non_secure/portasm.s
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM23/portasm.s
+portable/GCC/RL78/port.c
+portable/GCC/RL78/portmacro.h
+portable/GCC/RISC-V/portASM.S
+portable/IAR/ARM_CM23/non_secure/port.c
+portable/IAR/ARM_CM33_NTZ/non_secure/port.c
+portable/IAR/ARM_CM33/non_secure/port.c
+portable/IAR/ARM_CM23_NTZ/non_secure/port.c
+portable/GCC/ARM_CM23/non_secure/port.c
+portable/GCC/ARM_CM33_NTZ/non_secure/port.c
+portable/GCC/RISC-V/port.c
+portable/IAR/ARM_CM23/non_secure/portmacro.h
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM23/portmacro.h
+portable/GCC/RISC-V/portmacro.h
+portable/IAR/ARM_CM23/secure/secure_init.c
+portable/IAR/ARM_CM33/secure/secure_init.c
+portable/ARMv8M/secure/init/secure_init.c
+portable/GCC/ARM_CM23/secure/secure_init.c
+portable/GCC/ARM_CM33/secure/secure_init.c
+portable/GCC/RISC-V/chip_specific_extensions/RV32I_CLINT_no_extensions/freertos_risc_v_chip_specific_extensions.h
+portable/IAR/ARM_CM23/secure/secure_context.h
+portable/IAR/ARM_CM33/secure/secure_context.h
+portable/ARMv8M/secure/context/secure_context.h
+portable/GCC/ARM_CM23/secure/secure_context.h
+portable/GCC/ARM_CM33/secure/secure_context.h
+portable/GCC/RISC-V/chip_specific_extensions/RISCV_MTIME_CLINT_no_extensions/freertos_risc_v_chip_specific_extensions.h
+portable/IAR/ARM_CM23/secure/secure_context_port_asm.s
+portable/ARMv8M/secure/context/portable/IAR/ARM_CM23/secure_context_port_asm.s
+portable/GCC/RISC-V/chip_specific_extensions/Pulpino_Vega_RV32M1RM/freertos_risc_v_chip_specific_extensions.h
+portable/IAR/ARM_CM23/secure/secure_context.c
+portable/IAR/ARM_CM33/secure/secure_context.c
+portable/ARMv8M/secure/context/secure_context.c
+portable/GCC/ARM_CM23/secure/secure_context.c
+portable/GCC/ARM_CM33/secure/secure_context.c
+portable/GCC/ATMega323/port.c
+portable/IAR/ARM_CM23/secure/secure_heap.h
+portable/IAR/ARM_CM33/secure/secure_heap.h
+portable/ARMv8M/secure/heap/secure_heap.h
+portable/GCC/ARM_CM23/secure/secure_heap.h
+portable/GCC/ARM_CM33/secure/secure_heap.h
+portable/IAR/ARM_CM23/secure/secure_init.h
+portable/IAR/ARM_CM33/secure/secure_init.h
+portable/ARMv8M/secure/init/secure_init.h
+portable/GCC/ARM_CM23/secure/secure_init.h
+portable/GCC/ARM_CM33/secure/secure_init.h
+portable/GCC/ATMega323/portmacro.h
+portable/IAR/ARM_CM23/secure/secure_heap.c
+portable/IAR/ARM_CM33/secure/secure_heap.c
+portable/ARMv8M/secure/heap/secure_heap.c
+portable/GCC/ARM_CM23/secure/secure_heap.c
+portable/GCC/ARM_CM33/secure/secure_heap.c
+portable/IAR/ARM_CM23/secure/secure_port_macros.h
+portable/IAR/ARM_CM33/secure/secure_port_macros.h
+portable/ARMv8M/secure/macros/secure_port_macros.h
+portable/GCC/ARM_CM23/secure/secure_port_macros.h
+portable/GCC/ARM_CM33/secure/secure_port_macros.h
+portable/GCC/ARM_CM0/port.c
+portable/IAR/MSP430X/portext.s43
+portable/GCC/ARM_CM0/portmacro.h
+portable/IAR/MSP430X/port.c
+portable/GCC/STR75x/portISR.c
+portable/IAR/MSP430X/portmacro.h
+portable/IAR/MSP430X/data_model.h
+portable/GCC/STR75x/port.c
+portable/IAR/STR91x/ISR_Support.h
+portable/GCC/STR75x/portmacro.h
+portable/GCC/ARM7_AT91FR40008/portISR.c
+portable/IAR/STR91x/port.c
+portable/IAR/STR91x/portasm.s79
+portable/IAR/STR91x/portmacro.h
+portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ/portasm.s
+portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h
+portable/IAR/ARM_CM33/non_secure/portmacro.h
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ/portmacro.h
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM33/portmacro.h
+portable/IAR/LPC2000/ISR_Support.h
+portable/IAR/STR75x/ISR_Support.h
+portable/IAR/AtmelSAM7S64/ISR_Support.h
+portable/IAR/STR71x/ISR_Support.h
+portable/GCC/ARM7_AT91FR40008/port.c
+portable/GCC/ARM7_AT91FR40008/portmacro.h
+portable/IAR/LPC2000/port.c
+portable/IAR/LPC2000/portasm.s79
+portable/IAR/LPC2000/portmacro.h
+portable/IAR/AtmelSAM9XE/ISR_Support.h
+portable/IAR/AtmelSAM9XE/port.c
+portable/IAR/AtmelSAM9XE/portasm.s79
+portable/IAR/AtmelSAM9XE/portmacro.h
+portable/GCC/ARM_CM7/r0p1/port.c
+portable/IAR/RX700v3_DPFPU/port.c
+portable/GCC/ARM_CM7/r0p1/portmacro.h
+portable/IAR/RX700v3_DPFPU/portmacro.h
+portable/IAR/ARM_CM4F_MPU/portasm.s
+portable/GCC/HCS12/port.c
+portable/GCC/HCS12/portmacro.h
+portable/GCC/ARM_CA9/portASM.S
+portable/IAR/ARM_CM4F_MPU/port.c
+portable/GCC/ARM_CA9/port.c
+portable/IAR/ARM_CM4F_MPU/portmacro.h
+portable/GCC/ARM_CA9/portmacro.h
+portable/IAR/ARM_CM33/non_secure/portasm.s
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM33/portasm.s
+portable/GCC/PPC405_Xilinx/port.c
+portable/IAR/ARM_CM33/secure/secure_context_port_asm.s
+portable/ARMv8M/secure/context/portable/IAR/ARM_CM33/secure_context_port_asm.s
+portable/IAR/RX600/port_asm.s
+portable/IAR/RX600/port.c
+portable/GCC/RX100/port.c
+portable/IAR/RX600/portmacro.h
+portable/IAR/RL78/ISR_Support.h
+portable/GCC/RX100/portmacro.h
+portable/IAR/RL78/portasm.s87
+portable/GCC/CORTUS_APS3/port.c
+portable/IAR/RL78/port.c
+portable/GCC/CORTUS_APS3/portmacro.h
+portable/IAR/RL78/portmacro.h
+portable/GCC/RX200/port.c
+portable/GCC/RX200/portmacro.h
+portable/IAR/RISC-V/port.c
+portable/IAR/RISC-V/portmacro.h
+portable/IAR/RISC-V/chip_specific_extensions/RV32I_CLINT_no_extensions/freertos_risc_v_chip_specific_extensions.h
+portable/IAR/RISC-V/portASM.s
+portable/IAR/ATMega323/port.c
+portable/IAR/ATMega323/portmacro.s90
+portable/IAR/ATMega323/portmacro.h
+portable/IAR/ARM_CM0/portasm.s
+portable/IAR/ARM_CM0/port.c
+portable/IAR/ARM_CM0/portmacro.h
+portable/GCC/ARM7_AT91SAM7S/portISR.c
+portable/IAR/STR75x/port.c
+portable/IAR/STR75x/portasm.s79
+portable/IAR/STR75x/portmacro.h
+portable/IAR/ARM_CM7/r0p1/portasm.s
+portable/IAR/ARM_CM7/r0p1/port.c
+portable/IAR/ARM_CM7/r0p1/portmacro.h
+portable/IAR/ARM_CA9/portASM.h
+portable/IAR/ARM_CA9/port.c
+portable/IAR/ARM_CA9/portmacro.h
+portable/IAR/ARM_CA9/portASM.s
+portable/GCC/ARM7_AT91SAM7S/port.c
+portable/IAR/RX100/port_asm.s
+portable/IAR/RX100/port.c
+portable/IAR/RX100/portmacro.h
+portable/IAR/ARM_CM23_NTZ/non_secure/portasm.s
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM23_NTZ/portasm.s
+portable/IAR/ARM_CM23_NTZ/non_secure/portmacro.h
+portable/ARMv8M/non_secure/portable/IAR/ARM_CM23_NTZ/portmacro.h
+portable/IAR/78K0R/ISR_Support.h
+portable/IAR/78K0R/port.c
+portable/IAR/78K0R/portasm.s26
+portable/IAR/78K0R/portmacro.h
+portable/IAR/MSP430/portasm.h
+portable/IAR/MSP430/portext.s43
+portable/GCC/ARM7_AT91SAM7S/portmacro.h
+portable/IAR/MSP430/port.c
+portable/GCC/H8S2329/port.c
+portable/GCC/H8S2329/portmacro.h
+portable/GCC/MicroBlazeV9/port_exceptions.c
+portable/GCC/MicroBlazeV8/port_exceptions.c
+portable/GCC/MicroBlazeV9/portasm.S
+portable/GCC/MicroBlazeV8/portasm.S
+portable/IAR/MSP430/portmacro.h
+portable/GCC/MicroBlazeV9/port.c
+portable/GCC/MicroBlazeV9/portmacro.h
+portable/GCC/MicroBlazeV8/portmacro.h
+portable/GCC/AVR32_UC3/port.c
+portable/GCC/AVR32_UC3/exception.S
+portable/GCC/AVR32_UC3/portmacro.h
+portable/GCC/MicroBlazeV8/port.c
+portable/GCC/ARM_CA53_64_BIT_SRE/portASM.S
+portable/GCC/ARM_CA53_64_BIT_SRE/port.c
+portable/GCC/ARM_CA53_64_BIT_SRE/portmacro.h
+portable/GCC/ARM_CM3/port.c
+portable/GCC/ARM_CM3/portmacro.h
+portable/GCC/ARM_CM4F/port.c
+portable/GCC/ARM_CM4F/portmacro.h
+portable/GCC/IA32_flat/ISR_Support.h
+portable/GCC/IA32_flat/portASM.S
+portable/GCC/IA32_flat/port.c
+portable/GCC/IA32_flat/portmacro.h
+portable/GCC/NiosII/port_asm.S
+portable/GCC/NiosII/port.c
+portable/GCC/NiosII/portmacro.h
+portable/GCC/MicroBlaze/portasm.s
+portable/GCC/MicroBlaze/port.c
+portable/IAR/AtmelSAM7S64/port.c
+portable/GCC/MicroBlaze/portmacro.h
+portable/IAR/AtmelSAM7S64/portasm.s79
+portable/IAR/AtmelSAM7S64/portmacro.h
+portable/IAR/STR71x/port.c
+portable/IAR/STR71x/portasm.s79
+portable/IAR/STR71x/portmacro.h
+portable/IAR/AVR32_UC3/read.c
+portable/IAR/AVR32_UC3/port.c
+portable/IAR/AVR32_UC3/exception.s82
+portable/IAR/AVR32_UC3/portmacro.h
+portable/IAR/AVR32_UC3/write.c
+portable/IAR/AVR_AVRDx/porthardware.h
+portable/IAR/AVR_AVRDx/port.c
+portable/IAR/AVR_AVRDx/portmacro.s90
+portable/IAR/AVR_AVRDx/portmacro.h
+portable/IAR/AVR_Mega0/portmacro.h
+portable/IAR/ARM_CM3/portasm.s
+portable/IAR/ARM_CM3/port.c
+portable/IAR/ARM_CM3/portmacro.h
+portable/IAR/ARM_CA5_No_GIC/portASM.h
+portable/IAR/ARM_CA5_No_GIC/port.c
+portable/IAR/ARM_CA5_No_GIC/portmacro.h
+portable/IAR/ARM_CA5_No_GIC/portASM.s
+portable/IAR/ARM_CM4F/portasm.s
+portable/IAR/ARM_CM4F/port.c
+portable/IAR/ARM_CM4F/portmacro.h
+portable/IAR/AVR_Mega0/porthardware.h
+]]></Files>
+    <FileHash><![CDATA[79ea76ca3e66f23dee016c80120898295416f6c2
+a0702808f84315bbff7e6535f79c39eb86751cbf
+10dd53d50a9781a38c3d47246946d89c5795efdf
+47469a5fe8375cf319aba7aa1e71d126c93ee00e
+660b61cd06dbce4c6380cfa2987fbe29c3b0f915
+112ea302989a3e9d559f172b8142cede46872e02
+5a0a2da6b8554c9ddcf2dab3589008d724fad3c3
+1d3f2d27de6b8d794aa9394a51f5ff510a7e39df
+382ec4dd1560b48da5aa9ae44825b858b84a1f89
+bc0a70310f93f9d19a1d75163ba21bb575e693ef
+360ed62d3398186f8d753e425a49a34d2326d8c9
+c39a9c7bd4f4b6dc483fb35111d4097d9cf233b9
+a573d96c2a27d1788ce609e3600a0cc6226e395d
+cd663bcfd76e4aee089758c7bb3570c657a18861
+61c8af1be5c4aa9ffcd4530df167c3ee7bd4d70f
+11dff07528d08498976eeeda64c5d7731025d16e
+dc8f199885e12397a0eb8437374c11c62aaa6c4f
+eeff8ef18494d711ff1acba026797723cc81b3e1
+b9dc3fe51fcfe8d5178b3d309b778605ca0d734c
+c1bb62bf775785b8574de01c877de0b99cca8d71
+bcdde59223eb0b1726858af39855140bec9fcbe0
+7ee956df0faed5ae576099125d9bb15247d24d4d
+36e276d215b3eddcfd5ee603c7dc4e887795ca1a
+331f54d93d4eb82c080c12206a0ebd138b5878a4
+c9ecc735098e59571f02f1416147cacab0b9814e
+9b0395545429d4238a332caec2d03717ccfe34b8
+b8e17af2d42f57d3fb0ddca8cb21b56bb12c7a0c
+8533c640a4f1eac040c3da2f78bc5d1c8d52bc3c
+1c975d4e2f61bf8cb068666e50bb9a28a9c4a424
+8517b33e80b53b46a2b70ddc1b22fcdd4ad6c18c
+a52ef5f8d01f50aae52640efe430e0d5f14b4ccf
+959b3a428756e045706ed87174012110d1601422
+6a565aaa9cff08756b002fa8297a7aaf76124362
+fbdce7d8b7b6a46d8cb743ff9268665c6f05364a
+31f0f58b6945bb12a55538a557d86d23a5490086
+7500c802b5755c4701967d2921af04269d679bc2
+7847baf88d0bb040954b1d26dcbc487de26bba3d
+2e3b044b7a7011b82f1c97488a05677b6804e5cf
+7609febef4f222ae7b3d3f8c37a0567101ab8479
+950a1839e31533264d3232d232823483f397819d
+f4d7f1b645866e0fc2ba6eb5a10cb99c91f8c64c
+ba67764f115c3fcd22b79b31fb146a126962fdfa
+b2bc57654852fa6aba35f63d9e88afb4d0c2a902
+f0f9f93643fa8b82f3a0216ce0a01069187ff33d
+255761b55d1332ac79bff3b3c63024f4e2c0dcad
+35c89d811c1f5ff1c3a78856ad236a0f631f4e8e
+c6d580ba4cff3d4cde2a076ad514575b94a8e046
+759d4850916c23acbc473c443e7fe57e29c7c483
+00d7cba587d05eb0efa07171f9218039b66e311d
+60fe0fae16092e3627b60b8d0e91f1614f27e015
+e1335d10f8e6a621f0a52953492c4e6ad09d2d87
+fc8753381f33bd1ce35cb972b07ba75bce16f117
+9a0918612ba5074e8116acc9b52937d8b18d8eba
+c0636aa79232df1e773802a8524eda00c3350458
+bbdd4e28f2eff7f39fcc3e164c343192fb9cfb79
+91b9d24fd14e9f82965efabf7f0fd35f3c59eec3
+caa36d23b87f8fb0a37b071f0d2b7c1006540f2b
+6edf215c7f5a793238e9ee9b31cb4368aef1f951
+1d4eb3207222eee9aadedfc7cc717c9f98f71d62
+252b67663e2dc0e9fb69cfb00e080505cf76a5fd
+41bc64e10149b0d37759af629da36bd9d186cd80
+dcb5860e07a6f403d681ed5d64120266f181aee3
+af1976b0979e598a0f1b8097c6be7211550e4294
+31626f3b0758614694a572b3d81b1d1cfcfc28e9
+e7e9e01146a6113db0228651b73cf2bd1e405949
+b6245c3cb642bdc7b2bc366910386628c8896cbd
+93a41c377921b2427b17ac696385495d2b455838
+052da50f0d5e98e4d9a43326348b5e86c59b53da
+b7478f10d47ec62f6f02353a7694a8fd299cacee
+1c4a0e11eb7b0cc004d941f0f981b666a2f80c55
+449f016e22d8c41111eb248c211008dfb2f79d96
+654567c314f6880372f5ebbbf5e5834931e1166b
+f7c7f20b62838cd23af82b6b4a106e3a575323e9
+04d8bfe2715a051a8463b55d4bd2f0623fa02175
+ccdbf38145b4b12d7fb0b50bd66dc78b4e90c874
+ed4ae8ad4bb4b327f4f6bfe5bfacb2fc36192a00
+ed4ae8ad4bb4b327f4f6bfe5bfacb2fc36192a00
+707c25dd3112b4e2c88aba0b5d5c579d9a4f99d3
+f66677b8acf30ac56ec3371a1f146a1f4855599e
+966cde887add206a6fc54c0c96abc2ba36f1ae3e
+0a78ac62b35a10247278c3ecb5c4d11d2e3f4461
+18f3ad0f5fc884448c3fc06c99c71396ff134e22
+10d9f1c66492017bbd791086569b2766f4bcffd4
+33651477682b760a710cbc8d1ea47d7f87ccba41
+46726030eb2ad0417e50a5de0d57c1b7a7187a33
+3ce2917a05257640a54133046f516c6b983db249
+7b2b234c2135d9d2f28b81e4bcb509df1885b419
+52f71e730208d21f5f7304b5dff40dfc92284d3a
+7720bc403c1ec5aeda2c245511830d86b8c9e1e3
+b70830e40e72b2fe3a094a446050844c8ed9e74a
+ded583345d1d9956aa82fab476f266354f316362
+ad9f183c4a0c148050e2668915a3425651b40145
+c9bd9d053734c336da4505a1ea28ce736bce6961
+96a23ae72c22be79160f770aee68fbada35cc3b6
+b67886d773b2bb100b56506df1c4c3036b489ffa
+f210bf0acb843b172d509e7f5f382a54c8094d22
+36ba700536a026499dc3ee3110a7285d474b46d8
+04ffae987f4a89909a2c1c4baa0502f4c13c11a8
+06a18dd6e562655d32fed6845860bad238c0da34
+b0fee897209f64f104dfbd789f23df73d34b48f2
+07f53d215ba940dafa5320a9e49637f9818091ef
+c57c4391967cc1457c5bb4fdd5e2b8fef4449f61
+be9e256b79501a36e32de6640db38c4318b87c31
+9980b3523ac3f5d0785643922d19d2113e504e95
+e7fa1ce5e4023f8381eb71401186a8d67dcfc7df
+0a4e79ec4451d6d47639350225c655eb2f48f021
+6546724a890c72042213997bd76cfc8845866a50
+b1ed5936898c1e3406381bbf16316c7fc2e8e638
+222d595bc65e87b49c8ad2700f46b10d9b9ad082
+72325058043d21acafd8cd45da8abf13f6631569
+dd111b829e97984d3f2a2481e335548ad3a3e2f3
+d5498503369a0c6621cba2407ba87b98d141f010
+0010de7c62d76f1fbca221cc0d68c1bec1bfe4fc
+d1257498eaa45eb3aba7d53acf3c907165c67349
+53d9f4067c71c22d933adc40c654bc958be025e2
+cb19965fbe038e1fa13352e0a5d9d74c6b533b7d
+eb2a776d8add44028f8a322d29b8b3d79edbf902
+eb2a776d8add44028f8a322d29b8b3d79edbf902
+eb2a776d8add44028f8a322d29b8b3d79edbf902
+4d9e47423c6f2e7ca7703646d08c8700c966f41a
+cc28b217c6b640356fdf6754b2b7edcff8d9d921
+cf0da74a72482363ac9da13fb96aec937aefd0a6
+5fdf5262a604b27689812f29d0d54ccc72043610
+0fc3edfe65eee47149a5a7f23c697d384e2815cf
+15b58dd023c95157a8e92fefc4ee838dac2b5ce7
+ac5af40f4c539ef7805519671b92f4ca8cd22d5c
+e282ec3ce34016394713b85f6821c994ff87ec2f
+6678088f91df694163663ce9b8bcfb6678ec7be4
+45f9331590a7d4765b8f083d7d9031296c919d29
+76a65dfa6d4a1a689a813f667a9b26236e0c1141
+6ed23bdab96f6dd539d064b5523d7d3c08f1c98a
+9b9395984dd837a84accf0d8e534da44c283cea0
+e876906b8eae247c0878927124929dd78b442df4
+5a77ae7be72bc7ec533347bd38aaba04a0493298
+cd123a68fbf5824b04bc73dec89f3f5419a8af33
+9d1f8793fe7cbe833d14ddd28a97b85eeb2dac93
+b1e2f33daa2f7e67b8f3a0757edb362dfb123819
+282f33842a8abc7cd2cb1636d6a8839371b9a1a9
+72af51604cc14597e8f0a0d6b9a73192f8ae319e
+1390878f790a7ff121ad1693a5dfe251c7731b40
+f8605d3e68eb51e576ec308508dbd97aebf1259a
+614027e7f1970b736cfef25debfc60f53ae9f983
+46961feaba2b2ca24557f18594eb7ffd46f8e418
+18a696b616d85c910d62218738f842cfa46dfeaa
+4a9ee12ae5b07a25e9d6f670f3501b5b9a24dc76
+789e922ea38b05879cabb479d9871c02467c25a5
+a215447ab1728a7739537dadc38820f2e80bd803
+c4760622127c0f139ff10d06e615ef19369f00c6
+c6f79d0c25f15d2d27419b34cffbc3dca0b6456c
+24070469b4242b321b6fb59175d3b359ea4ae9d1
+24e72ecac9b5766f409045c6b56df710e439b240
+57a35389413bc38ce66f177fa4691da6102770e4
+14a39f336236d2a63cab5b9e0685ca0b5f307acc
+a8947d5f1c3ab6f66418edac01bcc273f920f873
+5ab49820fe14549d1b16c43ce61a8d68f364b368
+206398de42fe559a0043bff4b7c6cab9eab11109
+9e89cf76005519b9b882c9f29b2782fcc7ea23a3
+a2a113c5e6da60a50aabc982a2ffdefe1cd361ec
+a336bde4d96bb46bd8eda0edb1bf01928b09e7da
+cfe21397f8907fda4c40f24d127e540a7b43e481
+22f4ecb8f593cd293151a62450f1cddb79cd240f
+fc129de65804bdfbb86b6375db60d54a563df6ce
+19e589fee7ed58843bc8e79d74fa792ace299730
+19e589fee7ed58843bc8e79d74fa792ace299730
+19e589fee7ed58843bc8e79d74fa792ace299730
+cc2196c5296e5cb443a8c51059a6d74b8f9625cb
+c4900b11c01ea9be022d98677e9a84e60cee42c4
+c4900b11c01ea9be022d98677e9a84e60cee42c4
+fe6358537d61c3e7081c548635ebe865ae2baea6
+2cade55b1532539270664a6501ed561508d5c1e1
+baf753502ed66e2b6d081bb736e3b02ff35abbd8
+baf753502ed66e2b6d081bb736e3b02ff35abbd8
+baf753502ed66e2b6d081bb736e3b02ff35abbd8
+baf753502ed66e2b6d081bb736e3b02ff35abbd8
+4777911aa142b5ae38487f583a0690ca0a67fc10
+4777911aa142b5ae38487f583a0690ca0a67fc10
+be70a8375d0bf172b353dee4fcd975715663e46a
+b76c29d9fba627fde7ac713290f1b1ba9ee43dd6
+06d62db0dd7fbad7684be465fa672e583bc9ac8b
+06d62db0dd7fbad7684be465fa672e583bc9ac8b
+06d62db0dd7fbad7684be465fa672e583bc9ac8b
+06d62db0dd7fbad7684be465fa672e583bc9ac8b
+0b790496998948fa2a4e5e08f6841a44716cd71d
+0b790496998948fa2a4e5e08f6841a44716cd71d
+9b2cbc8779470a03f97f5e1a06dae9f4b34a3eac
+9b2cbc8779470a03f97f5e1a06dae9f4b34a3eac
+ff0fdaeef54ca67bdd9b6ad2b2fa5c49a9a0ae42
+064bd5fe87f216e2655567c43b9cc5bc70171107
+da4f6b14ed8eeb9da4a31d1b3d8809f4af5b1c3e
+da4f6b14ed8eeb9da4a31d1b3d8809f4af5b1c3e
+db376c3710476cb00fa0ae82f3a161e8f5a1526a
+db376c3710476cb00fa0ae82f3a161e8f5a1526a
+7cfd961eb92593c9dbad5eff56a3f1b19d3ae4e7
+90cf2d9944697abc279fb9e348c49c4871dc6ea3
+541c42a521c57a8649654acec5833adaee3e1776
+3d190f83cd42644676398b5d0372ff2b86e33efd
+87f008d0896c3e440d328cd6437a09c65c87a9c4
+41272c9b7baf7feaa8acd643e8a66b5596670f09
+cd4558d12d864336577d7a822068af253d388486
+aae22a30670b55555c1dde2941da341c7f7e82e3
+9b8c7cb85155d86e0112a9485d486bc55a10c6c5
+f5e12b290c027997ae4385d3c27353d3c55fee1d
+f0a4e648818f357054d401e408249cef6fd54e3f
+f1fbb5f4f4e1c45ea8c47c653b2a93d68e1f5ded
+4861a7120813076590ac345d402f97a48e9dd990
+d796abc26db0fbd69cb16dcf44c38ab15d16d9ba
+d6262e0efb425931d200e6893b3247fe16bdf5e6
+52c6c8aac2157c8798ab03c676f7e2d15fe2648b
+9779b6171c6393d9a52442e5d7dc00cd0a362003
+3de7ab8783d9a3eee62d44d6d3156533ec184a2c
+3bd2e794e821f7826b1cae666bdf761c031b69aa
+42c08496434ca5d6075da5d753242e06cccfee93
+f687e56dd5b05742a74ad6b9643d67d1e0076381
+ace0d3228e670a3537a564fbc673cd8a1f4b27e0
+2959b18015bca8ef08ff5ac16cc4a9ad6f9f5323
+4a835d615e6d16a0309c4d7fc81ce854dde80700
+b4b861c2b082b4530a641173545d427a3a250bca
+8b6bf5b14b268563bbe654445943d4f396295795
+de53d15c944766585fc54013b1882d2450059310
+19b4e357e4c53a554c33500c70b4425a1d2cf5b6
+fbceef43cc5fa41f5259bfe8adcd98ba5e879035
+90b08aa4d200c2fbd57d9073443b02c10f50e78b
+7d8a38a142e49ce6222468001b74dd63098dba8e
+af760335188958770ff45857696484b61769cff5
+d9b0c157491d9437e9d0e4eca834e9fef0e7c28f
+8f45b548ee010aa70710c9f59febbd1594fc6cd0
+a7ffe5c76baaefc445ff6d4dfee16bf09f83fdd1
+1b95477aacba428601dc68c677c6f3797cecb50b
+f83fa6cbc938bbc820d8539e4bda0e4e25e9906b
+eda90e3616926e59b3eb1e7899d8f3a1a1956cc1
+702905a69f5df289d25f77be0ce24677788f189d
+e526a6f0ad5ebbcfd08922afbb9fcc234de4c780
+2b960250047c98c79c348b49cb2eb32b085a89fd
+89648d616208904d3cd61a8438348f142803cab2
+b3690f5b944b8cc2c4251481e9e465ab4541232a
+397e5348b3d2d8ba111bc1bf1c4089134f89c129
+9ca2e043e908f66a3cdf29cec03080d2148c6850
+a9dc6e07092e0549f80c839a7007e1f79e3066d0
+6acaccdc0c98393f96b0ffa2532612593d143ffa
+4ae0b22bd7314a8285c60c68ffed192a5281d273
+fd362061554139b7de80cd8c6479ac92216b3c7c
+5f372b6e52df5a03b511355ee07920602a37e24a
+fb36ca1e7d4c72ebc3bff94021f7076ba50cc8d8
+7a91fb8172b5fcbfea57fdddbff9922a861fb637
+6e2ebb5e8891a5a8c2a4424429bc0b1e51732656
+c7811834a6e25c54632d9871059538565bdccb00
+ec31df8d0e1baa15b57f5411b7429cffaaf4d22a
+417c5974482a4865ac50b94370021db3a4000ad9
+cb32f5a642b1d91025b443680581e99f11fa83be
+e22ea2173711ba733f12758a09d1a7d0ae87cdb9
+e22ea2173711ba733f12758a09d1a7d0ae87cdb9
+1d153aad04a27abc687f8874d8081cce037768eb
+511f01dcbba064ecc2722419edbcd190259e8ddd
+0b50ceb147a853e095d8b796fb5ba149d3c0e212
+bc0f260e65218fc4aa86bdc04cf00933d0132d44
+9c83e2d33c8dce8d2d7c025a96cae7c08dfffdd9
+63cd92285c57b1b269b3695fd10544f9c40ca2db
+01158cd973a5f910656f1777760b6a4e5cfa812b
+01158cd973a5f910656f1777760b6a4e5cfa812b
+1ad331ce8f512b4982df9799987a797b3160cd33
+1ad331ce8f512b4982df9799987a797b3160cd33
+57b7eef59cfc2024171e79d3792dadb9cfa6d30a
+c6ad1e17920a6d8ab6f35ce422a1e971218c96a9
+51064ff390de968600c69b97bd9a590d59c6f52d
+51064ff390de968600c69b97bd9a590d59c6f52d
+1ff4dab13baffeb97b158c13c674a74fbef9f3c0
+0b35c78521555deed12239bd581290f88a068fba
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+7177f10be3504ed6b168ff1dfe6910513953a923
+37a9a66229b5f74c3df207cd52e0c9504cef5ddf
+f3f99d2ddeaf52baf4a7c21c5500481b2542fa0b
+f3f99d2ddeaf52baf4a7c21c5500481b2542fa0b
+393d7b0c5f4ee027ad80e1da12bee6f463069ba3
+f59c10e10d70985ce3f0d4af229c66755e658833
+c1bdc4631b7b47a02baeff9b7924338c5bc4b1a0
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+e29d4eef07c1906aae65cf8abf1fe3d1890eaebc
+e92b94a64fdb8af10655f50afda1d5235a15d690
+b9c2fc3122fa06233fef2ce67ccfc2f9fc922c2c
+b9c2fc3122fa06233fef2ce67ccfc2f9fc922c2c
+2a30ee0d01a2a5a5e5892a46ab87d1f0d6375930
+47d53dea7445eddd11d0100d968c3db7b0804228
+47d53dea7445eddd11d0100d968c3db7b0804228
+47d53dea7445eddd11d0100d968c3db7b0804228
+47d53dea7445eddd11d0100d968c3db7b0804228
+47d53dea7445eddd11d0100d968c3db7b0804228
+54c0056a035d702006c5f1621b4908c27031044a
+9721a951e5d82e143e9b46efce11b4a1409531ee
+9721a951e5d82e143e9b46efce11b4a1409531ee
+9721a951e5d82e143e9b46efce11b4a1409531ee
+9721a951e5d82e143e9b46efce11b4a1409531ee
+9721a951e5d82e143e9b46efce11b4a1409531ee
+07c1c7c54a241667b844e184cb977342437d7789
+8bf57543900f37d8aac5bed90ec27b2ae631a5c3
+8bf57543900f37d8aac5bed90ec27b2ae631a5c3
+2d8ff6f2efc19c251355c01bbc096ab5171424ee
+701af269bdfbdedb728d4beb729d1d0fbaf04d54
+701af269bdfbdedb728d4beb729d1d0fbaf04d54
+701af269bdfbdedb728d4beb729d1d0fbaf04d54
+701af269bdfbdedb728d4beb729d1d0fbaf04d54
+701af269bdfbdedb728d4beb729d1d0fbaf04d54
+cc755dc1107805f7ee61d8d76201890fd06c46b2
+aec19c9b04b3c176b7459cd674ab942519e4c6cf
+aec19c9b04b3c176b7459cd674ab942519e4c6cf
+aec19c9b04b3c176b7459cd674ab942519e4c6cf
+aec19c9b04b3c176b7459cd674ab942519e4c6cf
+aec19c9b04b3c176b7459cd674ab942519e4c6cf
+542fd2c67ece6e49e207b59da937a614776c9a7c
+542fd2c67ece6e49e207b59da937a614776c9a7c
+542fd2c67ece6e49e207b59da937a614776c9a7c
+542fd2c67ece6e49e207b59da937a614776c9a7c
+542fd2c67ece6e49e207b59da937a614776c9a7c
+c41bf2ec8ce52164042a913ea547e440b8bafec0
+5139707b55cac21a6bf71671e0e84917cbfbdbfb
+5139707b55cac21a6bf71671e0e84917cbfbdbfb
+5139707b55cac21a6bf71671e0e84917cbfbdbfb
+5139707b55cac21a6bf71671e0e84917cbfbdbfb
+5139707b55cac21a6bf71671e0e84917cbfbdbfb
+15ce8597660b8d653f69ac7e26f2e217311c879f
+15ce8597660b8d653f69ac7e26f2e217311c879f
+15ce8597660b8d653f69ac7e26f2e217311c879f
+15ce8597660b8d653f69ac7e26f2e217311c879f
+15ce8597660b8d653f69ac7e26f2e217311c879f
+0b524d1785ac3c3c16cde0d1e2c4182cb6d6903f
+4d6d9aa2a09122782becf4a167c121872b1f66fb
+8c034b80e54103f602bc28ba06a733c96ede12c8
+45daf8c0dfe50fcdfae301dd87d20578b6e67241
+e1a5711ff30c127f60d4ab4ed469fef903fcbb9f
+076424be63302c6bac6aca62c9df8fabb7fed4a3
+d0c4bf5629b6b9ecc725baf8d0041b7b04a926db
+c7f3b004621cc4d8606d9ea2905d64035454ab8b
+774dee7c49dc9610a25914c926ba827a4e7c603d
+5d65b4a7b06df6e2ac47b2ab7ef50059338528a7
+61b10254867255d4f86e16db09092a0aa606e774
+e18cae086b74a2cf925ac5c98d93a1fa4e330235
+3665bde4961ef321d8b2af7e45e94266648f2d0e
+9b7f0c41644b808045beb9a14ccec38336682d7d
+092954652cc71e3b1f5820df9fd16a46c8c000d9
+092954652cc71e3b1f5820df9fd16a46c8c000d9
+174735428d7cd8a8ff3f43d319f5d91deda638b1
+174735428d7cd8a8ff3f43d319f5d91deda638b1
+174735428d7cd8a8ff3f43d319f5d91deda638b1
+174735428d7cd8a8ff3f43d319f5d91deda638b1
+158ccc95a99e5dd8b3cc06cd12ab82db6602027b
+158ccc95a99e5dd8b3cc06cd12ab82db6602027b
+158ccc95a99e5dd8b3cc06cd12ab82db6602027b
+158ccc95a99e5dd8b3cc06cd12ab82db6602027b
+b91e428262e4fcf2af4af7068f2db400712424ed
+2683cf1213ca71cd20cd0fe618d24baa0fc18167
+ed330c67a7af35a16f5219b62403e28762a89e24
+49714e58d5140caccb37218ed8c1fea6e79eaac7
+772b2f47a84760d235beb4b132c4ceb97e0bee30
+5e3603ea01903a9a6adc81f1f185caf0afd99dd9
+9f625e3311dcbbf169b6ded84541117ba37d36c8
+29e627e63c6308e1555f0cf73fd31c3aab825959
+310e9d02fbd3062de2153cb02acac000de371288
+f82e881d36a6d467e3a316b7ea5be029701ffb38
+330c640f45eeee82ff762e46a0327cd91efdd60e
+d65d9047e3a555f5a6a5af275dd7faff2105dd30
+94183e33f4c83be46e542680e4000a52e1c50e46
+7a87998258c20305e7efce6d6207532b1c5ce202
+7cbb778e782000b3f782b6b5569ce7b5a66b026a
+3025bf6be248345cf626e2ffc2df4f85f8ad5fc1
+4e495026c828aa6b863edfa940b47855314cdc54
+ffddbc14fe9f3f1c1b1bfb02cf108b279ba0ee92
+53dd3e4d304e9334d552e67df5ab5a8ff9e4e261
+99e0f7773b2a2f95e1cc5a08977f0070ea3e486f
+0cf905c083f2fb3009b56fea123edc790dddbac2
+fe8497688a1675f5af9a0a9bc823e15907167e0e
+fe8497688a1675f5af9a0a9bc823e15907167e0e
+8b362c9337c89d8ceb453da435749e3ab3e2d9d0
+45fc2bcd347e290a8131f3432530a0ab87ed9043
+45fc2bcd347e290a8131f3432530a0ab87ed9043
+0ce249130fe72d941761ab15fe8dafc6a5d90681
+f76d39b4b1dbc6d40c827de9524b65628b00b8b6
+04f832689c9a8dc8bc3e252aa8f16d7629a9ab0b
+8dbc36f911196c11ed814de002a2b4901dfc9c3c
+5ccd0d62dca3c25e8c8fe59eba048f110af6727d
+7dfc0733aa20c6eb773493af273620ee35c8bb52
+6ce5adaf983ae4f0406db14fa7f07606844435d1
+3e7633921d399a7ebb8b5ce533162c8274c34036
+3753d5c30b4c2854ef3e70c2fcef12546c572e2e
+fe165a92cf04c91991be86b206462f2a14ad7196
+cdd3015eb13f8f028b127ff88e8e5ba02432749c
+7c06e20c5d178a3d37e22830babee278f714d6b8
+11f799eea7323dc446b79fd53ce99c34f6a6a41b
+4d14d89fbf2b4c1fb8d3f9bbe3c9aee5f17e7bd8
+a9e80059fec0f17849cb1971b53f7ea05d563938
+aa5040bc6608060eface5cd64c74db9cdba1a4a5
+3526910b966b45cf98b0d13c0e7745cd2f74eaca
+2433a22d650398151aef30a578b535675dca577d
+6ae20d6479c933a279c59e129cea93a9067336d9
+493ad6ed13f6531a86d883b3cecb158b76cf6d79
+8ff5d52db4dab704f92bb276ba221408c0eb2c00
+0f3183e4728bb6ab621265c3874e07baac69c009
+193140d696e1cf4fae08023ae25ab1d70f6f74dc
+9ea976bb1b74045de90c983173604fa019a942ce
+97878fcc0279284cba9da75ae7f3e535ce0b5396
+de54215b7ee9f45b3e8ad13be4620a0d03355709
+d7651ed570ddf736b725efb70e966d63bee30ab0
+631b053e90ac4a08702c83baf09f6a2777e2d768
+2f3f0d4a2535521ce1f53a27a0aa60284b1ae2be
+875adf6465856fbb75caaeededf0155aed39fac4
+914f9f9d0c4171d0b197bee62a09c6aa48d1cd94
+a4c468d4322b64dab1a4f78cdd478e8744c1993a
+01ca50f4f44f20bc14e0b31e0db09e757135e406
+3e90f77e45078ca2f05bac67f72d1138abf065d3
+ee6029bf693615751dab984f7301b10c2bca0617
+ca18d55b185aec7e2980be66bb8d241512e45c1b
+b4cc3793fdffd5d18aa0542a80f325e1ff0d8a92
+cfe8745ee777c772791675fa637df44ffdfb7c0f
+0687630205752fc33c9ed21cec4cad8245f075fc
+0687630205752fc33c9ed21cec4cad8245f075fc
+5742720d98e2fa58999656b9ef98fda7dade5b9f
+5742720d98e2fa58999656b9ef98fda7dade5b9f
+0c81c005aa08f422c6d51843c19c481c7ad54f0d
+91c826844a0dac8a41a64adebbe9d8dd4eb912e6
+90845f8f11eb98be488ad711af6aebf3104e1362
+b82ed612b6b8c78ebd2ae51176e98104282ef3fd
+fb4dc2fe7a9ef21c0e7a1eed49b976adc97e9247
+f78a2326dff88f3268c2e00c3c0498b4c049b6c7
+2b7e144357f2e4d9dcfd2bcdcd54075b4bbe0272
+2213665b42361698f9452235a94634f70ce69f24
+b3595623ff9da378779723d930d57b64fc0e58d6
+4abe50848c45f67aa6c2366afbae9aaca8a67646
+6226ed1b8d3b66e068edb7792b8cc3d92453e13b
+6226ed1b8d3b66e068edb7792b8cc3d92453e13b
+15d0ebc34f2474084d21971447856333a0680c61
+15d0ebc34f2474084d21971447856333a0680c61
+09ff6cdaa7ed41f9f780a60b9930f412698e1622
+6ffa183075892d23160d6a3518a405554d84bc9f
+f88a269d8eef44136fb16175fb00036e6eafb1d5
+f88a269d8eef44136fb16175fb00036e6eafb1d5
+e3b0084c309a131ee5ddf1471238502e7c539b6b
+3547761ff48de774b767ce3ae21c84d1583ca84c
+3e625335f835e8574f37c6188761a92e833badc5
+d86549281439530ac75541f164e473df78333097
+2aa91fcb31af78499c1e2b397ccdcffe6d9b2185
+edf0394140241e777320f9f01b0466f1092c65c6
+e3ee87008d7e53333417d0c97fc5478d5699346d
+0dfa68a06427340cb818621843203b465dcdd2d4
+1e2522fba7b6addb456250a65fa113fc6e0002c1
+81b99800e9459ad5f11ed8d4dcfa968148d3652e
+6fd472d41d6bbc8c562e9f2393a6f500c69ed2e9
+872f8ececb0bfae7726e6e36563cbf61e2f90d2b
+c493b4846a6111e06c192e6278f849068d1058da
+34c8861e97a21009a6d76f5a65b243545eece103
+7d988a5512df81c5535ce883aa58f63e07c7d8a2
+01aaae00e10278710789165ec8870dbd5938996a
+49a901cc478ef34d76d297ad14b6d160a838b47d
+b2e98b09567fc36a48c57804268fd7ce3cf407d2
+f1c3d198136cfeb4cb166a62247fe5dd299ca509
+408bfce919a4d18127b0ea31dc5dac739b685973
+397980e11696ffeab4717b89304d542244aae8a0
+35c0805c81d6ef1f1d6dbffd47df50cab1625c02
+f605519ef55353fdbd2b85d995266ad4437aea79
+4759368a60c51cdef1b69e857a263c2c99adfbe3
+a15b4bf8ab1933df4552a8db8652ae90cb8e2480
+ff1be2baebd586b17de9765ee7df03c2e6bf3bf3
+193834c9335f34c3e48e0192e5e7e1b5c885b33e
+f114cc5a0c74c5cd33c00441ae423ac7ed172f65
+fe3c5beb26d50797be1973cfeaa97860162edbf1
+4ef6508705668dff5054f32cc0e1de0b00176bb8
+197387cc5f535a9a12321696ff51d3c3204854fb
+09be3efdfa9837ace5007f1adc9c01f4a8c41bd9
+e8ef169c14adcd33a3aeb0242fcbf9e3884aec51
+2feede8a24ac4fbaaca6b7fe49a4ecc5ddf37fc0
+9cc7934f33b38d2efa4cafd32d0caf59ad78903d
+4da980515ba7d1cff0f91de61bba9dbfde733363
+4da980515ba7d1cff0f91de61bba9dbfde733363
+ae45454a9831b8d1e6a762fe17258a2f204206d3
+ebaa3219a4068712517b2698df5cd0079cbb5df3
+5dddbaf624d690efe4e4677cec635e708cf73484
+8fdd888539117dfd7adf8fb9da32969f7b8d064a
+a344799c8aa61c4092d2b0c3516b7a950ee944b3
+c3c1c190875ec5bbe3426dec371e97b8e5b56d71
+f80e1b9802e32e39ad4afef71df2bc395cb14eff
+a966c55fcc645c0e700f4bd70d13590888f00ea9
+2deec04a775adfb944c6ecbb2f59289aba1ba4bb
+81eb68d8b085cfeefa11902df8e4658b9cf97e41
+6d219801987d5bfac14e6bb4a723dd604ffb85bd
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2020 Synopsys, Inc. or its affiliates. All Rights Reserved.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/ARC_EM_HS/arc_freertos_exceptions.c
+portable/ThirdParty/GCC/ARC_v1/arc_freertos_exceptions.c
+portable/ThirdParty/GCC/ARC_EM_HS/arc_support.s
+portable/ThirdParty/GCC/ARC_EM_HS/arc_freertos_exceptions.h
+portable/ThirdParty/GCC/ARC_v1/arc_freertos_exceptions.h
+portable/ThirdParty/GCC/ARC_EM_HS/freertos_tls.c
+portable/ThirdParty/GCC/ARC_EM_HS/port.c
+portable/ThirdParty/GCC/ARC_EM_HS/portmacro.h
+portable/ThirdParty/GCC/ARC_v1/arc_support.s
+portable/ThirdParty/GCC/ARC_v1/port.c
+portable/ThirdParty/GCC/ARC_v1/portmacro.h
+]]></Files>
+    <FileHash><![CDATA[91d84ccbf6dcfb6dd9902c59e952df8b7efd4c0f
+91d84ccbf6dcfb6dd9902c59e952df8b7efd4c0f
+51935df077d959e90b0226abc55172ce1ad29faf
+aa93b521811a957c2712331ca8abc4bf47f69b21
+aa93b521811a957c2712331ca8abc4bf47f69b21
+d53543c9aade91522611d1a7f0371af5d8df72ea
+a3e19918e5f8400fd0d1386caf0ba4d5b78691d8
+468d4afec6618f228f46f47499eac5bba67f5ae6
+398829031613a0ab0a676903edc3a84b9de210a6
+cbb68dcd268e8792709ee286909b9578821fb86f
+c6597ce05ea82b8c197108c27f022b66037af4fe
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2020 Cambridge Consultants Ltd.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Posix/port.c
+]]></Files>
+    <FileHash><![CDATA[e5a412c790742f63585af1f9b05ee26358f00de4
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/RP2040/include/rp2040_config.h
+portable/ThirdParty/GCC/RP2040/include/freertos_sdk_config.h
+portable/ThirdParty/GCC/RP2040/include/portmacro.h
+portable/ThirdParty/GCC/RP2040/port.c
+]]></Files>
+    <FileHash><![CDATA[6256cbdd982dcefbc111718994f619c6732f3036
+399ccf82f6eb6bb70302db6fb72b81b822d3c391
+4c9cf149508e0ae8e33d4251641cd3771d374a25
+40aec266995d82a246ac0939d80bf5cb0e59f284
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2017 C-SKY Microsystems Co., Ltd. All rights reserved.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/CDK/T-HEAD_CK802/portasm.S
+portable/ThirdParty/CDK/T-HEAD_CK802/port.c
+portable/ThirdParty/CDK/T-HEAD_CK802/portmacro.h
+]]></Files>
+    <FileHash><![CDATA[fe387316be8be416e1261b5ac7bb8784ee4c5ccc
+7f58981ec9cd97ae40bd50098f122133b96d8494
+60dd9995c300cf47762247d598dd32e425c17c70
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2016-2017 Espressif Shanghai PTE LTD
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/portmux_impl.h
+portable/ThirdParty/GCC/Xtensa_ESP32/portmux_impl.inc.h
+]]></Files>
+    <FileHash><![CDATA[080b105eabb9e6a789e4a645bc17eaff3412820c
+311ed13cc4f53bfef1e5d4010b058853fa8b94d7
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2015-2019 Cadence Design Systems, Inc.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/XCC/Xtensa/xtensa_init.c
+portable/ThirdParty/XCC/Xtensa/xtensa_intr_asm.S
+portable/ThirdParty/XCC/Xtensa/xtensa_config.h
+portable/ThirdParty/XCC/Xtensa/xtensa_context.S
+portable/ThirdParty/XCC/Xtensa/xtensa_vectors.S
+portable/ThirdParty/XCC/Xtensa/portasm.S
+portable/ThirdParty/XCC/Xtensa/porttrace.h
+portable/ThirdParty/XCC/Xtensa/port.c
+portable/ThirdParty/XCC/Xtensa/portclib.c
+portable/ThirdParty/XCC/Xtensa/xtensa_intr.c
+portable/ThirdParty/XCC/Xtensa/xtensa_timer.h
+portable/ThirdParty/XCC/Xtensa/xtensa_rtos.h
+portable/ThirdParty/XCC/Xtensa/portmacro.h
+portable/ThirdParty/XCC/Xtensa/xtensa_api.h
+portable/ThirdParty/XCC/Xtensa/xtensa_overlay_os_hook.c
+portable/ThirdParty/XCC/Xtensa/portbenchmark.h
+portable/ThirdParty/XCC/Xtensa/xtensa_context.h
+]]></Files>
+    <FileHash><![CDATA[d5498503369a0c6621cba2407ba87b98d141f010
+d1257498eaa45eb3aba7d53acf3c907165c67349
+cb19965fbe038e1fa13352e0a5d9d74c6b533b7d
+5fdf5262a604b27689812f29d0d54ccc72043610
+e282ec3ce34016394713b85f6821c994ff87ec2f
+45f9331590a7d4765b8f083d7d9031296c919d29
+6ed23bdab96f6dd539d064b5523d7d3c08f1c98a
+e876906b8eae247c0878927124929dd78b442df4
+cd123a68fbf5824b04bc73dec89f3f5419a8af33
+9d1f8793fe7cbe833d14ddd28a97b85eeb2dac93
+b1e2f33daa2f7e67b8f3a0757edb362dfb123819
+282f33842a8abc7cd2cb1636d6a8839371b9a1a9
+1390878f790a7ff121ad1693a5dfe251c7731b40
+f8605d3e68eb51e576ec308508dbd97aebf1259a
+46961feaba2b2ca24557f18594eb7ffd46f8e418
+18a696b616d85c910d62218738f842cfa46dfeaa
+a215447ab1728a7739537dadc38820f2e80bd803
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2015-2015 Cadence Design Systems, Inc.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_overlay_os_hook.c
+]]></Files>
+    <FileHash><![CDATA[d6262e0efb425931d200e6893b3247fe16bdf5e6
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2015 Real Time Engineers Ltd. All rights reserved
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/include/portmacro.h
+portable/ThirdParty/GCC/Xtensa_ESP32/port.c
+]]></Files>
+    <FileHash><![CDATA[b4b6e1a5203bfe17fb2f5ca9f417421593351722
+7554f5412e52d7f11f7118012b1488565990bceb
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2015 Real Time Engineers Ltd.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/portmux_impl.h
+portable/ThirdParty/GCC/Xtensa_ESP32/portmux_impl.inc.h
+]]></Files>
+    <FileHash><![CDATA[080b105eabb9e6a789e4a645bc17eaff3412820c
+311ed13cc4f53bfef1e5d4010b058853fa8b94d7
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2006-2015 Cadence Design Systems, Inc.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_intr_asm.S
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_context.S
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_api.h
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_context.h
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_vectors.S
+portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_intr.c
+]]></Files>
+    <FileHash><![CDATA[a2a113c5e6da60a50aabc982a2ffdefe1cd361ec
+fc129de65804bdfbb86b6375db60d54a563df6ce
+be70a8375d0bf172b353dee4fcd975715663e46a
+ff0fdaeef54ca67bdd9b6ad2b2fa5c49a9a0ae42
+90cf2d9944697abc279fb9e348c49c4871dc6ea3
+4861a7120813076590ac345d402f97a48e9dd990
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2003-2015 Cadence Design Systems, Inc.
+]]></Content>
+    <Files><![CDATA[portable/ThirdParty/GCC/Xtensa_ESP32/xtensa_init.c
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_config.h
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_timer.h
+portable/ThirdParty/GCC/Xtensa_ESP32/include/xtensa_rtos.h
+portable/ThirdParty/GCC/Xtensa_ESP32/include/portbenchmark.h
+portable/ThirdParty/GCC/Xtensa_ESP32/portasm.S
+]]></Files>
+    <FileHash><![CDATA[14a39f336236d2a63cab5b9e0685ca0b5f307acc
+cc2196c5296e5cb443a8c51059a6d74b8f9625cb
+fe6358537d61c3e7081c548635ebe865ae2baea6
+2cade55b1532539270664a6501ed561508d5c1e1
+b76c29d9fba627fde7ac713290f1b1ba9ee43dd6
+3d190f83cd42644676398b5d0372ff2b86e33efd
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[(C) Fujitsu Microelectronics Europe GmbH */
+]]></Content>
+    <Files><![CDATA[portable/Softune/MB91460/__STD_LIB_sbrk.c
+portable/Softune/MB96340/__STD_LIB_sbrk.c
+]]></Files>
+    <FileHash><![CDATA[ed4ae8ad4bb4b327f4f6bfe5bfacb2fc36192a00
+ed4ae8ad4bb4b327f4f6bfe5bfacb2fc36192a00
+]]></FileHash>
+  </Copyright>
+
+  <IrrelevantFiles>
+    <Files><![CDATA[History.txt
+]]></Files>
+  </IrrelevantFiles>
+
+
+  <Comment>
+    <![CDATA[//History.txt marked as irrelevant because it is change log.
+Notice file for Apache 2.0 is not found.]]>
+  </Comment>
+  <ExternalIds>
+    <![CDATA[https://sw360.siemens.com/group/guest/components/-/component/release/detailRelease/66c2e239ac40431ad03e35a157126211/d1d3e7f6361e4dc3b299d1f3c197bce5#/tab-Summary]]>
+  </ExternalIds>
+</ComponentLicenseInformation>
+

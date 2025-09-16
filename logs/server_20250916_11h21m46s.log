@@ -1,0 +1,5 @@
+2025-09-16 11:21:46 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250916_11h21m46s.log
+2025-09-16 11:21:46 - uvicorn.error - INFO - Will watch for changes in these directories: ['C:\\Users\\z0054unn\\Documents\\Siemens-GitLab\\Third-party\\third-party-clearance']
+2025-09-16 11:21:46 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2025-09-16 11:21:46 - uvicorn.error - INFO - Started reloader process [31216] using StatReload
+2025-09-16 11:31:18 - uvicorn.error - WARNING - StatReload detected changes in 'back_end\server.py'. Reloading...

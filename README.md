@@ -1,93 +1,133 @@
-# ThirdPartyClearance
+# Siemens Third-Party Clearance 项目设计文档
 
+## 1. 项目目标
 
+本项目旨在实现对第三方开源组件（OSS）合规性自动化分析、风险评估、用户交互确认及报告生成。支持上传 OSS 相关 HTML 文件，自动解析、风险分析、依赖分析、用户交互确认，并最终生成合规报告。前后端分离，支持 Web 聊天交互。
 
-## Getting started
+---
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## 2. 总体架构
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+详细架构图及流程图请参照该文档: [架构图+流程图](README_Doc\Architecture_Workflow.md)
 
-## Add your files
+- **前端**：React + TypeScript，负责文件上传、组件风险展示、与后端对话交互。
+- **后端**：FastAPI（Python），负责文件接收、PocketFlow 工作流调度、对话管理、报告生成。
+- **核心流程**：PocketFlow 流程引擎，节点式编排各类自动化与交互任务。
+- **AI能力**：集成 Azure OpenAI/LLM，自动化风险评估、合规建议、对话交互。
+- **数据存储**：本地 JSON 文件存储中间结果，支持后续扩展数据库。
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+---
+
+## 3. 主要模块说明
+
+### 3.1 后端目录结构
 
 ```
-cd existing_repo
-git remote add origin https://code.siemens.com/BSCE_AIGC/thirdpartyclearance.git
-git branch -M main
-git push -uf origin main
+third-party-clearance/
+│
+├─ back_end/
+│   ├─ run_server.py / server.py      # FastAPI 服务入口
+│   ├─ services/                      # 聊天/流程服务
+│   ├─ items_utils/                   # 组件类型与工具
+│   ├─ test_codes/                    # 测试代码
+│   └─ uploads/                       # 上传文件存储
+│
+├─ utils/
+│   ├─ LLM_Analyzer.py                # LLM/AI相关分析与对话
+│   ├─ tools.py                       # 通用工具
+│   ├─ htmlParsing.py                 # HTML解析
+│   ├─ itemFilter.py                  # 组件/许可证筛选
+│   ├─ database/                      # 各类DB工具
+│   └─ PCR_Generation/                # PCR报告相关
+│
+├─ nodes.py                           # PocketFlow节点定义
+├─ flow.py                            # PocketFlow流程编排
+├─ main.py                            # 流程运行入口
+└─ ...
 ```
 
-## Integrate with your tools
+### 3.2 核心流程（PocketFlow）
 
-- [ ] [Set up project integrations](https://code.siemens.com/BSCE_AIGC/thirdpartyclearance/-/settings/integrations)
+- **pre_chat_flow**：文件解析、风险分析、依赖分析、初始化会话
+- **chat_flow**：与用户交互确认高/中风险组件
+- **post_chat_flow**：根据用户确认结果生成最终合规报告
 
-## Collaborate with your team
+#### 主要节点（nodes.py）
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+- `ParsingOriginalHtml`：解析上传的 HTML，提取组件、许可证等结构化信息
+- `LicenseReviewing`：自动化评估每个许可证的风险等级
+- `SpecialLicenseCollecting`：收集特殊类型许可证（如GPL等）
+- `RiskCheckingRAG`：结合知识库/向量DB进一步校验风险
+- `DependencyCheckingRAG`：分析组件间依赖关系
+- `initializeSession`：初始化对话机器人
+- `GetUserConfirming`：与用户交互确认高/中风险项
+- `itemFiltering`：根据用户确认结果筛选最终合规项
+- `getFinalOSS`：生成最终合规报告HTML
 
-## Test and Deploy
+### 3.3 AI与知识库
 
-Use the built-in continuous integration in GitLab.
+- `LLM_Analyzer.py`：封装了与 Azure OpenAI 的对接，支持风险评估、合规建议、对话交互等。
+- `database/vectorDB.py`：向量数据库，用于知识检索和RAG增强。
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### 3.4 服务层（back_end/services）
 
-***
+- `chat_service.py`：对话服务，管理会话状态、与前端交互
+- `chat_flow.py`：对话流程管理
+- `chat_manager.py`：多会话管理
+- `state_handlers/`：对话状态机与多种对话场景处理
 
-# Editing this README
+---
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+## 4. 数据流与交互流程
 
-## Suggestions for a good README
+1. **文件上传**（前端 -> /analyze）
+	- FastAPI 保存文件，调用 pre_chat_flow，完成自动化解析与风险分析，返回 session_id 和待确认组件列表。
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+2. **用户交互**（前端 -> /chat/{session_id}）
+	- 前端逐步与后端对话，确认每个高/中风险组件，后端通过 chat_flow 管理对话状态。
 
-## Name
-Choose a self-explaining name for your project.
+3. **报告生成**（后端自动或前端触发）
+	- 用户全部确认后，后端调用 post_chat_flow，生成最终合规报告，前端可下载或查看。
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+---
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+## 5. 扩展性与可维护性
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+- **节点式编排**：所有自动化与交互逻辑都以节点形式实现，易于插拔、扩展和单元测试。
+- **多流程分离**：解析/分析、交互、报告生成分为独立流程，便于维护和复用。
+- **AI能力可插拔**：LLM相关能力集中在 utils/LLM_Analyzer.py，便于更换模型或API。
+- **前后端解耦**：API接口清晰，前端可独立开发和升级。
+- **会话与状态管理**：支持多用户并发、会话持久化，便于后续扩展为多租户SaaS。
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+---
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## 6. 典型用例
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+1. 用户上传 OSS HTML 文件
+2. 系统自动解析、风险分析、依赖分析
+3. 前端展示待确认组件，用户逐一确认
+4. 系统根据用户确认结果生成合规报告
+5. 用户下载或查看报告
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+---
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## 7. 关键技术点
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+- **PocketFlow**：轻量级节点式流程引擎，支持灵活的流程编排
+- **LangChain/Azure OpenAI**：自动化风险评估、合规建议、对话交互
+- **向量数据库**：知识增强与RAG
+- **FastAPI**：高性能API服务，易于前后端分离
+- **React**：现代化前端，支持文件上传、聊天、进度展示
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+---
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+## 8. 未来可扩展方向
 
-## License
-For open source projects, say how it is licensed.
+- 支持更多文件格式（如 docx、pdf）
+- 支持多语言和国际化
+- 支持多种 LLM/AI 服务切换
+- 支持更细粒度的权限与多用户协作
+- 支持云端部署与大规模并发
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## 9.开发指南
+请参照此[指南](README_Doc\Tutorial.md)

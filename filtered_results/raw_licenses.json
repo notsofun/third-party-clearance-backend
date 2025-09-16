@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Apache-2.0",
+    "originalLevel": "low",
+    "CheckedLevel": "low",
+    "Justification": "The Apache License 2.0 is a permissive open-source license that allows for significant flexibility in how software can be used, modified, and redistributed. It does not impose copyleft obligations, meaning that derivative works do not have to be open source themselves. The risk primarily arises from the potential termination of patent licenses if litigation is initiated against contributors, but overall, it maintains a low risk level for users and developers due to its permissive nature and clear terms. Previous assessments and contextual information further support this low-risk classification.",
+    "status": "confirmed"
+  },
+  {
+    "title": "CC-BY-4.0",
+    "originalLevel": "low",
+    "CheckedLevel": "medium",
+    "Justification": "While the CC-BY-4.0 license allows for reuse and modification with proper attribution, it also permits a wide range of uses that could lead to an extensive reach and application of the licensed material. The absence of copyleft provisions means others can re-license under more restrictive terms, potentially creating fragmentation and confusion regarding rights. This potential for misuse or misinterpretation elevates the risk level beyond just low, justifying a medium risk assessment.",
+    "status": "confirmed"
+  },
+  {
+    "title": "3: MIT⇧",
+    "originalLevel": "low",
+    "CheckedLevel": "low",
+    "Justification": "The MIT License is categorized as a permissive license, which allows software to be used, copied, modified, and distributed with minimal restrictions. The main obligations include retaining the copyright notice and the license text in all copies, which poses a low risk to developers and users. The context provided supports the assessment of the MIT License, reiterating its low-risk nature due to the absence of copyleft requirements. Therefore, the original risk level provided is accurate.",
+    "status": "confirmed"
+  }
+]

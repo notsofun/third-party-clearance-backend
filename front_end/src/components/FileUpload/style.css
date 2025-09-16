@@ -1,0 +1,19 @@
+.file-upload-container {
+    width: 100%;
+}
+
+.ant-upload-text {
+    font-size: 16px;
+    color: #666;
+}
+
+.ant-upload-hint {
+    font-size: 14px;
+    color: #1890ff;
+    margin-top: 8px;
+}
+
+.ant-upload-drag-icon {
+    font-size: 48px;
+    color: #1890ff;
+}

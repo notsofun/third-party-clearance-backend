@@ -1,0 +1,1208 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ComponentLicenseInformation component="mbedtls-mbedtls-2.14.0.zip" creator="hemangi.joshi.ext@siemens.com" date="2024-04-03" baseDoc="" toolUsed="CliEditor (FOSSologyNG)" componentID="" includesAcknowledgements="false" componentSHA1="11d605a4995a1489f062651468b00c3d2f507a4a" Version="1.6">
+  <GeneralInformation>
+    <ReportId>51fc15a2-f186-11ee-a19c-005056ba5969</ReportId>
+    <ReviewedBy />
+    <ComponentName>mbed TLS</ComponentName>
+    <Community>Mbed TLS (https://www.trustedfirmware.org/projects/mbed-tls/)</Community>
+    <ComponentVersion>2.14.0</ComponentVersion>
+    <ComponentHash>11D605A4995A1489F062651468B00C3D2F507A4A</ComponentHash>
+    <ComponentReleaseDate>20-Nov-2018 (https://github.com/Mbed-TLS/mbedtls/tree/mbedtls-2.14.0)</ComponentReleaseDate>
+    <LinkComponentManagement><![CDATA[https://sw360.siemens.com/group/guest/components/-/component/release/detailRelease/6c424a46cb3743b992f3cee6c9e999e4/3332522a5ba84bc3a7ffa6887f7d33e8#/tab-Summary]]></LinkComponentManagement>
+    <LinkScanTool><![CDATA[https://fossology.pun.ctrda.siemens.co.in/repo/?mod=license&upload=22836&folder=284&item=122822948&show=quick]]></LinkScanTool>
+    <ComponentId>
+      <Type></Type>
+      <Id></Id>
+    </ComponentId>
+  </GeneralInformation>
+  <AssessmentSummary>
+    <GeneralAssessment><![CDATA[OSS component covered under Apache-2.0 license which has No copyleft effect]]></GeneralAssessment>
+    <CriticalFilesFound>None</CriticalFilesFound>
+    <DependencyNotes>None</DependencyNotes>
+    <ExportRestrictionsFound>None</ExportRestrictionsFound>
+    <UsageRestrictionsFound>None</UsageRestrictionsFound>
+    <AdditionalNotes><![CDATA[1] Notice file for Apache-2.0 is not found in the source code.
+
+2] Apache-2.0 Risk - If the changes made to the software are to be sent back to ASF, They will have to be covered under Apache-2.0. This can be avoided by NOT submitting the changes back to ASF. Contact BU Representative or Third-Party License Manager if you plan to contribute fixes back to the community. 
+
+3] The clearing team has checked for the dependencies for this package via the scan tool only. Additional manual steps (scripts run on source files) to identify dependencies were not performed. Identifying and listing the dependencies is the responsibility of the project team. The clearing team shall not be held responsible for not identifying or listing the same during clearing of any packages.]]></AdditionalNotes>
+  </AssessmentSummary>
+  <License type="global" name="Apache-2.0" spdxidentifier="Apache-2.0">
+    <Content><![CDATA[Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. Definitions.
+
+"License" shall mean the terms and conditions for use, reproduction, and distribution as defined by Sections 1 through 9 of this document.
+
+"Licensor" shall mean the copyright owner or entity authorized by the copyright owner that is granting the License.
+
+"Legal Entity" shall mean the union of the acting entity and all other entities that control, are controlled by, or are under common control with that entity. For the purposes of this definition, "control" means (i) the power, direct or indirect, to cause the direction or management of such entity, whether by contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the outstanding shares, or (iii) beneficial ownership of such entity.
+
+"You" (or "Your") shall mean an individual or Legal Entity exercising permissions granted by this License.
+
+"Source" form shall mean the preferred form for making modifications, including but not limited to software source code, documentation source, and configuration files.
+
+"Object" form shall mean any form resulting from mechanical transformation or translation of a Source form, including but not limited to compiled object code, generated documentation, and conversions to other media types.
+
+"Work" shall mean the work of authorship, whether in Source or Object form, made available under the License, as indicated by a copyright notice that is included in or attached to the work (an example is provided in the Appendix below).
+
+"Derivative Works" shall mean any work, whether in Source or Object form, that is based on (or derived from) the Work and for which the editorial revisions, annotations, elaborations, or other modifications represent, as a whole, an original work of authorship. For the purposes of this License, Derivative Works shall not include works that remain separable from, or merely link (or bind by name) to the interfaces of, the Work and Derivative Works thereof.
+
+"Contribution" shall mean any work of authorship, including the original version of the Work and any modifications or additions to that Work or Derivative Works thereof, that is intentionally submitted to Licensor for inclusion in the Work by the copyright owner or by an individual or Legal Entity authorized to submit on behalf of the copyright owner. For the purposes of this definition, "submitted" means any form of electronic, verbal, or written communication sent to the Licensor or its representatives, including but not limited to communication on electronic mailing lists, source code control systems, and issue tracking systems that are managed by, or on behalf of, the Licensor for the purpose of discussing and improving the Work, but excluding communication that is conspicuously marked or otherwise designated in writing by the copyright owner as "Not a Contribution."
+
+"Contributor" shall mean Licensor and any individual or Legal Entity on behalf of whom a Contribution has been received by Licensor and subsequently incorporated within the Work.
+
+2. Grant of Copyright License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to reproduce, prepare Derivative Works of, publicly display, publicly perform, sublicense, and distribute the Work and such Derivative Works in Source or Object form.
+
+3. Grant of Patent License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this section) patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the Work, where such license applies only to those patent claims licensable by such Contributor that are necessarily infringed by their Contribution(s) alone or by combination of their Contribution(s) with the Work to which such Contribution(s) was submitted. If You institute patent litigation against any entity (including a cross-claim or counterclaim in a lawsuit) alleging that the Work or a Contribution incorporated within the Work constitutes direct or contributory patent infringement, then any patent licenses granted to You under this License for that Work shall terminate as of the date such litigation is filed.
+
+4. Redistribution. You may reproduce and distribute copies of the Work or Derivative Works thereof in any medium, with or without modifications, and in Source or Object form, provided that You meet the following conditions:
+
+     (a) You must give any other recipients of the Work or Derivative Works a copy of this License; and
+
+     (b) You must cause any modified files to carry prominent notices stating that You changed the files; and
+
+     (c) You must retain, in the Source form of any Derivative Works that You distribute, all copyright, patent, trademark, and attribution notices from the Source form of the Work, excluding those notices that do not pertain to any part of the Derivative Works; and
+
+     (d) If the Work includes a "NOTICE" text file as part of its distribution, then any Derivative Works that You distribute must include a readable copy of the attribution notices contained within such NOTICE file, excluding those notices that do not pertain to any part of the Derivative Works, in at least one of the following places: within a NOTICE text file distributed as part of the Derivative Works; within the Source form or documentation, if provided along with the Derivative Works; or, within a display generated by the Derivative Works, if and wherever such third-party notices normally appear. The contents of the NOTICE file are for informational purposes only and do not modify the License. You may add Your own attribution notices within Derivative Works that You distribute, alongside or as an addendum to the NOTICE text from the Work, provided that such additional attribution notices cannot be construed as modifying the License.
+
+     You may add Your own copyright statement to Your modifications and may provide additional or different license terms and conditions for use, reproduction, or distribution of Your modifications, or for any such Derivative Works as a whole, provided Your use, reproduction, and distribution of the Work otherwise complies with the conditions stated in this License.
+
+5. Submission of Contributions. Unless You explicitly state otherwise, any Contribution intentionally submitted for inclusion in the Work by You to the Licensor shall be under the terms and conditions of this License, without any additional terms or conditions. Notwithstanding the above, nothing herein shall supersede or modify the terms of any separate license agreement you may have executed with Licensor regarding such Contributions.
+
+6. Trademarks. This License does not grant permission to use the trade names, trademarks, service marks, or product names of the Licensor, except as required for reasonable and customary use in describing the origin of the Work and reproducing the content of the NOTICE file.
+
+7. Disclaimer of Warranty. Unless required by applicable law or agreed to in writing, Licensor provides the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible for determining the appropriateness of using or redistributing the Work and assume any risks associated with Your exercise of permissions under this License.
+
+8. Limitation of Liability. In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.
+
+9. Accepting Warranty or Additional Liability. While redistributing the Work or Derivative Works thereof, You may choose to offer, and charge a fee for, acceptance of support, warranty, indemnity, or other liability obligations and/or rights consistent with this License. However, in accepting such obligations, You may act only on Your own behalf and on Your sole responsibility, not on behalf of any other Contributor, and only if You agree to indemnify, defend, and hold each Contributor harmless for any liability incurred by, or claims asserted against, such Contributor by reason of your accepting any such warranty or additional liability.
+
+END OF TERMS AND CONDITIONS
+
+APPENDIX: How to apply the Apache License to your work.
+
+To apply the Apache License to your work, attach the following boilerplate notice, with the fields enclosed by brackets "[]" replaced with your own identifying information. (Don't include the brackets!)  The text should be enclosed in the appropriate comment syntax for the file format. We also recommend that a file or class name and description of purpose be included on the same "printed page" as the copyright notice for easier identification within third-party archives.
+
+Copyright [yyyy] [name of copyright owner]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.]]></Content>
+    <Files><![CDATA[programs/x509/crl_app.c
+programs/x509/req_app.c
+programs/random/gen_entropy.c
+programs/hash/generic_sum.c
+programs/ssl/ssl_client2.c
+programs/ssl/ssl_fork_server.c
+programs/ssl/mini_client.c
+programs/ssl/dtls_server.c
+programs/ssl/dtls_client.c
+programs/ssl/ssl_pthread_server.c
+programs/wince_main.c
+programs/test/udp_proxy.c
+programs/test/cpp_dummy_build.cpp
+programs/test/benchmark.c
+programs/pkey/rsa_decrypt.c
+programs/pkey/dh_genprime.c
+programs/pkey/rsa_encrypt.c
+programs/pkey/rsa_genkey.c
+programs/pkey/dh_client.c
+programs/pkey/pk_encrypt.c
+programs/pkey/rsa_verify.c
+programs/pkey/pk_verify.c
+programs/pkey/pk_decrypt.c
+library/sha1.c
+library/pem.c
+library/ecjpake.c
+library/ccm.c
+library/oid.c
+library/des.c
+library/cipher.c
+library/pkwrite.c
+library/aria.c
+library/ecdsa.c
+library/pkcs5.c
+library/debug.c
+library/x509_csr.c
+library/cipher_wrap.c
+library/ssl_cache.c
+library/bignum.c
+library/platform.c
+library/pkparse.c
+library/nist_kw.c
+library/pkcs12.c
+library/entropy.c
+library/aes.c
+library/ripemd160.c
+library/blowfish.c
+library/platform_util.c
+library/x509_create.c
+library/ssl_srv.c
+library/gcm.c
+library/ssl_ciphersuites.c
+library/ctr_drbg.c
+library/entropy_poll.c
+library/ecp.c
+library/version_features.c
+library/chacha20.c
+library/md4.c
+include/mbedtls/base64.h
+include/mbedtls/sha512.h
+include/mbedtls/md4.h
+include/mbedtls/x509.h
+include/mbedtls/ssl_cache.h
+include/mbedtls/pkcs12.h
+include/mbedtls/cipher_internal.h
+include/mbedtls/x509_crl.h
+include/mbedtls/ctr_drbg.h
+include/mbedtls/version.h
+include/mbedtls/pkcs11.h
+include/mbedtls/asn1write.h
+include/mbedtls/pk.h
+programs/x509/cert_write.c
+programs/x509/cert_app.c
+programs/x509/cert_req.c
+programs/util/strerror.c
+programs/util/pem2der.c
+programs/random/gen_random_ctr_drbg.c
+programs/random/gen_random_havege.c
+programs/hash/hello.c
+programs/ssl/ssl_server.c
+programs/ssl/ssl_server2.c
+programs/ssl/ssl_client1.c
+programs/ssl/ssl_mail_client.c
+programs/aes/crypt_and_hash.c
+programs/aes/aescrypt2.c
+programs/test/selftest.c
+programs/test/zeroize.c
+programs/test/ssl_cert_test.c
+programs/pkey/gen_key.c
+programs/pkey/pk_sign.c
+programs/pkey/ecdsa.c
+programs/pkey/key_app.c
+programs/pkey/key_app_writer.c
+programs/pkey/rsa_sign.c
+programs/pkey/mpi_demo.c
+programs/pkey/dh_server.c
+programs/pkey/rsa_verify_pss.c
+programs/pkey/rsa_sign_pss.c
+programs/pkey/ecdh_curve25519.c
+library/asn1write.c
+library/md_wrap.c
+library/x509_crt.c
+library/ssl_cli.c
+library/error.c
+library/rsa.c
+library/camellia.c
+library/ssl_tls.c
+library/x509.c
+library/hkdf.c
+library/dhm.c
+library/net_sockets.c
+library/ssl_cookie.c
+library/ssl_ticket.c
+library/md.c
+library/pk_wrap.c
+library/havege.c
+library/cmac.c
+library/ecdh.c
+library/x509write_csr.c
+library/chachapoly.c
+library/md5.c
+library/sha256.c
+library/sha512.c
+library/timing.c
+library/certs.c
+library/x509_crl.c
+library/md2.c
+library/pk.c
+library/ecp_curves.c
+library/x509write_crt.c
+library/asn1parse.c
+library/hmac_drbg.c
+library/poly1305.c
+include/mbedtls/entropy_poll.h
+include/mbedtls/arc4.h
+include/mbedtls/oid.h
+include/mbedtls/chachapoly.h
+include/mbedtls/ssl_cookie.h
+include/mbedtls/poly1305.h
+include/mbedtls/ecp_internal.h
+include/mbedtls/chacha20.h
+include/mbedtls/x509_crt.h
+include/mbedtls/hmac_drbg.h
+include/mbedtls/pkcs5.h
+include/mbedtls/blowfish.h
+include/mbedtls/xtea.h
+include/mbedtls/ssl_ciphersuites.h
+include/mbedtls/rsa.h
+include/mbedtls/pem.h
+include/mbedtls/cmac.h
+include/mbedtls/ecdsa.h
+include/mbedtls/error.h
+include/mbedtls/dhm.h
+include/mbedtls/ssl_ticket.h
+include/mbedtls/padlock.h
+include/mbedtls/threading.h
+include/mbedtls/certs.h
+include/mbedtls/ccm.h
+include/mbedtls/config.h
+include/mbedtls/bn_mul.h
+include/mbedtls/gcm.h
+include/mbedtls/platform.h
+include/mbedtls/check_config.h
+include/mbedtls/bignum.h
+include/mbedtls/aria.h
+include/mbedtls/hkdf.h
+include/mbedtls/net.h
+include/mbedtls/platform_util.h
+include/mbedtls/md_internal.h
+include/mbedtls/md.h
+include/mbedtls/md5.h
+include/mbedtls/cipher.h
+include/mbedtls/ripemd160.h
+include/mbedtls/md2.h
+include/mbedtls/debug.h
+include/mbedtls/entropy.h
+include/mbedtls/platform_time.h
+include/mbedtls/sha1.h
+include/mbedtls/havege.h
+include/mbedtls/x509_csr.h
+include/mbedtls/ecjpake.h
+include/mbedtls/asn1.h
+include/mbedtls/ecp.h
+include/mbedtls/ssl_internal.h
+include/mbedtls/rsa_internal.h
+include/mbedtls/aes.h
+include/mbedtls/des.h
+include/mbedtls/ssl.h
+include/mbedtls/memory_buffer_alloc.h
+include/mbedtls/timing.h
+include/mbedtls/nist_kw.h
+include/mbedtls/compat-1.3.h
+include/mbedtls/ecdh.h
+include/mbedtls/net_sockets.h
+include/mbedtls/camellia.h
+include/mbedtls/pk_internal.h
+include/mbedtls/sha256.h
+include/mbedtls/aesni.h
+scripts/data_files/version_features.fmt
+scripts/data_files/error.fmt
+configs/config-suite-b.h
+configs/config-no-entropy.h
+configs/config-thread.h
+configs/config-ccm-psk-tls1_2.h
+configs/config-mini-tls1_1.h
+library/padlock.c
+library/arc4.c
+library/memory_buffer_alloc.c
+library/pkcs11.c
+library/xtea.c
+library/version.c
+library/base64.c
+library/aesni.c
+library/threading.c
+library/rsa_internal.c
+apache-2.0.txt
+LICENSE]]></Files>
+    <FileHash><![CDATA[39a2aa518b0fa77760851f47155db30d019749e0
+24edb7130dc1d576135e384024a34fd19765e48e
+160ce81b387f07ea3f4b77574a5669264c45cd2d
+d61569f2016bbab2a8b42a3093d59c0f07ec5fa1
+a047f986359cf19d949ac0aa55421b81c391ca7f
+cd545c3c7d8fc08fe2b1c9d511f1097a3d1faaaa
+632706b0d3026ca355cd8976b9e1ca5c3782da73
+22547d4a28cd2d64e83b1efa7d33e987e4005727
+95cc6ed651f118821869fafe62c159135aa22951
+e38225b606afd8232342f300994368c09cd3c9cd
+c6890861f1cfdd109a4ada94f23ed513869d4818
+9d52e0e4bb2dbb5b3f521e0957207345db939b23
+f5517cbc0916d41e60d0cc1d908d40324d96c1c4
+e3a77d479ed6985925d259802b5c5acf42425f54
+912ec47ed04d7b489ee764853fb02da44cf291e6
+58a4dfca3704a48166fcd7086b6f87ad5d1fd0e4
+ebed0264300bda47d2b23a4da3dc2adcaba8e5f0
+52af48ed73ab529a39b96cfa6af28da5ec21967d
+e57b5e1ea1cba55a5fd0caf38e208bcd3cf58347
+eb999b471cfcdd9d810e924ba335a26969980966
+0a7d935efe608ad4b81c8cb4e476454fd082fff2
+733f9c289d566d58f15b609bcb9713fc97ee184b
+c4075dbb037aa879542711d378d03a31991db450
+3ae1db764aa7be39ae5d2bc6f9e6b61d5b52ac19
+a0263161ac7dd294bd49bd851d3e37547672cfaf
+83f339dfa774cf48d9a1a32c57afc088766c3b21
+3d0235bc8c41a3299fa05d69445231503ca3598b
+69c625292656718b05c546dcc74bcc66a7430ebe
+094afd1cab48211c129d0db39a29bfc657eba19b
+421ccf8cda81fd33f36dea426f988361c04ea48b
+b188a4d371bdb62b5864d2d08d024311da42a4df
+64e54a594f592a3d1660af4c18e9fcd5df9591db
+79651a93d1a11ec6b4d3f34200a03a9711fa68de
+591594f367647e14353561b109be97d8cfec4001
+c2c8313d37dc160fddd497e99f19a618dcfadc37
+90412646d1eface02897055e7dabdf5854654a1a
+a5a242c2d07678202b846a328e0e20990f83d71d
+adb64da8ad1d2265c8ad6a9d510da00904b63e24
+fe65a48792d48927a86c052befe751fd5be80f9e
+7d1868fbae5298d4538c91f6a76ccbe78a0abf48
+4c27819b0239197c36d078bb5a934162962cce84
+5a611e39fa5fa405b9af8751feb55d50b8f605ec
+8197c7025ad38cd435877dac9260ac7b37a19f6a
+73d9551ea1009b23d4b62e41a786ab5955fe8c2a
+5e43a212711e5ff34b21d59687db6db232e62d4f
+5097db8c58d47571643ecb3188e2f93d01d60262
+7fadc6c4d63dd9a214bb5b859298603362221e0c
+6bd0c7c0e20d20b5621c23497c1ea963ae3a07fd
+86430fa92a53a380926ffd7b11634c4e29518efd
+4e006a590d2b3b46b6dc5397a2dec0753b15218e
+95cdbe7d71e3d64a08ba5acc20a186c947150add
+eaf731e244d9a7c7ae7e289b370852ee61c1361d
+8cd9b474ccde4ae7459936aad8c91146549ca2df
+088f550e34777d33f3c33500e056aced5580cbfa
+4ccfa19e966304395195cb8afe2fa17e07c28e04
+0f8e33ced188cecb85bb913e5153dd20b712416c
+ad3abaa4a5250f98d9eeba064d80de7c69a81fc7
+4a48d97cec1a19371e3f5293fc932b634d2cf2b5
+25b15fdd0c2ba77540c07edfe4474ef7df7406cd
+02018b725e42795e8861f6eb55f32f6ce52d1761
+b7e48ab13be9895d6a5376f4b7bab14f27fa1ef3
+0822e46fe2a6dea0a79899744127802061abb927
+3f859c17f225c53d007041c0cd5f9c2e376a6810
+66b3bfcf926cc96bc849e396833b7ad3033f35e2
+c0df71928e20baf8106af8aa4f3e86c05fb274d6
+c6d68efc059746e5a37e083eb90cb57a0bdee8cd
+a6ab4ed03c21f6295fa8e51ebf99bd90d1596a00
+a44e9b84e3fe959831157f12b43dc8f299acdcc4
+ced3a53728f7ba1e22024b2f1d9440143e9a5455
+6cb9c7f405fa9a3d28644fb1f7a70adc690d77d3
+7e240bfc3e3a938c55021cbe24a490b406c02734
+17f4fb13e2f9c651e65f506328aaa8eae8a7fd40
+9f91799b0dc50e129445a5306993ad18a4caed43
+3380e1c2e3289732e24833aacce2074df1f07357
+bde7df657d0e41776072609e3d5c10e412bf6965
+66bf29696d91e7d8ba5682a80f9282b2ace5dffb
+1a49374eddfc96111dde5e36d99b8bb1bdd64bc5
+ad24503d66ce728e073a005627b8853e655aeaf7
+15b85cd7c125c8aca9c8f60e873a63aa6533d74d
+95db12412ba40319e64bf16fa31dc84bf240e88c
+13ee0ff5f3969d12f9c576ec4d3d9446a27685fc
+b11fc03b9286a8b979d9bf4eba48985350b92d27
+d4e98cb59e89d6b900e54f3fecbee0bd7379cdf0
+5f39f8bcdf89b72733096a750d4c8bd6b68aec9d
+c2285652dcb9da6a29f3b6b3181a513200522a73
+3811426678e9bcb13f88dd94be534aa977a94315
+3812dd99d6571fbcef647a85e780c1f20ed7a39b
+888ddeef71cc72ef18743cb46e833c17bac1be6f
+645a78833cc0306630b3808220b3e0317b060c6f
+8b83a586eac21e18a4d612b90eb8f81d0c1a3594
+1c07e3d3d4257bfb69211ba1f07d56cdd3807622
+9e26bbc34804586755522a4e2fc1f6e0e98f8654
+f2a3c427eceaccf470776ae266ba84959bdfa377
+baa9d5f569d93208324bf86c2ddc77dab9925c62
+7d7d0c8d80f3c7bf99b7e37c0bb9909ae92c5813
+c1955ad0cc9969641d865038105a564000af5bee
+9e55c42c734652e8aee1bac703c9c93e9e62ac77
+08b10468cd79912883442732668c3875be354ded
+4fe3be87370b2c74b80d50b8d015d8be12a31907
+dcfc7a3dc83aaf933a55732f9a4c028b396d2697
+b00563dff8c7a1c48d04c185adcc45921093a51d
+ff4fc72ffa5e955f4d8b89b40d1fbf92b7e27023
+e2ca34cc7128a43542a8c0d2bca84d516cd75d7d
+a4ba2595cacab0b5ccd83408e3b01845baf33515
+64179ac916317b5ea8f4bfa6e4a84029ea29d968
+24f0f97a32488609647d9b2a388b640f724d434e
+bf4416bf50fa2edf25b923da4f866853a4abdc19
+32048fcf232a9ec2b69cf6077ea39375e3de1dfb
+ec313cbdf7b4737078a8b624e5e1b02d0227c347
+3583fbddab470c8b065503afef2443c49b7c0bab
+1e1dacfab94dd84da2e758bb8c8433229276ef23
+b9d94e0043e606e9598eba221d57bc814e41a74a
+bfcb1912ed42fc24325fdb87b17eebdbe1589a32
+e3a3426268fcd8e4fb47a2332628a53f3c51207a
+511d737085836006e70e7e275ac000cb341bd9e3
+9a102d5aeec8b3e2e2d9d8362e31fd77f7b10f99
+df1bafc093d1424fbf58ef1209e12fc43be8794a
+60d6ea7af78c5fa376c0324a0110f3b137ad4e85
+2e5abd590794c9aabf17803aa384c4612f4db3e0
+1f37a38647fc054c2a6d68b52164c45265f15ea4
+09d0a3c9bbda7f316ac443c5a0cc6e8efb9d4127
+3fdd971d3b2c87e5a8aabe0c56528d348e85f665
+d2f4928e51224bab9e763485e8d8bda0750bbe01
+c3cdd5d05af0b2c0f5a2bb1a616d5f6039aa6e0c
+f87d73bd825c1887e08a70fbed14e18d4af1e3fb
+86080b5ca0a02189cdfcec98f9801d9d1f3ab643
+c091fe4bb83afb1627b23c80aa3eefbf7fd3c458
+3c830bde067d2e180e24e9e729582cb50ffbfd61
+ba3a31dd68d3868ff8ec6801e87b62b4aa70bc18
+861fc891ef28cdc5951a9a78897d7ce55ed2c504
+4734cd9c7e11d19e01fa8a321380a78d8380c0e0
+fa4b9f47f27ab3f57c8bb9417ed9224b330c5f37
+8ca050d341c9b9b8f79ebd242fd1323bd4ba908c
+65cff180861340b2482f90bd28d08394f169a3ad
+d26e1ac140cb428fec9e4fbdd0d4337d52447847
+9ad4c210bd67bafee3cfab5518dc77ea0aa85426
+1e50a44670dbf891f30f9a5a29ea5017ea64d072
+eccecf81b5eb76ba2be4b343b0b5ca0379bee723
+7fffc93bae9f3a680163870d0676fb4377516fb5
+d33e2f64b787a3a6af015307863efdb33a04f399
+047ba62784df277d0c302e01667aef719cb18e40
+d432b9728f7134869355855aa7c258351bbfb5f9
+bdacbb2559c5070f5dfef223924622952ab9face
+6e4efaacb3bf75a9ddfb8bee4f371cde1058791a
+ded46ed9d929249c86007340a01a313f4225bc69
+4586cda5865126f375c0e20ef1d266e927a27bdb
+5413c27756bed644b088634b301974ae36b3161b
+c269120e69acb13ec4e8c7121801315a8115e69e
+be819f7d6446ea9fe143f86ef71dfdbfbac4dd3c
+629f33c3f9ba4f878b90644b47dd48bdd00ad52e
+77064e78813d59e5b575e635de44814188d41b42
+6fc40cc4e34365412823d46622dfb6059cd4e405
+d8e78f9f098568fb50c329da32f0c80f73bb44d9
+68171129f308b8c89cc9038f8c9d4f8cbf7c32bd
+fdd298e646322c0c9cd027f8f7376cd7ce4b408e
+1208bf2a5f62ca50a48431f74694d68a918017e1
+1df8f3d336761ab12d378e2d888c21855cb84c0f
+90d4a449c3f6114ee425d92abf3cb36c07a68260
+43f632a7856825c1f7174b2bf72a3e923389a0d7
+33f9805e790d3e7052bf8ec41f59227fb8e351d6
+a8c94bc46528737879bf3bbdf03ed7c486c2d65e
+b19ed846229544e4ad66997bb41d5ec95c541daa
+3be05e57ec7b0cedc603c18ee997c34909128d08
+92381c0d2c89359d8dba448b08bf9e614826f0d4
+47fbb6b1b5dc42b9e552f73b95d14bab2f603eab
+91864a42226c177cd6161edf2b91ab0055a5daa6
+39f1e2d6fa7594ea289c45de8cf4026d844adf53
+22daeab444dae7fa7fabf5d29e9901363b852025
+27bc2ef940b13c8de9f5caec328409e998731313
+ed9b0a709190f8d6c09dc531f5cfb8eeb901fb8a
+6a0b6ebbb6fe14799c34e500433d85746f08352f
+246dcce8940ac0763d60a59ab972d573a4e25155
+69525743ebfdfa6a1546ebe4bf1c45d38ace1ced
+1d1c327286336b38a0d49a9f4961f518b62ac8b4
+559b40e0e5779f57aaf654cd79ab5e18b1e676cb
+e9884c4963beca526b57f0679a038ef6bcbef0ef
+808924d38cf9feeb2d2abd0ec6574294c3f26bf0
+075f4e78618299d1f56d9697f94a06a34e4a6f07
+335c87ab327499b1d7bd8e298cec385a18bfbe04
+1a96dfded6e08d383da63ddd091f1ea67242eb39
+63154e88a4494d0d28364a68160c16757d0d60d5
+2d7d287129836b8199ed30ce7319dbbfd2be3872
+ead22ed4f5b66b02b0d02759c6ea337795fd1f99
+6786fdbcd671bee351f63e46cf1abda6a1ff824d
+c220c89a0830ab4a0f8e2d9f66ef62df9a4c5a13
+02ac479055171acc93d25c9cec63fee0803aae4d
+5599cfdff04dfd56d17bc22eb57872f9bf764753
+b68b669ea2b11b35c65506ac9fc571c9bb0f0fd3
+3f50bf902e9f067092284a6fa31403c3385d5c37
+ae27502c510ef115fd11daca9c9e8184e6eba8b5
+c45fb6d1fd3e7234eab97fbb2b2a8e0c3cac5410
+2c827a428814dc53ca0d0a8a079404d002d2308d
+51e758c7edde3a61c933a43c1df8082ed4d71404
+ea45b62af0118152a68c63c365f1c91b30931c75
+9cdc0ba07283623ceac5697735d342d1d107548e
+ef6180f811b093a3c9510a1645b7aaf89261c775
+bf01b0ce644ed8cef855167995ccaa04002cfa37
+dae9f79dcc24ae77cd5cd49d0c1b2cff2b886f24
+b6b6d4af8f650eb73b8a62abe4c011505b202843
+021c53d64e5d8f210a345ef7442ef55b26958fab
+df4d57f7956dd8268f9e64ff6d1de3bed1aa7d94
+d994c661db9409f2698bc830b2b959ee887842ba
+85042e806ea546f78ae7ac50b7c0d602a992cdd0
+ebde2067e96157fd91d26de9f16a8a01c2b4e9c7
+4cb425bcda2213ded66b956e26e40a5281019d15
+6137aa14b0ce4dd1e384c7582fedbc9e8341a0a6
+5d0e26c144f5a97ded57fe5172a45eca6eed7547
+3fbf43b58dc8d74e73c03c62553abe1c99f84f09
+118b92730f2368974692a5ab0056f6147b7a67b2
+8d25ddaed98faa6429ad017918ecd08ddba84d60
+89a5d717ca1d11a7358d7e0ea1993592aff51f39
+62d842149e74eb03b234a9917fc7803cafe798cf
+e54f4bdebb5264e87e03c43ef709cc490297a6dc
+d57374275b974299e71ff6c476282aaff5be3e88
+d757e41475c047b8e5d8b355aa6a387746f9f675
+2b8b815229aa8a61e483fb4ba0588b8b6c491890
+4d6c5af1a9cc4eaab3b93353fc166d8e29c150c6]]></FileHash>
+    <Tags></Tags>
+  </License>
+  <Obligation>
+    <Topic><![CDATA[Provide acknowledgement]]></Topic>
+    <Text><![CDATA[Add all relevant acknowledgements to Readme_OSS]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[Risk of termination of the rights upon patent proceedings]]></Topic>
+    <Text><![CDATA[Siemens will lose all rights (i.e. copyright and patent rights) granted to Siemens for the open source code if Siemens makes legal claims regarding Siemens patents in such covered open source code.]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[marking modifications]]></Topic>
+    <Text><![CDATA[Note for Apache-2.0, ECL-2.0:  
+If you modify this component and do not intend to contribute the modifications/the modified work back to open source community, you must conspicuously mark or designate the modifications as âNot a Contributionâ.
+
+If you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.
+
+Note for CDDL-1.0:  
+If you modify this component and intend to contribute the modifications/the modified work back to open source community, you must contact your 3rd Party Software Manager. There is a process for contributions.]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[Provide acknowledgement]]></Topic>
+    <Text><![CDATA[Add all relevant acknowledgements to Readme_OSS 
+
+Note for Apache-2.0: 
+The content of the NOTICE file must be made available in readable form. The content of the NOTICE file is made available in readable form as acknowledgement.
+
+Note for Catharon Open Source LICENSE:
+Portions of this software are copyright Â© Catharon Productions, Inc. All rights reserved
+
+Note for all CC licenses:
+In CC licenses this acknowledgement (in CC terms "appropriate credit") shall inculde:
+ - name of the creator 
+ - copyright notice 
+ - license notice 
+ - disclaimer 
+ - link to the material
+
+Note for ECL-2.0: 
+The content of the NOTICE file must be made available in readable form. The content of the NOTICE file is made available in readable form as acknowledgement.
+
+Note for all OWFa-1.0:
+ - the acknowledgement must contain at minimum the specification name and version number
+
+Note for Independent JPEG Group License
+ - the acknowledgement is: "this software is based in part on the work of the Independent JPEG Group"
+
+Note for Apache-1.1 and Apache-1.1-jakarta-oro-variant:
+ - the acknowledgement is: "This product includes software developed by the
+       Apache Software Foundation (http://www.apache.org/)."
+
+Note for Apache-1.1-JRDF-Project:
+ - the acknowledgement is: "This product includes software developed by the 
+         the JRDF Project (http://jrdf.sf.net/)."
+
+Note for  Apache-1.1-University-of-Chicago:
+ - the acknowledgement is: "This product includes software developed by the
+   University of Chicago, as Operator of Argonne National Laboratory."
+
+Note for Dual License, Multiple License and Triple License:
+ - the acknowledgement is the licensing decision: "To the extend files may be licensed under ABC or XYZ, in this context ABC has been chosen. This shall not restrict the freedom of other users to choose ABC or XYZ. For convenience both license texts are provided"
+
+Note for FTL-License:
+ - the acknowledgement must contain the text: "Portions of this software are copyright Â© The FreeType Project (www.freetype.org). All rights reserved."
+
+Note for Indiana-Extrem-License-1.1:
+ - the acknowledgement is: "This product includes software developed by the 
+         the Indiana University Extreme! Lab.For further information please visit  http://www.extreme.indiana.edu/."
+
+Note for LDL-License:
+ - the acknowledgement must contain the text: "With permission of ..."
+
+Note for RSA-Security License:
+ - the acknowledgement must contain the text: "This product includes software derived from the RSA Data Security, Inc. MD5 Message-Digest Algorithm"
+
+Note for Nunit License:
+- the acknowledgement must contain the text: " Portions Copyright Â© 2002-2012 Charlie Poole or Copyright Â© 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov or Copyright Â© 2000-2002 Philip A. Craig "
+
+Note for JDOM-License:
+- the acknowledgement shall contain the text: "This product includes software developed by the JDOM Project (http://www.jdom.org/)."
+
+Note for OpenSSL, SSLeay License:
+- the acknowledgement text must contain the text:
+"This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/)"
+"This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
+"This product includes cryptographic software written by Eric Young (eay@cryptsoft.com)"]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Obligation>
+    <Topic><![CDATA[Risk of termination of patent licenses upon patent proceedings]]></Topic>
+    <Text><![CDATA[If [Your Legal Entity] sues contributors regarding [Your Legal Entity] patents, any patent license granted to [Your Legal Entity] for this component will automatically terminate]]></Text>
+    <Licenses>
+      <License><![CDATA[Apache-2.0]]></License>
+    </Licenses>
+  </Obligation>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2018, Arm Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[tests/scripts/check-files.py
+tests/scripts/test_zeroize.gdb
+tests/scripts/check-python-files.sh
+scripts/abi_check.py]]></Files>
+    <FileHash><![CDATA[e29e66ef7d0d9ab145eda507062d8996f0db99e9
+e84d5c1bf2ca680e0cd10a3ed148437d9cba83bf
+385c6b4b9fa873431f35be8258a8b1898ffaeb64
+31d256f6c399b19730b9db5716c25d0da15de344]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2018, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[tests/scripts/check-generated-files.sh]]></Files>
+    <FileHash><![CDATA[e4e70d994fa9c22859eb4164d4829dc3e637860d]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2017, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[tests/git-scripts/pre-push.sh
+tests/scripts/depends-hashes.pl
+tests/scripts/depends-pkalgs.pl]]></Files>
+    <FileHash><![CDATA[43b6b6d53408b4c0f6cd375884913fee29797edd
+bc9e8a1600a9376b95c645526a7f26c003d5faa3
+7f2be7e3db1630ed34ecaaec87ca6f18c1c61c55]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2016, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[tests/ssl-opt.sh
+tests/scripts/travis-log-failure.sh
+tests/scripts/basic-build-test.sh
+scripts/output_env.sh]]></Files>
+    <FileHash><![CDATA[e5d13e6946dd74f4fd758122f23653476e649586
+96bc182ffd837c34f2b4d717ebab68e041785026
+ff776ba936a45e2f6ca800abfe73a8fed76838e7
+e007350653238f339f2840a127dc8e61110e1a42]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2015-2017, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[tests/scripts/key-exchanges.pl]]></Files>
+    <FileHash><![CDATA[90dcfb4d35cf41db33208498852055cab69f778a]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2015-2016, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[tests/scripts/run-test-suites.pl
+tests/scripts/check-names.sh
+scripts/footprint.sh
+scripts/rename.pl]]></Files>
+    <FileHash><![CDATA[016e91bda11848ff3fc080ced2672e602b7fdd44
+194e07aaa848a16cdd6d52a959d2daca9d9dca5e
+95093d1b81eae4c93dece7ba907eb2fd44e16171
+021142f1544dd16a00134bf64e82ef3fa3e9cec4]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2014-2017, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[tests/scripts/all.sh]]></Files>
+    <FileHash><![CDATA[c3ba943e55d761e94a6f33e04803a9abf8456a7b]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2014-2016, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[tests/scripts/curves.pl
+scripts/config.pl]]></Files>
+    <FileHash><![CDATA[63f9e27466796ed55d5f4fcd30d5daa907f7aa06
+39013a3e22a72c37f0ef4984f4a3f9c1ce09d38b]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2013-2016, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[tests/scripts/test-ref-configs.pl]]></Files>
+    <FileHash><![CDATA[8f0b3dc110e3287136adf2e5d24d30398833a92c]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2012-2016, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[tests/compat.sh
+scripts/bump_version.sh]]></Files>
+    <FileHash><![CDATA[49d80e987b19a678aec6914fc3bf3b2d776098d8
+bacc439fc984a7f4b720346b7d951b0d3e2ebf10]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2018, Arm Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[include/mbedtls/platform_util.h
+library/platform_util.c
+programs/test/zeroize.c]]></Files>
+    <FileHash><![CDATA[22daeab444dae7fa7fabf5d29e9901363b852025
+6bd0c7c0e20d20b5621c23497c1ea963ae3a07fd
+3812dd99d6571fbcef647a85e780c1f20ed7a39b]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2018, Arm Limited (or its affiliates), All Rights Reserved]]></Content>
+    <Files><![CDATA[include/mbedtls/nist_kw.h
+library/nist_kw.c]]></Files>
+    <FileHash><![CDATA[c45fb6d1fd3e7234eab97fbb2b2a8e0c3cac5410
+5a611e39fa5fa405b9af8751feb55d50b8f605ec]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2018, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[programs/test/cpp_dummy_build.cpp]]></Files>
+    <FileHash><![CDATA[f5517cbc0916d41e60d0cc1d908d40324d96c1c4]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2016-2018, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[include/mbedtls/hkdf.h
+library/hkdf.c]]></Files>
+    <FileHash><![CDATA[91864a42226c177cd6161edf2b91ab0055a5daa6
+ec313cbdf7b4737078a8b624e5e1b02d0227c347]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2016, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[configs/config-no-entropy.h
+include/mbedtls/ecp_internal.h]]></Files>
+    <FileHash><![CDATA[d994c661db9409f2698bc830b2b959ee887842ba
+d33e2f64b787a3a6af015307863efdb33a04f399]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2015-2018, Arm Limited (or its affiliates), All Rights Reserved]]></Content>
+    <Files><![CDATA[include/mbedtls/cmac.h]]></Files>
+    <FileHash><![CDATA[629f33c3f9ba4f878b90644b47dd48bdd00ad52e]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2006-2018, Arm Limited (or its affiliates), All Rights Reserved.]]></Content>
+    <Files><![CDATA[include/mbedtls/aes.h
+include/mbedtls/chacha20.h
+include/mbedtls/poly1305.h
+include/mbedtls/chachapoly.h]]></Files>
+    <FileHash><![CDATA[02ac479055171acc93d25c9cec63fee0803aae4d
+047ba62784df277d0c302e01667aef719cb18e40
+7fffc93bae9f3a680163870d0676fb4377516fb5
+1e50a44670dbf891f30f9a5a29ea5017ea64d072]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2006-2018, Arm Limited (or its affiliates), All Rights Reserved]]></Content>
+    <Files><![CDATA[include/mbedtls/sha256.h
+include/mbedtls/ecdh.h
+include/mbedtls/ecp.h
+include/mbedtls/sha1.h
+include/mbedtls/cipher.h
+include/mbedtls/md.h
+include/mbedtls/platform.h
+include/mbedtls/gcm.h
+include/mbedtls/ccm.h
+include/mbedtls/dhm.h
+include/mbedtls/ecdsa.h
+include/mbedtls/rsa.h
+include/mbedtls/ctr_drbg.h
+include/mbedtls/sha512.h]]></Files>
+    <FileHash><![CDATA[bf01b0ce644ed8cef855167995ccaa04002cfa37
+51e758c7edde3a61c933a43c1df8082ed4d71404
+ead22ed4f5b66b02b0d02759c6ea337795fd1f99
+075f4e78618299d1f56d9697f94a06a34e4a6f07
+246dcce8940ac0763d60a59ab972d573a4e25155
+ed9b0a709190f8d6c09dc531f5cfb8eeb901fb8a
+b19ed846229544e4ad66997bb41d5ec95c541daa
+a8c94bc46528737879bf3bbdf03ed7c486c2d65e
+90d4a449c3f6114ee425d92abf3cb36c07a68260
+d8e78f9f098568fb50c329da32f0c80f73bb44d9
+77064e78813d59e5b575e635de44814188d41b42
+c269120e69acb13ec4e8c7121801315a8115e69e
+a6ab4ed03c21f6295fa8e51ebf99bd90d1596a00
+02018b725e42795e8861f6eb55f32f6ce52d1761]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2006-2018, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[include/mbedtls/aria.h
+include/mbedtls/check_config.h
+include/mbedtls/config.h
+include/mbedtls/error.h]]></Files>
+    <FileHash><![CDATA[47fbb6b1b5dc42b9e552f73b95d14bab2f603eab
+3be05e57ec7b0cedc603c18ee997c34909128d08
+43f632a7856825c1f7174b2bf72a3e923389a0d7
+6fc40cc4e34365412823d46622dfb6059cd4e405]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2006-2017, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[library/rsa_internal.c
+include/mbedtls/rsa_internal.h
+library/aria.c]]></Files>
+    <FileHash><![CDATA[d757e41475c047b8e5d8b355aa6a387746f9f675
+c220c89a0830ab4a0f8e2d9f66ef62df9a4c5a13
+64e54a594f592a3d1660af4c18e9fcd5df9591db]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2006-2016, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[include/mbedtls/platform_time.h
+include/mbedtls/entropy.h
+include/mbedtls/net.h
+include/mbedtls/entropy_poll.h
+library/chacha20.c
+library/poly1305.c
+library/entropy_poll.c
+library/chachapoly.c
+library/cmac.c
+library/entropy.c
+library/platform.c
+programs/test/benchmark.c
+programs/aes/crypt_and_hash.c]]></Files>
+    <FileHash><![CDATA[808924d38cf9feeb2d2abd0ec6574294c3f26bf0
+e9884c4963beca526b57f0679a038ef6bcbef0ef
+39f1e2d6fa7594ea289c45de8cf4026d844adf53
+65cff180861340b2482f90bd28d08394f169a3ad
+ad3abaa4a5250f98d9eeba064d80de7c69a81fc7
+8ca050d341c9b9b8f79ebd242fd1323bd4ba908c
+088f550e34777d33f3c33500e056aced5580cbfa
+1f37a38647fc054c2a6d68b52164c45265f15ea4
+df1bafc093d1424fbf58ef1209e12fc43be8794a
+73d9551ea1009b23d4b62e41a786ab5955fe8c2a
+7d1868fbae5298d4538c91f6a76ccbe78a0abf48
+e3a77d479ed6985925d259802b5c5acf42425f54
+5f39f8bcdf89b72733096a750d4c8bd6b68aec9d]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2006-2015, ARM Limited, All Rights Reserved]]></Content>
+    <Files><![CDATA[library/aesni.c
+library/threading.c
+library/base64.c
+library/version.c
+library/xtea.c
+library/pkcs11.c
+library/memory_buffer_alloc.c
+library/arc4.c
+library/padlock.c
+configs/config-mini-tls1_1.h
+configs/config-ccm-psk-tls1_2.h
+configs/config-thread.h
+configs/config-suite-b.h
+scripts/data_files/error.fmt
+scripts/data_files/version_features.fmt
+include/mbedtls/aesni.h
+include/mbedtls/pk_internal.h
+include/mbedtls/camellia.h
+include/mbedtls/net_sockets.h
+include/mbedtls/compat-1.3.h
+include/mbedtls/ssl.h
+include/mbedtls/timing.h
+include/mbedtls/memory_buffer_alloc.h
+include/mbedtls/des.h
+include/mbedtls/ssl_internal.h
+include/mbedtls/asn1.h
+include/mbedtls/ecjpake.h
+include/mbedtls/x509_csr.h
+include/mbedtls/havege.h
+include/mbedtls/debug.h
+include/mbedtls/md2.h
+include/mbedtls/ripemd160.h
+include/mbedtls/md5.h
+include/mbedtls/md_internal.h
+include/mbedtls/bignum.h
+include/mbedtls/bn_mul.h
+include/mbedtls/certs.h
+include/mbedtls/threading.h
+include/mbedtls/padlock.h
+include/mbedtls/ssl_ticket.h
+include/mbedtls/pem.h
+include/mbedtls/ssl_ciphersuites.h
+include/mbedtls/xtea.h
+include/mbedtls/blowfish.h
+include/mbedtls/pk.h
+include/mbedtls/pkcs5.h
+include/mbedtls/asn1write.h
+include/mbedtls/hmac_drbg.h
+include/mbedtls/pkcs11.h
+include/mbedtls/x509_crt.h
+include/mbedtls/version.h
+include/mbedtls/x509_crl.h
+include/mbedtls/cipher_internal.h
+include/mbedtls/pkcs12.h
+include/mbedtls/ssl_cookie.h
+include/mbedtls/ssl_cache.h
+include/mbedtls/x509.h
+include/mbedtls/oid.h
+include/mbedtls/md4.h
+include/mbedtls/arc4.h
+include/mbedtls/base64.h
+library/md4.c
+library/version_features.c
+library/hmac_drbg.c
+library/ecp.c
+library/asn1parse.c
+library/x509write_crt.c
+library/ecp_curves.c
+library/pk.c
+library/ctr_drbg.c
+library/md2.c
+library/ssl_ciphersuites.c
+library/x509_crl.c
+library/certs.c
+library/gcm.c
+library/timing.c
+library/ssl_srv.c
+library/sha512.c
+library/sha256.c
+library/x509_create.c
+library/md5.c
+library/blowfish.c
+library/x509write_csr.c
+library/ripemd160.c
+library/ecdh.c
+library/aes.c
+library/havege.c
+library/pk_wrap.c
+library/pkcs12.c
+library/md.c
+library/ssl_ticket.c
+library/pkparse.c
+library/ssl_cookie.c
+library/net_sockets.c
+library/dhm.c
+library/bignum.c
+library/ssl_cache.c
+library/x509.c
+library/cipher_wrap.c
+library/ssl_tls.c
+library/x509_csr.c
+library/debug.c
+library/pkcs5.c
+library/ecdsa.c
+library/camellia.c
+library/rsa.c
+library/pkwrite.c
+library/cipher.c
+library/error.c
+library/des.c
+library/ssl_cli.c
+library/oid.c
+library/x509_crt.c
+library/ccm.c
+library/ecjpake.c
+library/md_wrap.c
+library/pem.c
+library/asn1write.c
+library/sha1.c
+programs/pkey/ecdh_curve25519.c
+programs/pkey/pk_decrypt.c
+programs/pkey/rsa_sign_pss.c
+programs/pkey/pk_verify.c
+programs/pkey/rsa_verify_pss.c
+programs/pkey/dh_server.c
+programs/pkey/rsa_verify.c
+programs/pkey/mpi_demo.c
+programs/pkey/pk_encrypt.c
+programs/pkey/rsa_sign.c
+programs/pkey/dh_client.c
+programs/pkey/key_app_writer.c
+programs/pkey/rsa_genkey.c
+programs/pkey/key_app.c
+programs/pkey/rsa_encrypt.c
+programs/pkey/ecdsa.c
+programs/pkey/dh_genprime.c
+programs/pkey/pk_sign.c
+programs/pkey/rsa_decrypt.c
+programs/pkey/gen_key.c
+programs/test/ssl_cert_test.c
+programs/test/selftest.c
+programs/test/udp_proxy.c
+programs/aes/aescrypt2.c
+programs/wince_main.c
+programs/ssl/ssl_mail_client.c
+programs/ssl/ssl_pthread_server.c
+programs/ssl/dtls_client.c
+programs/ssl/ssl_client1.c
+programs/ssl/dtls_server.c
+programs/ssl/ssl_server2.c
+programs/ssl/mini_client.c
+programs/ssl/ssl_fork_server.c
+programs/ssl/ssl_server.c
+programs/ssl/ssl_client2.c
+programs/hash/generic_sum.c
+programs/hash/hello.c
+programs/random/gen_random_havege.c
+programs/random/gen_random_ctr_drbg.c
+programs/random/gen_entropy.c
+programs/util/pem2der.c
+programs/util/strerror.c
+programs/x509/cert_req.c
+programs/x509/req_app.c
+programs/x509/cert_app.c
+programs/x509/crl_app.c
+programs/x509/cert_write.c]]></Files>
+    <FileHash><![CDATA[e54f4bdebb5264e87e03c43ef709cc490297a6dc
+d57374275b974299e71ff6c476282aaff5be3e88
+62d842149e74eb03b234a9917fc7803cafe798cf
+89a5d717ca1d11a7358d7e0ea1993592aff51f39
+8d25ddaed98faa6429ad017918ecd08ddba84d60
+118b92730f2368974692a5ab0056f6147b7a67b2
+3fbf43b58dc8d74e73c03c62553abe1c99f84f09
+5d0e26c144f5a97ded57fe5172a45eca6eed7547
+6137aa14b0ce4dd1e384c7582fedbc9e8341a0a6
+4cb425bcda2213ded66b956e26e40a5281019d15
+ebde2067e96157fd91d26de9f16a8a01c2b4e9c7
+85042e806ea546f78ae7ac50b7c0d602a992cdd0
+df4d57f7956dd8268f9e64ff6d1de3bed1aa7d94
+021c53d64e5d8f210a345ef7442ef55b26958fab
+b6b6d4af8f650eb73b8a62abe4c011505b202843
+dae9f79dcc24ae77cd5cd49d0c1b2cff2b886f24
+ef6180f811b093a3c9510a1645b7aaf89261c775
+9cdc0ba07283623ceac5697735d342d1d107548e
+ea45b62af0118152a68c63c365f1c91b30931c75
+2c827a428814dc53ca0d0a8a079404d002d2308d
+b68b669ea2b11b35c65506ac9fc571c9bb0f0fd3
+ae27502c510ef115fd11daca9c9e8184e6eba8b5
+3f50bf902e9f067092284a6fa31403c3385d5c37
+5599cfdff04dfd56d17bc22eb57872f9bf764753
+6786fdbcd671bee351f63e46cf1abda6a1ff824d
+2d7d287129836b8199ed30ce7319dbbfd2be3872
+63154e88a4494d0d28364a68160c16757d0d60d5
+1a96dfded6e08d383da63ddd091f1ea67242eb39
+335c87ab327499b1d7bd8e298cec385a18bfbe04
+559b40e0e5779f57aaf654cd79ab5e18b1e676cb
+1d1c327286336b38a0d49a9f4961f518b62ac8b4
+69525743ebfdfa6a1546ebe4bf1c45d38ace1ced
+6a0b6ebbb6fe14799c34e500433d85746f08352f
+27bc2ef940b13c8de9f5caec328409e998731313
+92381c0d2c89359d8dba448b08bf9e614826f0d4
+33f9805e790d3e7052bf8ec41f59227fb8e351d6
+1df8f3d336761ab12d378e2d888c21855cb84c0f
+1208bf2a5f62ca50a48431f74694d68a918017e1
+fdd298e646322c0c9cd027f8f7376cd7ce4b408e
+68171129f308b8c89cc9038f8c9d4f8cbf7c32bd
+be819f7d6446ea9fe143f86ef71dfdbfbac4dd3c
+5413c27756bed644b088634b301974ae36b3161b
+4586cda5865126f375c0e20ef1d266e927a27bdb
+ded46ed9d929249c86007340a01a313f4225bc69
+7e240bfc3e3a938c55021cbe24a490b406c02734
+6e4efaacb3bf75a9ddfb8bee4f371cde1058791a
+6cb9c7f405fa9a3d28644fb1f7a70adc690d77d3
+bdacbb2559c5070f5dfef223924622952ab9face
+ced3a53728f7ba1e22024b2f1d9440143e9a5455
+d432b9728f7134869355855aa7c258351bbfb5f9
+a44e9b84e3fe959831157f12b43dc8f299acdcc4
+c6d68efc059746e5a37e083eb90cb57a0bdee8cd
+c0df71928e20baf8106af8aa4f3e86c05fb274d6
+66b3bfcf926cc96bc849e396833b7ad3033f35e2
+eccecf81b5eb76ba2be4b343b0b5ca0379bee723
+3f859c17f225c53d007041c0cd5f9c2e376a6810
+0822e46fe2a6dea0a79899744127802061abb927
+9ad4c210bd67bafee3cfab5518dc77ea0aa85426
+b7e48ab13be9895d6a5376f4b7bab14f27fa1ef3
+d26e1ac140cb428fec9e4fbdd0d4337d52447847
+25b15fdd0c2ba77540c07edfe4474ef7df7406cd
+4a48d97cec1a19371e3f5293fc932b634d2cf2b5
+0f8e33ced188cecb85bb913e5153dd20b712416c
+fa4b9f47f27ab3f57c8bb9417ed9224b330c5f37
+4ccfa19e966304395195cb8afe2fa17e07c28e04
+4734cd9c7e11d19e01fa8a321380a78d8380c0e0
+861fc891ef28cdc5951a9a78897d7ce55ed2c504
+ba3a31dd68d3868ff8ec6801e87b62b4aa70bc18
+3c830bde067d2e180e24e9e729582cb50ffbfd61
+8cd9b474ccde4ae7459936aad8c91146549ca2df
+c091fe4bb83afb1627b23c80aa3eefbf7fd3c458
+eaf731e244d9a7c7ae7e289b370852ee61c1361d
+86080b5ca0a02189cdfcec98f9801d9d1f3ab643
+f87d73bd825c1887e08a70fbed14e18d4af1e3fb
+95cdbe7d71e3d64a08ba5acc20a186c947150add
+c3cdd5d05af0b2c0f5a2bb1a616d5f6039aa6e0c
+4e006a590d2b3b46b6dc5397a2dec0753b15218e
+d2f4928e51224bab9e763485e8d8bda0750bbe01
+3fdd971d3b2c87e5a8aabe0c56528d348e85f665
+86430fa92a53a380926ffd7b11634c4e29518efd
+09d0a3c9bbda7f316ac443c5a0cc6e8efb9d4127
+7fadc6c4d63dd9a214bb5b859298603362221e0c
+2e5abd590794c9aabf17803aa384c4612f4db3e0
+5097db8c58d47571643ecb3188e2f93d01d60262
+60d6ea7af78c5fa376c0324a0110f3b137ad4e85
+5e43a212711e5ff34b21d59687db6db232e62d4f
+9a102d5aeec8b3e2e2d9d8362e31fd77f7b10f99
+511d737085836006e70e7e275ac000cb341bd9e3
+8197c7025ad38cd435877dac9260ac7b37a19f6a
+e3a3426268fcd8e4fb47a2332628a53f3c51207a
+bfcb1912ed42fc24325fdb87b17eebdbe1589a32
+4c27819b0239197c36d078bb5a934162962cce84
+b9d94e0043e606e9598eba221d57bc814e41a74a
+1e1dacfab94dd84da2e758bb8c8433229276ef23
+3583fbddab470c8b065503afef2443c49b7c0bab
+fe65a48792d48927a86c052befe751fd5be80f9e
+adb64da8ad1d2265c8ad6a9d510da00904b63e24
+32048fcf232a9ec2b69cf6077ea39375e3de1dfb
+a5a242c2d07678202b846a328e0e20990f83d71d
+bf4416bf50fa2edf25b923da4f866853a4abdc19
+90412646d1eface02897055e7dabdf5854654a1a
+c2c8313d37dc160fddd497e99f19a618dcfadc37
+591594f367647e14353561b109be97d8cfec4001
+79651a93d1a11ec6b4d3f34200a03a9711fa68de
+24f0f97a32488609647d9b2a388b640f724d434e
+64179ac916317b5ea8f4bfa6e4a84029ea29d968
+b188a4d371bdb62b5864d2d08d024311da42a4df
+421ccf8cda81fd33f36dea426f988361c04ea48b
+a4ba2595cacab0b5ccd83408e3b01845baf33515
+094afd1cab48211c129d0db39a29bfc657eba19b
+e2ca34cc7128a43542a8c0d2bca84d516cd75d7d
+69c625292656718b05c546dcc74bcc66a7430ebe
+ff4fc72ffa5e955f4d8b89b40d1fbf92b7e27023
+3d0235bc8c41a3299fa05d69445231503ca3598b
+83f339dfa774cf48d9a1a32c57afc088766c3b21
+b00563dff8c7a1c48d04c185adcc45921093a51d
+a0263161ac7dd294bd49bd851d3e37547672cfaf
+dcfc7a3dc83aaf933a55732f9a4c028b396d2697
+3ae1db764aa7be39ae5d2bc6f9e6b61d5b52ac19
+4fe3be87370b2c74b80d50b8d015d8be12a31907
+c4075dbb037aa879542711d378d03a31991db450
+08b10468cd79912883442732668c3875be354ded
+733f9c289d566d58f15b609bcb9713fc97ee184b
+9e55c42c734652e8aee1bac703c9c93e9e62ac77
+c1955ad0cc9969641d865038105a564000af5bee
+0a7d935efe608ad4b81c8cb4e476454fd082fff2
+7d7d0c8d80f3c7bf99b7e37c0bb9909ae92c5813
+eb999b471cfcdd9d810e924ba335a26969980966
+baa9d5f569d93208324bf86c2ddc77dab9925c62
+e57b5e1ea1cba55a5fd0caf38e208bcd3cf58347
+f2a3c427eceaccf470776ae266ba84959bdfa377
+52af48ed73ab529a39b96cfa6af28da5ec21967d
+9e26bbc34804586755522a4e2fc1f6e0e98f8654
+ebed0264300bda47d2b23a4da3dc2adcaba8e5f0
+1c07e3d3d4257bfb69211ba1f07d56cdd3807622
+58a4dfca3704a48166fcd7086b6f87ad5d1fd0e4
+8b83a586eac21e18a4d612b90eb8f81d0c1a3594
+912ec47ed04d7b489ee764853fb02da44cf291e6
+645a78833cc0306630b3808220b3e0317b060c6f
+888ddeef71cc72ef18743cb46e833c17bac1be6f
+3811426678e9bcb13f88dd94be534aa977a94315
+9d52e0e4bb2dbb5b3f521e0957207345db939b23
+c2285652dcb9da6a29f3b6b3181a513200522a73
+c6890861f1cfdd109a4ada94f23ed513869d4818
+d4e98cb59e89d6b900e54f3fecbee0bd7379cdf0
+e38225b606afd8232342f300994368c09cd3c9cd
+95cc6ed651f118821869fafe62c159135aa22951
+b11fc03b9286a8b979d9bf4eba48985350b92d27
+22547d4a28cd2d64e83b1efa7d33e987e4005727
+13ee0ff5f3969d12f9c576ec4d3d9446a27685fc
+632706b0d3026ca355cd8976b9e1ca5c3782da73
+cd545c3c7d8fc08fe2b1c9d511f1097a3d1faaaa
+95db12412ba40319e64bf16fa31dc84bf240e88c
+a047f986359cf19d949ac0aa55421b81c391ca7f
+d61569f2016bbab2a8b42a3093d59c0f07ec5fa1
+15b85cd7c125c8aca9c8f60e873a63aa6533d74d
+ad24503d66ce728e073a005627b8853e655aeaf7
+1a49374eddfc96111dde5e36d99b8bb1bdd64bc5
+160ce81b387f07ea3f4b77574a5669264c45cd2d
+66bf29696d91e7d8ba5682a80f9282b2ace5dffb
+bde7df657d0e41776072609e3d5c10e412bf6965
+3380e1c2e3289732e24833aacce2074df1f07357
+24edb7130dc1d576135e384024a34fd19765e48e
+9f91799b0dc50e129445a5306993ad18a4caed43
+39a2aa518b0fa77760851f47155db30d019749e0
+17f4fb13e2f9c651e65f506328aaa8eae8a7fd40]]></FileHash>
+  </Copyright>
+  <IrrelevantFiles>
+    <Files><![CDATA[tests/scripts/mbedtls_test.py
+tests/scripts/generate_test_code.py
+tests/scripts/test_generate_test_code.py
+ChangeLog
+CONTRIBUTING.md
+doxygen/input/doc_x509.h
+doxygen/input/doc_ssltls.h
+doxygen/input/doc_hashing.h
+doxygen/input/doc_tcpip.h
+doxygen/input/doc_encdec.h
+doxygen/input/doc_rng.h
+doxygen/input/doc_mainpage.h
+doxygen/mbedtls.doxyfile]]></Files>
+  </IrrelevantFiles>
+  <Tags></Tags>
+  <Comment>1] Notice file for Apache-2.0 is not found in the source code.
+
+2] Apache-2.0 Risk - If the changes made to the software are to be sent back to ASF, They will have to be covered under Apache-2.0. This can be avoided by NOT submitting the changes back to ASF. Contact BU Representative or Third-Party License Manager if you plan to contribute fixes back to the community. 
+
+3] The clearing team has checked for the dependencies for this package via the scan tool only. Additional manual steps (scripts run on source files) to identify dependencies were not performed. Identifying and listing the dependencies is the responsibility of the project team. The clearing team shall not be held responsible for not identifying or listing the same during clearing of any packages.</Comment>
+  <ExternalIds />
+</ComponentLicenseInformation>

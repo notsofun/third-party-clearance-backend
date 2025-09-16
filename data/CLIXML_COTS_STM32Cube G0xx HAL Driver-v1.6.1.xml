@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ComponentLicenseInformation component="Clearing Report_COTS_STM32Cube G0xx HAL Driver-v1.6.1" creator="Vaishnav, Savita (ADV IT D SVE OSPO 2)" date="2/15/2023" baseDoc="Clearing Report_COTS_STM32Cube G0xx HAL Driver-v1.6.1.docx" toolUsed="CliEditor (ReadMe Generator V0.98)" componentID="-1" includesAcknowledgements="false" componentSHA1="" Version="1.4">
+  <GeneralInformation>
+    <ReportId></ReportId>
+    <ReviewedBy />
+    <ComponentName>STM32Cube G0xx HAL Driver</ComponentName>
+    <Community>STMicroelectronics</Community>
+    <ComponentVersion>1.6.1</ComponentVersion>
+    <ComponentHash></ComponentHash>
+    <ComponentReleaseDate />
+    <LinkComponentManagement />
+    <ComponentId>
+      <Type></Type>
+      <Id></Id>
+    </ComponentId>
+  </GeneralInformation>
+  <AssessmentSummary>
+    <GeneralAssessment><![CDATA[]]></GeneralAssessment>
+    <CriticalFilesFound>None</CriticalFilesFound>
+    <DependencyNotes>None</DependencyNotes>
+    <ExportRestrictionsFound>None</ExportRestrictionsFound>
+    <UsageRestrictionsFound>None</UsageRestrictionsFound>
+    <AdditionalNotes><![CDATA[]]></AdditionalNotes>
+  </AssessmentSummary>
+  <License type="global" name="SOFTWARE PACKAGE LICENSE AGREEMENT - SLA0048" spdxidentifier="n/a">
+    <Content><![CDATA[SOFTWARE PACKAGE LICENSE AGREEMENT
+
+Please indicate your acceptance or NON-acceptance by selecting "I ACCEPT" or "I DO NOT ACCEPT" as indicated below in the media.
+
+BY INSTALLING COPYING, DOWNLOADING, ACCESSING OR OTHERWISE USING THIS SOFTWARE PACKAGE OR ANY
+PART THEREOF (AND THE RELATED DOCUMENTATION) FROM STMICROELECTRONICS INTERNATIONAL N.V, SWISS
+BRANCH AND/OR ITS AFFILIATED COMPANIES (STMICROELECTRONICS), THE RECIPIENT, ON BEHALF OF HIMSELF OR HERSELF, OR ON BEHALF OF ANY ENTITY BY WHICH SUCH RECIPIENT IS EMPLOYED AND/OR ENGAGED
+AGREES TO BE BOUND BY THIS SOFTWARE PACKAGE LICENSE AGREEMENT.
+
+Under STMicroelectronics' intellectual property rights and subject to applicable licensing terms for any third-party software incorporated in this software package and applicable Open Source Terms (as defined here below), the redistribution, reproduction and use in source and binary forms of the software package or any part thereof, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistribution of source code (modified or not) must retain any copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form, except as embedded into microcontroller or microprocessor device manufactured by or for
+STMicroelectronics or a software update for such device, must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+3. Neither the name of STMicroelectronics nor the names of other contributors to this software package may be used to endorse or promote products derived from this software package or part thereof without specific written permission.
+
+4. This software package or any part thereof, including modifications and/or derivative works of this software package, must be used and execute solely and exclusively on or in combination with a microcontroller or a microprocessor devices manufactured by or for STMicroelectronics.
+
+5. No use, reproduction or redistribution of this software package partially or totally may be done in any manner that would subject this software package to any Open Source Terms (as defined below).
+
+6. Some portion of the software package may contain software subject to Open Source Terms (as defined below) applicable for each such portion ("Open Source Software"), as further specified in the software package. Such Open Source Software is supplied under the applicable Open Source Terms and is not subject to the terms and conditions of license hereunder. "Open Source Terms" shall mean any open source license which requires as part of distribution of software that the source code of such software is distributed therewith or otherwise made available, or open source license that substantially
+complies with the Open Source definition specified at www.opensource.org and any other comparable open source license
+such as for example GNU General Public License (GPL), Eclipse Public License (EPL), Apache Software License, BSDlicense and MIT license.
+
+7. This software package may also include third party software as expressly specified in the software package subject to specific license terms from such third parties. Such third party software is supplied under such specific license terms and is not subject to the terms and conditions of license hereunder. By installing copying, downloading, accessing or otherwise using this software package, the recipient agrees to be bound by such license terms with regard to such third party software.
+
+8. STMicroelectronics has no obligation to provide any maintenance, support or updates for the software package.
+
+9. The software package is and will remain the exclusive property of STMicroelectronics and its licensors. The recipient will not take any action that jeopardizes STMicroelectronics and its licensors' proprietary rights or acquire any rights in the software package,except the limited rights specified hereunder.
+
+10. The recipient shall comply with all applicable laws and regulations affecting the use of the software package or any part thereof including any applicable export control law or regulation.
+
+11. Redistribution and use of this software package partially or any part thereof other than as permitted under this license is void and will automatically terminate your rights under this license.
+
+THIS SOFTWARE PACKAGE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" AND ANY
+EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE PACKAGE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+EXCEPT AS EXPRESSLY PERMITTED HEREUNDER AND SUBJECT TO THE APPLICABLE LICENSING TERMS FOR ANY
+THIRD-PARTY SOFTWARE INCORPORATED IN THE SOFTWARE PACKAGE AND OPEN SOURCE TERMS AS APPLICABLE, NO LICENSE OR OTHER RIGHTS, WHETHER EXPRESS OR IMPLIED, ARE GRANTED UNDER ANY PATENT OR OTHER INTELLECTUAL PROPERTY RIGHTS OF STMICROELECTRONICS OR ANY THIRD PARTY.]]></Content>
+    <Files><![CDATA[]]></Files>
+    <FileHash><![CDATA[]]></FileHash>
+    <Tags></Tags>
+  </License>
+  <License type="other" name="BSD-3-Clause" spdxidentifier="n/a">
+    <Content><![CDATA[Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+   1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+   2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+   3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.]]></Content>
+    <Files><![CDATA[Inc/Legacy/stm32_hal_legacy.h
+Inc/stm32_assert_template.h
+Inc/stm32g0xx_hal.h
+Inc/stm32g0xx_hal_adc.h
+Inc/stm32g0xx_hal_adc_ex.h
+Inc/stm32g0xx_hal_cec.h
+Inc/stm32g0xx_hal_comp.h
+Inc/stm32g0xx_hal_conf_template.h
+Inc/stm32g0xx_hal_cortex.h
+Inc/stm32g0xx_hal_crc.h
+Inc/stm32g0xx_hal_crc_ex.h
+Inc/stm32g0xx_hal_cryp.h
+Inc/stm32g0xx_hal_cryp_ex.h
+Inc/stm32g0xx_hal_dac.h
+Inc/stm32g0xx_hal_dac_ex.h
+Inc/stm32g0xx_hal_def.h
+Inc/stm32g0xx_hal_dma.h
+Inc/stm32g0xx_hal_dma_ex.h
+Inc/stm32g0xx_hal_exti.h
+Inc/stm32g0xx_hal_fdcan.h
+Inc/stm32g0xx_hal_flash.h
+Inc/stm32g0xx_hal_flash_ex.h
+Inc/stm32g0xx_hal_gpio.h
+Inc/stm32g0xx_hal_gpio_ex.h
+Inc/stm32g0xx_hal_hcd.h
+Inc/stm32g0xx_hal_i2c.h
+Inc/stm32g0xx_hal_i2c_ex.h
+Inc/stm32g0xx_hal_i2s.h
+Inc/stm32g0xx_hal_irda.h
+Inc/stm32g0xx_hal_irda_ex.h
+Inc/stm32g0xx_hal_iwdg.h
+Inc/stm32g0xx_hal_lptim.h
+Inc/stm32g0xx_hal_pcd.h
+Inc/stm32g0xx_hal_pcd_ex.h
+Inc/stm32g0xx_hal_pwr.h
+Inc/stm32g0xx_hal_pwr_ex.h
+Inc/stm32g0xx_hal_rcc.h
+Inc/stm32g0xx_hal_rcc_ex.h
+Inc/stm32g0xx_hal_rng.h
+Inc/stm32g0xx_hal_rtc.h
+Inc/stm32g0xx_hal_rtc_ex.h
+Inc/stm32g0xx_hal_smartcard.h
+Inc/stm32g0xx_hal_smartcard_ex.h
+Inc/stm32g0xx_hal_smbus.h
+Inc/stm32g0xx_hal_smbus_ex.h
+Inc/stm32g0xx_hal_spi.h
+Inc/stm32g0xx_hal_spi_ex.h
+Inc/stm32g0xx_hal_tim.h
+Inc/stm32g0xx_hal_tim_ex.h
+Inc/stm32g0xx_hal_uart.h
+Inc/stm32g0xx_hal_uart_ex.h
+Inc/stm32g0xx_hal_usart.h
+Inc/stm32g0xx_hal_usart_ex.h
+Inc/stm32g0xx_hal_wwdg.h
+Inc/stm32g0xx_ll_adc.h
+Inc/stm32g0xx_ll_bus.h
+Inc/stm32g0xx_ll_comp.h
+Inc/stm32g0xx_ll_cortex.h
+Inc/stm32g0xx_ll_crc.h
+Inc/stm32g0xx_ll_crs.h
+Inc/stm32g0xx_ll_dac.h
+Inc/stm32g0xx_ll_dma.h
+Inc/stm32g0xx_ll_dmamux.h
+Inc/stm32g0xx_ll_exti.h
+Inc/stm32g0xx_ll_gpio.h
+Inc/stm32g0xx_ll_i2c.h
+Inc/stm32g0xx_ll_iwdg.h
+Inc/stm32g0xx_ll_lptim.h
+Inc/stm32g0xx_ll_lpuart.h
+Inc/stm32g0xx_ll_pwr.h
+Inc/stm32g0xx_ll_rcc.h
+Inc/stm32g0xx_ll_rng.h
+Inc/stm32g0xx_ll_rtc.h
+Inc/stm32g0xx_ll_spi.h
+Inc/stm32g0xx_ll_system.h
+Inc/stm32g0xx_ll_tim.h
+Inc/stm32g0xx_ll_ucpd.h
+Inc/stm32g0xx_ll_usart.h
+Inc/stm32g0xx_ll_usb.h
+Inc/stm32g0xx_ll_utils.h
+Inc/stm32g0xx_ll_wwdg.h
+LICENSE.txt
+Src/stm32g0xx_hal.c
+Src/stm32g0xx_hal_adc.c
+Src/stm32g0xx_hal_adc_ex.c
+Src/stm32g0xx_hal_cec.c
+Src/stm32g0xx_hal_comp.c
+Src/stm32g0xx_hal_cortex.c
+Src/stm32g0xx_hal_crc.c
+Src/stm32g0xx_hal_crc_ex.c
+Src/stm32g0xx_hal_cryp.c
+Src/stm32g0xx_hal_cryp_ex.c
+Src/stm32g0xx_hal_dac.c
+Src/stm32g0xx_hal_dac_ex.c
+Src/stm32g0xx_hal_dma.c
+Src/stm32g0xx_hal_dma_ex.c
+Src/stm32g0xx_hal_exti.c
+Src/stm32g0xx_hal_fdcan.c
+Src/stm32g0xx_hal_flash.c
+Src/stm32g0xx_hal_flash_ex.c
+Src/stm32g0xx_hal_gpio.c
+Src/stm32g0xx_hal_hcd.c
+Src/stm32g0xx_hal_i2c.c
+Src/stm32g0xx_hal_i2c_ex.c
+Src/stm32g0xx_hal_i2s.c
+Src/stm32g0xx_hal_irda.c
+Src/stm32g0xx_hal_iwdg.c
+Src/stm32g0xx_hal_lptim.c
+Src/stm32g0xx_hal_msp_template.c
+Src/stm32g0xx_hal_pcd.c
+Src/stm32g0xx_hal_pcd_ex.c
+Src/stm32g0xx_hal_pwr.c
+Src/stm32g0xx_hal_pwr_ex.c
+Src/stm32g0xx_hal_rcc.c
+Src/stm32g0xx_hal_rcc_ex.c
+Src/stm32g0xx_hal_rng.c
+Src/stm32g0xx_hal_rtc.c
+Src/stm32g0xx_hal_rtc_ex.c
+Src/stm32g0xx_hal_smartcard.c
+Src/stm32g0xx_hal_smartcard_ex.c
+Src/stm32g0xx_hal_smbus.c
+Src/stm32g0xx_hal_smbus_ex.c
+Src/stm32g0xx_hal_spi.c
+Src/stm32g0xx_hal_spi_ex.c
+Src/stm32g0xx_hal_tim.c
+Src/stm32g0xx_hal_tim_ex.c
+Src/stm32g0xx_hal_timebase_rtc_alarm_template.c
+Src/stm32g0xx_hal_timebase_rtc_wakeup_template.c
+Src/stm32g0xx_hal_timebase_tim_template.c
+Src/stm32g0xx_hal_uart.c
+Src/stm32g0xx_hal_uart_ex.c
+Src/stm32g0xx_hal_usart.c
+Src/stm32g0xx_hal_usart_ex.c
+Src/stm32g0xx_hal_wwdg.c
+Src/stm32g0xx_ll_adc.c
+Src/stm32g0xx_ll_comp.c
+Src/stm32g0xx_ll_crc.c
+Src/stm32g0xx_ll_crs.c
+Src/stm32g0xx_ll_dac.c
+Src/stm32g0xx_ll_dma.c
+Src/stm32g0xx_ll_exti.c
+Src/stm32g0xx_ll_gpio.c
+Src/stm32g0xx_ll_i2c.c
+Src/stm32g0xx_ll_lptim.c
+Src/stm32g0xx_ll_lpuart.c
+Src/stm32g0xx_ll_pwr.c
+Src/stm32g0xx_ll_rcc.c
+Src/stm32g0xx_ll_rng.c
+Src/stm32g0xx_ll_rtc.c
+Src/stm32g0xx_ll_spi.c
+Src/stm32g0xx_ll_tim.c
+Src/stm32g0xx_ll_ucpd.c
+Src/stm32g0xx_ll_usart.c
+Src/stm32g0xx_ll_usb.c
+Src/stm32g0xx_ll_utils.c]]></Files>
+    <FileHash><![CDATA[]]></FileHash>
+    <Tags></Tags>
+  </License>
+  <Copyright>
+    <Content><![CDATA[Copyright © 2018 STMicroelectronics]]></Content>
+    <Files><![CDATA[Release_Notes.html]]></Files>
+    <FileHash><![CDATA[]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2021 STMicroelectronics. All rights reserved.]]></Content>
+    <Files><![CDATA[Inc/Legacy/stm32_hal_legacy.h]]></Files>
+    <FileHash><![CDATA[]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2019 STMicroelectronics. All rights reserved.]]></Content>
+    <Files><![CDATA[Inc/stm32g0xx_ll_crs.h
+Src/stm32g0xx_ll_crs.c]]></Files>
+    <FileHash><![CDATA[]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2018 STMicroelectronics. All rights reserved.]]></Content>
+    <Files><![CDATA[Inc/stm32_assert_template.h
+Inc/stm32g0xx_hal.h
+Inc/stm32g0xx_hal_adc.h
+Inc/stm32g0xx_hal_adc_ex.h
+Inc/stm32g0xx_hal_cec.h
+Inc/stm32g0xx_hal_comp.h
+Inc/stm32g0xx_hal_conf_template.h
+Inc/stm32g0xx_hal_cortex.h
+Inc/stm32g0xx_hal_crc.h
+Inc/stm32g0xx_hal_crc_ex.h
+Inc/stm32g0xx_hal_cryp.h
+Inc/stm32g0xx_hal_cryp_ex.h
+Inc/stm32g0xx_hal_dac.h
+Inc/stm32g0xx_hal_dac_ex.h
+Inc/stm32g0xx_hal_def.h
+Inc/stm32g0xx_hal_dma.h
+Inc/stm32g0xx_hal_dma_ex.h
+Inc/stm32g0xx_hal_exti.h
+Inc/stm32g0xx_hal_fdcan.h
+Inc/stm32g0xx_hal_flash.h
+Inc/stm32g0xx_hal_flash_ex.h
+Inc/stm32g0xx_hal_gpio.h
+Inc/stm32g0xx_hal_gpio_ex.h
+Inc/stm32g0xx_hal_hcd.h
+Inc/stm32g0xx_hal_i2c.h
+Inc/stm32g0xx_hal_i2c_ex.h
+Inc/stm32g0xx_hal_i2s.h
+Inc/stm32g0xx_hal_irda.h
+Inc/stm32g0xx_hal_irda_ex.h
+Inc/stm32g0xx_hal_iwdg.h
+Inc/stm32g0xx_hal_lptim.h
+Inc/stm32g0xx_hal_pcd.h
+Inc/stm32g0xx_hal_pcd_ex.h
+Inc/stm32g0xx_hal_pwr.h
+Inc/stm32g0xx_hal_pwr_ex.h
+Inc/stm32g0xx_hal_rcc.h
+Inc/stm32g0xx_hal_rcc_ex.h
+Inc/stm32g0xx_hal_rng.h
+Inc/stm32g0xx_hal_rtc.h
+Inc/stm32g0xx_hal_rtc_ex.h
+Inc/stm32g0xx_hal_smartcard.h
+Inc/stm32g0xx_hal_smartcard_ex.h
+Inc/stm32g0xx_hal_smbus.h
+Inc/stm32g0xx_hal_smbus_ex.h
+Inc/stm32g0xx_hal_spi.h
+Inc/stm32g0xx_hal_spi_ex.h
+Inc/stm32g0xx_hal_tim.h
+Inc/stm32g0xx_hal_tim_ex.h
+Inc/stm32g0xx_hal_uart.h
+Inc/stm32g0xx_hal_uart_ex.h
+Inc/stm32g0xx_hal_usart.h
+Inc/stm32g0xx_hal_usart_ex.h
+Inc/stm32g0xx_hal_wwdg.h
+Inc/stm32g0xx_ll_adc.h
+Inc/stm32g0xx_ll_bus.h
+Inc/stm32g0xx_ll_comp.h
+Inc/stm32g0xx_ll_cortex.h
+Inc/stm32g0xx_ll_crc.h
+Inc/stm32g0xx_ll_dac.h
+Inc/stm32g0xx_ll_dma.h
+Inc/stm32g0xx_ll_dmamux.h
+Inc/stm32g0xx_ll_exti.h
+Inc/stm32g0xx_ll_gpio.h
+Inc/stm32g0xx_ll_i2c.h
+Inc/stm32g0xx_ll_iwdg.h
+Inc/stm32g0xx_ll_lptim.h
+Inc/stm32g0xx_ll_lpuart.h
+Inc/stm32g0xx_ll_pwr.h
+Inc/stm32g0xx_ll_rcc.h
+Inc/stm32g0xx_ll_rng.h
+Inc/stm32g0xx_ll_rtc.h
+Inc/stm32g0xx_ll_spi.h
+Inc/stm32g0xx_ll_system.h
+Inc/stm32g0xx_ll_tim.h
+Inc/stm32g0xx_ll_ucpd.h
+Inc/stm32g0xx_ll_usart.h
+Inc/stm32g0xx_ll_usb.h
+Inc/stm32g0xx_ll_utils.h
+Inc/stm32g0xx_ll_wwdg.h
+Src/stm32g0xx_hal.c
+Src/stm32g0xx_hal_adc.c
+Src/stm32g0xx_hal_adc_ex.c
+Src/stm32g0xx_hal_cec.c
+Src/stm32g0xx_hal_comp.c
+Src/stm32g0xx_hal_cortex.c
+Src/stm32g0xx_hal_crc.c
+Src/stm32g0xx_hal_crc_ex.c
+Src/stm32g0xx_hal_cryp.c
+Src/stm32g0xx_hal_cryp_ex.c
+Src/stm32g0xx_hal_dac.c
+Src/stm32g0xx_hal_dac_ex.c
+Src/stm32g0xx_hal_dma.c
+Src/stm32g0xx_hal_dma_ex.c
+Src/stm32g0xx_hal_exti.c
+Src/stm32g0xx_hal_fdcan.c
+Src/stm32g0xx_hal_flash.c
+Src/stm32g0xx_hal_flash_ex.c
+Src/stm32g0xx_hal_gpio.c
+Src/stm32g0xx_hal_hcd.c
+Src/stm32g0xx_hal_i2c.c
+Src/stm32g0xx_hal_i2c_ex.c
+Src/stm32g0xx_hal_i2s.c
+Src/stm32g0xx_hal_irda.c
+Src/stm32g0xx_hal_iwdg.c
+Src/stm32g0xx_hal_lptim.c
+Src/stm32g0xx_hal_msp_template.c
+Src/stm32g0xx_hal_pcd.c
+Src/stm32g0xx_hal_pcd_ex.c
+Src/stm32g0xx_hal_pwr.c
+Src/stm32g0xx_hal_pwr_ex.c
+Src/stm32g0xx_hal_rcc.c
+Src/stm32g0xx_hal_rcc_ex.c
+Src/stm32g0xx_hal_rng.c
+Src/stm32g0xx_hal_rtc.c
+Src/stm32g0xx_hal_rtc_ex.c
+Src/stm32g0xx_hal_smartcard.c
+Src/stm32g0xx_hal_smartcard_ex.c
+Src/stm32g0xx_hal_smbus.c
+Src/stm32g0xx_hal_smbus_ex.c
+Src/stm32g0xx_hal_spi.c
+Src/stm32g0xx_hal_spi_ex.c
+Src/stm32g0xx_hal_tim.c
+Src/stm32g0xx_hal_tim_ex.c
+Src/stm32g0xx_hal_timebase_rtc_alarm_template.c
+Src/stm32g0xx_hal_timebase_rtc_wakeup_template.c
+Src/stm32g0xx_hal_timebase_tim_template.c
+Src/stm32g0xx_hal_uart.c
+Src/stm32g0xx_hal_uart_ex.c
+Src/stm32g0xx_hal_usart.c
+Src/stm32g0xx_hal_usart_ex.c
+Src/stm32g0xx_hal_wwdg.c
+Src/stm32g0xx_ll_adc.c
+Src/stm32g0xx_ll_comp.c
+Src/stm32g0xx_ll_crc.c
+Src/stm32g0xx_ll_dac.c
+Src/stm32g0xx_ll_dma.c
+Src/stm32g0xx_ll_exti.c
+Src/stm32g0xx_ll_gpio.c
+Src/stm32g0xx_ll_i2c.c
+Src/stm32g0xx_ll_lptim.c
+Src/stm32g0xx_ll_lpuart.c
+Src/stm32g0xx_ll_pwr.c
+Src/stm32g0xx_ll_rcc.c
+Src/stm32g0xx_ll_rng.c
+Src/stm32g0xx_ll_rtc.c
+Src/stm32g0xx_ll_spi.c
+Src/stm32g0xx_ll_tim.c
+Src/stm32g0xx_ll_ucpd.c
+Src/stm32g0xx_ll_usart.c
+Src/stm32g0xx_ll_usb.c
+Src/stm32g0xx_ll_utils.c]]></Files>
+    <FileHash><![CDATA[]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[(C) COPYRIGHT STMicroelectronics]]></Content>
+    <Files><![CDATA[Src/stm32g0xx_hal_dma_ex.c]]></Files>
+    <FileHash><![CDATA[]]></FileHash>
+  </Copyright>
+  <IrrelevantFiles>
+    <Files><![CDATA[]]></Files>
+  </IrrelevantFiles>
+  <Tags></Tags>
+  <Comment></Comment>
+  <ExternalIds />
+</ComponentLicenseInformation>

@@ -1,0 +1,38 @@
+[
+  {
+    "licenseTitle": "1: Apache-2.0⇧",
+    "risk": {
+      "level": "low",
+      "reason": "The license is permissive and does not impose copyleft obligations."
+    },
+    "credentialOrNot": {
+      "LicenseName": "Apache-2.0",
+      "CredentialOrNot": true
+    },
+    "sourceCodeRequired": "false"
+  },
+  {
+    "licenseTitle": "2: CC-BY-4.0⇧",
+    "risk": {
+      "level": "low",
+      "reason": "This license allows broad use and modifications of the material without copyleft obligations."
+    },
+    "credentialOrNot": {
+      "LicenseName": "CC-BY-4.0",
+      "CredentialOrNot": false
+    },
+    "sourceCodeRequired": "false"
+  },
+  {
+    "licenseTitle": "3: MIT⇧",
+    "risk": {
+      "level": "low",
+      "reason": "Permissive license without copyleft obligations"
+    },
+    "credentialOrNot": {
+      "LicenseName": "3: MIT⇧",
+      "CredentialOrNot": false
+    },
+    "sourceCodeRequired": "false"
+  }
+]

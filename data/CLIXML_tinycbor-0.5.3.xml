@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ComponentLicenseInformation component="tinycbor-0.5.3.zip" creator="savita.vaishnav@siemens.com" date="2021-05-21" baseDoc="Clearing_Report_tinycbor-0.5.3.docx" toolUsed="FOSSologyNG" componentID=""  componentSHA1="4c78aa98285026e01f590f0b376ba04f0819f9e5" Version="1.4">
+  <License type="global" name="MIT" spdxidentifier="MIT">
+    <Content><![CDATA[Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+]]></Content>
+    <Files><![CDATA[tools/cbordump/cbordump.c
+src/cborerrorstrings.c
+src/cborencoder_close_container_checked.c
+src/compilersupport_p.h
+src/cborpretty_stdio.c
+tools/json2cbor/json2cbor.c
+src/utf8_p.h
+src/cbor.dox
+src/cborparser.c
+src/cborpretty.c
+src/cborencoder.c
+src/cborparser_dup_string.c
+src/cborinternal_p.h
+src/cbortojson.c
+LICENSE
+src/cborjson.h
+src/parsetags.pl
+src/cborvalidation.c
+src/cbor.h
+src/open_memstream.c
+]]></Files>
+    <FileHash><![CDATA[4d6787e188a0139bca0696023810ad43e25c50f2
+b2189a8eef5734a698f15280809cef0ceaff09f9
+2905125b3c6e122a3c3bcf3a3375de873dd42ccf
+32b50dde04786e33f64716823ba7229ce7798fdf
+8eb2133f168a1ec5f09a459f342c029cd808acca
+44016c462451f3c97bd2523b35da0002cdb0b208
+8c704c0c5f9ba6104fa1907cbb5a771a3b794fce
+ca5bddc7520d877e42a2013a1559bc793c82f2ed
+55d647bdc748659381255c873f4573b5cc6cf2f7
+8d598b61613e56a882e6e1d8dddfd4e560d60ff5
+2166b0d7f08bcdfc03ea52d7ccbb708e65aedaee
+4e8f3470e82a231da808bb7d9c1d3919fd0d0196
+c75e6d2f16034e7d259a4ac0a1879833ed4dfb37
+eeeee178421cd81d32fbd417a697176b169755d0
+744aeb214e5bd02d894c0390cb505be56847b6be
+e5ee5f4f7d498a4daa66ef98a1b25ad33b679d89
+c82e228a18d13bec3504a37746e378e49ac52b36
+52ec25ef8401c296ecc77eed29537b0be487e033
+5c91180343e3497401c5d09036c8958438734255
+f4e2811f44a67310b8052dbf8033c6d0320d9c6d
+]]></FileHash>
+  </License>
+  <Copyright>
+    <Content><![CDATA[Copyright (c) 2017 Intel Corporation
+]]></Content>
+    <Files><![CDATA[LICENSE
+]]></Files>
+    <FileHash><![CDATA[744aeb214e5bd02d894c0390cb505be56847b6be
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2019 Intel Corporation
+]]></Content>
+    <Files><![CDATA[src/cborvalidation.c
+src/cborpretty.c
+src/cbor.h
+]]></Files>
+    <FileHash><![CDATA[52ec25ef8401c296ecc77eed29537b0be487e033
+8d598b61613e56a882e6e1d8dddfd4e560d60ff5
+5c91180343e3497401c5d09036c8958438734255
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2018 Intel Corporation
+]]></Content>
+    <Files><![CDATA[src/cbortojson.c
+]]></Files>
+    <FileHash><![CDATA[eeeee178421cd81d32fbd417a697176b169755d0
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2017 Intel Corporation
+]]></Content>
+    <Files><![CDATA[src/cborinternal_p.h
+src/compilersupport_p.h
+src/parsetags.pl
+src/cborpretty_stdio.c
+src/cborparser.c
+src/utf8_p.h
+]]></Files>
+    <FileHash><![CDATA[c75e6d2f16034e7d259a4ac0a1879833ed4dfb37
+32b50dde04786e33f64716823ba7229ce7798fdf
+c82e228a18d13bec3504a37746e378e49ac52b36
+8eb2133f168a1ec5f09a459f342c029cd808acca
+55d647bdc748659381255c873f4573b5cc6cf2f7
+8c704c0c5f9ba6104fa1907cbb5a771a3b794fce
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2016 Intel Corporation
+]]></Content>
+    <Files><![CDATA[src/cbor.dox
+src/cborencoder.c
+src/cborerrorstrings.c
+src/cborparser_dup_string.c
+]]></Files>
+    <FileHash><![CDATA[ca5bddc7520d877e42a2013a1559bc793c82f2ed
+2166b0d7f08bcdfc03ea52d7ccbb708e65aedaee
+b2189a8eef5734a698f15280809cef0ceaff09f9
+4e8f3470e82a231da808bb7d9c1d3919fd0d0196
+]]></FileHash>
+  </Copyright>
+  <Copyright>
+    <Content><![CDATA[Copyright (C) 2015 Intel Corporation
+]]></Content>
+    <Files><![CDATA[tools/cbordump/cbordump.c
+tools/json2cbor/json2cbor.c
+src/open_memstream.c
+src/cborjson.h
+src/cborencoder_close_container_checked.c
+]]></Files>
+    <FileHash><![CDATA[4d6787e188a0139bca0696023810ad43e25c50f2
+44016c462451f3c97bd2523b35da0002cdb0b208
+f4e2811f44a67310b8052dbf8033c6d0320d9c6d
+e5ee5f4f7d498a4daa66ef98a1b25ad33b679d89
+2905125b3c6e122a3c3bcf3a3375de873dd42ccf
+]]></FileHash>
+  </Copyright>
+
+  <IrrelevantFiles>
+    <Files><![CDATA[tests/parser/tst_parser.cpp
+tests/cpp/tst_cpp.cpp
+tests/encoder/tst_encoder.cpp
+tests/tojson/tst_tojson.cpp
+tests/c90/tst_c90.c
+]]></Files>
+  </IrrelevantFiles>
+
+
+  <Comment>
+    <![CDATA[None]]>
+  </Comment>
+  <ExternalIds>
+    <![CDATA[https://sw360.siemens.com/group/guest/components/-/component/release/detailRelease/7c79770a36cdbe6c113bd2ba985d2511#/tab-Summary]]>
+  </ExternalIds>
+</ComponentLicenseInformation>
+
