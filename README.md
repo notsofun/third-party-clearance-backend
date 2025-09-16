@@ -111,7 +111,51 @@ third-party-clearance/
 
 ---
 
-## 7. 关键技术点
+## 7. 如何开始？
+*以目前的开发进度（截至2025年9月16日）*
+
+1. 首先安装依赖项
+
+```powershell
+pip install -r requirements.txt
+```
+
+2. 在 `back_end` 目录下运行：
+
+```powershell
+python run_server.py
+```
+
+3. 在`front_end`目录下安装`Node`包
+
+```powershell
+npm install
+```
+
+4. 运行前端
+
+```powershell
+npm run dev
+```
+
+5. 在前端页面中与**Chatbot**对话，以生成`ReadmeOSS.docx`文档，在对话框中下载
+   
+6. 对于PCR文件，目前仅支持通过测试文件生成，在`/back_end/test_codes/testing.py`中，修改
+
+在命令行中作为参数传进去
+
+```python
+def class_context(request):
+    """创建类级别的context，在整个测试类中共享"""
+    shared = {
+        'html_path': r"C:\Users\z0054unn\Downloads\LicenseInfo-Wireless Room Sensor-2.0-2025-08-22_01_44_49.html",
+        'PCR_Path': r'uploads\test\ProjectClearingReport-Wireless Room Sensor-2.0-2025-08-28_03_14_37.docx',
+    }
+```
+
+---
+
+## 8. 关键技术点
 
 - **PocketFlow**：轻量级节点式流程引擎，支持灵活的流程编排
 - **LangChain/Azure OpenAI**：自动化风险评估、合规建议、对话交互
@@ -121,7 +165,7 @@ third-party-clearance/
 
 ---
 
-## 8. 未来可扩展方向
+## 9. 未来可扩展方向
 
 - 支持更多文件格式（如 docx、pdf）
 - 支持多语言和国际化
@@ -129,5 +173,5 @@ third-party-clearance/
 - 支持更细粒度的权限与多用户协作
 - 支持云端部署与大规模并发
 
-## 9.开发指南
+## 10.开发指南
 请参照此[指南](README_Doc\Tutorial.md)

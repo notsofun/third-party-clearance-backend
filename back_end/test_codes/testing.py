@@ -41,7 +41,7 @@ def class_context(request):
     shared['riskBot'] = get_singleton_risk_bot()
     
     chat_service = ChatService()
-    chat_service.chat_flow.current_state = ConfirmationStatus.CONCLUSION
+    chat_service.chat_flow.current_state = ConfirmationStatus.OEM
 
     chat_service.initialize_chat(shared=shared)
     handler = chat_service.handler_factory.get_handler(chat_service.chat_flow.current_state.value, chat_service.bot)

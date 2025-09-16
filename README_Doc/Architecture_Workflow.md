@@ -3,7 +3,7 @@
 ```mermaid
 flowchart TD
     U1([开始：进入系统])
-    U2[上传OSS Readme/合规材料]
+    U2[上传LicenseInfo/合规材料]
     U3[系统自动解析并分析风险]
     U4[展示待确认组件/许可证列表]
     U5{有高/中风险项需人工确认吗?}
