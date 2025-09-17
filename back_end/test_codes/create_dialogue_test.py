@@ -7,7 +7,7 @@ dialog_dir = Path(r"back_end\test_codes\test_dialogue")
 dialog_dir.mkdir(parents=True, exist_ok=True)
 
 # Define the number of turns you want
-num_turns = 12
+num_turns = 20
 
 # Create test dialog with configurable number of turns
 test_dialog = {
@@ -29,7 +29,7 @@ test_dialog = {
 # Generate remaining turns with "ok, I am satisfied with it"
 for i in range(1, num_turns):
     turn = {
-        "user_input": "ok, I am satisfied with it",
+        "user_input": "ok, let's move forward.",
         "expected_status": "obligations",
         "follow_up_if_continue": "Here's additional information about distribution"
     }
