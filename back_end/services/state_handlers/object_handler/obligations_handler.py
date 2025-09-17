@@ -156,6 +156,7 @@ class AdditionalHandler(SubContentGenerationHandler):
     def get_instructions(self):
         return "Now we are going to check whether this release contains dual licenses..."
     
+    # 现在没有处理实在为空的情况？
     def _generate_content(self, shared: Dict):
         current_item_idx = shared.get('current_item_idx', 0)
         components = shared.get(TYPE_CONFIG.get(ItemType.PC)['items_key'], [])
@@ -163,7 +164,7 @@ class AdditionalHandler(SubContentGenerationHandler):
         licenses = self.db.get_unique_licenses(current_comp['compName'])
         filtered_licenses = [license for license in licenses if 'dual' in license]
         if len(filtered_licenses) == 0:
-            return ''
+            return 'None'
         else:
             return '- Dual/triple license: document license selection.'
         

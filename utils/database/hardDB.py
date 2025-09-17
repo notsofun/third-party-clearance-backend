@@ -5,6 +5,7 @@ sys.path.append(r'C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-p
 from utils.database.baseDB import TYPE, BaseDatabase
 from utils.LLM_Analyzer import RelevanceChecker, LicRelevanceChecker
 from log_config import configure_logging, get_logger
+from utils.itemFilter import ContentNormalizer
 
 configure_logging()
 logger = get_logger(__name__)
@@ -151,15 +152,35 @@ class HardDB(BaseDatabase):
         """
         def query(item):
             if item.get('_data_type') == TYPE.TYPE_XML.value:
-                item_comp_name = item.get('component_name',
-                                            item.get('component', '')).lower()
+                # 获取组件名称
+                item_comp_name = item.get('component_name', item.get('component', '')).lower()
                 search_term = comp_name.lower()
-                result = self.rel.check(search_term,item_comp_name)
-                # 模糊匹配：任一包含另一个
-                if  result == 'true':
+                
+                # 方法1: 使用rel.check方法判断
+                rel_result = self.rel.check(search_term, item_comp_name)
+                if rel_result == 'true':
                     return True
-                else:
-                    return False
+                    
+                # 方法2: 硬编码方法判断
+                def hard_coded_check(search, target):
+                    # 简单包含关系判断
+                    if search in target or target in search:
+                        return True
+                    
+                    norm_search = ContentNormalizer.normalize_name(search)
+                    norm_target = ContentNormalizer.normalize_name(target)
+                    
+                    # 检查标准化后的名称是否有包含关系
+                    return (norm_search in norm_target or
+                        norm_target in norm_search or
+                        (("freertos" in norm_search and "freertos" in norm_target)))
+                
+                # 执行硬编码检查
+                hard_coded_result = hard_coded_check(search_term, item_comp_name)
+                
+                # 只要任一方法返回True，整体就返回True
+                return hard_coded_result
+                
             return False
         
         return self._base_query(query)
