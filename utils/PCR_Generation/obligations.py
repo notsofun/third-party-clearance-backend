@@ -5,50 +5,50 @@ def get_license_descriptions(licenses, data_list, desc_type:str = 'description')
     Extract license descriptions from a nested dictionary list based on license names.
     
     Args:
-        licenses (list): List of license names to search for
-        data_list (list): List of dictionaries containing license information
+        licenses (list): List of license dictionaries with 'name' field
+        data_list (list): List of dictionaries containing license information with comma and newline separated licenses
     
     Returns:
-        list: List of descriptions corresponding to the input licenses
+        list: List of unique descriptions corresponding to the input licenses
     """
-    # Create a mapping of license names to their descriptions
-    license_map = {}
-    
-    for item in data_list:
-        if not isinstance(item, dict):
-            continue
-            
-        # Check if this dictionary has license information
-        if "License" in item and desc_type in item:
-            license_name = item["License"]
-            description = item[desc_type]
-            
-            # Add the description to our map (handle multiple descriptions per license)
-            if license_name in license_map:
-                if description not in license_map[license_name]:  # Avoid duplicates
-                    license_map[license_name].append(description)
-            else:
-                license_map[license_name] = [description]
-    
-    # Retrieve descriptions for each requested license
     result = []
-    seen_descriptions = set()
+    seen_descriptions = set()  # 用于去重
     
-    for license_name in licenses:
-        if isinstance(license_name, dict):
-            license_name = license_name['name']
-
-        for key in license_map.keys():
-            lic_list = ContentNormalizer.remove_n(key)
-            if license_name in lic_list:
-                # Join all descriptions for this license with a separator
-                descriptions = license_map[key]
-                joined_desc = "\n\n".join(descriptions)
-                
-                # 去重检查
-                if joined_desc not in seen_descriptions:
-                    result.append(joined_desc)
-                    seen_descriptions.add(joined_desc)
+    # 从licenses列表中提取名称
+    license_names = []
+    for license_item in licenses:
+        if isinstance(license_item, dict) and 'name' in license_item:
+            license_names.append(license_item['name'])
+        elif isinstance(license_item, str):
+            license_names.append(license_item)
+    
+    # 遍历data_list中的每个项目
+    for data_item in data_list:
+        if not isinstance(data_item, dict) or "License" not in data_item or desc_type not in data_item:
+            continue
+        
+        # 获取并分割许可证字符串
+        license_string = data_item["License"]
+        license_names_in_data = [name.strip() for name in license_string.split(", \n")]
+        
+        # 获取描述
+        description = data_item[desc_type]
+        
+        # 检查是否有匹配的许可证
+        match_found = False
+        for license_name in license_names:
+            for data_license in license_names_in_data:
+                if license_name == data_license:
+                    match_found = True
+                    break
+            
+            if match_found:
+                break
+        
+        # 如果找到匹配且描述未添加过，则添加到结果中
+        if match_found and description not in seen_descriptions:
+            result.append(description)
+            seen_descriptions.add(description)
     
     return result
 

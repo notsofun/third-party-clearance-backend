@@ -115,6 +115,7 @@ class ChapterGeneration(SubTaskStateHandler):
         # 子标题是按顺序的，所以找到第一个未确认的子标题就是当前子标题的方法是对的，但是得加上check_completion的逻辑
         for handler_wrapper in subtitle_handlers:
             # 若未生成内容，则先生成
+            self.logger.info(f'ChapterGenerationHandler: Now we are checking {item_key}, and you see this handler{handler_wrapper.handler.__class__.__name__}')
             if not handler_wrapper.content_generated:
                 return State.GENERATION.value
             

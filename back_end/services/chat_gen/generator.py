@@ -71,7 +71,7 @@ class ChatGenerator:
                 subtitle_key = f"content_{item_key}_{handler.handler.__class__.__name__}"
                 shared[subtitle_key] = content
                 
-                self.logger.info(f"Generated content for {item_key} - {handler.__class__.__name__}")
+                self.logger.info(f"Generated content for {item_key} - {handler.handler.__class__.__name__}")
                 return content
         
         return False

@@ -1,9 +1,11 @@
+import sys
+sys.path.append(r'C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance')
 import json
 from utils.callAIattack import AzureOpenAIChatClient
 import time
 from utils.tools import get_strict_json, get_strict_string, read_doc, get_strict_talking
 from langchain_openai import AzureChatOpenAI
-from langchain.memory import ConversationBufferMemory, ConversationSummaryBufferMemory
+from langchain.memory import ConversationSummaryBufferMemory
 from langchain.chains import LLMChain
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from log_config import get_logger
@@ -404,15 +406,14 @@ class RiskBot(Chatbot):
     def __init__(self, session_id):
         super().__init__(
             promptName="bot/RiskBot",
-            session_id = 'default'
+            session_id = 'default',
+            deployment= 'gpt-4.1-2025-04-14'
         )
         self.session_id = session_id
         self.conditions = {
             "Go_on": ("continue"),
             "End" : ("passed","discarded")
         }
-        # print('here is prompt',self.langfusePrompt)
-
     def toConfirm(self,comp,user_input):
 
         json_welcome = get_strict_json(self,f"here is the licenseName: {comp['title']}, CheckedLevel: {comp['CheckedLevel']}, and Justification: {comp['Justification']}")

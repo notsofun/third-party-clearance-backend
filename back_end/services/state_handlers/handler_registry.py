@@ -28,6 +28,7 @@ class HandlerStateWrapper:
             self.logger = handler.logger
         self.content_confirmed: bool = False
         self.content_generated: bool = False
+        self.instructed: bool = False
 
     def handle(self, context):
         """代理处理方法，根据处理结果更新状态"""
@@ -35,7 +36,10 @@ class HandlerStateWrapper:
         go, self = self.handler.handle(context, self)
         return go, self
 
-    
+    def set_instructed(self) -> None:
+        if not self.instructed:
+            self.instructed = True
+
     def __getattr__(self, name):
         """将未定义的属性和方法转发给内部handler"""
         # 添加安全检查，防止无限递归
