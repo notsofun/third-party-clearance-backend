@@ -9,7 +9,9 @@ from pathlib import Path
 
 # 确保可以导入项目模块
 root_dir = Path(__file__).resolve().parent
+project_root = root_dir.parent
 sys.path.append(str(root_dir))
+sys.path.append(str(project_root))
 
 # 导入日志配置
 from log_config import configure_logging

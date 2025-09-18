@@ -1,31 +1,35 @@
 # Siemens Third-Party Clearance Backend requirements.txt
-# 基础依赖
+# Basic dependencies
 fastapi
 uvicorn
 pydantic
 requests
 python-dotenv
+azure-identity
+python-multipart
 
-# 文档与解析
+# Document and parsing
 beautifulsoup4
 python-docx
 spire.doc
 
-# AI/LLM相关（如需本地/云端推理）
+# AI/LLM
 openai
 transformers
 sentence-transformers
 pocketflow
 langchain
 langfuse
+langchain-openai
 
-# 数据库与存储
+# Database
 sqlalchemy
 pymysql
+faiss-cpu
 
-# 其他工具
+# Tools
 loguru
 logging
 
-# 测试
+# Test
 pytest
