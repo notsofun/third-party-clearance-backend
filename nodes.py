@@ -19,6 +19,14 @@ from back_end.items_utils.item_utils import process_items_and_generate_finals
 from typing import Dict
 
 logger = get_logger(__name__)  # 每个模块用自己的名称
+output_dir = 'resultsInProgress'
+# 确保存在resultsInProgress这一个中间目录
+try:
+    os.makedirs(output_dir, exist_ok=True)
+    logger.info(f"Directory '{output_dir}' ensured to exist.")
+except OSError as e:
+    logger.error(f"Error creating directory '{output_dir}': {e}")
+
 class ParsingOriginalHtml(Node):
     """处理原始OSS-Readme文件，生成Json文件方便后续调用
     prep：拿数据
@@ -61,9 +69,10 @@ class ParsingOriginalHtml(Node):
         final, comps = exec_res
         shared[TYPE_CONFIG[ItemType.PC]['items_key']] = comps
         shared["parsedHtml"] =  final
-        shared
+
         with open("resultsInProgress/parsed_original_oss.json","w",encoding="utf-8") as f:
             json.dump(exec_res,f,ensure_ascii=False,indent=2)
+
         logger.info("Successfully parsed!")
         return "default"
 
