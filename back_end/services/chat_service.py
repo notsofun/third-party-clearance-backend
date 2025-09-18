@@ -1,4 +1,4 @@
-import json
+import json, os
 from typing import Dict, Any, Tuple, Optional
 from .chat_manager import ChatManager
 from back_end.items_utils.item_types import State
@@ -14,6 +14,14 @@ from back_end.services.state_handlers.base_handler import SubTaskStateHandler, C
 from back_end.services.state_handlers.content_handler import ChapterGeneration, SimpleChapterGeneration
 
 logger = get_logger(__name__)  # 每个模块用自己的名称
+
+output_dir = 'resultsInProgress'
+# 确保存在resultsInProgress这一个中间目录
+try:
+    os.makedirs(output_dir, exist_ok=True)
+    logger.info(f"Directory '{output_dir}' ensured to exist.")
+except OSError as e:
+    logger.error(f"Error creating directory '{output_dir}': {e}")
 
 class ChatService:
     def __init__(self):
@@ -403,7 +411,7 @@ class ChatService:
             shared, item_type, result, self.bot
         )
 
-        with open("currentSharedCredential.json","w", encoding="utf-8" ) as f1:
+        with open("resultsInProgress/currentSharedCredential.json","w", encoding="utf-8" ) as f1:
             json.dump(updated_shared["credential_required_components"],f1,ensure_ascii=False,indent=2)
 
         logger.warning('chat_service.handle_nested: we have found this messsage %s', message)
