@@ -139,6 +139,7 @@ npm run dev
 ```
 
 5. 在前端页面中与**Chatbot**对话，以生成`ReadmeOSS.docx`文档，在对话框中下载
+   1. LicenseInfo文件上传需要以`.html`格式
    
 6. 对于PCR文件，目前仅支持通过测试文件生成，在`/back_end/test_codes/testing.py`中，修改
 

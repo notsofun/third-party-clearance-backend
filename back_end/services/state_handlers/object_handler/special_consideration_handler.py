@@ -4,8 +4,7 @@ from utils.PCR_Generation.obligations import generate_component_license_markdown
 from utils.tools import get_strict_json
 from back_end.services.state_handlers.handler_registry import HandlerStateWrapper
 from utils.database.hardDB import HardDB
-from typing import Dict, Any
-
+from typing import Dict,Tuple
 class SpecialConsiderationHandler(SimpleChapterGeneration):
 
     def __init__(self, bot=None, subcontent_factory = None, chapter_title_key = "Special Considerations", chapter_content_key = "generated_special_consideration"):
@@ -39,6 +38,12 @@ class SpecialConsiderationHandler(SimpleChapterGeneration):
             handler_wrapper = HandlerStateWrapper(shared_handler)
             handlers.append(handler_wrapper)
         return handlers
+    
+    def get_title_and_description(self) -> Tuple[str, str]:
+        '''返回大章节标题和描述'''
+        title = 'Special Considerations'
+        description = ''
+        return title, description
     
 class InteractionObligationHandler(SubContentGenerationHandler):
 
@@ -227,8 +232,8 @@ class RemainingHandler(SubContentGenerationHandler):
         '''
 class SpecialCombiningHandler(SubContentGenerationHandler):
     #⃣　やっとインターンの最後に日本語入力を確保できた
-    def __init__(self, bot=None):
-        super().__init__(bot)
+    def __init__(self, bot=None, item_subchapter = True):
+        super().__init__(bot, item_subchapter)
 
     def get_instructions(self):
         return 'Now we are generating the combined content for the sixth chapter'
@@ -250,19 +255,19 @@ class SpecialCombiningHandler(SubContentGenerationHandler):
         Remaining_special = shared['Remaining_special']
 
         final_chapt = f"""
-        # Special Considerations \n\n
-        ## Obligations resulting from interactions between components\n\n
-        {Obligations_resulting_from_interaction}\n\n
-        ## Copyleft effect\n\n
-        {Copyleft_effect}\n\n
-        ## Additional obligations resulting from GPL-2.0, GPL-3.0, LGPL-2.1, LGPL-3.0\n\n
-        {Additional_obligations_resulting_from_special_licenses}\n\n
-        ## Other Obligations\n\n
-        {Other_obligations}\n\n
-        ## Readme_OSS\n\n
-        {ReadmeOSS}\n\n
-        ## Source Code to be delivered\n\n
-        {Source_Codes}\n\n
-        {Remaining_special}
-        """
+    # Special Considerations \n\n
+    ## Obligations resulting from interactions between components\n\n
+    {Obligations_resulting_from_interaction}\n\n
+    ## Copyleft effect\n\n
+    {Copyleft_effect}\n\n
+    ## Additional obligations resulting from GPL-2.0, GPL-3.0, LGPL-2.1, LGPL-3.0\n\n
+    {Additional_obligations_resulting_from_special_licenses}\n\n
+    ## Other Obligations\n\n
+    {Other_obligations}\n\n
+    ## Readme_OSS\n\n
+    {ReadmeOSS}\n\n
+    ## Source Code to be delivered\n\n
+    {Source_Codes}\n\n
+    {Remaining_special}
+    """
         return final_chapt

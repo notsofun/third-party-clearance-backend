@@ -12,6 +12,7 @@ from back_end.services.state_handlers.handler_factory import StateHandlerFactory
 from back_end.services.chat_gen.generator import ChatGenerator
 from back_end.services.state_handlers.base_handler import SubTaskStateHandler, ContentGenerationHandler
 from back_end.services.state_handlers.content_handler import ChapterGeneration, SimpleChapterGeneration
+from back_end.services.state_handlers.handler_registry import HandlerStateWrapper
 
 logger = get_logger(__name__)  # 每个模块用自己的名称
 
@@ -131,7 +132,7 @@ class ChatService:
                 
                 if aggregated_content:
                     # 使用add_section方法添加聚合后的内容
-                    self.handler_factory.add_section(old_status, aggregated_content)
+                    self.handler_factory.add_section(old_status,aggregated_content)
                     logger.info('_process_status_change: Aggregated content added to section for status: %s', old_status)
                 else:
                     logger.warning('_process_status_change: No aggregated content returned from ChapterGeneration')
@@ -182,7 +183,7 @@ class ChatService:
             handlers_list = handler.nested_handlers  # 直接是list
             if handlers_list and handler.current_handler_index < len(handlers_list):
                 current_subhandler = handlers_list[handler.current_handler_index].handler.__class__.__name__
-                self.handler_factory.md.add_section(gen_content, f'### {current_subhandler}')
+                self.handler_factory.md.add_section(content=gen_content, title=f'### {current_subhandler}')
             
             # 处理特殊逻辑
             shared = handler.process_special_logic(shared, content=gen_content)
@@ -240,7 +241,7 @@ class ChatService:
             logger.info(f"now we started generating content with this handler {handler.__class__.__name__}")
             generated_content = handler._generate_content(shared)
             shared = handler.process_special_logic(shared,content=generated_content)
-            self.handler_factory.add_section(status, generated_content)
+            self.handler_factory.add_section(status,generated_content)
             confirmation_message = f"Based on the information you proived, I have generated the following content: \n\n{generated_content}\n\n Would you mind telling me if it meets your requirements?"
             
             return status, shared, self._ensure_list(confirmation_message)
@@ -306,7 +307,9 @@ class ChatService:
         gen_content, all_completed = self.gen.generate_content(content)
         
         # 存储到markdown
-        self._save_generated_content_to_markdown(handler, gen_content)
+        current_subhandler = self._get_current_subhandler(handler)
+        if getattr(current_subhandler, 'item_subchapter'):
+            self._save_generated_content_to_markdown(gen_content, current_subhandler)
         
         # 处理特殊逻辑
         shared = handler.process_special_logic(shared, content=gen_content)
@@ -319,11 +322,10 @@ class ChatService:
         else:
             return self._handle_ongoing_generation(shared, status, handler, gen_content)
 
-    def _save_generated_content_to_markdown(self, handler: ChapterGeneration, gen_content: str) -> None:
+    def _save_generated_content_to_markdown(self, gen_content: str, current_subhandler: HandlerStateWrapper) -> None:
         """将生成的内容保存到markdown结构中"""
-        current_subhandler = self._get_current_subhandler(handler)
         if current_subhandler:
-            self.handler_factory.md.add_section(gen_content, f'### {current_subhandler.__class__.__name__}')
+            self.handler_factory.md.add_section(content = gen_content)
 
     def _handle_completed_generation(self, shared: Dict[str, Any], status: str, handler: ChapterGeneration) -> Tuple[str, Dict[str, Any], str]:
         """处理完成生成的情况"""
@@ -333,7 +335,10 @@ class ChatService:
         content = {'shared': shared, 'status': 'next'}
         result_in_flow = self.chat_flow.process(content)
         final_status = result_in_flow['current_state'].value
-        
+
+        # 这里还得实现一个专门在全部生成后加上标题和第一句话的方法
+        self._handle_chapter_finished(handler)
+
         # 如果状态发生变化，处理状态变化
         if final_status != status:
             return self._process_status_change(shared, status, final_status, handler)
@@ -344,6 +349,13 @@ class ChatService:
             completion_message += "\n\n已保存生成的章节内容。"
         
         return status, shared, self._ensure_list(completion_message)
+
+    def _handle_chapter_finished(self,handler: ChapterGeneration) -> None:
+        '''处理章节内容生成完毕之后放入标题和'''
+        target_index = self.handler_factory.md.find_section_index_by_title(handler.expected_previous_chapter) + 1
+        title, description = handler.get_title_and_description()
+        self.handler_factory.md.add_section(content=description, title=title, position=target_index)
+        return None
 
     def _handle_ongoing_generation(self, shared: Dict[str, Any], status: str, handler: ChapterGeneration, gen_content: str) -> Tuple[str, Dict[str, Any], str]:
         """处理正在进行生成的情况"""

@@ -2,17 +2,17 @@ from back_end.services.state_handlers.base_handler import SubTaskStateHandler, C
 from back_end.items_utils.item_types import State
 from typing import Dict, Any, Tuple, Callable
 from abc import ABC, abstractmethod
-from utils.string_to_markdown import MarkdownDocumentBuilder
 from back_end.services.state_handlers.handler_registry import HandlerRegistry, HandlerStateWrapper
 
 class SubContentGenerationHandler(ContentGenerationHandler):
     '''
     基本基于subtask这个处理器来实现，需要重新实现初始化+判断完成的方法，这一部分基于content来实现
     '''
-    def __init__(self, bot = None):
+    def __init__(self, bot = None, item_subchapter = False):
         '''通过索引实现转移，subtask列表包含的每一个元素是一个statehandler'''
         super().__init__(bot)
         self.subtasks = []
+        self.item_subchapter = item_subchapter
 
     def set_bot(self, bot):
         self.bot = bot
@@ -48,6 +48,7 @@ class ChapterGeneration(SubTaskStateHandler):
     def __init__(self, bot = None, item_list_key : str = None,
                 subtask_factory: Callable[[Any,Any], Any] = None,
                 subcontent_factory: Callable[[Any, Any, Any], Any] = None,
+                expected_previous_chapter: str = None,
                 chapter_title_key: str = "generated_chapter_title",
                 chapter_content_key: str = "generated_chapter_content"):
         if item_list_key is None:
@@ -62,6 +63,7 @@ class ChapterGeneration(SubTaskStateHandler):
         self.subcontent_factory = subcontent_factory
         self.chapter_title_key = chapter_title_key
         self.chapter_content_key = chapter_content_key
+        self.expected_previous_chapter = expected_previous_chapter
         
         # 嵌套字典：{item_key: [子标题生成实例列表]}
         self.nested_handlers = {}
@@ -96,6 +98,10 @@ class ChapterGeneration(SubTaskStateHandler):
 
     @abstractmethod
     def _create_content_handlers(self):
+        pass
+
+    @abstractmethod
+    def get_title_and_description(self) -> Tuple[str, str]:
         pass
 
     def _state_transition(self, context: Dict[str, Any]) -> str:

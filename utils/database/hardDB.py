@@ -15,7 +15,7 @@ import os
 from pathlib import Path
 class HardDB(BaseDatabase):
 
-    def __init__(self, default_type=TYPE.TYPE_LICENSE.value, db_path="./database/hardDB/hard_database.json"):
+    def __init__(self, default_type=TYPE.TYPE_LICENSE.value, db_path="database/hardDB/hard_database.json"):
         super().__init__(default_type)
         self.db_path = db_path
         self.data = []  # 存储所有数据项

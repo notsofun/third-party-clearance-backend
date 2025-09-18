@@ -87,28 +87,28 @@ class VectorDatabase(BaseDatabase):
 
         """保存索引、文本数据和嵌入向量"""
 
-        os.makedirs("./database", exist_ok=True)
+        os.makedirs("database", exist_ok=True)
 
         # 保存文本数据和嵌入向量
         save_data = {
             'texts': self.texts,
             'embeddings': self.embedding
         }
-        with open(f"./database/{path}.pkl", 'wb') as f:
+        with open(f"database/{path}.pkl", 'wb') as f:
             pickle.dump(save_data, f)
         # 保存索引
         if self.index:
-            faiss.write_index(self.index, f"./database/{path}.faiss")
-        print(f"✅ 数据库已保存到 ./database/{path}，共 {len(self.texts)} 条记录")
+            faiss.write_index(self.index, f"database/{path}.faiss")
+        print(f"✅ 数据库已保存到database/{path}，共 {len(self.texts)} 条记录")
 
     def load(self, path):
         """加载索引、文本数据和嵌入向量"""
-        if not os.path.exists(f"./database/{path}.pkl"):
-            raise FileNotFoundError(f"数据库文件 ./database/{path}.pkl 不存在")
+        if not os.path.exists(f"database/{path}.pkl"):
+            raise FileNotFoundError(f"数据库文件database/{path}.pkl 不存在")
         
         try:
             # 加载文本数据和嵌入向量
-            with open(f"./database/{path}.pkl", 'rb') as f:
+            with open(f"database/{path}.pkl", 'rb') as f:
                 data = pickle.load(f)
                 
                 # 兼容旧格式
@@ -121,8 +121,8 @@ class VectorDatabase(BaseDatabase):
                     self.embeddings = data.get('embeddings', [])
             
             # 加载索引
-            if os.path.exists(f"./database/{path}.faiss"):
-                self.index = faiss.read_index(f"./database/{path}.faiss")
+            if os.path.exists(f"database/{path}.faiss"):
+                self.index = faiss.read_index(f"database/{path}.faiss")
             else:
                 print("⚠️ 未找到索引文件，将在需要时重建")
                 self.index = None
