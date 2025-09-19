@@ -113,7 +113,7 @@ class ChapterGeneration(SubTaskStateHandler):
             return State.COMPLETED.value
         
         current_item = self.items[self.current_item_index]
-        item_key = current_item.get('id', current_item.get('title', f'item_{self.current_item_index}'))
+        item_key = current_item.get('title', current_item.get('compName', f'item_{self.current_item_index}'))
         
         # 获取当前项目的子标题处理器列表
         subtitle_handlers = self.nested_handlers.get(self.current_item_index, [])

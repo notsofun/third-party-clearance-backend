@@ -8,7 +8,7 @@
 
 ## 2. 总体架构
 
-详细架构图及流程图请参照该文档: [架构图+流程图](README_Doc\Architecture_Workflow.md)
+详细架构图及流程图请参照该文档: [架构图+流程图](..\README_Doc\Architecture_Workflow.md)
 
 - **前端**：React + TypeScript，负责文件上传、组件风险展示、与后端对话交互。
 - **后端**：FastAPI（Python），负责文件接收、PocketFlow 工作流调度、对话管理、报告生成。
@@ -178,4 +178,4 @@ def class_context(request):
 - 支持云端部署与大规模并发
 
 ## 10.开发指南
-请参照此[指南](README_Doc\Tutorial.md)
+请参照此[指南](..\README_Doc\Tutorial.md)
