@@ -4,11 +4,12 @@ from utils.PCR_Generation.obligations import get_license_descriptions, list_to_s
 from utils.tools import get_strict_json
 from back_end.services.state_handlers.handler_registry import HandlerStateWrapper
 from utils.database.hardDB import HardDB
-from typing import Dict, Any
+from typing import Dict, Tuple
 
 class ObligationsHandler(ChapterGeneration):
 
     def __init__(self, bot=None, item_list_key = TYPE_CONFIG[ItemType.PC]['items_key'],
+                expected_previous_chapter = 'Common Rules',
                 chapter_title_key = 'Obligations resulting from the use of 3rd party components',
                 chapter_content_key = 'Generated Obligations resulting from the use of 3rd party components'):
         super().__init__(bot, item_list_key, chapter_title_key, chapter_content_key)
@@ -40,6 +41,12 @@ class ObligationsHandler(ChapterGeneration):
             handler_wrapper = HandlerStateWrapper(shared_handler)
             handlers.append(handler_wrapper)
         return handlers
+    
+    def get_title_and_description(self) -> Tuple[str, str]:
+        '''返回大章节标题和描述'''
+        title = 'Obligations resulting from the use of 3rd party components'
+        description = 'name - version contains the 3rd party components listed below.\n\nOnly components with obligations other than common obligations are shown. Apache-2.0 license is handled as if it has only common obligations, because no component has been modified.'
+        return title, description
     
 class LicenseHandler(SubContentGenerationHandler):
 
@@ -192,15 +199,15 @@ class ImplementationHandler(SubContentGenerationHandler):
         filtered_licenses = [license for license in licenses if license in discarded_licenses]
         final_str = list_to_string(filtered_licenses)
         content = f"""
-            - Licenses and copyrights have been added to Readme_OSS.
-            - No Apache NOTICE file available.
-            - License selection has been documented in Readme_OSS.
-            - Source code is ready to be shipped to the customer.
-            - Licenses that do not apply:
-                - {final_str}
-            - Acknowledgements have been added to Readme_OSS.
-            - Check for required sub-components has been done.
-            - Risk: Component binary has not been built from cleared source code.
+- Licenses and copyrights have been added to Readme_OSS.
+- No Apache NOTICE file available.
+- License selection has been documented in Readme_OSS.
+- Source code is ready to be shipped to the customer.
+- Licenses that do not apply:
+    - {final_str}
+- Acknowledgements have been added to Readme_OSS.
+- Check for required sub-components has been done.
+- Risk: Component binary has not been built from cleared source code.
         """
         return content
     
@@ -213,8 +220,8 @@ class ImplementationHandler(SubContentGenerationHandler):
         
 # 这里需要注意一下怎么去拼之后对应每一个item
 class ObligationCombiningHandler(SubContentGenerationHandler):
-    def __init__(self, bot=None):
-        super().__init__(bot)
+    def __init__(self, bot=None, item_subchapter = True):
+        super().__init__(bot, item_subchapter)
         self.db = HardDB()
         self.db.load()
 
@@ -236,23 +243,29 @@ class ObligationCombiningHandler(SubContentGenerationHandler):
         general_assessment = self.db.get_general_assessment(current_comp['compName'])
         additional_notes = self.db.get_additional_nots(current_comp['compName'])
 
+        # 处理单行情况 (依然适用)
+        original_string_single = current_comp['compName']
+        first_line_single = original_string_single.splitlines()[0] if original_string_single else ""
+        # 进一步清理第一行，去除 â§ 和末尾空格
+        cleaned_first_line_single = first_line_single.replace("â§", "").strip()
+
         final_chap = f"""
-        ## {current_comp['compName']} \n\n
-        General Assessment: {general_assessment}\n\n
-        Additional Notes: {additional_notes}\n\n
-        ### Licenses Identified\n\n
-        {Licenses_identified}\n\n
-        ### Obligations\n\n
-        {SubObligations}\n\n
-        ### Risks\n\n
-        {SubRisk}\n\n
-        ### Licenses with Common Rules Only\n\n
-        {CommonRulesOnlyLicenses}\n\n
-        ### Additional Obligations\n\n
-        {AdditionalObligations}
-        ### Implementation of Obligations / Remarks\n\n
-        {ImplementationDetails}
-        """
+## {cleaned_first_line_single} \n
+General Assessment: {general_assessment}
+Additional Notes: {additional_notes}\n
+### Licenses Identified\n
+{Licenses_identified}\n
+### Obligations\n
+{SubObligations}\n
+### Risks\n
+{SubRisk}\n
+### Licenses with Common Rules Only\n
+{CommonRulesOnlyLicenses}\n
+### Additional Obligations\n
+{AdditionalObligations}
+### Implementation of Obligations / Remarks\n
+{ImplementationDetails}
+"""
 
         return final_chap
     

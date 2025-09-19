@@ -7,7 +7,7 @@ dialog_dir = Path(r"back_end\test_codes\test_dialogue")
 dialog_dir.mkdir(parents=True, exist_ok=True)
 
 # Define the number of turns you want
-num_turns = 20
+num_turns = 100
 
 # Create test dialog with configurable number of turns
 test_dialog = {

@@ -8,7 +8,7 @@
 
 ## 2. 总体架构
 
-详细架构图及流程图请参照该文档: [架构图+流程图](README_Doc\Architecture_Workflow.md)
+详细架构图及流程图请参照该文档: [架构图+流程图](..\README_Doc\Architecture_Workflow.md)
 
 - **前端**：React + TypeScript，负责文件上传、组件风险展示、与后端对话交互。
 - **后端**：FastAPI（Python），负责文件接收、PocketFlow 工作流调度、对话管理、报告生成。
@@ -139,6 +139,7 @@ npm run dev
 ```
 
 5. 在前端页面中与**Chatbot**对话，以生成`ReadmeOSS.docx`文档，在对话框中下载
+   1. LicenseInfo文件上传需要以`.html`格式
    
 6. 对于PCR文件，目前仅支持通过测试文件生成，在`/back_end/test_codes/testing.py`中，修改
 
@@ -152,6 +153,9 @@ def class_context(request):
         'PCR_Path': r'uploads\test\ProjectClearingReport-Wireless Room Sensor-2.0-2025-08-28_03_14_37.docx',
     }
 ```
+
+7. 构建数据库
+将预备检查的`LicenseInfo`列表中的组件对应的`CLIXML`文件统一下载到`data/`文件夹中，并运行`utils/database/buildDB.py`文件
 
 ---
 
@@ -174,4 +178,4 @@ def class_context(request):
 - 支持云端部署与大规模并发
 
 ## 10.开发指南
-请参照此[指南](README_Doc\Tutorial.md)
+请参照此[指南](..\README_Doc\Tutorial.md)

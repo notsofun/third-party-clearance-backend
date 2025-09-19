@@ -3,8 +3,16 @@ from utils.tools import get_strict_json
 from log_config import get_logger
 from utils.PCR_Generation.component_overview import generate_components_markdown_table
 from utils.database.hardDB import HardDB
+import os
 
 logger = get_logger(__name__)
+
+output_dir = 'src'
+try:
+    os.makedirs(output_dir, exist_ok=True)
+    logger.info(f"Directory '{output_dir}' ensured to exist.")
+except OSError as e:
+    logger.error(f"Error creating directory '{output_dir}': {e}")
 
 class OEMStateHandler(SimpleStateHandler):
     def get_instructions(self) -> str:

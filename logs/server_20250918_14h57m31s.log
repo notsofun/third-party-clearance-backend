@@ -1,0 +1,7 @@
+2025-09-18 14:57:31 - root - INFO - 服务器日志系统初始化完成，日志文件: C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance\logs\server_20250918_14h57m31s.log
+2025-09-18 14:57:31 - back_end.services.state_handlers.object_handler.simple_handler - INFO - Directory 'src' ensured to exist.
+2025-09-18 14:57:31 - back_end.services.chat_service - INFO - Directory 'resultsInProgress' ensured to exist.
+2025-09-18 14:57:31 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2025-09-18 14:57:32 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2025-09-18 14:57:32 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes. This is only an error if you're trying to use GPU Faiss.
+2025-09-18 14:57:32 - nodes - INFO - Directory 'resultsInProgress' ensured to exist.

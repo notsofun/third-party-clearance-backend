@@ -23,7 +23,7 @@ const FileUpload: React.FC<Props> = ({ onContractAnalyzed, onFileAnalyzed, uploa
         : `${API_ENDPOINTS.ANALYZE_CONTRACT}/${sessionId}`;
 
     const uploadText = phase === 'license'
-        ? 'Click or drag your license file here'
+        ? 'Click or drag your license file here, Your file should be an HTML'
         : 'Click or drag your contract file here';
 
     const handleChange = (info: any) => {

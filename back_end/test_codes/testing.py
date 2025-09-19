@@ -1,14 +1,11 @@
-import sys
+import sys,os
 sys.path.append(r'C:\Users\z0054unn\Documents\Siemens-GitLab\Third-party\third-party-clearance')
 import pytest
 import datetime
 from log_config import configure_logging, get_logger
 from back_end.items_utils.item_types import State, ConfirmationStatus
-from back_end.services.chat_flow import WorkflowContext
-from back_end.services.chat_manager import ChatManager
 import json
 from back_end.services.chat_service import ChatService
-from back_end.services.state_handlers.handler_factory import StateHandlerFactory
 from utils.LLM_Analyzer import RiskBot
 import random
 from main import run_test
@@ -17,6 +14,13 @@ _GLOBAL_RISK_BOT = None
 
 configure_logging()
 logger = get_logger(__name__)
+
+output_dir = 'back_end'
+try:
+    os.makedirs(output_dir, exist_ok=True)
+    logger.info(f"Directory '{output_dir}' ensured to exist.")
+except OSError as e:
+    logger.error(f"Error creating directory '{output_dir}': {e}")
 
 # 首先定义一个只初始化一次的单例bot函数
 def get_singleton_risk_bot():
@@ -260,7 +264,7 @@ class TestCustomProjectOverviewIntegration:
                 updated_shared = shared
                 current_status = status
 
-        chat_service.handler_factory.md.save_document(f'./downloads/test/product_clearance/5th_report.md')
+        chat_service.handler_factory.md.save_document(f'./downloads/test/product_clearance/5th_report_2nd.md')
         logger.info('The latest file has been saved sucessfully!')
         self.context_data['chat_service'] = chat_service
         self.context_data['shared'] = shared

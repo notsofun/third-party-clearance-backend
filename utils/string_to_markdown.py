@@ -47,6 +47,31 @@ class MarkdownDocumentBuilder:
         else:
             self.sections.append(section_content)
             return len(self.sections) - 1
+        
+    def find_section_index_by_title(self, title):
+        """
+        根据章节标题查找其在文档中的索引。
+        
+        Args:
+            title (str): 要查找的章节标题。
+        
+        Returns:
+            int: 如果找到，返回章节的索引；如果未找到，返回 None。
+        """
+        if not isinstance(title, str) or not title:
+            # 如果标题无效，直接返回None
+            return None
+            
+        # 构造要查找的标题行格式，与 add_section 中保持一致
+        search_pattern = f"# {title}\n\n"
+        
+        for index, section_content in enumerate(self.sections):
+            # 检查章节内容是否以该标题行开头
+            if section_content.startswith(search_pattern):
+                return index
+        
+        # 如果遍历完所有章节都没有找到，则返回 None
+        return None
     
     def remove_section(self, index):
         """

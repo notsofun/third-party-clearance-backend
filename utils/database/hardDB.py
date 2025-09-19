@@ -12,16 +12,19 @@ logger = get_logger(__name__)
 
 import json
 import os
-from pathlib import Path
 class HardDB(BaseDatabase):
 
-    def __init__(self, default_type=TYPE.TYPE_LICENSE.value, db_path="./database/hardDB/hard_database.json"):
+    def __init__(self, default_type=TYPE.TYPE_LICENSE.value, db_path=None):
         super().__init__(default_type)
-        self.db_path = db_path
         self.data = []  # 存储所有数据项
         self.rel = RelevanceChecker(session_id='relevancyChecker')
         self.lic_rel = LicRelevanceChecker(session_id='lic_relevancyChecker')
-
+        if db_path is None:
+            project_root = self._get_project_root_path()
+            self.db_path = os.path.join(project_root, "database", "hardDB", "hard_database.json")
+        else:
+            self.db_path = db_path
+            
     def build_index(self, data_dict, data_type=None):
         """构建索引并存储为JSON文件
         
