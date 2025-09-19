@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 from enum import Enum
+import os
 
 class TYPE(Enum):
     TYPE_LICENSE = 'license'
@@ -179,6 +180,29 @@ class BaseDatabase:
             print(f"Something wrong with processing xml data: {e}")
         
         return items
+
+    def _get_project_root_path(self):
+        """
+        辅助方法：根据当前文件 (vectorDB.py) 的位置动态确定项目根目录。
+        假设项目结构为：
+        /project_root
+        ├── nodes.py
+        ├── database/
+        │   └── your_db_files.pkl
+        └── utils/
+            └── database/
+                └── vectorDB.py
+        """
+        # 获取当前文件 (vectorDB.py) 的绝对路径
+        current_file_path = os.path.abspath(__file__)
+        # 获取当前文件所在的目录: /project_root/utils/database
+        current_dir = os.path.dirname(current_file_path)
+        # 向上两级目录到达项目根目录:
+        # 第一次 os.path.dirname: /project_root/utils
+        # 第二次 os.path.dirname: /project_root
+        project_root = os.path.dirname(os.path.dirname(current_dir))
+        return project_root
+
 
     def _serialize_item(self, item):
         """基于数据类型选择合适的序列化方法"""

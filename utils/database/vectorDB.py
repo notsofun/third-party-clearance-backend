@@ -81,34 +81,47 @@ class VectorDatabase(BaseDatabase):
             })
         
         return results
-    
 
     def save(self, path):
 
         """保存索引、文本数据和嵌入向量"""
 
-        os.makedirs("database", exist_ok=True)
+        project_root = self._get_project_root_path()
+        database_folder_path = os.path.join(project_root, "database")
+        # 确保 database 目录存在
+        os.makedirs(database_folder_path, exist_ok=True)
+        # 构建 .pkl 文件的完整绝对路径
+        pkl_file_path = os.path.join(database_folder_path, f"{path}.pkl")
 
         # 保存文本数据和嵌入向量
         save_data = {
             'texts': self.texts,
             'embeddings': self.embedding
         }
-        with open(f"database/{path}.pkl", 'wb') as f:
+        with open(pkl_file_path, 'wb') as f:
             pickle.dump(save_data, f)
         # 保存索引
+        faiss_file_path = os.path.join(database_folder_path, f"{path}.faiss")
         if self.index:
-            faiss.write_index(self.index, f"database/{path}.faiss")
+            faiss.write_index(self.index, faiss_file_path)
         print(f"✅ 数据库已保存到database/{path}，共 {len(self.texts)} 条记录")
 
     def load(self, path):
         """加载索引、文本数据和嵌入向量"""
-        if not os.path.exists(f"database/{path}.pkl"):
-            raise FileNotFoundError(f"数据库文件database/{path}.pkl 不存在")
+        project_root = self._get_project_root_path()
+        # 构建 database 文件夹的绝对路径
+        database_folder_path = os.path.join(project_root, "database")
+
+        # 构建 .pkl 文件的完整绝对路径
+        pkl_file_path = os.path.join(database_folder_path, f"{path}.pkl")
+
+        # 检查 .pkl 文件是否存在
+        if not os.path.exists(pkl_file_path):
+            raise FileNotFoundError(f"数据库文件 {pkl_file_path} 不存在。预期路径: {pkl_file_path}")
         
         try:
             # 加载文本数据和嵌入向量
-            with open(f"database/{path}.pkl", 'rb') as f:
+            with open(pkl_file_path, 'rb') as f:
                 data = pickle.load(f)
                 
                 # 兼容旧格式
@@ -119,10 +132,10 @@ class VectorDatabase(BaseDatabase):
                 else:
                     self.texts = data.get('texts', [])
                     self.embeddings = data.get('embeddings', [])
-            
+            faiss_file_path = os.path.join(database_folder_path, f"{path}.faiss")
             # 加载索引
-            if os.path.exists(f"database/{path}.faiss"):
-                self.index = faiss.read_index(f"database/{path}.faiss")
+            if os.path.exists(faiss_file_path):
+                self.index = faiss.read_index(faiss_file_path)
             else:
                 print("⚠️ 未找到索引文件，将在需要时重建")
                 self.index = None

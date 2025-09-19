@@ -154,6 +154,9 @@ def class_context(request):
     }
 ```
 
+7. 构建数据库
+将预备检查的`LicenseInfo`列表中的组件对应的`CLIXML`文件统一下载到`data/`文件夹中，并运行`utils/database/buildDB.py`文件
+
 ---
 
 ## 8. 关键技术点

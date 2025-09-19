@@ -243,21 +243,27 @@ class ObligationCombiningHandler(SubContentGenerationHandler):
         general_assessment = self.db.get_general_assessment(current_comp['compName'])
         additional_notes = self.db.get_additional_nots(current_comp['compName'])
 
+        # 处理单行情况 (依然适用)
+        original_string_single = current_comp['compName']
+        first_line_single = original_string_single.splitlines()[0] if original_string_single else ""
+        # 进一步清理第一行，去除 â§ 和末尾空格
+        cleaned_first_line_single = first_line_single.replace("â§", "").strip()
+
         final_chap = f"""
-## {current_comp['compName']} \n\n
-General Assessment: {general_assessment}\n\n
-Additional Notes: {additional_notes}\n\n
-### Licenses Identified\n\n
-{Licenses_identified}\n\n
-### Obligations\n\n
-{SubObligations}\n\n
-### Risks\n\n
-{SubRisk}\n\n
-### Licenses with Common Rules Only\n\n
-{CommonRulesOnlyLicenses}\n\n
-### Additional Obligations\n\n
+## {cleaned_first_line_single} \n
+General Assessment: {general_assessment}
+Additional Notes: {additional_notes}\n
+### Licenses Identified\n
+{Licenses_identified}\n
+### Obligations\n
+{SubObligations}\n
+### Risks\n
+{SubRisk}\n
+### Licenses with Common Rules Only\n
+{CommonRulesOnlyLicenses}\n
+### Additional Obligations\n
 {AdditionalObligations}
-### Implementation of Obligations / Remarks\n\n
+### Implementation of Obligations / Remarks\n
 {ImplementationDetails}
 """
 

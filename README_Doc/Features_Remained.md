@@ -29,7 +29,10 @@
 暂未解决的bug如下：
 - 模型理解用户意图的能力较弱，有时无法区分是`next`还是`continue`，导致状态流转故障
   - 例子：用户说想“next, please”，但是模型坚持要获取某些关键信息 -> 修改了系统提示词，让模型更加听从用户指挥
-- **Obligations resulting from 3rd party components**章节，按照组件为单位的子标题还未处理好
+- **Obligations resulting from 3rd party components**章节
+  - 按照组件为单位的子标题还未处理好
+  - 组件能够遍历往下走，但是最后保存的内容不太对劲？
+
 - 模型在判断组件名和CliXML文件名的相关性上能力较弱
 - **Component Overview**章节缺失标题，同时还需要加上一句描述性的句子
   - 同时，还缺少一列作为序号
