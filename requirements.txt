@@ -18,6 +18,7 @@ openai
 transformers
 sentence-transformers
 pocketflow
+mcp>=1.27.0
 langchain
 langfuse
 langchain-openai

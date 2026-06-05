@@ -427,6 +427,7 @@ class getFinalOSS(Node):
     def post(self, shared, prep_res, exec_res):
         shared["reconstructedHtml"] = exec_res
         session_id = shared.get('session_id', '')
+        os.makedirs(f'downloads/{session_id}', exist_ok=True)
 
         with open('resultsInProgress/reconstructedHtml.html', "w", encoding="utf-8") as f:
             f.write(shared["reconstructedHtml"])
@@ -450,6 +451,19 @@ class ParsingPCR(Node):
         return PCR_path
 
     def exec(self, prep_res):
+        if not prep_res or not os.path.exists(prep_res):
+            logger.info("No PCR file provided; skipping PCR parsing.")
+            return {
+                "metadata": {
+                    "filename": None,
+                    "paragraphs_count": 0,
+                    "tables_count": 0
+                },
+                "structure": {
+                    "sections": []
+                },
+                "tables": []
+            }
         pcr = parse_docx_to_hierarchical_json(prep_res, 'resultsInProgress/pcr.json')
         return pcr
     
